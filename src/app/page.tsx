@@ -1,9 +1,17 @@
-import LandingPage from "@/pages/Home";
+
+import BotMaker from "@/components/ChatBot/BotMaker";
+import KnowledgeBase from "@/components/ChatBot/KnowledgeBase";
+import SideBar from "@/components/SideBar";
+import ChatbotList from "@/pages/my-chatbots/page";
 
 export default function Home() {
   return (
     <>
-    <LandingPage/>
+    <SideBar/>
+    <ChatbotList/>
+    <KnowledgeBase/>
+    <BotMaker/>
+
     </>
   );
 }
