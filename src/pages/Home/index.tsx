@@ -1,26 +1,13 @@
-<<<<<<< HEAD
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
 import PricingCard from '@/components/Pricing';
 import Factors from '@/components/Factors';
 import Features from '@/components/Features';
 import Hero from '@/components/Hero';
-=======
-import PricingCard from '../../components/PricingCard';
-import FactorsCard from '../../components/FactorsCard';
-import FeatureCard from '@/components/FeatureCards';
->>>>>>> feature/chatbots
 
 const LandingPage: React.FC = () => {
   return (
     <>
       <main>
-<<<<<<< HEAD
         <Hero />
-        <Features />
-        <Factors />
-        <PricingCard />
-=======
         <section>
         <div className="flex flex-col items-center px-5 pt-6">
           <header className="shrink-0 mt-6 max-w-full" />
@@ -43,18 +30,17 @@ const LandingPage: React.FC = () => {
         </section>
         <section>
           <div>
-            <FeatureCard/>
+            <Features/>
           </div>            
         </section>
         <section>
           <div>
-            <FactorsCard/>
+            <Factors/>
           </div>
         </section>
         <section>
           <PricingCard/>
         </section>
->>>>>>> feature/chatbots
       </main>
     </>
   );

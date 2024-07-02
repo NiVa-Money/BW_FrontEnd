@@ -32,7 +32,7 @@ const AuthContextProvider = ({ children }: PropsWithChildren) => {
 
   useLayoutEffect(() => {
     setLoading(true);
-    const unsubscribe = onAuthStateChanged(auth, (usr) => {
+    const unsubscribe = onAuthStateChanged(auth, (usr: any) => {
       setUser(usr || null);
       setLoading(false);
     });
