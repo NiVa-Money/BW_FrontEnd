@@ -1,4 +1,12 @@
+<<<<<<< HEAD
 'use client';
+=======
+
+import BotMaker from "@/components/ChatBot/BotMaker";
+import KnowledgeBase from "@/components/ChatBot/KnowledgeBase";
+import SideBar from "@/components/SideBar";
+import ChatbotList from "@/pages/my-chatbots/page";
+>>>>>>> feature/chatbots
 
 import Home from '@/pages/Home';
 import { auth } from '@/auth/firebase';
@@ -29,8 +37,18 @@ function App() {
 
 export default function () {
   return (
+<<<<<<< HEAD
     <AuthContextProvider>
       <App />
     </AuthContextProvider>
+=======
+    <>
+    <SideBar/>
+    <ChatbotList/>
+    <KnowledgeBase/>
+    <BotMaker/>
+
+    </>
+>>>>>>> feature/chatbots
   );
 }
