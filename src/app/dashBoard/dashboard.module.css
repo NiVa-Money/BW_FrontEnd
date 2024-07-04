@@ -1,0 +1,22 @@
+.containerOne{
+    display: flex;
+}
+
+.containerTwo {
+    margin-top: 1rem;
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    
+}
+.wrapper {
+    margin-top: 2rem;
+    display: flex;
+    margin-right: 12rem; 
+    margin-left: 15rem;
+  }
+.card {
+    flex: 1; 
+    margin-right: 10px; 
+}
+
