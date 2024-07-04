@@ -1,5 +1,6 @@
 import Image from "next/image";
 import React from "react";
+import BW_LOGO from '@/public/assets/logo.png';
 
 const CommunityBox: React.FC = () => {
   return (
@@ -7,7 +8,7 @@ const CommunityBox: React.FC = () => {
       <div className="flex justify-center items-center p-6 font-black max-md:px-5">
         <div className="flex flex-col items-center max-w-full w-[765px]">
           <div className="flex gap-2 justify-center px-1.5 py-2 text-3xl tracking-widest whitespace-nowrap">
-            <Image src="/assets/logo.png" alt="logo" width={50} height={50} />
+            <Image src={BW_LOGO.src} alt="logo" width={50} height={50} />
             <div className="my-auto">BotWot</div>
           </div>
           <h1 className="self-stretch mt-10 text-6xl">

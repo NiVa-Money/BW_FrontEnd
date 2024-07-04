@@ -37,7 +37,7 @@ export default function () {
     <><AuthContextProvider>
       <App />
     </AuthContextProvider><>
-        <SideBar />
+        {/* <SideBar /> */}
         <ChatbotList />
         <KnowledgeBase />
         <BotMaker />
