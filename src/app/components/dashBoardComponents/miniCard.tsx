@@ -8,6 +8,7 @@ interface MiniCardProps {
 }
 
 export function MiniCard({ uniqueClientToday, totalClientServed,sessionConsumed }: MiniCardProps) {
+  
   return (
     <div className={styles.cardsContainer}>
     <Card className="mx-auto max-w-xs h-48 rounded-3xl">

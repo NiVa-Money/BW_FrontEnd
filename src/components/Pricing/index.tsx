@@ -1,7 +1,11 @@
+"use client"
 import React from 'react';
 import PricingTier from './Tier';
+import { useAuthContext } from '@/context/AuthContext';
 
 const PricingCard: React.FC = () => {
+  const { handleSignIn } = useAuthContext();
+
   const pricingTiers = [
     {
       title: 'Basic',
@@ -15,6 +19,7 @@ const PricingCard: React.FC = () => {
       ],
       buttonText: 'Start 7 Days Free Trial',
       backgroundColor: 'bg-emerald-400',
+      handleSignIn, // Pass handleSignIn to the component
     },
     {
       title: 'BotWot Exclusive',
@@ -28,6 +33,7 @@ const PricingCard: React.FC = () => {
       ],
       buttonText: 'Start 7 Days Free Trial',
       backgroundColor: 'bg-indigo-500',
+      handleSignIn, // Pass handleSignIn to the component
     },
     {
       title: 'Starter',
@@ -41,6 +47,7 @@ const PricingCard: React.FC = () => {
       ],
       buttonText: 'Start 7 Days Free Trial',
       backgroundColor: 'bg-fuchsia-950',
+      handleSignIn, // Pass handleSignIn to the component
     },
     {
       title: 'Professional',
@@ -54,6 +61,7 @@ const PricingCard: React.FC = () => {
       ],
       buttonText: 'Start 7 Days Free Trial',
       backgroundColor: 'bg-pink-400',
+      handleSignIn, // Pass handleSignIn to the component
     },
   ];
 
