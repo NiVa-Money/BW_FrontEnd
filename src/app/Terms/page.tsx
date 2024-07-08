@@ -1,12 +1,10 @@
-import PrivacyComponent from "@/components/PrivacyComponent/PrivacyComponent";
-import TermsComponent from "@/components/TermsComponent/TermsComponent";
-
+import TermsComponent from '@/components/TermsComponent/TermsComponent';
 
 const TermsPage: React.FC = () => {
   return (
     <>
       <main>
-        <TermsComponent/>
+        <TermsComponent />
       </main>
     </>
   );
