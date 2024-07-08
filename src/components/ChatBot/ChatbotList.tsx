@@ -1,5 +1,5 @@
 import React from 'react';
-import ChatbotCard, { ChatbotCardProps } from '../ChatBot/ChatBotCard'; // Adjust import path as per your project structure
+import ChatbotCard, { ChatbotCardProps } from '../ChatBot/ChatBotCard';
 
 const ChatbotList: React.FC = () => {
   const chatbots: ChatbotCardProps[] = [

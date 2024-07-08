@@ -8,6 +8,7 @@ import { SqureCardTwo } from '../components/dashBoardComponents/squreCardTwo';
 import { MiniCard } from '../components/dashBoardComponents/miniCard';
 import { BotCard } from '../components/dashBoardComponents/botCard';
 import styles from "./dashboard.module.css";
+
 const Page = () => {
     const [metrics, setMetrics] = useState({
         activeBots: 0,
@@ -21,25 +22,37 @@ const Page = () => {
         emailId: '', 
         userId: '' 
     });
+
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const token = ''; //add your bearer token
-                const metricsResponse = await axios.get('http://13.235.189.116:8000/user/metrics/6682c8d3db83a66e4dc21af5', {
+                const token = localStorage.getItem('token');
+                const userId = localStorage.getItem('userId');
+                const emailId = localStorage.getItem('emailId');
+                if (!token || !userId || !emailId) {
+                    throw new Error("User is not authenticated");
+                }
+
+                const metricsResponse = await axios.get(`http://13.235.189.116:8000/user/metrics/${userId}`, {
                     headers: {
                         'Authorization': `Bearer ${token}`,
                         'Accept': 'application/json',
                     }
+                    
                 });
+                console.log(userId)
+                console.log("id",token)
+                console.log("email",emailId)
                 const { activeBots, uniqueClientToday, totalClientServed, sessionConsumed, sessionTotal, sessionLeft } = metricsResponse.data;
-                // Fetch user profile data
-                const userProfileResponse = await axios.get('http://13.235.189.116:8000/user/getUserProfile?emailId=kalpanathmajhi%40gmail.com', {
+
+                const userProfileResponse = await axios.get(`http://13.235.189.116:8000/user/getUserProfile?emailId=${encodeURIComponent(emailId)}`, {
                     headers: {
                         'Authorization': `Bearer ${token}`,
                         'Accept': 'application/json',
                     }
                 });
-                const { firstName, lastName, emailId, userId } = userProfileResponse.data;
+                
+                const { firstName, lastName, emailId: fetchedEmailId, userId: fetchedUserId } = userProfileResponse.data;
                 setMetrics({
                     activeBots,
                     uniqueClientToday,
@@ -49,8 +62,8 @@ const Page = () => {
                     sessionLeft,
                     firstName,
                     lastName,
-                    emailId,
-                    userId
+                    emailId: fetchedEmailId,
+                    userId: fetchedUserId
                 });
 
                 console.log("Fetched metrics:", {
@@ -65,8 +78,8 @@ const Page = () => {
                 console.log("Fetched user profile:", {
                     firstName,
                     lastName,
-                    emailId,
-                    userId
+                    emailId: fetchedEmailId,
+                    userId: fetchedUserId
                 });
             } catch (error) {
                 console.error("Error fetching data:", error);
@@ -75,6 +88,7 @@ const Page = () => {
 
         fetchData();
     }, []);
+
     return (
         <div className={styles.wrapper}>
             <div className={styles.containerMain}>
@@ -102,4 +116,5 @@ const Page = () => {
         </div>
     );
 }
+
 export default Page;

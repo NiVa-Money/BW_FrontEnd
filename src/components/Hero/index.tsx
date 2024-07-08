@@ -1,7 +1,16 @@
 import { useAuthContext } from '@/context/AuthContext';
-import React from 'react';
-
+import React, { useState } from 'react';
+import Modal from '../signupModal/page';
 const Hero = () => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const handleButtonClick = () => {
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
   const { handleSignIn } = useAuthContext();
 
   return (
@@ -28,6 +37,13 @@ const Hero = () => {
           />
           <span>Sign in with Google</span>
         </button>
+        <button
+        className="flex gap-4 justify-center px-6 py-4 mt-20 text-2xl text-pink-200 bg-gray-800 rounded-[99px] max-md:px-5 max-md:mt-10"
+        onClick={handleButtonClick}
+      >
+        <span>Sign in With Your Email</span>
+      </button>
+      {isModalOpen && <Modal closeModal={closeModal} />}
       </div>
     </section>
   );

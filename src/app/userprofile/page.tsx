@@ -19,25 +19,32 @@ const UserProfile = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const token = '';//replae with bearer token
-        const metricsResponse = await axios.get('http://13.235.189.116:8000/user/metrics/6682c8d3db83a66e4dc21af5', {
-          headers: {
-            'Authorization': `Bearer ${token}`,
-            'Accept': 'application/json',
+          const token = localStorage.getItem('token');
+          const userId = localStorage.getItem('userId');
+          const emailId = localStorage.getItem('emailId');
+          if (!token || !userId || !emailId) {
+              throw new Error("User is not authenticated");
           }
-        });
+
+          const metricsResponse = await axios.get(`http://13.235.189.116:8000/user/metrics/${userId}`, {
+              headers: {
+                  'Authorization': `Bearer ${token}`,
+                  'Accept': 'application/json',
+              }
+              
+          });
         const { activeBots, uniqueClientToday, totalClientServed, sessionConsumed, sessionTotal, sessionLeft } = metricsResponse.data;
 
         // Fetch user profile data
-        const userProfileResponse = await axios.get('http://13.235.189.116:8000/user/getUserProfile?emailId=kalpanathmajhi%40gmail.com', {
+        const userProfileResponse = await axios.get(`http://13.235.189.116:8000/user/getUserProfile?emailId=${encodeURIComponent(emailId)}`, {
           headers: {
-            'Authorization': `Bearer ${token}`,
-            'Accept': 'application/json',
+              'Authorization': `Bearer ${token}`,
+              'Accept': 'application/json',
           }
-        });
-        const { firstName, lastName, emailId, userId } = userProfileResponse.data;
-
-        setMetrics({
+      });
+      
+      const { firstName, lastName, emailId: fetchedEmailId, userId: fetchedUserId } = userProfileResponse.data;
+      setMetrics({
           activeBots,
           uniqueClientToday,
           totalClientServed,
@@ -46,15 +53,32 @@ const UserProfile = () => {
           sessionLeft,
           firstName,
           lastName,
-          emailId,
-          userId
-        });
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
-    fetchData();
-  }, []); 
+          emailId: fetchedEmailId,
+          userId: fetchedUserId
+      });
+
+      console.log("Fetched metrics:", {
+          activeBots,
+          uniqueClientToday,
+          totalClientServed,
+          sessionConsumed,
+          sessionTotal,
+          sessionLeft
+      });
+
+      console.log("Fetched user profile:", {
+          firstName,
+          lastName,
+          emailId: fetchedEmailId,
+          userId: fetchedUserId
+      });
+  } catch (error) {
+      console.error("Error fetching data:", error);
+  }
+};
+
+fetchData();
+}, []);
   return (
     <div >
        <div className={styles.container}>

@@ -1,7 +1,10 @@
+"use client"
 import Image from 'next/image';
 import React from 'react';
 import BW_LOGO from '@/public/assets/logo.png';
-
+import { usePathname } from 'next/navigation'
+import Link from 'next/link'
+import   "./header.css"
 type NavItemProps = {
   text: string;
 };
@@ -24,22 +27,36 @@ const Button: React.FC<ButtonProps> = ({ children, className }) => (
 );
 
 const Header: React.FC = () => {
-  const navItems: string[] = ['Home', 'About Us', 'Pricing', 'Blog'];
+  const pathname = usePathname()
 
   return (
     <header className="flex justify-center items-center px-6 py-4 w-full text-gray-100">
       <div className="flex gap-5 justify-between py-0.5 pl-1.5 w-full max-w-[1184px] max-md:flex-wrap ">
+      <Link className={`link ${pathname === '/' }`} href="/">
         <div className="flex gap-2 justify-center px-1.5 py-2 my-auto text-2xl font-bold tracking-widest whitespace-nowrap">
           <Image src={BW_LOGO.src} alt="logo" width={50} height={50} />
-          <h2 className="my-auto">BotWot</h2>
+          <h2 className="my-auto">BotWot</h2>    
         </div>
+        </Link>
         <nav className="flex gap-5 justify-between items-center py-2 pl-3 text-sm leading-5 max-md:flex-wrap ">
           <ul className="flex gap-10">
-            {navItems.map((item, index) => (
-              <NavItem key={index} text={item} />
-            ))}
+          <Link className={`link ${pathname === '/' ? 'active' : ''}`} href="/">
+            Home
+          </Link>
+          <Link className={`link ${pathname === '/aboutUs' ? 'active' : ''}`} href="/aboutUs">
+          About Us
+          </Link>
+          <Link className={`link ${pathname === '/pricing' ? 'active' : ''}`} href="/pricing">
+          Pricing
+          </Link>
+          <Link className={`link ${pathname === '/blog' ? 'active' : ''}`} href="/blog">
+            Blog
+          </Link>
+          <Link className={`link ${pathname === '/contactus' ? 'active' : ''}`} href="/contactus">
+            Contact Us
+          </Link>
           </ul>
-          <Button>Contact Us</Button>
+          
         </nav>
       </div>
     </header>
