@@ -1,5 +1,4 @@
 import type { Config } from 'tailwindcss';
-
 import colors from 'tailwindcss/colors';
 
 const config: Config = {
@@ -101,18 +100,6 @@ const config: Config = {
         'tremor-metric': ['1.875rem', { lineHeight: '2.25rem' }],
       },
     },
-
-
-const config: Config = {
-  content: [
-    './src/pages/**/*.{js,ts,jsx,tsx,mdx}',
-    './src/components/**/*.{js,ts,jsx,tsx,mdx}',
-    './src/app/**/*.{js,ts,jsx,tsx,mdx}',
-    './src/context/**/*.{js,ts,jsx,tsx,mdx}',
-  ],
-  theme: {
-    extend: {},
-
   },
   safelist: [
     {
