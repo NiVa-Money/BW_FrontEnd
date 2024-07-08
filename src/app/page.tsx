@@ -33,9 +33,9 @@ function App() {
       <Chat />
       <SideBar />
       <ChatbotList />
-      {/* <KnowledgeBase /> */}
-      {/* <BotMaker /> */}
-      {/* <PricingCard /> */}
+      {/* <KnowledgeBase />
+       <BotMaker /> 
+       <PricingCard /> */}
     </div>
   );
 }

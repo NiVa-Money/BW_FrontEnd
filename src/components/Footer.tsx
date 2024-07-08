@@ -1,6 +1,7 @@
 import Image from "next/image";
 import React from "react";
 import CommunityBox from "./CommunityBox";
+import Link from "next/link";
 
 type FooterLinkProps = {
   title: string;
@@ -16,9 +17,9 @@ const FooterLink: React.FC<FooterLinkProps> = ({ title, links }) => (
     <div className="flex flex-col text-base leading-6 text-white text-opacity-80 max-md:mt-4">
       <div className="font-medium text-white">{title}</div>
       {links.map((link, index) => (
-        <div key={index} className={index === 0 ? "mt-6" : "mt-2.5"}>
+        <Link href={`/${link}`} key={index} className={index === 0 ? "mt-6" : "mt-2.5"}>
           {link}
-        </div>
+        </Link>
       ))}
     </div>
   </div>
