@@ -67,7 +67,6 @@ const Footer: React.FC = () => {
         { name: 'Privacy', path: 'privacy' },
         { name: 'Terms', path: 'terms' },
         { name: 'Cancellation & Return Policy', path: 'cancellation' },
-        { name: 'Shipping & Delivery', path: 'Shipping' },
       ],
     },
   ];

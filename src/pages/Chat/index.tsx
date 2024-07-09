@@ -1,6 +1,6 @@
 import { auth } from '@/auth/firebase';
 import { useAuthContext } from '@/context/AuthContext';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 const Chat = () => {
   const { user } = useAuthContext();

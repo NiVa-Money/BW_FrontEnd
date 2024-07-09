@@ -7,7 +7,12 @@ interface ChatbotCardProps {
   isNew?: boolean;
 }
 
-const ChatbotCard: React.FC<ChatbotCardProps> = ({ icon, title, description, isNew }) => (
+const ChatbotCard: React.FC<ChatbotCardProps> = ({
+  icon,
+  title,
+  description,
+  isNew,
+}) => (
   <div className="bg-[#EEEEF0] rounded-xl p-4 flex items-start space-x-4">
     <img src={icon} alt={title} className="w-12 h-12 rounded-full" />
     <div className="flex-grow">
@@ -16,18 +21,36 @@ const ChatbotCard: React.FC<ChatbotCardProps> = ({ icon, title, description, isN
     </div>
     {!isNew && (
       <button className="text-black">
-        <i className="fas fa-trash" style={{ fontSize: '35px'}}></i>
+        <i className="fas fa-trash" style={{ fontSize: '35px' }}></i>
       </button>
     )}
   </div>
 );
 
-const ChatbotList: React.FC = () => {
+const MyChatBotComponent: React.FC = () => {
   const chatbots: ChatbotCardProps[] = [
-    { icon: "/icons/plus.png", title: "Create Chatbot", description: "Create a version of chatbot for specific purpose", isNew: true },
-    { icon: "/icons/talent.png", title: "TalentTalker", description: "Chatbot for or Human Resources with a playful twist" },
-    { icon: "/icons/market.png", title: "MarketBot", description: "Provide comprehensive assistance in the field of market research" },
-    { icon: "/icons/promark.png", title: "ProMark", description: "Cater to the needs of marketers" },
+    {
+      icon: '/icons/plus.png',
+      title: 'Create Chatbot',
+      description: 'Create a version of chatbot for specific purpose',
+      isNew: true,
+    },
+    {
+      icon: '/icons/talent.png',
+      title: 'TalentTalker',
+      description: 'Chatbot for or Human Resources with a playful twist',
+    },
+    {
+      icon: '/icons/market.png',
+      title: 'MarketBot',
+      description:
+        'Provide comprehensive assistance in the field of market research',
+    },
+    {
+      icon: '/icons/promark.png',
+      title: 'ProMark',
+      description: 'Cater to the needs of marketers',
+    },
   ];
 
   return (
@@ -48,4 +71,4 @@ const ChatbotList: React.FC = () => {
   );
 };
 
-export default ChatbotList;
+export default MyChatBotComponent;

@@ -93,7 +93,9 @@ const PrivacyComponent: React.FC = () => {
         Privacy Policies
       </h1>
       <div className=" text-white p-6 rounded-lg">
-        <h1 className="text-2xl font-bold mb-4">BotWot Privacy Policy</h1>
+        <h1 className="text-2xl font-bold mb-4 underline">
+          BotWot Privacy Policy
+        </h1>
         <p className="mb-6">Effective Date: 01st July, 2024</p>
         <p className="mb-6">
           BotWot ("BotWot", "we", "us", or "our") is a product by PurpleAnt

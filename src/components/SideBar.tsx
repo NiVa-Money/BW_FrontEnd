@@ -17,13 +17,30 @@ interface SidebarItemProps {
 }
 
 const SIDENAV_ITEMS: SidebarItemProps[] = [
-  { icon: 'fa-comment', text: 'Chat', hasDropdown: true, subMenuItems: [{ title: 'Today' }, { title: 'Yesterday' }, { title: 'Previous 7 days' }] },
-  { icon: 'fa-robot', text: 'Bots', hasDropdown: true, subMenuItems: [{ path: '/my-chatbots', title: 'My Chatbots' }, { path: '/bots/knowledge-base', title: 'Knowledge Base' }] },
+  {
+    icon: 'fa-comment',
+    text: 'Chat',
+    hasDropdown: true,
+    subMenuItems: [
+      { title: 'Today' },
+      { title: 'Yesterday' },
+      { title: 'Previous 7 days' },
+    ],
+  },
+  {
+    icon: 'fa-robot',
+    text: 'Bots',
+    hasDropdown: true,
+    subMenuItems: [
+      { path: '/my-chatbots', title: 'My Chatbots' },
+      { path: '/bots/knowledge-base', title: 'Knowledge Base' },
+    ],
+  },
   { icon: 'fa-user', text: 'Profile', path: '/profile' },
   { icon: 'fa-trash', text: 'Clear Conversations' },
   { icon: 'fa-crown', text: 'Membership' },
-  { icon: 'fa-question-circle', text: 'Updates & FAQ', path: '/updates-faq' },
-  { icon: 'fa-sign-out-alt', text: 'Log Out' }
+  { icon: 'fa-question-circle', text: 'Updates & FAQ', path: '/updates-faqs' },
+  { icon: 'fa-sign-out-alt', text: 'Log Out' },
 ];
 
 const SideBar: React.FC = () => {
@@ -54,7 +71,11 @@ const MenuItem = ({ item }: { item: SidebarItemProps }) => {
         <>
           <button
             onClick={toggleSubMenu}
-            className={`flex items-center space-x-3 py-2 px-3 text-gray-300 hover:bg-white hover:bg-opacity-10 rounded-full cursor-pointer ${pathname && pathname.includes(item.text.toLowerCase()) ? 'bg-white bg-opacity-10' : ''}`}
+            className={`flex items-center space-x-3 py-2 px-3 text-gray-300 hover:bg-white hover:bg-opacity-10 rounded-full cursor-pointer ${
+              pathname && pathname.includes(item.text.toLowerCase())
+                ? 'bg-white bg-opacity-10'
+                : ''
+            }`}
           >
             <i className={`fas ${item.icon}`}></i>
             <span>{item.text}</span>
@@ -65,19 +86,32 @@ const MenuItem = ({ item }: { item: SidebarItemProps }) => {
           {subMenuOpen && (
             <div className="ml-4">
               {item.subMenuItems?.map((subItem, idx) => (
-                <Link key={idx} href={subItem.path ?? ''} className="text-gray-300 hover:bg-white hover:bg-opacity-10 rounded-full cursor-pointer">
-                    <div className={`flex items-center space-x-3 py-2 px-3 ${subItem.path === pathname ? 'font-bold' : ''}`}>
-                      <span>{subItem.title}</span>
-                    </div>
+                <Link
+                  key={idx}
+                  href={subItem.path ?? ''}
+                  className="text-gray-300 hover:bg-white hover:bg-opacity-10 rounded-full cursor-pointer"
+                >
+                  <div
+                    className={`flex items-center space-x-3 py-2 px-3 ${
+                      subItem.path === pathname ? 'font-bold' : ''
+                    }`}
+                  >
+                    <span>{subItem.title}</span>
+                  </div>
                 </Link>
               ))}
             </div>
           )}
         </>
       ) : (
-        <Link href={item.path ?? ''} className={`flex items-center space-x-3 py-2 px-3 text-gray-300 hover:bg-white hover:bg-opacity-10 rounded-full cursor-pointer ${item.path === pathname ? 'bg-white bg-opacity-10' : ''}`}>
-            <i className={`fas ${item.icon}`}></i>
-            <span>{item.text}</span>
+        <Link
+          href={item.path ?? ''}
+          className={`flex items-center space-x-3 py-2 px-3 text-gray-300 hover:bg-white hover:bg-opacity-10 rounded-full cursor-pointer ${
+            item.path === pathname ? 'bg-white bg-opacity-10' : ''
+          }`}
+        >
+          <i className={`fas ${item.icon}`}></i>
+          <span>{item.text}</span>
         </Link>
       )}
     </div>
