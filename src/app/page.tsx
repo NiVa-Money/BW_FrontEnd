@@ -3,7 +3,6 @@
 import BotMaker from "@/components/ChatBot/BotMaker";
 import KnowledgeBase from "@/components/ChatBot/KnowledgeBase";
 import SideBar from "@/components/SideBar";
-import ChatbotList from "@/pages/my-chatbots/page";
 import Home from '@/pages/Home';
 import { auth } from '@/auth/firebase';
 import AuthContextProvider, { useAuthContext } from '@/context/AuthContext';
@@ -11,6 +10,7 @@ import { onAuthStateChanged } from 'firebase/auth';
 import { useEffect } from 'react';
 import Chat from '@/pages/Chat';
 import PricingCard from "@/components/Pricing";
+import ChatbotList from "@/components/ChatBot/ChatbotList";
 
 function App() {
   const { user, setUser } = useAuthContext();
