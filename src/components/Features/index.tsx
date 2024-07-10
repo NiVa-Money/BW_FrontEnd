@@ -34,10 +34,10 @@ const Features: React.FC = () => {
         Discover what's possible with BotWot
       </p>
       <section className="self-start  ml-16 pl-15 pr-10 mt-10 mb-2.5 w-full max-w-[1150px]">
-        <div className="flex gap-5 max-md:flex-col max-md:gap-0">
+        <div className="flex gap-5 max-md:flex-col max-md:gap-0s">
           {cardData.map((card, index) => (
-            <div key={index} className="flex gap-4 flex-col w-[33%]">
-              <Card {...card} />
+            <div key={index} className="flex gap-4 flex-col w-[33%] ">
+              <Card {...card}  />
             </div>
           ))}
         </div>

@@ -1,0 +1,5 @@
+.border-gradient-bcg {
+    border-image-source: linear-gradient(90deg, #0B031E 0%, #9747FF 50%, #171A1F 100%);
+    border-image-slice: 1;
+  }
+  
