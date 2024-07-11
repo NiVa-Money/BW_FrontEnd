@@ -1,4 +1,3 @@
-import { useAuthContext } from '@/context/AuthContext';
 import React, { useState } from 'react';
 import Modal from '../signupModal/page';
 import { setUser } from '@/redux/actions/authActions';
