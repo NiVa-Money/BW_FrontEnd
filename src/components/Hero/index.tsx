@@ -56,10 +56,10 @@ const Hero = () => {
         </button>
         {isSignupModalOpen && <Modal closeModal={closeSignupModal} />}
         <button
-          className="flex gap-4 justify-center px-3 py-2 mt-4 text-2xl text-pink-200 rounded-[99px] max-md:px-5"
+          className="flex gap-4 justify-center px-3 py-2  text-2xl text-pink-200 rounded-[99px] max-md:px-5"
           onClick={handleLoginButtonClick}
         >
-          <span>Already have an account? Log in</span>
+         <span className="text-sm">  Already have an account? <span className="underline">Log in</span></span>
         </button>
         {isLoginModalOpen && <LoginModal closeModal={closeLoginModal} />}
       </div>
