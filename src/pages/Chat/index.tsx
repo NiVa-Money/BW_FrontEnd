@@ -1,9 +1,9 @@
 import { auth } from '@/auth/firebase';
-import { useAuthContext } from '@/context/AuthContext';
+// import { useAuthContext } from '@/context/AuthContext';
 import React from 'react';
 
 const Chat = () => {
-  const { user } = useAuthContext();
+  // const { user } = useAuthContext();
 
   const signOut = () => {
     auth.signOut();
@@ -11,7 +11,7 @@ const Chat = () => {
 
   return (
     <div className="min-h-screen flex justify-center flex-col items-center text-center text-neutral-400">
-      <h1 className="font-bold text-4xl">Welcome {user?.displayName}</h1>
+      <h1 className="font-bold text-4xl">Welcome </h1>
       <span className="text-xl font-medium">
         Chat page to start conversation. Coming Soon.
       </span>
