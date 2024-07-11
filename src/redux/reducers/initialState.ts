@@ -2,6 +2,7 @@
 const initialState: any = {
     root: {
         pathName: '',
+        user:null
     },
     
 };
