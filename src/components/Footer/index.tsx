@@ -1,4 +1,4 @@
-import { useAuthContext } from '@/context/AuthContext';
+// import { useAuthContext } from '@/context/AuthContext';
 import Image from 'next/image';
 import * as React from 'react';
 
@@ -21,7 +21,7 @@ const FooterLink: React.FC<FooterLinkProps> = ({ title, links }) => (
 );
 
 const Footer: React.FC = () => {
-  const { handleSignIn } = useAuthContext();
+  // const { handleSignIn } = useAuthContext();
 
   const footerLinks = [
     { title: 'Company', links: ['Blog', 'Careers'] },
@@ -59,7 +59,7 @@ const Footer: React.FC = () => {
           </div>
         </div>
         <button
-          onClick={handleSignIn}
+          // onClick={handleSignIn}
           className="justify-center items-center self-center px-8 py-6 mt-8 w-60 max-w-full text-base font-medium shadow-2xl bg-[conic-gradient(from_180deg_at_50%_50%,#B52BBA_4.666563235223293deg,#A12CBC_23.647727966308594deg,#8C2EBE_44.85525995492935deg,#792FBF_72.45651304721832deg,#6C30C0_82.50000178813934deg,#4B32C3_127.99007892608643deg,#5831C2_160.968976020813deg,#6330C1_178.45529437065125deg,#742FC0_189.47770357131958deg,#8D2DBE_202.95226335525513deg,#A62CBC_230.65982580184937deg,#B92ABA_251.35178089141846deg,#D029B8_276.4414644241333deg,#EC27B6_306.45145654678345deg,#C729B9_331.67617321014404deg)] rounded-[99px] max-md:px-5"
         >
           Sign in now
