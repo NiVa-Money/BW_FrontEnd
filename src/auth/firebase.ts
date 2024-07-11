@@ -26,7 +26,7 @@
 
 import firebase from 'firebase/app';
 import 'firebase/auth';
-import { getAuth } from 'firebase/auth';
+import { GoogleAuthProvider, getAuth } from 'firebase/auth';
 import { initializeApp } from 'firebase/app';
 const isDev = process.env.NODE_ENV === 'development';
 
@@ -42,6 +42,6 @@ const firebaseConfig = {
 
 const firebaseApp = initializeApp(firebaseConfig);
 
-
 export const auth = getAuth(firebaseApp);
+export const provider = new GoogleAuthProvider();
 // export const googleProvider = new firebase.auth.GoogleAuthProvider();

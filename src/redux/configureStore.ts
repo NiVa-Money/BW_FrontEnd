@@ -3,7 +3,6 @@
 // import { rootSaga } from './saga';
 // import globalReducer from './reducers/globalReducers/globalReducers';
 
-
 // const sagaMiddleware = createSagaMiddleware();
 
 // export const store = configureStore({
@@ -17,8 +16,8 @@
 // sagaMiddleware.run(rootSaga);
 import { configureStore } from '@reduxjs/toolkit';
 import createSagaMiddleware from 'redux-saga';
-import { rootSaga } from './saga';
 import globalReducers from './reducers/globalReducers/globalReducers';
+import rootSaga from './saga';
 
 const sagaMiddleware = createSagaMiddleware();
 
@@ -36,4 +35,3 @@ export type AppDispatch = typeof store.dispatch;
 export type RootState = ReturnType<typeof store.getState>;
 
 export default store;
-
