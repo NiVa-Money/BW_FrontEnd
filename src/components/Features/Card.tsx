@@ -13,7 +13,7 @@ const Card: React.FC<CardProps> = ({ imageSrc, title, description }) => (
         loading="lazy"
         src={imageSrc}
         alt={title}
-        className="w-16 aspect-square"
+        className="w-6 aspect-square"
       />
       <h3 className="mt-3.5 text-2xl font-semibold tracking-tight leading-8 text-white">
         {title}

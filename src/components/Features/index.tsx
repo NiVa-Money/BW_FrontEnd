@@ -4,21 +4,20 @@ const Features: React.FC = () => {
   const cardData = [
     {
       imageSrc:
-        'https://cdn.builder.io/api/v1/image/assets/TEMP/30c3dcf530f0d28e1a2fc6e405e9a261362bf7e65601c2836b9cbfa74c9601ea?apiKey=555c811dd3f44fc79b6b2689129389e8&',
+        '/images/Vectorrocket.png',
       title: 'Launch in minutes',
       description:
         'Choose and deploy pre-built conversational modules tailored to your business instantly.',
     },
     {
       imageSrc:
-        'https://cdn.builder.io/api/v1/image/assets/TEMP/d006b056253a94c02f38a4c31699e2dcc8f12d36941a5dce9355726884f17823?apiKey=555c811dd3f44fc79b6b2689129389e8&',
+        '/images/Vectormagic.png',
       title: 'Seamless Integrations',
       description:
         'Effortlessly connect with your systems using our no-code, user-friendly platform.',
     },
     {
-      imageSrc:
-        'https://cdn.builder.io/api/v1/image/assets/TEMP/322d66484845d31b97a3404d8a8c545cc34806a887e381a2fcd9d89d8888cbf7?apiKey=555c811dd3f44fc79b6b2689129389e8&',
+      imageSrc: '/images/Vectorchat.png',
       title: 'Personalized Interactions',
       description:
         "Train your AI chatbot to embody your brand's personality for precise responses.",

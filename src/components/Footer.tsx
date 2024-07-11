@@ -52,10 +52,6 @@ const Footer: React.FC = () => {
       links: [
         { name: 'pricing', path: 'pricing' },
         { name: 'Download', path: 'Download' },
-        { name: 'AI', path: 'AI' },
-        { name: 'Sales', path: 'Sales' },
-        { name: 'Enterprise', path: 'Enterprise' },
-        { name: 'Outlook', path: 'Outlook' },
       ],
     },
     {
@@ -71,8 +67,6 @@ const Footer: React.FC = () => {
       links: [
         { name: 'Privacy', path: 'privacy' },
         { name: 'Terms', path: 'terms' },
-        { name: 'Cancellation & Return Policy', path: 'cancellation' },
-        { name: 'Shipping & Delivery', path: 'Shipping' },
       ],
     },
   ];
