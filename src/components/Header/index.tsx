@@ -1,7 +1,7 @@
 "use client"
 import Image from 'next/image';
 import React from 'react';
-import BW_LOGO from '@/public/assets/logo.png';
+import mainLogo from '@/public/assets/mainLogo.svg';
 import { usePathname } from 'next/navigation'
 import Link from 'next/link'
 import   "./header.css"
@@ -34,8 +34,8 @@ const Header: React.FC = () => {
       <div className="flex gap-5 justify-between py-0.5 pl-1.5 w-full max-w-[1184px] max-md:flex-wrap ">
       <Link className={`link ${pathname === '/' }`} href="/">
         <div className="flex gap-2 justify-center px-1.5 py-2 my-auto text-2xl font-bold tracking-widest whitespace-nowrap">
-          <Image src={BW_LOGO.src} alt="logo" width={50} height={50} />
-          <h2 className="my-auto">BotWot</h2>    
+          <Image src={mainLogo.src} alt="logo" width={90} height={80} />
+          {/* <h2 className="my-auto">BotWot</h2>     */}
         </div>
         </Link>
         <nav className="flex gap-5 justify-between items-center py-2 pl-3 text-sm leading-5 max-md:flex-wrap ">

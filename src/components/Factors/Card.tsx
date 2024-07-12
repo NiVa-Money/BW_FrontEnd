@@ -1,12 +1,12 @@
 import React from 'react';
-
+import "./factors.css"
 type FactorsCardProps = {
   title: string;
   description: string;
 };
 
 const Cards: React.FC<FactorsCardProps> = ({ title, description }) => (
-  <section className="flex flex-col px-5 py-6 bg-slate-900 rounded">
+  <section className="flex flex-col px-5 py-6 bg-slate-900 rounded-3xl border border-gradient-bcg">
     <h2 className="text-3xl font-bold leading-10 text-white uppercase">
       {title}
     </h2>

@@ -1,44 +1,48 @@
+import { useAuthContext } from '@/context/AuthContext';
 import React, { useState } from 'react';
 import Modal from '../signupModal/page';
 import { signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
 import { useDispatch } from 'react-redux';
-import { signInRequest, signUpDataAction } from '@/redux/actions/authActions'; 
+import { signInRequest, signUpDataAction } from '@/redux/actions/authActions';
 const provider = new GoogleAuthProvider();
 
 const Hero = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const dispatch = useDispatch();
 
-  const handleButtonClick = () => {
-    setIsModalOpen(true);
+  const handleSignupButtonClick = () => {
+    // setIsSignupModalOpen(true);
   };
 
-  const closeModal = () => {
-    setIsModalOpen(false);
+  const handleLoginButtonClick = () => {
+    // setIsLoginModalOpen(true);
   };
 
- 
   const handleSignUp = (userData: any) => {
-    dispatch(signUpDataAction(userData)); 
-    closeModal(); 
-   
+    dispatch(signUpDataAction(userData));
+    // closeModal();
   };
 
-  const handleSignIn = (): any => {
-    dispatch(signInRequest()); 
+  // const handleSignIn = (): any => {
+  //   dispatch(signInRequest());
+  // };
+
+  const closeLoginModal = () => {
+    // setIsLoginModalOpen(false);
   };
+
+  const { handleSignIn } = useAuthContext();
 
   return (
     <section>
       <div className="flex flex-col items-center px-5 pt-6">
+        {/* <BackgroundAnimation /> */}
         <div className="shrink-0 mt-6 max-w-full" />
-        <h1 className="mt-4 text-6xl font-black text-center text-gray-100  max-md:text-4xl">
-          Create Your Own No-Code <br /> AI Chatbot with Ease!
+        <h1 className="mt-4 text-6xl font-black text-center text-gray-100 max-md:text-4xl">
+          Build the Easiest No-Code <br /> AI Chatbot here!
         </h1>
-        <p className="mt-4 text-2xl text-center text-gray-100 w-[691px] ">
-          Effortlessly build your AI chatbot with our no-code platform. Ideal
-          for beginners and experts alike, start now to enhance your customer
-          interactions!
+        <p className="mt-4 text-2xl text-center text-gray-100 w-[691px]">
+          Click. Create. Chat.
         </p>
         <button
           onClick={handleSignIn}
@@ -53,12 +57,12 @@ const Hero = () => {
           <span>Sign in with Google</span>
         </button>
         <button
-          className="flex gap-4 justify-center px-6 py-4 mt-20 text-2xl text-pink-200 bg-gray-800 rounded-[99px] max-md:px-5 max-md:mt-10"
-          onClick={handleButtonClick}
+          className="flex gap-4 justify-center px-6 py-4 mt-4 text-2xl  text-gray-500 rounded-[99px] max-md:px-5"
+          onClick={handleSignupButtonClick}
         >
-          <span>Sign in With Your Email</span>
+          <span>Sign Up With Your Email</span>
         </button>
-        {isModalOpen && <Modal closeModal={closeModal} handleSignUp={handleSignUp} />}
+        {/* {isModalOpen && <Modal closeModal={closeModal} handleSignUp={handleSignUp} />} */}
       </div>
     </section>
   );
