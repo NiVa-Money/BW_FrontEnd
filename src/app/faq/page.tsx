@@ -1,136 +1,124 @@
-"use client"
+"use client";
 import React, { useState } from 'react';
 import Accordion from '@mui/material/Accordion';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import Typography from '@mui/material/Typography';
 
-const faq = () => {
-    const [expandedPanel, setExpandedPanel] = useState<string | false>("panel1");
+const faqData = [
+  {
+    panel: 'panel1',
+    question: 'What is BotWot?',
+    answer: 'BotWot is a no-code chatbot platform that empowers businesses to build and deploy custom AI chatbots in minutes, without any coding experience.',
+  },
+  {
+    panel: 'panel2',
+    question: 'How does BotWot work?',
+    answer: 'BotWot provides a user-friendly, drag-and-drop interface for creating conversation flows, adding text messages, buttons, and media elements to design chatbot responses and interactions.',
+  },
+  {
+    panel: 'panel3',
+    question: 'Do I need any technical knowledge to use BotWot?',
+    answer: 'No technical knowledge is required. BotWot is designed for users of all technical backgrounds, making it easy to build chatbots quickly and efficiently.',
+  },
+  {
+    panel: 'panel4',
+    question: 'How much does BotWot cost?',
+    answer: 'BotWot offers various pricing plans to suit different business needs. For detailed pricing information, please visit our website or contact our sales team for a customized quote.',
+  },
+  {
+    panel: 'panel5',
+    question: 'Who can benefit from BotWot?',
+    answer: 'Businesses of all sizes and industries, including retail, healthcare, and financial services, can leverage BotWot to enhance customer service, boost sales, and create engaging customer experiences.',
+  },
+  {
+    panel: 'panel6',
+    question: 'What features does BotWot offer for building chatbots?',
+    answer: `Drag-and-drop interface for creating conversation flows.
+            Pre-built templates for common customer service scenarios.
+            Options to add text messages, buttons, menus, and images.
+            Integration with external platforms (based on your plan).
+            Analytics dashboard to track chatbot performance.`,
+  },
+];
 
-    const handleChange = (panel: string) => (event: React.ChangeEvent<{}>, isExpanded: boolean) => {
-        setExpandedPanel(isExpanded ? panel : false);
-    };
+const FAQbody: React.FC = () => {
+  const [expandedPanel, setExpandedPanel] = useState<string | false>('panel1');
+  const [activeTab, setActiveTab] = useState<number>(1);
 
-    const expandIcon = (panel: string) => (
-        expandedPanel === panel ? (
-            <span style={{ color: "white", fontSize: "24px" }}>-</span>
-        ) : (
-            <span style={{ color: "white", fontSize: "24px" }}>+</span>
-        )
-    );
+  const handleChange = (panel: string) => (event: React.ChangeEvent<{}>, isExpanded: boolean) => {
+    setExpandedPanel(isExpanded ? panel : false);
+  };
 
-    return (
-        <>
-            <h1 className="text-3xl font-bold text-white text-center mb-6 mt-10">Frequently Asked Questions</h1>
-            <div className="max-w-3xl mx-auto bg-[#17112A] rounded-2xl p-6 shadow-xl">
-
-                <Accordion expanded={expandedPanel === "panel1"} onChange={handleChange("panel1")} className='bg-[#17112A] p-6'>
-                    <AccordionSummary
-                        expandIcon={expandIcon("panel1")}
-                        aria-controls="panel1-content"
-                        id="panel1-header"
-                        className='bg-[#17112A] rounded-2xl'
-                    >
-                        <Typography variant="body1" className="text-white">What is BotWot?</Typography>
-                    </AccordionSummary>
-                    <AccordionDetails>
-                        <Typography variant="body2" className="text-gray-600">
-                            BotWot is a no-code chatbot platform that empowers businesses to build and deploy custom AI chatbots in minutes, without any coding experience.
-                        </Typography>
-                    </AccordionDetails>
-                    <hr></hr>
-                </Accordion>
-                <Accordion expanded={expandedPanel === "panel2"} onChange={handleChange("panel2")} className='bg-[#17112A] p-6'>
-                    <AccordionSummary
-                        expandIcon={expandIcon("panel2")}
-                        aria-controls="panel2-content"
-                        id="panel2-header"
-                        className='bg-[#17112A] rounded-2xl'
-                    >
-                        <Typography variant="body1" className="text-white">How does BotWot work?</Typography>
-                    </AccordionSummary>
-                    <AccordionDetails>
-                        <Typography variant="body2" className="text-gray-600">
-                            BotWot provides a user-friendly, drag-and-drop interface for creating conversation flows, adding text messages, buttons, and media elements to design chatbot responses and interactions.
-                        </Typography>
-                    </AccordionDetails>
-                    <hr></hr>
-                </Accordion>
-                <Accordion expanded={expandedPanel === "panel3"} onChange={handleChange("panel3")} className='bg-[#17112A] p-6'>
-                    <AccordionSummary
-                        expandIcon={expandIcon("panel3")}
-                        aria-controls="panel3-content"
-                        id="panel3-header"
-                        className='bg-[#17112A] rounded-2xl'
-                    >
-                        <Typography variant="body1" className="text-white">Do I need any technical knowledge to use BotWot?</Typography>
-                    </AccordionSummary>
-                    <AccordionDetails>
-                        <Typography variant="body2" className="text-gray-600">
-                            No technical knowledge is required. BotWot is designed for users of all technical backgrounds, making it easy to build chatbots quickly and efficiently.
-                        </Typography>
-                    </AccordionDetails>
-                    <hr></hr>
-                </Accordion>
-                <Accordion expanded={expandedPanel === "panel4"} onChange={handleChange("panel4")} className='bg-[#17112A] p-6'>
-                    <AccordionSummary
-                        expandIcon={expandIcon("panel4")}
-                        aria-controls="panel4-content"
-                        id="panel4-header"
-                        className='bg-[#17112A] rounded-2xl'
-                    >
-                        <Typography variant="body1" className="text-white">How much does BotWot cost?</Typography>
-                    </AccordionSummary>
-                    <AccordionDetails>
-                        <Typography variant="body2" className="text-gray-600">
-                            BotWot offers various pricing plans to suit different business needs. For detailed pricing information, please visit our website or contact our sales team for a customized quote.
-
-                        </Typography>
-                    </AccordionDetails>
-                    <hr></hr>
-                </Accordion>
-                <Accordion expanded={expandedPanel === "panel5"} onChange={handleChange("panel5")} className='bg-[#17112A] p-6'>
-                    <AccordionSummary
-                        expandIcon={expandIcon("panel5")}
-                        aria-controls="panel5-content"
-                        id="panel5-header"
-                        className='bg-[#17112A] rounded-2xl'
-                    >
-                        <Typography variant="body1" className="text-white">Who can benefit from BotWot?</Typography>
-                    </AccordionSummary>
-                    <AccordionDetails>
-                        <Typography variant="body2" className="text-gray-600">
-                            Businesses of all sizes and industries, including retail, healthcare, and financial services, can leverage BotWot to enhance customer service, boost sales, and create engaging customer experiences.
-                        </Typography>
-                    </AccordionDetails>
-                    <hr></hr>
-                </Accordion>
-                <Accordion expanded={expandedPanel === "panel6"} onChange={handleChange("panel6")} className='bg-[#17112A] p-6'>
-                    <AccordionSummary
-                        expandIcon={expandIcon("panel6")}
-                        aria-controls="panel6-content"
-                        id="panel5-header"
-                        className='bg-[#17112A] rounded-2xl'
-                    >
-                        <Typography variant="body1" className="text-white">What features does BotWot offer for building chatbots
-                        </Typography>
-                    </AccordionSummary>
-                    <AccordionDetails>
-                        <Typography variant="body2" className="text-gray-600">
-                            Drag-and-drop interface for creating conversation flows.
-                            Pre-built templates for common customer service scenarios.
-                            Options to add text messages, buttons, menus, and images.
-                            Integration with external platforms (based on your plan).
-                            Analytics dashboard to track chatbot performance.
-                        </Typography>
-                    </AccordionDetails>
-                    <hr></hr>
-                </Accordion>
-               
-            </div>
-        </>
+  const expandIcon = (panel: string) => (
+    expandedPanel === panel ? (
+      <span style={{ color: 'white', fontSize: '24px' }}>-</span>
+    ) : (
+      <span style={{ color: 'white', fontSize: '24px' }}>+</span>
     )
-}
+  );
 
-export default faq
+  return (
+    <>
+    
+      <section>
+        <h1 className="text-3xl font-bold text-white text-center mb-6 mt-10">FAQ</h1>
+        <section className="mt-10 mb-4">
+        <div className="max-w-3xl mx-auto bg-[#17112A] rounded-2xl p-6 shadow-xl">
+          <div className="flex justify-around border-b border-gray-700 mb-6">
+            <button
+              className={`py-2 px-4 ${activeTab === 1 ? 'border-b-2 border-fuchsia-700 text-fuchsia-700' : 'text-white'}`}
+              onClick={() => setActiveTab(1)}
+            >
+              Section 1
+            </button>
+            <button
+              className={`py-2 px-4 ${activeTab === 2 ? 'border-b-2 border-fuchsia-700 text-fuchsia-700' : 'text-white'}`}
+              onClick={() => setActiveTab(2)}
+            >
+              Section 2
+            </button>
+            <button
+              className={`py-2 px-4 ${activeTab === 3 ? 'border-b-2 border-fuchsia-700 text-fuchsia-700' : 'text-white'}`}
+              onClick={() => setActiveTab(3)}
+            >
+              Section 3
+            </button>
+          </div>
+        </div>
+      </section>
+        <div className="max-w-3xl mx-auto bg-[#17112A] rounded-2xl p-6 shadow-xl">
+          {faqData.map((faq) => (
+            <Accordion
+              key={faq.panel}
+              expanded={expandedPanel === faq.panel}
+              onChange={handleChange(faq.panel)}
+              className="bg-[#17112A] p-6"
+            >
+              <AccordionSummary
+                expandIcon={expandIcon(faq.panel)}
+                aria-controls={`${faq.panel}-content`}
+                id={`${faq.panel}-header`}
+                className="bg-[#17112A] rounded-2xl"
+              >
+                <Typography variant="body1" className="text-white">
+                  {faq.question}
+                </Typography>
+              </AccordionSummary>
+              <AccordionDetails>
+                <Typography variant="body2" className="text-gray-600">
+                  {faq.answer}
+                </Typography>
+              </AccordionDetails>
+              <hr />
+            </Accordion>
+          ))}
+        </div>
+      </section>
+
+     
+    </>
+  );
+};
+
+export default FAQbody;
