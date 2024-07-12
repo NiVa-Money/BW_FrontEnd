@@ -2,6 +2,11 @@
 
 import React, { useState } from 'react';
 import Image from 'next/image';
+import bot1 from '@/public/assets/bot1.svg';
+import bot2 from '@/public/assets/bot2.svg';
+import bot3 from '@/public/assets/bot3.svg';
+import bot4 from '@/public/assets/bot4.svg';
+import bot5 from '@/public/assets/bot5.svg';
 
 const CreateBotComponent: React.FC = () => {
   const [step, setStep] = useState(1);
@@ -21,15 +26,53 @@ const CreateBotComponent: React.FC = () => {
   const [greetingMessage, setGreetingMessage] = useState(
     'Hi, How can I assist you today?'
   );
+  const questionsSamples = [
+    'What subscription plans do you offer?',
+    'How do I upgrade or downgrade my subscription?',
+    'How do I cancel my subscription?',
+  ];
+  const [imageSrc, setImageSrc] = useState('');
+  const [imagename, setImageName] = useState('');
+  const [textVal, setTextVal] = useState('');
+  console.log(imageSrc);
+  // Function to handle file upload
+  const handleFileUpload = (event: any) => {
+    const file = event.target.files[0];
+    setImageName(file.name);
+    const imageUrl = URL.createObjectURL(file); // Creates a blob URL
+    setImageSrc(imageUrl);
+  };
 
   const handleContinue = () => {
     if (step < 2) setStep(step + 1);
+  };
+  const handleDivClick = (text: any) => {
+    setTextVal(text);
   };
 
   const handleBack = () => {
     if (step > 1) setStep(step - 1);
   };
-
+  const botSamples = [
+    {
+      imageUrl: bot1.src,
+    },
+    {
+      imageUrl: bot2.src,
+    },
+    {
+      imageUrl: bot3.src,
+    },
+    {
+      imageUrl: bot4.src,
+    },
+    {
+      imageUrl: bot5.src,
+    },
+  ];
+  const handleBotSampleClick = (imageUrl: any) => {
+    setImageSrc(imageUrl);
+  };
   const renderStep1 = () => (
     <>
       <div className="mb-4">
@@ -71,15 +114,36 @@ const CreateBotComponent: React.FC = () => {
         <label className="block text-gray-200 mb-2">Bot profile</label>
         <div className="grid grid-cols-5 gap-2">
           {/* Add bot profile images here */}
+          {botSamples.map((item, idx) => (
+            <Image
+              key={idx}
+              src={item.imageUrl}
+              alt="logo"
+              width={90}
+              height={80}
+              onClick={() => handleBotSampleClick(item.imageUrl)}
+            />
+          ))}
         </div>
       </div>
       <div className="mb-4">
         <label className="block text-gray-200 mb-2">Custom photo</label>
-        <div className="flex items-center bg-gray-800 p-2 rounded">
-          <span className="mr-2">Bot.png</span>
-          <button className="ml-auto text-red-500">×</button>
+        <div className="relative">
+          <div className="flex items-center bg-gray-800 p-2 w-full rounded absolute">
+            <span className="mr-2">
+              {imagename?.length ? imagename : 'Choose Image'}
+            </span>
+            <button className="ml-auto text-red-500">×</button>
+          </div>
+          <input
+            type="file"
+            onChange={handleFileUpload}
+            accept="image/*"
+            id="file-upload"
+            className="absolute top-[0] opacity-0"
+          />
         </div>
-        <button className="mt-2 bg-indigo-600 text-white px-4 py-2 rounded">
+        <button className="mt-12 bg-indigo-600 text-white px-4 py-2 rounded">
           Upload
         </button>
       </div>
@@ -185,7 +249,7 @@ const CreateBotComponent: React.FC = () => {
               onClick={
                 step === 2 ? () => console.log('Save bot') : handleContinue
               }
-              className="bg-indigo-600 text-white w-[287px] h-[60px] px-[32px] py-[16px] gap-[8px] custom-button"
+              className="bg-indigo-600 text-white px-6 py-2 rounded"
             >
               {step === 2 ? 'Save' : 'Continue'}
             </button>
@@ -202,22 +266,50 @@ const CreateBotComponent: React.FC = () => {
                 <div className="flex gap-5 justify-between self-end max-w-full text-xl font-bold leading-7 text-black whitespace-nowrap w-[351px]">
                   <h2 className="my-auto p-5 text-white">Preview</h2>
                 </div>
-                <img
+                {imageSrc ? (
+                  <Image
+                    width={100}
+                    height={100}
+                    src={imageSrc}
+                    alt="Uploaded"
+                    className="mr-2 h-100 w-100 rounded-full"
+                  />
+                ) : (
+                  <span className="mr-2">Bot.png</span>
+                )}{' '}
+                {/* <img
                   loading="lazy"
-                  src="https://cdn.builder.io/api/v1/image/assets/TEMP/30bd15fdd4489632c223e7a24823d52aed6a1d9c38ab81c9de382066da0d3cdd?apiKey=555c811dd3f44fc79b6b2689129389e8&"
+                  src=""
                   alt="BotWot Assistant"
                   className="mt-5 max-w-full aspect-square w-[115px] max-md:mt-10"
-                />
+                /> */}
                 <h3 className="mt-8 text-2xl font-bold leading-9 text-center text-white">
-                  BotWot Assistant
+                  {botName}
                 </h3>
                 <p className="mt-6 text-sm leading-6 text-white text-center text-neutral-400 w-[344px]">
                   I'm your customer support, ready to answer your
                   <br />
                   questions
                 </p>
+                <div className="flex flex-col">
+                  {' '}
+                  {questionsSamples.map((value, index) => (
+                    <div
+                      key={index}
+                      className="clickable-div border-[1px] border-[solid] rounded-[12px] flex mt-2 mb-2 "
+                      onClick={() => handleDivClick(value)}
+                    >
+                      <span className="p-[10px]"> {value}</span>
+                    </div>
+                  ))}
+                </div>
+                <input
+                  type="text"
+                  value={textVal}
+                  onChange={(e) => setTextVal(e.target.value)}
+                  className="w-full bg-gray-800 text-white p-2 rounded"
+                />
               </div>
-              <div>hi</div>
             </aside>
           </div>
         </div>
