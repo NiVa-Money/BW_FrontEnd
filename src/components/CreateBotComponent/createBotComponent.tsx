@@ -217,6 +217,7 @@ const CreateBotComponent: React.FC = () => {
                   questions
                 </p>
               </div>
+              <div>hi</div>
             </aside>
           </div>
         </div>
