@@ -27,7 +27,7 @@ export default function RootLayout({
           <PathnameHandler />
           <ConditionalHeader routeWithoutHeader={routeWithoutHeader} />
           <div className="flex">
-            <ConditionalSideBar routeWithoutSidebar={routeWithoutSidebar} />
+            <SideBar />
 
             <main className="flex-grow">{children}</main>
           </div>
