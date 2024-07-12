@@ -4,21 +4,20 @@ const Features: React.FC = () => {
   const cardData = [
     {
       imageSrc:
-        'https://cdn.builder.io/api/v1/image/assets/TEMP/30c3dcf530f0d28e1a2fc6e405e9a261362bf7e65601c2836b9cbfa74c9601ea?apiKey=555c811dd3f44fc79b6b2689129389e8&',
+        '/images/Vectorrocket.png',
       title: 'Launch in minutes',
       description:
         'Choose and deploy pre-built conversational modules tailored to your business instantly.',
     },
     {
       imageSrc:
-        'https://cdn.builder.io/api/v1/image/assets/TEMP/d006b056253a94c02f38a4c31699e2dcc8f12d36941a5dce9355726884f17823?apiKey=555c811dd3f44fc79b6b2689129389e8&',
+        '/images/Vectormagic.png',
       title: 'Seamless Integrations',
       description:
         'Effortlessly connect with your systems using our no-code, user-friendly platform.',
     },
     {
-      imageSrc:
-        'https://cdn.builder.io/api/v1/image/assets/TEMP/322d66484845d31b97a3404d8a8c545cc34806a887e381a2fcd9d89d8888cbf7?apiKey=555c811dd3f44fc79b6b2689129389e8&',
+      imageSrc: '/images/Vectorchat.png',
       title: 'Personalized Interactions',
       description:
         "Train your AI chatbot to embody your brand's personality for precise responses.",
@@ -34,10 +33,10 @@ const Features: React.FC = () => {
         Discover what's possible with BotWot
       </p>
       <section className="self-start  ml-16 pl-15 pr-10 mt-10 mb-2.5 w-full max-w-[1150px]">
-        <div className="flex gap-5 max-md:flex-col max-md:gap-0">
+        <div className="flex gap-5 max-md:flex-col max-md:gap-0s">
           {cardData.map((card, index) => (
-            <div key={index} className="flex gap-4 flex-col w-[33%]">
-              <Card {...card} />
+            <div key={index} className="flex gap-4 flex-col w-[33%] ">
+              <Card {...card}  />
             </div>
           ))}
         </div>

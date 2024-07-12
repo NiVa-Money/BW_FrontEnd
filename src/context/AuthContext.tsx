@@ -1,7 +1,7 @@
 'use client';
 
 import { auth, provider } from '@/auth/firebase';
-import { User, onAuthStateChanged, signInWithPopup } from 'firebase/auth';
+import { User, onAuthStateChanged, signInWithPopup, createUserWithEmailAndPassword,signInWithEmailAndPassword } from 'firebase/auth';
 import React, { PropsWithChildren, useLayoutEffect, useState } from 'react';
 
 type SharedContext = {
@@ -9,6 +9,8 @@ type SharedContext = {
   setUser: React.Dispatch<React.SetStateAction<User | null>>;
   handleSignIn: () => Promise<void>;
   handleSignOut: () => Promise<void>;
+  signUpWithEmail: (email: string, password: string) => Promise<User | null>;
+  handleSignInWithEmail: (email: string, password: string) => Promise<void>;
 };
 
 export const AuthContext = React.createContext({} as SharedContext);
@@ -19,6 +21,7 @@ const AuthContextProvider = ({ children }: PropsWithChildren) => {
 
   const handleSignOut = async () => {
     await auth.signOut();
+    setUser(null);
   };
 
   const handleSignIn = async () => {
@@ -30,6 +33,26 @@ const AuthContextProvider = ({ children }: PropsWithChildren) => {
     }
   };
 
+  const signUpWithEmail = async (email: string, password: string) => {
+    try {
+      const result = await createUserWithEmailAndPassword(auth, email, password);
+      setUser(result.user);
+      return result.user;
+    } catch (error) {
+      console.log(error);
+      return null;
+    }
+  };
+  const handleSignInWithEmail = async (email: string, password: string) => {
+    try {
+      const result = await signInWithEmailAndPassword(auth, email, password);
+      setUser(result.user);
+    } catch (error) {
+      console.log(error);
+      throw new Error('Failed to log in');
+    }
+  };
+
   useLayoutEffect(() => {
     setLoading(true);
     const unsubscribe = onAuthStateChanged(auth, (usr: any) => {
@@ -38,11 +61,11 @@ const AuthContextProvider = ({ children }: PropsWithChildren) => {
     });
 
     return () => unsubscribe();
-  }, [user]);
+  }, []);
 
   return (
     <AuthContext.Provider
-      value={{ user, setUser, handleSignIn, handleSignOut }}
+      value={{ user, setUser, handleSignIn, handleSignOut, signUpWithEmail,handleSignInWithEmail  }}
     >
       {loading ? (
         <div className="fixed inset-0 flex items-center justify-center">
@@ -59,7 +82,7 @@ const AuthContextProvider = ({ children }: PropsWithChildren) => {
               cy="12"
               r="10"
               stroke="currentColor"
-              stroke-width="4"
+              strokeWidth="4"
             ></circle>
             <path
               className="opacity-75"

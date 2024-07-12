@@ -123,8 +123,6 @@ const faq = () => {
                             Options to add text messages, buttons, menus, and images.
                             Integration with external platforms (based on your plan).
                             Analytics dashboard to track chatbot performance.
-
-
                         </Typography>
                     </AccordionDetails>
                     <hr></hr>

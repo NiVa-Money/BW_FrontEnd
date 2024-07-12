@@ -1,5 +1,4 @@
 'use client';
-
 import BotMaker from "@/components/ChatBot/BotMaker";
 import KnowledgeBase from "@/components/ChatBot/KnowledgeBase";
 import SideBar from "@/components/SideBar";
