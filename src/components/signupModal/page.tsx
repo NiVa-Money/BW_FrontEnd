@@ -13,7 +13,8 @@ const Modal: React.FC<ModalProps> = ({ closeModal, handleSignUp }) => {
     firstName: '',
     lastName: '',
     emailId: '',
-    mobileNo: ''
+    mobileNo: '',
+    password: '',
   });
 
   const router = useRouter();
@@ -81,6 +82,17 @@ const Modal: React.FC<ModalProps> = ({ closeModal, handleSignUp }) => {
               type="text"
               name="mobileNo"
               value={formData.mobileNo}
+              onChange={handleChange}
+              className="w-full p-2 border rounded text-black"
+              required
+            />
+          </label>
+          <label className="block mb-2">
+            Password:
+            <input
+              type="text"
+              name="password"
+              value={formData.password}
               onChange={handleChange}
               className="w-full p-2 border rounded text-black"
               required
