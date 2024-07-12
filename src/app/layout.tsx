@@ -25,9 +25,11 @@ export default function RootLayout({
         <body className={`${inter.className} flex flex-col min-h-screen`}>
           <PathnameHandler />
           <ConditionalHeader routeWithoutHeader={routeWithoutHeader} />
-          <SideBar />
+          <div className="flex">
+            <SideBar />
 
-          <main className="flex-grow">{children}</main>
+            <main className="flex-grow">{children}</main>
+          </div>
           <ConditionalFooter routeWithoutFooter={routeWithoutFooter} />
         </body>
       </html>
