@@ -2,15 +2,11 @@ import PricingCard from '@/components/Pricing';
 import Factors from '@/components/Factors';
 import Features from '@/components/Features';
 import Hero from '@/components/Hero';
-<<<<<<< HEAD
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@/redux/configureStore';
 import { useEffect } from 'react';
-import { fetchUserData } from '@/redux/services';
 import { fetchUserDataAction } from '@/redux/actions/authActions';
-=======
 import Testimonials from '@/components/testemonial/Testimonials';
->>>>>>> origin/predev
 
 const LandingPage: React.FC = () => {
   const userEmail = useSelector((state: RootState) => state.root?.user?.email);
@@ -39,19 +35,17 @@ const LandingPage: React.FC = () => {
         </section>
         <section>
           <div>
-<<<<<<< HEAD
             <Factors />
           </div>
         </section>
         <section>
-          <PricingCard />
-=======
-          <Testimonials />
+          <div>
+            <PricingCard />
+            <Testimonials />
           </div>
         </section>
         <section>
-          <PricingCard/>
->>>>>>> origin/predev
+          <PricingCard />
         </section>
       </main>
     </>
