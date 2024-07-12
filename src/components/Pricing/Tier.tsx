@@ -7,7 +7,7 @@ type PricingTierProps = {
   features: string[];
   buttonText: string;
   backgroundColor: string;
-  // handleSignIn: () => void; // Added prop type
+  handleSignIn: () => void; // Added prop type
 };
 
 const PricingTier: React.FC<PricingTierProps> = ({
@@ -17,7 +17,8 @@ const PricingTier: React.FC<PricingTierProps> = ({
   features,
   buttonText,
   backgroundColor,
-  // handleSignIn, // Added prop
+  handleSignIn, // Added prop
+  
 }) => (
   <section
     className={`flex flex-col justify-between items-center px-6 py-8 ${backgroundColor} rounded-3xl shadow-2xl w-72 h-[500px]`}
@@ -41,10 +42,9 @@ const PricingTier: React.FC<PricingTierProps> = ({
       ))}
     </ul>
     <div className="flex justify-center mt-5 w-full">
-      <button
-        // onClick={handleSignIn} // Added onClick handler
-        className="py-2 px-6 text-base font-medium bg-gray-100 rounded-lg text-slate-950"
-      >
+      <button 
+        onClick={handleSignIn} // Added onClick handler
+        className="py-2 px-6 text-base font-medium bg-gray-100 rounded-lg text-slate-950">
         {buttonText}
       </button>
     </div>
