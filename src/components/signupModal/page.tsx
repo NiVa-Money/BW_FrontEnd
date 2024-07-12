@@ -1,14 +1,14 @@
 'use client';
 
 import React, { useState } from 'react';
-import axios from 'axios';
 import { useRouter } from 'next/navigation';
 
 interface ModalProps {
   closeModal: () => void;
+  handleSignUp: (userData: any, router: any) => void;
 }
 
-const Modal: React.FC<ModalProps> = ({ closeModal }) => {
+const Modal: React.FC<ModalProps> = ({ closeModal, handleSignUp }) => {
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
@@ -28,34 +28,10 @@ const Modal: React.FC<ModalProps> = ({ closeModal }) => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    try {
-      const response = await axios.post('http://13.235.189.116:8000/user/signup', formData);
-  
-      if (response.data.success) {
-        const { token, user_id, emailId } = response.data;
-        localStorage.setItem('token', token);
-        localStorage.setItem('userId', user_id);
-        
-        
-        if (formData.emailId) {
-          localStorage.setItem('emailId', formData.emailId);
-        } else {
-         
-          localStorage.setItem('emailId', emailId);
-        }
-  
-       
-        closeModal();
-        router.push('/dashBoard');
-      } else {
-        console.error('Signup failed:', response.data.message);
-      }
-    } catch (error) {
-      console.error('Signup error:', error);
-    }
+    
+    handleSignUp(formData, router);
   };
-  
-  
+
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
       <div className="bg-black p-6 rounded-lg max-w-md mx-auto">

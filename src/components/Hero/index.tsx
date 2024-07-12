@@ -2,10 +2,12 @@ import React, { useState } from 'react';
 import Modal from '../signupModal/page';
 import { signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
 import { useDispatch } from 'react-redux';
-import { SIGN_IN_REQUEST } from '@/redux/actions/actionTypes';
+import { signInRequest, signUpDataAction } from '@/redux/actions/authActions'; 
 const provider = new GoogleAuthProvider();
+
 const Hero = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const dispatch = useDispatch();
 
   const handleButtonClick = () => {
     setIsModalOpen(true);
@@ -14,9 +16,16 @@ const Hero = () => {
   const closeModal = () => {
     setIsModalOpen(false);
   };
-  const dispatch = useDispatch();
+
+ 
+  const handleSignUp = (userData: any) => {
+    dispatch(signUpDataAction(userData)); 
+    closeModal(); 
+   
+  };
+
   const handleSignIn = (): any => {
-    dispatch({ type: SIGN_IN_REQUEST });
+    dispatch(signInRequest()); 
   };
 
   return (
@@ -49,7 +58,7 @@ const Hero = () => {
         >
           <span>Sign in With Your Email</span>
         </button>
-        {isModalOpen && <Modal closeModal={closeModal} />}
+        {isModalOpen && <Modal closeModal={closeModal} handleSignUp={handleSignUp} />}
       </div>
     </section>
   );
