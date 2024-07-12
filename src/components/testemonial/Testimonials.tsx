@@ -20,13 +20,13 @@ const testimonials: Testimonial[] = [
     name: 'Gati savarkar',
     text: '"Always-On Assistants Description: Meet your new round-the-clock team members. BotWot chatbots never take a coffee break—they’re always there to assist.',
     quote: '"“BotWot’s chatbots are our 24/7 virtual assistants. They handle queries, collect leads, and even crack a joke or two. A reliable team member!.”"',
-    img: 'https://cdn.builder.io/api/v1/image/assets/TEMP/b7ad23889c1acca2a12804f00c11b12980fc398725762c81489fd00c54554c07?apiKey=555c811dd3f44fc79b6b2689129389e8&',
+    img: 'https://cdn.builder.io/api/v1/image/assets/TEMP/b7ad2',
   },
   {
     name: 'Faizal ameer',
     text: '"Discover the secret sauce behind successful e-commerce: BotWot chatbots. They guide users through the buying journey, turning clicks into sales.',
     quote: '"“BotWot transformed our e-commerce game. Their chatbots engage shoppers, recommend products, and boost conversions. Sales have never been smoother.”"',
-    img: 'https://cdn.builder.io/api/v1/image/assets/TEMP/b7ad23889c1acca2a12804f00c11b12980fc398725762c81489fd00c54554c07?apiKey=555c811dd3f44fc79b6b2689129389e8&',
+    img: 'https://cdn.builder.io/api/v1/image/assets/TEMP/b7ad23889c1acca2a12576c81489fd00c54554c07?apiKey=555c811dd3f44fc79b6b2689129389e8&',
   },
 
 ];
