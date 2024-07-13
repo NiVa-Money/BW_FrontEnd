@@ -40,7 +40,6 @@ const LandingPage: React.FC = () => {
         </section>
         <section>
           <div>
-            <PricingCard />
             <Testimonials />
           </div>
         </section>
