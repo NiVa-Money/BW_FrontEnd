@@ -1,16 +1,15 @@
 'use client';
-
 import React, { useState } from 'react';
-import axios from 'axios';
 import { useRouter } from 'next/navigation';
 import { useAuthContext } from '@/context/AuthContext';
 import { BackgroundAnimation } from '../BackgroundAnimation/backgroundAnimation';
 
 interface ModalProps {
   closeModal: () => void;
+  handleSignUp: (userData: any, router: any) => void;
 }
 
-const Modal: React.FC<ModalProps> = ({ closeModal }) => {
+const Modal: React.FC<ModalProps> = ({ closeModal,handleSignUp  }) => {
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
@@ -27,55 +26,16 @@ const Modal: React.FC<ModalProps> = ({ closeModal }) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({
       ...prevData,
-      [name]: value
+      [name]: value,
     }));
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (formData.password.length < 8) {
-      setError('Password must be at least 8 characters long.');
-      return;
-    }
-
-    try {
-
-      const user = await signUpWithEmail(formData.emailId, formData.password);
-
-      if (user) {
-        const response = await axios.post('http://13.235.189.116:8000/user/signup', {
-          firstName: formData.firstName,
-          lastName: formData.lastName,
-          emailId: formData.emailId,
-          mobileNo: formData.mobileNo
-        });
-
-        if (response.data.success) {
-          const { token, user_id, emailId } = response.data;
-          localStorage.setItem('token', token);
-          localStorage.setItem('userId', user_id);
-
-          if (formData.emailId) {
-            localStorage.setItem('emailId', formData.emailId);
-          } else {
-            localStorage.setItem('emailId', emailId);
-          }
-
-          closeModal();
-          router.push('/dashBoard');
-        } else {
-          console.error('Signup verification failed:', response.data.message);
-          setError(response.data.message);
-        }
-      } else {
-        setError('Signup failed, Account Already Exist.');
-      }
-    } catch (error) {
-      console.error('Signup error:', error);
-      setError('An error occurred during signup. Please try again.');
-    }
+    handleSignUp(formData, router);
   };
+
 
   return (
     <>
