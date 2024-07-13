@@ -12,6 +12,7 @@ export const fetchUserData = async (userEmail: string) => {
 export const signUpUserData = async (payload: any) => {
   try {
     const response = await axiosInstance.post('user/signup', payload);
+    console.log("ds",response.data)
     return response.data;
   } catch (error) {
     throw new Error('Error fetching user data');

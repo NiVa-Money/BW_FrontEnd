@@ -32,10 +32,12 @@ export const signInFailure = (error: any): any => ({
   type: SIGN_IN_FAILURE,
   payload: error,
 });
+
 export const fetchUserDataAction = (userData: any) => ({
   type: FETCH_USER_DATA,
   payload: userData,
 });
+
 export const fetchUserDataSuccess = (userData: any) => ({
   type: FETCH_USER_DATA_SUCCESS,
   payload: userData,
