@@ -37,6 +37,7 @@ const CreateBotComponent: React.FC = () => {
   const [greetingMessage, setGreetingMessage] = useState(
     'Hi, How can I assist you today?'
   );
+  const [initiateConversation] = useState('Hi, How can I assist you today?');
   const questionsSamples = [
     'What subscription plans do you offer?',
     'How do I upgrade or downgrade my subscription?',
@@ -44,6 +45,8 @@ const CreateBotComponent: React.FC = () => {
   ];
   const [imageSrc, setImageSrc] = useState('');
   const [imagename, setImageName] = useState('');
+  const [filename, setFileName] = useState('');
+
   const [textVal, setTextVal] = useState('');
   console.log(imageSrc);
   // Function to handle file upload
@@ -52,6 +55,10 @@ const CreateBotComponent: React.FC = () => {
     setImageName(file.name);
     const imageUrl = URL.createObjectURL(file); // Creates a blob URL
     setImageSrc(imageUrl);
+  };
+  const handleDocumentUpload = (event: any) => {
+    const file = event.target.files[0];
+    setFileName(file.name);
   };
 
   const handleContinue = () => {
@@ -122,7 +129,7 @@ const CreateBotComponent: React.FC = () => {
           type="text"
           value={botName}
           onChange={(e) => setBotName(e.target.value)}
-          className="w-full bg-gray-800 text-white p-2 rounded"
+          className="w-full bg-gray-800 text-white p-2 rounded-[12px]"
         />
       </div>
       <div className="mb-4">
@@ -170,18 +177,26 @@ const CreateBotComponent: React.FC = () => {
       <div className="mb-4">
         <label className="block text-gray-200 mb-2">Custom photo</label>
         <div className="relative mb-4">
-          <div className="flex items-center bg-gray-800 p-2 w-full rounded absolute ">
+          <div className="flex items-center bg-gray-800 p-2 w-full rounded-[12px] absolute ">
             <span className="mr-2">
               {imagename?.length ? imagename : 'Choose Image'}
             </span>
-            <button className="ml-auto text-red-500">×</button>
+            <button
+              onClick={() => {
+                setImageName('');
+                setImageSrc('');
+              }}
+              className="ml-auto text-white"
+            >
+              ×
+            </button>
           </div>
           <input
             type="file"
             onChange={handleFileUpload}
             accept="image/*"
             id="file-upload"
-            className="absolute top-[0] opacity-0"
+            className="absolute top-[0] opacity-0 "
           />
         </div>
         <button className="rounded-[70px] bg-[#3F2181] mt-12  text-white px-4 py-2 rounded flex justify-center">
@@ -195,7 +210,7 @@ const CreateBotComponent: React.FC = () => {
           type="text"
           value={greetingMessage}
           onChange={(e) => setGreetingMessage(e.target.value)}
-          className="w-full bg-gray-800 text-white p-2 rounded"
+          className="w-full bg-gray-800 text-white p-2 rounded-[12px]"
         />
       </div>
     </>
@@ -226,7 +241,7 @@ const CreateBotComponent: React.FC = () => {
         <textarea
           value={botIdentity}
           onChange={(e) => setBotIdentity(e.target.value)}
-          className="w-full bg-gray-800 text-white p-2 rounded"
+          className="w-full bg-gray-800 text-white p-2 rounded-[12px]"
           rows={4}
         />
       </div>
@@ -234,22 +249,30 @@ const CreateBotComponent: React.FC = () => {
         <label className="block text-gray-200 mb-2">Knowledge base</label>
         <div className="mb-4">
           <div className="relative mb-4">
-            <div className="flex items-center bg-gray-800 p-2 w-full rounded absolute ">
+            <div className="flex items-center bg-gray-800 p-2 w-full rounded-[12px] absolute ">
               <span className="mr-2">
-                {imagename?.length ? imagename : 'Choose File'}
+                {filename?.length ? filename : 'Choose File'}
               </span>
-              <button className="ml-auto text-red-500">×</button>
+              <button
+                onClick={() => {
+                  setImageName('');
+                  setImageSrc('');
+                }}
+                className="ml-auto text-white"
+              >
+                ×
+              </button>
             </div>
             <input
               type="file"
-              onChange={handleFileUpload}
-              accept="image/*"
+              onChange={handleDocumentUpload}
+              accept="pdf/*"
               id="file-upload"
-              className="absolute top-[0] opacity-0"
+              className="absolute top-[0] opacity-0 -[12px]"
             />
           </div>
         </div>
-        <button className="rounded-[70px] bg-[#3F2181] mt-4  text-white px-4 py-2 rounded flex justify-center">
+        <button className="rounded-[70px] bg-[#3F2181] mt-[66px]  text-white px-4 py-2 rounded flex justify-center">
           <span>Upload</span>
           <FileUploadIcon />
         </button>
@@ -261,7 +284,7 @@ const CreateBotComponent: React.FC = () => {
         <select
           value={botLimit}
           onChange={(e) => setBotLimit(e.target.value)}
-          className="w-full bg-gray-800 text-white p-2 rounded"
+          className="w-full bg-gray-800 text-white p-2 rounded-[12px]"
         >
           <option value="50-100">50-100</option>
           <option value="100-200">100-200</option>
@@ -275,7 +298,7 @@ const CreateBotComponent: React.FC = () => {
           value={supportEmail}
           onChange={(e) => setSupportEmail(e.target.value)}
           placeholder="Enter Your Email"
-          className="w-full bg-gray-800 text-white p-2 rounded"
+          className="w-full bg-gray-800 text-white p-2 rounded-[12px]"
         />
       </div>
       <div className="mb-4">
@@ -285,7 +308,7 @@ const CreateBotComponent: React.FC = () => {
           value={supportPhone}
           onChange={(e) => setSupportPhone(e.target.value)}
           placeholder="Enter Your Phone Number"
-          className="w-full bg-gray-800 text-white p-2 rounded"
+          className="w-full bg-gray-800 text-white p-2 rounded-[12px]"
         />
       </div>
     </>
@@ -346,7 +369,7 @@ const CreateBotComponent: React.FC = () => {
                 <h3 className="mt-8 text-2xl font-bold leading-9 text-center text-white">
                   {botName}
                 </h3>
-                <p className="mt-6 text-sm leading-6 text-white text-center text-neutral-400 w-[344px]">
+                <p className="mt-6 text-sm leading-6 text-[#8D8997] mb-6 text-center text-neutral-400 w-[344px]">
                   I'm your customer support, ready to answer your
                   <br />
                   questions
@@ -361,6 +384,12 @@ const CreateBotComponent: React.FC = () => {
                       <span className="p-[10px]"> {value}</span>
                     </div>
                   ))}
+                </div>
+                <div className="flex items-center justify-start mt-[50px] mb-4 w-full h-[Hug (57px)px] bg-[#2B243C] rounded-[12px] p-[10px]">
+                  {imageSrc?.length ? (
+                    <Image src={imageSrc} height={50} width={50} alt="logo" />
+                  ) : null}
+                  <span>{initiateConversation}</span>
                 </div>
                 <input
                   type="text"
