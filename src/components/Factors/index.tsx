@@ -1,5 +1,5 @@
 import Cards from './Card';
-
+import "./factors.css"
 const factorsList = [
   {
     title: 'Key Factors & Functionalities',
@@ -25,7 +25,7 @@ const factorsList = [
 
 const Factors: React.FC = () => {
   return (
-    <div className="flex gap-5 justify-between py-16 mt-10 w-full text-center bg-black">
+    <div className="flex gap-5 justify-between py-16 mt-10 w-full text-center border border-gradient-bcg">
       {factorsList.map((factor, index) => (
         <Cards
           key={index}
