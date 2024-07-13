@@ -131,7 +131,7 @@ const CreateBotComponent: React.FC = () => {
           type="text"
           value={botName}
           onChange={(e) => setBotName(e.target.value)}
-          className="w-full bg-gray-800 text-white p-2 rounded-[12px]"
+          className="w-full bg-[#171029] text-white p-2 rounded-[12px]"
         />
       </div>
       <div className="mb-4">
@@ -179,7 +179,7 @@ const CreateBotComponent: React.FC = () => {
       <div className="mb-4">
         <label className="block text-gray-200 mb-2">Custom photo</label>
         <div className="relative mb-4">
-          <div className="flex items-center bg-gray-800 p-2 w-full rounded-[12px] absolute ">
+          <div className="flex items-center bg-[#171029] p-2 w-full rounded-[12px] absolute ">
             <span className="mr-2">
               {imagename?.length ? imagename : 'Choose Image'}
             </span>
@@ -212,7 +212,7 @@ const CreateBotComponent: React.FC = () => {
           type="text"
           value={greetingMessage}
           onChange={(e) => setGreetingMessage(e.target.value)}
-          className="w-full bg-gray-800 text-white p-2 rounded-[12px]"
+          className="w-full bg-[#171029] text-white p-2 rounded-[12px]"
         />
       </div>
     </>
@@ -243,7 +243,7 @@ const CreateBotComponent: React.FC = () => {
         <textarea
           value={botIdentity}
           onChange={(e) => setBotIdentity(e.target.value)}
-          className="w-full bg-gray-800 text-white p-2 rounded-[12px]"
+          className="w-full bg-[#171029] text-white p-2 rounded-[12px]"
           rows={4}
         />
       </div>
@@ -286,7 +286,7 @@ const CreateBotComponent: React.FC = () => {
         <select
           value={botLimit}
           onChange={(e) => setBotLimit(e.target.value)}
-          className="w-full bg-gray-800 text-white p-2 rounded-[12px]"
+          className="w-full bg-[#171029] text-white p-2 rounded-[12px]"
         >
           <option value="50-100">50-100</option>
           <option value="100-200">100-200</option>
@@ -300,7 +300,7 @@ const CreateBotComponent: React.FC = () => {
           value={supportEmail}
           onChange={(e) => setSupportEmail(e.target.value)}
           placeholder="Enter Your Email"
-          className="w-full bg-gray-800 text-white p-2 rounded-[12px]"
+          className="w-full bg-[#171029] text-white p-2 rounded-[12px]"
         />
       </div>
       <div className="mb-4">
@@ -310,7 +310,7 @@ const CreateBotComponent: React.FC = () => {
           value={supportPhone}
           onChange={(e) => setSupportPhone(e.target.value)}
           placeholder="Enter Your Phone Number"
-          className="w-full bg-gray-800 text-white p-2 rounded-[12px]"
+          className="w-full bg-[#171029] text-white p-2 rounded-[12px]"
         />
       </div>
     </>
@@ -409,7 +409,7 @@ const CreateBotComponent: React.FC = () => {
                   type="text"
                   value={textVal}
                   onChange={(e) => setTextVal(e.target.value)}
-                  className="w-full bg-gray-800 text-white p-2 rounded"
+                  className="w-full bg-[#171029] text-white p-2 rounded"
                 />
               </div>
             </aside>
