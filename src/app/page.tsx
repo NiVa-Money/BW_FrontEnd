@@ -1,6 +1,5 @@
 'use client';
 
-import BotMaker from "@/components/ChatBot/BotMaker";
 import KnowledgeBase from "@/components/ChatBot/KnowledgeBase";
 import SideBar from "@/components/SideBar";
 import Home from '@/pages/Home';
@@ -11,6 +10,7 @@ import { useEffect } from 'react';
 import Chat from '@/pages/Chat';
 import PricingCard from "@/components/Pricing";
 import ChatbotList from "@/components/ChatBot/ChatbotList";
+import KnowledgeBaseCard from "@/components/ChatBot/KnowledgeBase";
 
 function App() {
   const { user, setUser } = useAuthContext();
@@ -33,9 +33,8 @@ function App() {
       <Chat />
       <SideBar />
       <ChatbotList />
-      {/* <KnowledgeBase />
-       <BotMaker /> 
-       <PricingCard /> */}
+      <KnowledgeBase/>
+       {/* <PricingCard />  */}
     </div>
   );
 }
