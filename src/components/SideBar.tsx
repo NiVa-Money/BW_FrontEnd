@@ -38,17 +38,14 @@ const SIDENAV_ITEMS: SidebarItemProps[] = [
       { path: '/bots/knowledge-base', title: 'Knowledge Base' },
     ],
   },
-  // { icon: 'fa-user', text: 'Profile', path: '/profile' },
-  // { icon: 'fa-trash', text: 'Clear Conversations' },
-  // { icon: 'fa-crown', text: 'Membership' },
-  // { icon: 'fa-question-circle', text: 'Updates & FAQ', path: '/updates-faq' },
-  // { icon: 'fa-sign-out-alt', text: 'Log Out' },
+
 ];
 const SIDENAV_ITEMS2: SidebarItemProps[] = [
+
   { icon: 'fa-user', text: 'Profile', path: '/profile' },
   { icon: 'fa-trash', text: 'Clear Conversations' },
-  { icon: 'fa-crown', text: 'Membership' },
-  { icon: 'fa-question-circle', text: 'Updates & FAQ', path: '/updates-faq' },
+  { icon: 'fa-crown', text: 'Membership', path: "/memberShip" },
+  { icon: 'fa-question-circle', text: 'Updates & FAQ', path: '/faq' },
   { icon: 'fa-sign-out-alt', text: 'Log Out' },
 ];
 
