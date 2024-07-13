@@ -1,8 +1,7 @@
 import * as React from "react";
-import { SqureCardOne } from "../components/dashBoardComponents/squreCardOne";
-import { SqureCardTwo } from "../components/dashBoardComponents/squreCardTwo";
-import { CardHeader1 } from "../components/dashBoardComponents/headerCard";
-
+import { SqureCardOne } from "@/components/dashBoardComponents/squreCardOne";
+import { SqureCardTwo } from "@/components/dashBoardComponents/squreCardTwo";
+import { CardHeader1 } from "@/components/dashBoardComponents/headerCard";
 const DashBoard: React.FC = () => {
   return (
     <div className="flex flex-col p-8 bg-[#0B031E] text-white">
