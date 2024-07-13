@@ -3,13 +3,14 @@ import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuthContext } from '@/context/AuthContext';
 import { BackgroundAnimation } from '../BackgroundAnimation/backgroundAnimation';
+import { fetchUserData,signUpUserData  } from '@/redux/services';
 
 interface ModalProps {
   closeModal: () => void;
   handleSignUp: (userData: any, router: any) => void;
 }
 
-const Modal: React.FC<ModalProps> = ({ closeModal,handleSignUp  }) => {
+const Modal: React.FC<ModalProps> = ({ closeModal, handleSignUp }) => {
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
@@ -33,16 +34,27 @@ const Modal: React.FC<ModalProps> = ({ closeModal,handleSignUp  }) => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    handleSignUp(formData, router);
-  };
+    try {
+      // First, sign up the user
+      await signUpUserData(formData);
 
+      // Then, verify the email
+      await fetchUserData(formData.emailId);
+
+      // If both succeed, proceed with handleSignUp
+      handleSignUp(formData, router);
+    } catch (error) {
+      // Handle errors from either signUpUserData or fetchUserData
+      setError('Error processing your request');
+      console.error('Error:', error);
+    }
+  };
 
   return (
     <>
       <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 ">
         <BackgroundAnimation />
-        <div className=" p-6 rounded-lg max-w-lg mx-auto relative">
-
+        <div className="p-6 rounded-lg max-w-lg mx-auto relative">
           <div className="flex justify-end">
             <button onClick={closeModal} className="text-black-500 hover:text-black-800">
               &times;
@@ -131,7 +143,6 @@ const Modal: React.FC<ModalProps> = ({ closeModal,handleSignUp  }) => {
           </form>
         </div>
       </div>
-
     </>
   );
 };

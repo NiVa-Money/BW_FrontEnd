@@ -19,9 +19,9 @@ const Hero = () => {
   };
 
  
-  const handleSignUp = (userData: any) => {
-    dispatch(signUpDataAction(userData)); 
+  const handleSignUp = (userData: any,router:any) => {
     closeModal(); 
+    router.push("/dashBoard")
   };
 
   const handleSignIn = (): any => {
