@@ -1,30 +1,39 @@
-import { useAuthContext } from '@/context/AuthContext';
 import React, { useState } from 'react';
 import Modal from '../signupModal/page';
 import { BackgroundAnimation } from '../BackgroundAnimation/backgroundAnimation';
 import LoginModal from '../loginModal/loginModal';
+import { signInRequest, signUpDataAction } from '@/redux/actions/authActions'; 
+import { useDispatch } from 'react-redux';
 import "./hero.css"
 const Hero = () => {
-  const [isSignupModalOpen, setIsSignupModalOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
+  const dispatch = useDispatch();
 
-  const handleSignupButtonClick = () => {
-    setIsSignupModalOpen(true);
+  const handleButtonClick = () => {
+    setIsModalOpen(true);
   };
 
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
+
+ 
+  const handleSignUp = (userData: any,router:any) => {
+    closeModal(); 
+    router.push("/dashBoard")
+  };
+
+  const handleSignIn = (): any => {
+    dispatch(signInRequest()); 
+  };
   const handleLoginButtonClick = () => {
     setIsLoginModalOpen(true);
   };
-
-  const closeSignupModal = () => {
-    setIsSignupModalOpen(false);
-  };
-
+  
   const closeLoginModal = () => {
     setIsLoginModalOpen(false);
   };
-
-  const { handleSignIn } = useAuthContext();
 
   return (
     <section>
@@ -50,11 +59,11 @@ const Hero = () => {
         </button>
         <button
           className="flex gap-4 justify-center px-6 py-4 mt-4 text-2xl  text-gray-500 rounded-[99px] max-md:px-5"
-          onClick={handleSignupButtonClick}
+          onClick={handleButtonClick}
         >
           <span>Sign Up With Your Email</span>
         </button>
-        {isSignupModalOpen && <Modal closeModal={closeSignupModal} />}
+        {isModalOpen && <Modal closeModal={closeModal}  handleSignUp={handleSignUp}/>}
         <button
           className="flex gap-4 justify-center px-3 py-2  text-2xl text-pink-200 rounded-[99px] max-md:px-5"
           onClick={handleLoginButtonClick}

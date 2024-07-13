@@ -1,16 +1,16 @@
 'use client';
-
 import React, { useState } from 'react';
-import axios from 'axios';
 import { useRouter } from 'next/navigation';
 import { useAuthContext } from '@/context/AuthContext';
 import { BackgroundAnimation } from '../BackgroundAnimation/backgroundAnimation';
+import { fetchUserData,signUpUserData  } from '@/redux/services';
 
 interface ModalProps {
   closeModal: () => void;
+  handleSignUp: (userData: any, router: any) => void;
 }
 
-const Modal: React.FC<ModalProps> = ({ closeModal }) => {
+const Modal: React.FC<ModalProps> = ({ closeModal, handleSignUp }) => {
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
@@ -27,53 +27,26 @@ const Modal: React.FC<ModalProps> = ({ closeModal }) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({
       ...prevData,
-      [name]: value
+      [name]: value,
     }));
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (formData.password.length < 8) {
-      setError('Password must be at least 8 characters long.');
-      return;
-    }
-
     try {
+      // First, sign up the user
+      await signUpUserData(formData);
 
-      const user = await signUpWithEmail(formData.emailId, formData.password);
+      // Then, verify the email
+      await fetchUserData(formData.emailId);
 
-      if (user) {
-        const response = await axios.post('http://13.235.189.116:8000/user/signup', {
-          firstName: formData.firstName,
-          lastName: formData.lastName,
-          emailId: formData.emailId,
-          mobileNo: formData.mobileNo
-        });
-
-        if (response.data.success) {
-          const { token, user_id, emailId } = response.data;
-          localStorage.setItem('token', token);
-          localStorage.setItem('userId', user_id);
-
-          if (formData.emailId) {
-            localStorage.setItem('emailId', formData.emailId);
-          } else {
-            localStorage.setItem('emailId', emailId);
-          }
-
-          closeModal();
-          router.push('/dashBoard');
-        } else {
-          console.error('Signup verification failed:', response.data.message);
-          setError(response.data.message);
-        }
-      } else {
-        setError('Signup failed, Account Already Exist.');
-      }
+      // If both succeed, proceed with handleSignUp
+      handleSignUp(formData, router);
     } catch (error) {
-      console.error('Signup error:', error);
-      setError('An error occurred during signup. Please try again.');
+      // Handle errors from either signUpUserData or fetchUserData
+      setError('Error processing your request');
+      console.error('Error:', error);
     }
   };
 
@@ -81,8 +54,7 @@ const Modal: React.FC<ModalProps> = ({ closeModal }) => {
     <>
       <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 ">
         <BackgroundAnimation />
-        <div className=" p-6 rounded-lg max-w-lg mx-auto relative">
-
+        <div className="p-6 rounded-lg max-w-lg mx-auto relative">
           <div className="flex justify-end">
             <button onClick={closeModal} className="text-black-500 hover:text-black-800">
               &times;
@@ -171,7 +143,6 @@ const Modal: React.FC<ModalProps> = ({ closeModal }) => {
           </form>
         </div>
       </div>
-
     </>
   );
 };

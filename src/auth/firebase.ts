@@ -1,3 +1,5 @@
+import firebase from 'firebase/app';
+import 'firebase/auth';
 import { initializeApp } from 'firebase/app';
 
 import { getAuth, signInWithPopup } from 'firebase/auth';
@@ -15,9 +17,8 @@ const firebaseConfig = {
   measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID,
 };
 
-export const firebaseApp = initializeApp(firebaseConfig);
+const firebaseApp = initializeApp(firebaseConfig);
+
 export const auth = getAuth(firebaseApp);
 export const provider = new GoogleAuthProvider();
-provider.setCustomParameters({
-  prompt: 'select_account',
-});
+// export const googleProvider = new firebase.auth.GoogleAuthProvider();

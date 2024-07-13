@@ -17,8 +17,7 @@ export function SqureCardOne({ sessionTotal, sessionLeft }: SqureCardOneProps) {
   ];
 
   return (
-    <Card className="mx-auto max-w-xs w-80 h-72 rounded-3xl">
-      <p className="text-center text-slate-400">Session Usage</p>
+   <>
       <DonutChart
         className="h-52"
         data={data}
@@ -27,6 +26,6 @@ export function SqureCardOne({ sessionTotal, sessionLeft }: SqureCardOneProps) {
         valueFormatter={valueFormatter}
         colors={['blue', 'cyan']}
       />
-    </Card>
+</>
   );
 }
