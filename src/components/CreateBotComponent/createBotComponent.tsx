@@ -7,7 +7,18 @@ import bot2 from '@/public/assets/bot2.svg';
 import bot3 from '@/public/assets/bot3.svg';
 import bot4 from '@/public/assets/bot4.svg';
 import bot5 from '@/public/assets/bot5.svg';
-
+import bot6 from '@/public/assets/bot6.svg';
+import bot7 from '@/public/assets/bot7.svg';
+import bot8 from '@/public/assets/bot8.svg';
+import bot9 from '@/public/assets/bot9.svg';
+import bot10 from '@/public/assets/bot10.svg';
+import bot11 from '@/public/assets/bot11.svg';
+import bot12 from '@/public/assets/bot12.svg';
+import bot13 from '@/public/assets/bot13.svg';
+import bot14 from '@/public/assets/bot14.svg';
+import bot15 from '@/public/assets/bot15.svg';
+import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
+import FileUploadIcon from '@mui/icons-material/FileUpload';
 const CreateBotComponent: React.FC = () => {
   const [step, setStep] = useState(1);
   const [botName, setBotName] = useState('BotWot Assistant');
@@ -69,6 +80,36 @@ const CreateBotComponent: React.FC = () => {
     {
       imageUrl: bot5.src,
     },
+    {
+      imageUrl: bot6.src,
+    },
+    {
+      imageUrl: bot7.src,
+    },
+    {
+      imageUrl: bot8.src,
+    },
+    {
+      imageUrl: bot9.src,
+    },
+    {
+      imageUrl: bot10.src,
+    },
+    {
+      imageUrl: bot11.src,
+    },
+    {
+      imageUrl: bot12.src,
+    },
+    {
+      imageUrl: bot13.src,
+    },
+    {
+      imageUrl: bot14.src,
+    },
+    {
+      imageUrl: bot15.src,
+    },
   ];
   const handleBotSampleClick = (imageUrl: any) => {
     setImageSrc(imageUrl);
@@ -128,8 +169,8 @@ const CreateBotComponent: React.FC = () => {
       </div>
       <div className="mb-4">
         <label className="block text-gray-200 mb-2">Custom photo</label>
-        <div className="relative">
-          <div className="flex items-center bg-gray-800 p-2 w-full rounded absolute">
+        <div className="relative mb-4">
+          <div className="flex items-center bg-gray-800 p-2 w-full rounded absolute ">
             <span className="mr-2">
               {imagename?.length ? imagename : 'Choose Image'}
             </span>
@@ -143,8 +184,9 @@ const CreateBotComponent: React.FC = () => {
             className="absolute top-[0] opacity-0"
           />
         </div>
-        <button className="mt-12 bg-indigo-600 text-white px-4 py-2 rounded">
-          Upload
+        <button className="rounded-[70px] bg-[#3F2181] mt-12  text-white px-4 py-2 rounded flex justify-center">
+          <span>Upload</span>
+          <FileUploadIcon />
         </button>
       </div>
       <div className="mb-4">
@@ -170,8 +212,8 @@ const CreateBotComponent: React.FC = () => {
               onClick={() => setBotTone(tone)}
               className={`px-4 py-2 rounded ${
                 botTone === tone
-                  ? 'bg-indigo-600 text-white'
-                  : 'bg-gray-800 text-gray-200'
+                  ? 'bg-[#3F2181] text-white h-[Hug (38px)px] rounded-[24px]'
+                  : 'text-gray-200'
               }`}
             >
               {tone}
@@ -190,12 +232,26 @@ const CreateBotComponent: React.FC = () => {
       </div>
       <div className="mb-4">
         <label className="block text-gray-200 mb-2">Knowledge base</label>
-        <div className="flex items-center bg-gray-800 p-2 rounded">
-          <span className="mr-2">Assistant.pdf</span>
-          <button className="ml-auto text-red-500">×</button>
+        <div className="mb-4">
+          <div className="relative mb-4">
+            <div className="flex items-center bg-gray-800 p-2 w-full rounded absolute ">
+              <span className="mr-2">
+                {imagename?.length ? imagename : 'Choose File'}
+              </span>
+              <button className="ml-auto text-red-500">×</button>
+            </div>
+            <input
+              type="file"
+              onChange={handleFileUpload}
+              accept="image/*"
+              id="file-upload"
+              className="absolute top-[0] opacity-0"
+            />
+          </div>
         </div>
-        <button className="mt-2 bg-indigo-600 text-white px-4 py-2 rounded">
-          Upload
+        <button className="rounded-[70px] bg-[#3F2181] mt-4  text-white px-4 py-2 rounded flex justify-center">
+          <span>Upload</span>
+          <FileUploadIcon />
         </button>
       </div>
       <div className="mb-4">
@@ -239,17 +295,21 @@ const CreateBotComponent: React.FC = () => {
     <div className="bg-gray-900 text-white min-h-screen p-8">
       <div className="max-w-4xl mx-auto">
         <div className="flex justify-between items-center mb-8">
-          <button onClick={handleBack} className="text-2xl">
-            ←
-          </button>
-          <h1 className="text-3xl font-bold">Create Bot</h1>
+          <div className="flex gap-[8px]">
+            <button onClick={handleBack} className="text-2xl">
+              <ArrowBackIosNewIcon />
+            </button>
+            <h1 className="text-3xl font-bold">Create Bot</h1>
+          </div>
           <div className="flex items-center">
             <span className="mr-4">Step {step} of 2</span>
+          </div>
+          <div>
             <button
               onClick={
                 step === 2 ? () => console.log('Save bot') : handleContinue
               }
-              className="bg-indigo-600 text-white px-6 py-2 rounded"
+              className="bg-[#3F2181] w-[Hug (287px)px] rounded-[99px] text-white px-6 py-2 "
             >
               {step === 2 ? 'Save' : 'Continue'}
             </button>
@@ -292,7 +352,6 @@ const CreateBotComponent: React.FC = () => {
                   questions
                 </p>
                 <div className="flex flex-col">
-                  {' '}
                   {questionsSamples.map((value, index) => (
                     <div
                       key={index}
