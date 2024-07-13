@@ -18,6 +18,7 @@ interface SidebarItemProps {
   subMenuItems?: { path?: string; title: string }[];
 }
 const DashboardItem: SidebarItemProps = {
+  path: "/dashBoard",
   icon: 'fa-gauge-high',
   text: 'Dashboard',
   hasDropdown: false,
@@ -34,7 +35,7 @@ const SIDENAV_ITEMS: SidebarItemProps[] = [
     text: 'Bots',
     hasDropdown: true,
     subMenuItems: [
-      { path: '/my-chatbots', title: 'My Chatbots' },
+      { path: 'createBot', title: 'My Chatbots' },
       { path: '/bots/knowledge-base', title: 'Knowledge Base' },
     ],
   },
