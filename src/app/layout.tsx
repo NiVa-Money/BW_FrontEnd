@@ -17,6 +17,7 @@ export default function RootLayout({
 }>) {
   const routeWithoutHeader: string[] = ['/MyChatBots', '/createBot'];
   const routeWithoutFooter: string[] = ['/MyChatBots', '/createBot'];
+  const routeWithoutSidebar: string[] = ['/createBot'];
 
   return (
     <Provider store={store}>
@@ -26,7 +27,7 @@ export default function RootLayout({
           <PathnameHandler />
           <ConditionalHeader routeWithoutHeader={routeWithoutHeader} />
           <div className="flex">
-            <SideBar />
+            <ConditionalSideBar routeWithoutSidebar={routeWithoutSidebar} />
 
             <main className="flex-grow">{children}</main>
           </div>
@@ -53,4 +54,12 @@ function ConditionalFooter({
 }) {
   const pathName = useSelector((state: RootState) => state.root.pathName);
   return <>{!routeWithoutFooter.includes(pathName) ? <Footer /> : null}</>;
+}
+function ConditionalSideBar({
+  routeWithoutSidebar,
+}: {
+  routeWithoutSidebar: string[];
+}) {
+  const pathName = useSelector((state: RootState) => state.root.pathName);
+  return <>{!routeWithoutSidebar.includes(pathName) ? <SideBar /> : null}</>;
 }
