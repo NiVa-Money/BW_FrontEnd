@@ -15,7 +15,7 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const routeWithoutHeader: string[] = ['/MyChatBots', '/createBot',"/dashBoard", "/faq","/profile","/memberShip"];
+  const routeWithoutHeader: string[] = ['/MyChatBots', '/createBot',"/dashBoard", "/faq","/profile","/memberShip","/bot/knowledegeBase",];
   const routeWithoutFooter: string[] = ['/MyChatBots', '/createBot'];
 
   return (
