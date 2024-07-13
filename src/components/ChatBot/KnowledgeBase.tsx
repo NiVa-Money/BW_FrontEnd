@@ -1,29 +1,54 @@
 import React from 'react';
-import ChatbotCard, { ChatbotCardProps } from '../ChatBot/ChatBotCard'; // Adjust import path as per your project structure
+import ChatBotCard from './ChatBotCard';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
+
+interface KnowledgeBaseCardProps {
+  name: string;
+  description: string;
+  icon: string;
+  tone?: string;
+  file: string;
+  color?: string;
+  createdAt: string;
+}
+
+const knowledgebase: KnowledgeBaseCardProps[] = [
+  {
+    name: "TalentTalker",
+    description: "Chatbot for Human Resources with a playful twist",
+    icon: "https://cdn.builder.io/api/v1/image/assets/TEMP/83ca9326c329ecba81bf2f6263aaec95e0712d60070b29a4af7f07b5ebeb0c93?apiKey=555c811dd3f44fc79b6b2689129389e8&",
+    file: "Fintech.PDF",
+    createdAt: "Jun 14, 2024 at 12:10 pm"
+  },
+  {
+    name: "MarketBot",
+    description: "Provides comprehensive assistance in the field of market research",
+    icon: "https://cdn.builder.io/api/v1/image/assets/TEMP/f9c775da8197f3375ae992ec7dd5a00c8e6aa140bdc20e55e78babc3bbfd5a1f?apiKey=555c811dd3f44fc79b6b2689129389e8&",
+    file: "Fintech.PDF",
+    createdAt: "Jun 14, 2024 at 12:10 pm"
+  }
+];
 
 const KnowledgeBase: React.FC = () => {
-  const chatbots: ChatbotCardProps[] = [
-    { icon: "/icons/talent.png", title: "TalentTalker", description: "Product's style guide.pdf" },
-    { icon: "/icons/market.png", title: "MarketBot", description: "Product's style guide.pdf" },
-    { icon: "/icons/promark.png", title: "ProMark", description: "Product's style guide.pdf" },
-  ];
-
   return (
-    <div className="flex-grow m-16 p-16 bg-[#13131F] rounded-3xl">
-      <div className="flex justify-between items-center mb-10">
-        <h1 className="text-white text-3xl font-bold">Knowledge Base</h1>
-        <button className="bg-[#7B71E2] text-white text-base rounded-full py-2 px-4 flex items-center space-x-2">
-          <i className="fas fa-plus"></i>
-          <span>Create Knowledge Base</span>
+    <main className="flex flex-col">
+      <header className="flex gap-2.5 px-5 max-md:flex-wrap">
+        <h1 className="flex-1 my-auto text-3xl font-bold px-10 leading-6 text-white">
+          My Knowledge Base
+        </h1>
+        <button className="flex gap-2 justify-center px-14 py-3 text-xl font-medium text-gray-100 bg-[#3F2181] rounded-[60px]">
+          <span>Create Bot</span>
+          <FontAwesomeIcon icon={faPlus} className="w-[25px] h-[25px]" />
         </button>
-      </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-10">
-        {chatbots.map((chatbot, index) => (
-          <ChatbotCard key={index} {...chatbot} />
+      </header>
+      <section className="mt-12 px-10">
+        {knowledgebase.map((bot, index) => (
+          <ChatBotCard key={index} bot={bot} />
         ))}
-      </div>
-    </div>
+      </section>
+    </main>
   );
-};
+}
 
 export default KnowledgeBase;
