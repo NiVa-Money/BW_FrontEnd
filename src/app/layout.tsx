@@ -15,8 +15,8 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const routeWithoutHeader: string[] = ['/MyChatBots'];
-  const routeWithoutFooter: string[] = ['/MyChatBots'];
+  const routeWithoutHeader: string[] = ['/MyChatBots', '/createBot'];
+  const routeWithoutFooter: string[] = ['/MyChatBots', '/createBot'];
 
   return (
     <Provider store={store}>
@@ -25,9 +25,11 @@ export default function RootLayout({
         <body className={`${inter.className} flex flex-col min-h-screen`}>
           <PathnameHandler />
           <ConditionalHeader routeWithoutHeader={routeWithoutHeader} />
-          <SideBar />
+          <div className="flex">
+            <SideBar />
 
-          <main className="flex-grow">{children}</main>
+            <main className="flex-grow">{children}</main>
+          </div>
           <ConditionalFooter routeWithoutFooter={routeWithoutFooter} />
         </body>
       </html>
