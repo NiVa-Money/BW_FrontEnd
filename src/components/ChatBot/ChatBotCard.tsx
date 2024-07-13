@@ -2,14 +2,13 @@ import React from 'react';
 import { faPencilAlt, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-
 interface ChatBot {
   name: string;
   description: string;
   icon: string;
-  tone: string;
+  tone?: string;
   file: string;
-  color: string;
+  color?: string;
   createdAt: string;
 }
 
@@ -18,6 +17,8 @@ interface ChatBotCardProps {
 }
 
 const ChatBotCard: React.FC<ChatBotCardProps> = ({ bot }) => {
+  const botColor = bot.color?.toLowerCase() || 'default';
+
   return (
     <article className="flex gap-7 justify-between px-8 py-5 mb-6 w-full bg-gray-900 rounded-xl max-md:flex-wrap max-md:px-5 max-md:max-w-full">
       <div className="flex flex-col max-md:max-w-full">
@@ -55,8 +56,8 @@ const ChatBotCard: React.FC<ChatBotCardProps> = ({ bot }) => {
           <div className="flex flex-col justify-end pt-3 whitespace-nowrap text-neutral-400">
             <span className="self-start ml-2.5 text-base">Color</span>
             <div className="flex gap-2.5 p-2.5 mt-4 text-sm leading-5 text-center rounded-full">
-              <div className={`shrink-0 w-6 h-6 ${bot.color.toLowerCase() === 'blue' ? 'bg-blue-500' : 'bg-fuchsia-600'}`} />
-              <span className="my-auto">{bot.color}</span>
+              <div className={`shrink-0 w-6 h-6 ${botColor === 'blue' ? 'bg-blue-500' : botColor === 'fuchsia' ? 'bg-fuchsia-600' : 'bg-gray-500'}`} />
+              <span className="my-auto">{bot.color || ''}</span>
             </div>
           </div>
           <div className="flex flex-col justify-end pt-4 pb-2.5 text-neutral-400">
