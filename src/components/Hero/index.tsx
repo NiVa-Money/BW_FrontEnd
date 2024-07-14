@@ -6,7 +6,6 @@ import { signInRequest, signUpDataAction } from '@/redux/actions/authActions';
 import { useDispatch } from 'react-redux';
 import "./hero.css"
 const Hero = () => {
-  const [isSignupModalOpen, setIsSignupModalOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
   const dispatch = useDispatch();
@@ -20,10 +19,9 @@ const Hero = () => {
   };
 
  
-  const handleSignUp = (userData: any) => {
-    dispatch(signUpDataAction(userData)); 
+  const handleSignUp = (userData: any,router:any) => {
     closeModal(); 
-   
+    router.push("/dashBoard")
   };
 
   const handleSignIn = (): any => {

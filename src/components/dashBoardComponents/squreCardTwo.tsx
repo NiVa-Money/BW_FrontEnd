@@ -39,8 +39,8 @@ const dataFormatter = (number: number) =>
 
 export function SqureCardTwo() {
   return (
-    <Card className="mx-auto max-w-xs w-80 h-72 rounded-3xl">
-      <p className="text-center text-slate-400">Bar Chart</p>
+   
+     <>
       <BarChart
       className="h-52"
     data={chartdata}
@@ -51,7 +51,7 @@ export function SqureCardTwo() {
     yAxisWidth={48}
     onValueChange={(v) => console.log(v)}
   />
-    </Card>
+</>
     
   );
 }

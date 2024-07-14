@@ -1,5 +1,4 @@
 "use client"
-import { Card } from '@tremor/react';
 import { AreaChart } from '@tremor/react';
 //data
 const chartdata = [
@@ -70,8 +69,8 @@ const dataFormatter = (number: number) =>
 
 export function CardHeader1() {
   return (
-    <Card className="mx-auto max-w-3xl h-48 rounded-3xl">
-      <p className="text-center text-slate-400">Use/Avilable</p>
+    <>
+    
       <AreaChart
       className="h-36"
       data={chartdata}
@@ -82,7 +81,7 @@ export function CardHeader1() {
       yAxisWidth={60}
       onValueChange={(v) => console.log(v)}
     />
-    </Card>
+   </>
 
   );
 }

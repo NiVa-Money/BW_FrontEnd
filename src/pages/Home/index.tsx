@@ -7,7 +7,6 @@ import { RootState } from '@/redux/configureStore';
 import { useEffect } from 'react';
 import { fetchUserDataAction } from '@/redux/actions/authActions';
 import Testimonials from '@/components/testemonial/Testimonials';
-
 const LandingPage: React.FC = () => {
   const userEmail = useSelector((state: RootState) => state.root?.user?.email);
   const userVerify = useSelector((state: RootState) => state.root?.userVerify);

@@ -18,6 +18,7 @@ interface SidebarItemProps {
   subMenuItems?: { path?: string; title: string }[];
 }
 const DashboardItem: SidebarItemProps = {
+
   icon: 'fa-gauge-high',
   text: 'Dashboard',
   hasDropdown: false,
@@ -34,6 +35,7 @@ const SIDENAV_ITEMS: SidebarItemProps[] = [
     text: 'Bots',
     hasDropdown: true,
     subMenuItems: [
+
       { path: '/my-chatbots', title: 'My Chatbots' },
       { path: '/bots/knowledge-base', title: 'Knowledge Base' },
     ],
@@ -49,6 +51,8 @@ const SIDENAV_ITEMS2: SidebarItemProps[] = [
   { icon: 'fa-trash', text: 'Clear Conversations' },
   { icon: 'fa-crown', text: 'Membership' },
   { icon: 'fa-question-circle', text: 'Updates & FAQ', path: '/updates-faq' },
+
+
   { icon: 'fa-sign-out-alt', text: 'Log Out' },
 ];
 
