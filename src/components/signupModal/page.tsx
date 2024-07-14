@@ -3,7 +3,9 @@ import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuthContext } from '@/context/AuthContext';
 import { BackgroundAnimation } from '../BackgroundAnimation/backgroundAnimation';
-import { fetchUserData,signUpUserData  } from '@/redux/services';
+import { fetchUserData } from '@/redux/services';
+import { signUpDataAction } from '@/redux/actions/authActions';
+import { useDispatch } from 'react-redux';
 
 interface ModalProps {
   closeModal: () => void;
@@ -16,9 +18,9 @@ const Modal: React.FC<ModalProps> = ({ closeModal, handleSignUp }) => {
     lastName: '',
     emailId: '',
     mobileNo: '',
-    password: ''
+    password: '',
   });
-
+  const dispatch = useDispatch();
   const [error, setError] = useState('');
   const { signUpWithEmail } = useAuthContext();
   const router = useRouter();
@@ -31,15 +33,16 @@ const Modal: React.FC<ModalProps> = ({ closeModal, handleSignUp }) => {
     }));
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
     try {
+      console.log('form', formData);
       // First, sign up the user
-      await signUpUserData(formData);
+      dispatch(signUpDataAction(formData));
 
       // Then, verify the email
-      await fetchUserData(formData.emailId);
+      // await fetchUserData(formData.emailId);
 
       // If both succeed, proceed with handleSignUp
       handleSignUp(formData, router);
@@ -56,7 +59,10 @@ const Modal: React.FC<ModalProps> = ({ closeModal, handleSignUp }) => {
         <BackgroundAnimation />
         <div className="p-6 rounded-lg max-w-lg mx-auto relative">
           <div className="flex justify-end">
-            <button onClick={closeModal} className="text-black-500 hover:text-black-800">
+            <button
+              onClick={closeModal}
+              className="text-black-500 hover:text-black-800"
+            >
               &times;
             </button>
           </div>
@@ -73,7 +79,7 @@ const Modal: React.FC<ModalProps> = ({ closeModal, handleSignUp }) => {
                     value={formData.firstName}
                     onChange={handleChange}
                     className="w-full p-2 border rounded-xl text-white bg-black"
-                    placeholder='First Name'
+                    placeholder="First Name"
                     required
                   />
                 </label>
@@ -88,7 +94,7 @@ const Modal: React.FC<ModalProps> = ({ closeModal, handleSignUp }) => {
                     value={formData.lastName}
                     onChange={handleChange}
                     className="w-full p-2 border rounded-xl text-white bg-black"
-                    placeholder='Last Name'
+                    placeholder="Last Name"
                     required
                   />
                 </label>
@@ -102,7 +108,7 @@ const Modal: React.FC<ModalProps> = ({ closeModal, handleSignUp }) => {
                 value={formData.emailId}
                 onChange={handleChange}
                 className="w-full p-2 border rounded-xl text-white bg-black"
-                placeholder='Email'
+                placeholder="Email"
                 required
               />
             </label>
@@ -114,7 +120,7 @@ const Modal: React.FC<ModalProps> = ({ closeModal, handleSignUp }) => {
                 value={formData.password}
                 onChange={handleChange}
                 className="w-full p-2 border rounded-xl text-white bg-black"
-                placeholder='Password'
+                placeholder="Password"
                 required
               />
             </label>
@@ -126,16 +132,17 @@ const Modal: React.FC<ModalProps> = ({ closeModal, handleSignUp }) => {
                 value={formData.mobileNo}
                 onChange={handleChange}
                 className="w-full p-2 border rounded-xl text-white bg-black"
-                placeholder='Mobile No'
+                placeholder="Mobile No"
                 required
               />
             </label>
-            
+
             <button
               type="submit"
               className="w-full text-white p-2 rounded mt-8"
               style={{
-                background: 'conic-gradient(from 180deg at 50% 50%, #C729B9 -28.32deg, #B52BBA 4.67deg, #A12CBC 23.65deg, #8C2EBE 44.86deg, #792FBF 72.46deg, #6C30C0 82.5deg, #4B32C3 127.99deg, #5831C2 160.97deg, #6330C1 178.46deg, #742FC0 189.48deg, #8D2DBE 202.95deg, #A62CBC 230.66deg, #B92ABA 251.35deg, #D029B8 276.44deg, #EC27B6 306.45deg, #C729B9 331.68deg, #B52BBA 364.67deg)'
+                background:
+                  'conic-gradient(from 180deg at 50% 50%, #C729B9 -28.32deg, #B52BBA 4.67deg, #A12CBC 23.65deg, #8C2EBE 44.86deg, #792FBF 72.46deg, #6C30C0 82.5deg, #4B32C3 127.99deg, #5831C2 160.97deg, #6330C1 178.46deg, #742FC0 189.48deg, #8D2DBE 202.95deg, #A62CBC 230.66deg, #B92ABA 251.35deg, #D029B8 276.44deg, #EC27B6 306.45deg, #C729B9 331.68deg, #B52BBA 364.67deg)',
               }}
             >
               Sign Up

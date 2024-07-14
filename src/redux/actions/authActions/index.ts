@@ -8,7 +8,6 @@ import {
   SIGN_IN_REQUEST,
   SIGN_IN_SUCCESS,
   SIGN_UP_DATA,
-
 } from '../actionTypes';
 
 export const setUser = (user: any): any => console.log(user);
@@ -50,6 +49,6 @@ export const signUpDataAction = (userData: any) => ({
   payload: userData,
 });
 
-export const fetchMetrictsAction = () => ({
+export const fetchMetricsAction = () => ({
   type: FETCH_USER_METRICTS,
 });

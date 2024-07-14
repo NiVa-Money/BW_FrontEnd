@@ -1,10 +1,11 @@
-"use client"
+'use client';
 
-import { fetchMetrictsAction } from '@/redux/actions/authActions';
+import { FETCH_USER_METRICTS } from '@/redux/actions/actionTypes';
+import { fetchMetricsAction } from '@/redux/actions/authActions';
 import { RootState } from '@/redux/configureStore';
-import { Card, DonutChart} from '@tremor/react';
+import { Card, DonutChart } from '@tremor/react';
 import React, { useEffect } from 'react';
-import { useDispatch,useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 const valueFormatter = (number: number) =>
   ` ${Intl.NumberFormat('us').format(number).toString()}`;
@@ -14,25 +15,23 @@ interface SqureCardOneProps {
   sessionLeft: number;
 }
 
-
 export function SqureCardOne({ sessionTotal, sessionLeft }: SqureCardOneProps) {
-  const dispatch = useDispatch
+  const dispatch = useDispatch();
   const verifyVal = useSelector((state: RootState) => state.root.userVerify);
+  console.log('verifyVal', verifyVal);
   useEffect(() => {
-  if (verifyVal) {
-    dispatch(fetchMetrictsAction()) 
-  }
-
-  }, [verifyVal])
-  
+    if (verifyVal) {
+      dispatch(fetchMetricsAction());
+    }
+  }, [verifyVal]);
 
   const data = [
     { name: 'Sessions Total', value: sessionTotal },
-    { name: 'Sessions Consumed', value:  sessionLeft },
+    { name: 'Sessions Consumed', value: sessionLeft },
   ];
 
   return (
-   <>
+    <>
       <DonutChart
         className="h-52"
         data={data}
@@ -41,6 +40,6 @@ export function SqureCardOne({ sessionTotal, sessionLeft }: SqureCardOneProps) {
         valueFormatter={valueFormatter}
         colors={['blue', 'cyan']}
       />
-</>
+    </>
   );
 }
