@@ -5,9 +5,9 @@ import React from "react";
 const MyChatBots: React.FC = () => {
   return (
     <>
-      <main>
+      <div className="mt-12">
         <ChatBotList />
-      </main>
+      </div>
     </>
   );
 };
