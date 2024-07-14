@@ -19,6 +19,8 @@ import bot14 from '@/public/assets/bot14.svg';
 import bot15 from '@/public/assets/bot15.svg';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import FileUploadIcon from '@mui/icons-material/FileUpload';
+import ZoomOutMapIcon from '@mui/icons-material/ZoomOutMap';
+import Link from 'next/link';
 const CreateBotComponent: React.FC = () => {
   const [step, setStep] = useState(1);
   const [botName, setBotName] = useState('BotWot Assistant');
@@ -129,7 +131,7 @@ const CreateBotComponent: React.FC = () => {
           type="text"
           value={botName}
           onChange={(e) => setBotName(e.target.value)}
-          className="w-full bg-gray-800 text-white p-2 rounded-[12px]"
+          className="w-full bg-[#171029] text-white p-2 rounded-[12px]"
         />
       </div>
       <div className="mb-4">
@@ -177,7 +179,7 @@ const CreateBotComponent: React.FC = () => {
       <div className="mb-4">
         <label className="block text-gray-200 mb-2">Custom photo</label>
         <div className="relative mb-4">
-          <div className="flex items-center bg-gray-800 p-2 w-full rounded-[12px] absolute ">
+          <div className="flex items-center bg-[#171029] p-2 w-full rounded-[12px] absolute ">
             <span className="mr-2">
               {imagename?.length ? imagename : 'Choose Image'}
             </span>
@@ -210,7 +212,7 @@ const CreateBotComponent: React.FC = () => {
           type="text"
           value={greetingMessage}
           onChange={(e) => setGreetingMessage(e.target.value)}
-          className="w-full bg-gray-800 text-white p-2 rounded-[12px]"
+          className="w-full bg-[#171029] text-white p-2 rounded-[12px]"
         />
       </div>
     </>
@@ -241,7 +243,7 @@ const CreateBotComponent: React.FC = () => {
         <textarea
           value={botIdentity}
           onChange={(e) => setBotIdentity(e.target.value)}
-          className="w-full bg-gray-800 text-white p-2 rounded-[12px]"
+          className="w-full bg-[#171029] text-white p-2 rounded-[12px]"
           rows={4}
         />
       </div>
@@ -284,7 +286,7 @@ const CreateBotComponent: React.FC = () => {
         <select
           value={botLimit}
           onChange={(e) => setBotLimit(e.target.value)}
-          className="w-full bg-gray-800 text-white p-2 rounded-[12px]"
+          className="w-full bg-[#171029] text-white p-2 rounded-[12px]"
         >
           <option value="50-100">50-100</option>
           <option value="100-200">100-200</option>
@@ -298,7 +300,7 @@ const CreateBotComponent: React.FC = () => {
           value={supportEmail}
           onChange={(e) => setSupportEmail(e.target.value)}
           placeholder="Enter Your Email"
-          className="w-full bg-gray-800 text-white p-2 rounded-[12px]"
+          className="w-full bg-[#171029] text-white p-2 rounded-[12px]"
         />
       </div>
       <div className="mb-4">
@@ -308,20 +310,26 @@ const CreateBotComponent: React.FC = () => {
           value={supportPhone}
           onChange={(e) => setSupportPhone(e.target.value)}
           placeholder="Enter Your Phone Number"
-          className="w-full bg-gray-800 text-white p-2 rounded-[12px]"
+          className="w-full bg-[#171029] text-white p-2 rounded-[12px]"
         />
       </div>
     </>
   );
 
   return (
-    <div className="bg-gray-900 text-white min-h-screen p-8">
-      <div className="max-w-4xl mx-auto">
+    <div className="text-white min-h-screen p-8">
+      <div className="max-w-[80%] mx-auto">
         <div className="flex justify-between items-center mb-8">
           <div className="flex gap-[8px]">
-            <button onClick={handleBack} className="text-2xl">
-              <ArrowBackIosNewIcon />
-            </button>
+            {step == 2 ? (
+              <button onClick={handleBack} className="text-2xl">
+                <ArrowBackIosNewIcon />
+              </button>
+            ) : (
+              <Link href={`/MyChatBots`}>
+                <ArrowBackIosNewIcon />
+              </Link>
+            )}
             <h1 className="text-3xl font-bold">Create Bot</h1>
           </div>
           <div className="flex items-center">
@@ -346,19 +354,20 @@ const CreateBotComponent: React.FC = () => {
           <div className="w-2/5">
             <aside className="flex w-full flex-col ml-5 w-6/12 max-md:ml-0 max-md:w-full">
               <div className="flex flex-col grow items-center px-6 pt-3.5 pb-7 mt-4 w-full bg-[#171029] rounded-2xl shadow-sm text-zinc-400 max-md:pl-5 max-md:mt-10 max-md:max-w-full">
-                <div className="flex gap-5 justify-between self-end max-w-full text-xl font-bold leading-7 text-black whitespace-nowrap w-[351px]">
+                <div className="flex gap-5 justify-between items-center w-full max-w-full text-xl font-bold leading-7 text-black whitespace-nowrap w-[351px]">
                   <h2 className="my-auto p-5 text-white">Preview</h2>
+                  <ZoomOutMapIcon style={{ color: 'white' }} />
                 </div>
                 {imageSrc ? (
                   <Image
-                    width={100}
-                    height={100}
+                    width={200}
+                    height={200}
                     src={imageSrc}
                     alt="Uploaded"
-                    className="mr-2 h-100 w-100 rounded-full"
+                    className="mr-2 h-200 w-200 rounded-full"
                   />
                 ) : (
-                  <span className="mr-2">Bot.png</span>
+                  <span className="mr-2">Choose Profile</span>
                 )}{' '}
                 {/* <img
                   loading="lazy"
@@ -366,7 +375,7 @@ const CreateBotComponent: React.FC = () => {
                   alt="BotWot Assistant"
                   className="mt-5 max-w-full aspect-square w-[115px] max-md:mt-10"
                 /> */}
-                <h3 className="mt-8 text-2xl font-bold leading-9 text-center text-white">
+                <h3 className="mt-4 text-2xl font-bold leading-9 text-center text-white">
                   {botName}
                 </h3>
                 <p className="mt-6 text-sm leading-6 text-[#8D8997] mb-6 text-center text-neutral-400 w-[344px]">
@@ -374,7 +383,7 @@ const CreateBotComponent: React.FC = () => {
                   <br />
                   questions
                 </p>
-                <div className="flex flex-col">
+                <div className="flex flex-col w-full">
                   {questionsSamples.map((value, index) => (
                     <div
                       key={index}
@@ -385,7 +394,12 @@ const CreateBotComponent: React.FC = () => {
                     </div>
                   ))}
                 </div>
-                <div className="flex items-center justify-start mt-[50px] mb-4 w-full h-[Hug (57px)px] bg-[#2B243C] rounded-[12px] p-[10px]">
+                <div
+                  className="flex items-center justify-start mt-[50px] mb-4 w-full h-[Hug (57px)px] bg-[#2B243C] rounded-[12px] p-[10px]"
+                  onClick={() => {
+                    setTextVal(initiateConversation);
+                  }}
+                >
                   {imageSrc?.length ? (
                     <Image src={imageSrc} height={50} width={50} alt="logo" />
                   ) : null}
@@ -395,7 +409,7 @@ const CreateBotComponent: React.FC = () => {
                   type="text"
                   value={textVal}
                   onChange={(e) => setTextVal(e.target.value)}
-                  className="w-full bg-gray-800 text-white p-2 rounded"
+                  className="w-full bg-[#171029] text-white p-2 rounded"
                 />
               </div>
             </aside>
