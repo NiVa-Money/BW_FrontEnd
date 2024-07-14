@@ -7,7 +7,7 @@ import '@fortawesome/fontawesome-free/css/all.min.css';
 import { Icon } from '@iconify/react';
 import Image from 'next/image';
 import mainLogo from '@/public/assets/mainLogo.svg';
-
+import { logoutUser } from '@/redux/services';
 interface SidebarItemProps {
   path?: string;
   icon?: string;
@@ -18,7 +18,7 @@ interface SidebarItemProps {
   subMenuItems?: { path?: string; title: string }[];
 }
 const DashboardItem: SidebarItemProps = {
-
+  path:"/dashBoard",
   icon: 'fa-gauge-high',
   text: 'Dashboard',
   hasDropdown: false,
@@ -40,22 +40,21 @@ const SIDENAV_ITEMS: SidebarItemProps[] = [
       { path: '/bots/knowledge-base', title: 'Knowledge Base' },
     ],
   },
-  // { icon: 'fa-user', text: 'Profile', path: '/profile' },
-  // { icon: 'fa-trash', text: 'Clear Conversations' },
-  // { icon: 'fa-crown', text: 'Membership' },
-  // { icon: 'fa-question-circle', text: 'Updates & FAQ', path: '/updates-faq' },
-  // { icon: 'fa-sign-out-alt', text: 'Log Out' },
+
 ];
 const SIDENAV_ITEMS2: SidebarItemProps[] = [
   { icon: 'fa-user', text: 'Profile', path: '/profile' },
   { icon: 'fa-trash', text: 'Clear Conversations' },
-  { icon: 'fa-crown', text: 'Membership' },
-  { icon: 'fa-question-circle', text: 'Updates & FAQ', path: '/updates-faq' },
-
-
+  { icon: 'fa-crown', text: 'Membership',path:'/memberShip' },
+  { icon: 'fa-question-circle', text: 'Updates & FAQ', path: '/faq' },
   { icon: 'fa-sign-out-alt', text: 'Log Out' },
 ];
 
+const LogoutButton = () => {
+  const handleLogout = () => {
+    logoutUser();
+  };
+}
 const SideBar: React.FC = () => {
   return (
     <div className="w-64 p-4 flex flex-col h-screen relative">

@@ -21,9 +21,12 @@ const LoginModal: React.FC<ModalProps> = ({ closeModal }) => {
     try {
       await handleSignInWithEmail(email, password);
 
-      const response = await axios.post('http://13.235.189.116:8000/user/signup/verify', {
-        emailId: email,
-      });
+      const response = await axios.post(
+        'http://13.235.189.116:8000/user/signup/verify',
+        {
+          emailId: email,
+        }
+      );
 
       if (response.data.success) {
         const { token, user_id } = response.data;
@@ -31,7 +34,7 @@ const LoginModal: React.FC<ModalProps> = ({ closeModal }) => {
         localStorage.setItem('userId', user_id);
         localStorage.setItem('emailId', email);
         closeModal();
-        router.push('/dashBoard');
+        // router.push('/dashBoard');
       } else {
         setError('Verification failed. Please try again.');
       }
@@ -44,7 +47,10 @@ const LoginModal: React.FC<ModalProps> = ({ closeModal }) => {
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
       <div className="bg-black p-6 rounded-lg max-w-md mx-auto">
         <div className="flex justify-end">
-          <button onClick={closeModal} className="text-gray-500 hover:text-gray-800">
+          <button
+            onClick={closeModal}
+            className="text-gray-500 hover:text-gray-800"
+          >
             &times;
           </button>
         </div>
@@ -71,7 +77,10 @@ const LoginModal: React.FC<ModalProps> = ({ closeModal }) => {
               required
             />
           </label>
-          <button type="submit" className="w-full bg-blue-500 text-white p-2 rounded mt-4">
+          <button
+            type="submit"
+            className="w-full bg-blue-500 text-white p-2 rounded mt-4"
+          >
             Log In
           </button>
         </form>
