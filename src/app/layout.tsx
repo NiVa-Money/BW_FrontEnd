@@ -62,4 +62,4 @@ function ConditionalSideBar({
 }) {
   const pathName = useSelector((state: RootState) => state.root.pathName);
   return <>{!routeWithoutSidebar.includes(pathName) ? <SideBar /> : null}</>;
-}
+
