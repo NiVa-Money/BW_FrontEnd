@@ -2,7 +2,7 @@ import React from 'react';
 import ChatBotCard from './ChatBotCard';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
-
+import Link from 'next/link';
 interface KnowledgeBaseCardProps {
   name: string;
   description: string;
@@ -38,7 +38,9 @@ const KnowledgeBase: React.FC = () => {
           My Knowledge Base
         </h1>
         <button className="flex gap-2 justify-center px-14 py-3 text-xl font-medium text-gray-100 bg-[#3F2181] rounded-[60px]">
-          <span>Create Bot</span>
+        <Link href={`/createKnowledgeBase`}>
+            <span>Create Knowledge Base</span>
+          </Link>
           <FontAwesomeIcon icon={faPlus} className="w-[25px] h-[25px]" />
         </button>
       </header>

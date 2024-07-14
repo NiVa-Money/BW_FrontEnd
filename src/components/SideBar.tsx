@@ -36,8 +36,8 @@ const SIDENAV_ITEMS: SidebarItemProps[] = [
     hasDropdown: true,
     subMenuItems: [
 
-      { path: '/my-chatbots', title: 'My Chatbots' },
-      { path: '/bots/knowledge-base', title: 'Knowledge Base' },
+      { path: '/MyChatBots', title: 'My Chatbots' },
+      { path: '/knowledgeBase', title: 'Knowledge Base' },
     ],
   },
 
@@ -47,7 +47,7 @@ const SIDENAV_ITEMS2: SidebarItemProps[] = [
   { icon: 'fa-trash', text: 'Clear Conversations' },
   { icon: 'fa-crown', text: 'Membership',path:'/memberShip' },
   { icon: 'fa-question-circle', text: 'Updates & FAQ', path: '/faq' },
-  { icon: 'fa-sign-out-alt', text: 'Log Out' },
+  { icon: 'fa-sign-out-alt', text: 'Log Out' ,path: '/'},
 ];
 
 const LogoutButton = () => {
@@ -59,7 +59,7 @@ const SideBar: React.FC = () => {
   return (
     <div className="w-64 p-4 flex flex-col h-screen relative">
       <Link
-        href={'/'}
+        href={'/dashBoard'}
         className="flex justify-center w-full mt-[10px] mb-[20px]"
       >
         <Image src={mainLogo.src} alt="logo" width={90} height={80} />

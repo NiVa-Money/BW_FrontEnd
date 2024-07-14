@@ -1,10 +1,10 @@
-import KnowledgeBase from '@/components/ChatBot/KnowledgeBase'
+import CreateKnowledgeBase from '@/components/ChatBot/CreateKnowledgeBase'
 import React from 'react'
 
 const page = () => {
   return (
     <div>
-      <KnowledgeBase />
+      <CreateKnowledgeBase />
     </div>
   )
 }
