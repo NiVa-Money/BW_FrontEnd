@@ -19,6 +19,7 @@ const Hero = () => {
 
   const handleSignUp = (userData: any, router: any) => {
     closeModal();
+    router.push('/dashBoard')
   };
 
   const handleSignIn = () => {

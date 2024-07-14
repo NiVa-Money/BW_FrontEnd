@@ -69,9 +69,11 @@ const ChatBotCard: React.FC<ChatBotCardProps> = ({ bot }) => {
       <div className="flex gap-6">
         <button aria-label="Delete bot" className="text-red-500">
           <FontAwesomeIcon icon={faTrash} />
+          <span>Delete</span>
         </button>
         <button aria-label="Edit bot" className="text-blue-500">
           <FontAwesomeIcon icon={faPencilAlt} />
+          <span>Edit</span>
         </button>
       </div>
     </article>
