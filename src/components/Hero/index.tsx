@@ -21,11 +21,12 @@ const Hero = () => {
  
   const handleSignUp = (userData: any,router:any) => {
     closeModal(); 
-    router.push("/dashBoard")
+    // router.push("/dashBoard")
   };
 
-  const handleSignIn = (): any => {
+  const handleSignIn = () => {
     dispatch(signInRequest()); 
+    
   };
   const handleLoginButtonClick = () => {
     setIsLoginModalOpen(true);

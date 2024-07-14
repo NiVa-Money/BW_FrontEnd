@@ -1,6 +1,8 @@
 import {
   FETCH_USER_DATA_FAILURE,
   FETCH_USER_DATA_SUCCESS,
+  FETCH_USER_METRICTS_FAILURE,
+  FETCH_USER_METRICTS_SUCCESS,
   LOGOUT_USER,
   SET_PATHNAME,
   SET_USER,
@@ -50,6 +52,26 @@ export default function globalReducers(state = initialState.root, action: any) {
         userVerify: action.payload,
       };
 
+      case FETCH_USER_METRICTS_SUCCESS:
+        return {
+          ...state,
+          userMetric:{
+            ...state.userMetric,
+            data:action.payload,
+            loader:false,
+          },
+         
+        };
+      case FETCH_USER_METRICTS_FAILURE:
+        return {
+          ...state,
+          userMetric:{
+            ...state.userMetric,
+            data:action.payload,
+            loader:true,
+          },
+         
+        };
     default:
       return state;
   }

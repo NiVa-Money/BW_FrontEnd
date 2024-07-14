@@ -1,4 +1,4 @@
-import CreateBotComponent from '@/components/CreateBotComponent/createBotComponent';
+import CreateBotComponent from "@/components/CreateBotComponent/createBotComponent";
 
 const CreateBotPage: React.FC = () => {
   return (
