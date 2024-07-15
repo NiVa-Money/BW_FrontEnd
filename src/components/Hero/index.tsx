@@ -1,3 +1,5 @@
+// 'use client';
+
 import React, { useState } from 'react';
 import Modal from '../signupModal/page';
 import { BackgroundAnimation } from '../BackgroundAnimation/backgroundAnimation';
@@ -5,6 +7,8 @@ import LoginModal from '../loginModal/loginModal';
 import { signInRequest, signUpDataAction } from '@/redux/actions/authActions';
 import { useDispatch } from 'react-redux';
 import './hero.css';
+import { useRouter } from 'next/router';
+import { redirect } from 'next/navigation';
 const Hero = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
@@ -19,7 +23,7 @@ const Hero = () => {
 
   const handleSignUp = (userData: any, router: any) => {
     closeModal();
-    router.push('/dashBoard')
+    router.push('/dashBoard');
   };
 
   const handleSignIn = () => {

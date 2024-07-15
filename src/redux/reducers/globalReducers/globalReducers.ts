@@ -51,6 +51,7 @@ export default function globalReducers(state = initialState.root, action: any) {
         },
       };
     case SIGN_UP_DATA_SUCCESS:
+      localStorage.setItem('token', action.payload.token);
       return {
         ...state,
         userData: { ...action.payload, ...state.userData },

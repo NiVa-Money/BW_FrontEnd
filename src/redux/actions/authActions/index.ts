@@ -49,6 +49,7 @@ export const signUpDataAction = (userData: any) => ({
   payload: userData,
 });
 
-export const fetchMetricsAction = () => ({
+export const fetchMetricsAction = (user_id: any) => ({
   type: FETCH_USER_METRICTS,
+  payload: user_id,
 });

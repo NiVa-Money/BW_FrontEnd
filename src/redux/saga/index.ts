@@ -77,7 +77,7 @@ export function* fetchuserMetricSaga({
   payload: any;
 }): Generator<any> {
   try {
-    const fetchuserMetricData = yield call(fetchUserMetrics);
+    const fetchuserMetricData = yield call(fetchUserMetrics, payload);
     yield put({
       type: FETCH_USER_METRICTS_SUCCESS,
       payload: fetchuserMetricData,
@@ -88,6 +88,7 @@ export function* fetchuserMetricSaga({
     });
   }
 }
+
 export default function* rootSaga() {
   yield takeLatest(SIGN_IN_REQUEST, signInSaga);
   yield takeLatest(FETCH_USER_DATA, verifyUserSaga);

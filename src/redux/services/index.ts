@@ -5,7 +5,8 @@ export const signUpUserData = async (payload: any) => {
     const response = await axiosInstance.post('user/signup', payload);
     return response.data;
   } catch (error) {
-    console.error('Error signing up user:', error);2
+    console.error('Error signing up user:', error);
+    2;
     throw new Error('Error signing up user');
   }
 };
@@ -23,23 +24,25 @@ export const fetchUserData = async (userEmail: string) => {
     console.log('token saved:', localStorage.getItem('token'));
     return response.data;
   } catch (error: any) {
-    console.error('Error response:', error.response ? error.response.data : error.message);
+    console.error(
+      'Error response:',
+      error.response ? error.response.data : error.message
+    );
     throw new Error('Error fetching user data');
   }
 };
 
 //for fetching data
-export const fetchUserMetrics = async () => {
+export const fetchUserMetrics = async (payload: any) => {
   try {
-    const user_id = localStorage.getItem('user_id')
-    
-    const response = await axiosInstance.get(`user/metrics/${user_id}`, {
-      
-    });
+    const response = await axiosInstance.get(`user/metrics/${payload}`, {});
     console.log('User metrics:', response.data);
     return response.data;
   } catch (error: any) {
-    console.error('Error fetching user metrics:', error.response ? error.response.data : error.message);
+    console.error(
+      'Error fetching user metrics:',
+      error.response ? error.response.data : error.message
+    );
     throw new Error('Error fetching user metrics');
   }
 };
@@ -50,7 +53,7 @@ export const logoutUser = () => {
     localStorage.removeItem('user_id');
     localStorage.removeItem('token');
 
-    window.location.href = '/'; 
+    window.location.href = '/';
   } catch (error) {
     console.error('Error logging out user:', error);
     throw new Error('Error logging out user');

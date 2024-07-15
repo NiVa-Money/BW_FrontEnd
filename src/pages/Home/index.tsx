@@ -1,3 +1,4 @@
+'use client';
 import PricingCard from '@/components/Pricing';
 import Factors from '@/components/Factors';
 import Features from '@/components/Features';
@@ -10,7 +11,6 @@ import Testimonials from '@/components/testemonial/Testimonials';
 const LandingPage: React.FC = () => {
   const userEmail = useSelector((state: RootState) => state.root?.user?.email);
   const userVerify = useSelector((state: RootState) => state.root?.userVerify);
-  console.log(userEmail);
   const dispatch = useDispatch();
   useEffect(() => {
     if (userEmail?.length) {

@@ -1,9 +1,8 @@
 'use client';
 
-import { FETCH_USER_METRICTS } from '@/redux/actions/actionTypes';
 import { fetchMetricsAction } from '@/redux/actions/authActions';
 import { RootState } from '@/redux/configureStore';
-import { Card, DonutChart } from '@tremor/react';
+import { DonutChart } from '@tremor/react';
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -18,10 +17,14 @@ interface SqureCardOneProps {
 export function SqureCardOne({ sessionTotal, sessionLeft }: SqureCardOneProps) {
   const dispatch = useDispatch();
   const verifyVal = useSelector((state: RootState) => state.root.userVerify);
+  const userId = useSelector(
+    (state: RootState) => state.root?.userData?.user_id
+  );
+
   console.log('verifyVal', verifyVal);
   useEffect(() => {
     if (verifyVal) {
-      dispatch(fetchMetricsAction());
+      dispatch(fetchMetricsAction(userId));
     }
   }, [verifyVal]);
 
