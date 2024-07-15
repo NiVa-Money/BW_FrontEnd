@@ -1,5 +1,4 @@
 'use client';
-
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
@@ -8,6 +7,8 @@ import { Icon } from '@iconify/react';
 import Image from 'next/image';
 import mainLogo from '@/public/assets/mainLogo.svg';
 import { logoutUser } from '@/redux/services';
+import ClearConversation from './clearConversation/clearConversation';
+
 interface SidebarItemProps {
   path?: string;
   icon?: string;
@@ -17,12 +18,14 @@ interface SidebarItemProps {
   hasDropdown?: boolean;
   subMenuItems?: { path?: string; title: string }[];
 }
+
 const DashboardItem: SidebarItemProps = {
-  path:"/dashBoard",
+  path: "/dashBoard",
   icon: 'fa-gauge-high',
   text: 'Dashboard',
   hasDropdown: false,
 };
+
 const SIDENAV_ITEMS: SidebarItemProps[] = [
   {
     icon: 'fa-comment',
@@ -35,27 +38,32 @@ const SIDENAV_ITEMS: SidebarItemProps[] = [
     text: 'Bots',
     hasDropdown: true,
     subMenuItems: [
-
       { path: '/MyChatBots', title: 'My Chatbots' },
       { path: '/knowledgeBase', title: 'Knowledge Base' },
     ],
   },
-
 ];
+
 const SIDENAV_ITEMS2: SidebarItemProps[] = [
   { icon: 'fa-user', text: 'Profile', path: '/profile' },
-  { icon: 'fa-trash', text: 'Clear Conversations' },
-  { icon: 'fa-crown', text: 'Membership',path:'/memberShip' },
+  { icon: 'fa-trash', text: 'Clear Conversations', onClick: undefined }, 
+  { icon: 'fa-crown', text: 'Membership', path: '/memberShip' },
   { icon: 'fa-question-circle', text: 'Updates & FAQ', path: '/faq' },
-  { icon: 'fa-sign-out-alt', text: 'Log Out' ,path: '/'},
+  { icon: 'fa-sign-out-alt', text: 'Log Out', path: '/' },
 ];
 
 const LogoutButton = () => {
   const handleLogout = () => {
     logoutUser();
   };
-}
+};
+
 const SideBar: React.FC = () => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const openModal = () => setIsModalOpen(true);
+  const closeModal = () => setIsModalOpen(false);
+
   return (
     <div className="w-64 p-4 flex flex-col h-screen relative">
       <Link
@@ -64,10 +72,14 @@ const SideBar: React.FC = () => {
       >
         <Image src={mainLogo.src} alt="logo" width={90} height={80} />
       </Link>
+      
       <button className="bg-[#1E1E2E] text-white rounded-full py-4 px-4 mb-8 flex items-center space-x-4 justify-center">
         <i className="fas fa-plus"></i>
-        <span>New Chat</span>
+        <Link href={`/newchat`}>
+          <span>New Chat</span>
+        </Link>
       </button>
+      
       <MenuItem item={DashboardItem} key={DashboardItem?.text} />
       <div className="flex flex-col space-y-2">
         {SIDENAV_ITEMS.map((item, idx) => (
@@ -76,14 +88,21 @@ const SideBar: React.FC = () => {
       </div>
       <div className="flex flex-col space-y-2 absolute bottom-[10px]">
         {SIDENAV_ITEMS2.map((item, idx) => (
-          <MenuItem key={idx} item={item} />
+          <MenuItem key={idx} item={item} onClick={item.text === 'Clear Conversations' ? openModal : undefined} />
         ))}
       </div>
+      
+      {isModalOpen && <ClearConversation closeModal={closeModal} />}
     </div>
   );
 };
 
-const MenuItem = ({ item }: { item: SidebarItemProps }) => {
+interface MenuItemProps {
+  item: SidebarItemProps;
+  onClick?: () => void;
+}
+
+const MenuItem: React.FC<MenuItemProps> = ({ item, onClick }) => {
   const pathname = usePathname();
   const [subMenuOpen, setSubMenuOpen] = useState(false);
   const toggleSubMenu = () => setSubMenuOpen(!subMenuOpen);
@@ -132,6 +151,7 @@ const MenuItem = ({ item }: { item: SidebarItemProps }) => {
           className={`flex items-center space-x-3 py-2 px-3 text-gray-300 hover:bg-white hover:bg-opacity-10 rounded-full cursor-pointer ${
             item.path === pathname ? 'bg-white bg-opacity-10' : ''
           }`}
+          onClick={onClick}
         >
           <i className={`fas ${item.icon}`}></i>
           <span>{item.text}</span>

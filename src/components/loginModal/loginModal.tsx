@@ -16,32 +16,32 @@ const LoginModal: React.FC<ModalProps> = ({ closeModal }) => {
   const { handleSignInWithEmail } = useAuthContext();
   const router = useRouter();
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    try {
-      await handleSignInWithEmail(email, password);
+  // const handleSubmit = async (e: React.FormEvent) => {
+  //   e.preventDefault();
+  //   try {
+  //     await handleSignInWithEmail(email, password);
 
-      const response = await axios.post(
-        'http://13.235.189.116:8000/user/signup/verify',
-        {
-          emailId: email,
-        }
-      );
+  //     const response = await axios.post(
+  //       'http://13.235.189.116:8000/user/signup/verify',
+  //       {
+  //         emailId: email,
+  //       }
+  //     );
 
-      if (response.data.success) {
-        const { token, user_id } = response.data;
-        localStorage.setItem('token', token);
-        localStorage.setItem('userId', user_id);
-        localStorage.setItem('emailId', email);
-        closeModal();
-        // router.push('/dashBoard');
-      } else {
-        setError('Verification failed. Please try again.');
-      }
-    } catch (err) {
-      setError('Failed to log in. Please check your email and password.');
-    }
-  };
+  //     if (response.data.success) {
+  //       const { token, user_id } = response.data;
+  //       localStorage.setItem('token', token);
+  //       localStorage.setItem('userId', user_id);
+  //       localStorage.setItem('emailId', email);
+  //       closeModal();
+  //       // router.push('/dashBoard');
+  //     } else {
+  //       setError('Verification failed. Please try again.');
+  //     }
+  //   } catch (err) {
+  //     setError('Failed to log in. Please check your email and password.');
+  //   }
+  // };
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
@@ -54,8 +54,8 @@ const LoginModal: React.FC<ModalProps> = ({ closeModal }) => {
             &times;
           </button>
         </div>
-        <h2 className="text-2xl mb-4">Log In</h2>
-        <form onSubmit={handleSubmit}>
+        <h2 className="text-2xl mb-4">Log In Feature is Coming Soon</h2>
+        {/* <form onSubmit={handleSubmit}>
           {error && <p className="text-red-500 mb-4">{error}</p>}
           <label className="block mb-2">
             Email:
@@ -83,7 +83,7 @@ const LoginModal: React.FC<ModalProps> = ({ closeModal }) => {
           >
             Log In
           </button>
-        </form>
+        </form> */}
       </div>
     </div>
   );

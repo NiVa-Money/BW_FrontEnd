@@ -2,27 +2,30 @@ import * as React from "react";
 import { SqureCardOne } from "@/components/dashBoardComponents/squreCardOne";
 import { SqureCardTwo } from "@/components/dashBoardComponents/squreCardTwo";
 import { CardHeader1 } from "@/components/dashBoardComponents/headerCard";
+import Link from "next/link";
 const DashBoard: React.FC = () => {
   return (
     <div className="flex flex-col p-8 bg-[#0B031E] text-white">
       <div className="grid grid-cols-4 gap-4">
         <div className="bg-[#8E2DA0] rounded-2xl p-4">
           <div className="text-sm">Sessions Consumed</div>
-          <div className="text-3xl font-bold">154</div>
+          <div className="text-3xl font-bold">0</div>
         </div>
         <div className="bg-[#46217C] rounded-2xl p-4">
           <div className="text-sm">Sessions Left</div>
-          <div className="text-3xl font-bold">9,846</div>
+          <div className="text-3xl font-bold">0</div>
         </div>
         <div className="bg-[#6E54EF] rounded-2xl p-4">
           <div className="text-sm">Total Sessions</div>
-          <div className="text-3xl font-bold">10,000</div>
+          <div className="text-3xl font-bold">0</div>
         </div>
         <div className="bg-[#1E1935] rounded-2xl p-4 flex flex-col items-center">
           <div className="text-lg">Active Bots</div>
-          <div className="text-3xl font-bold">2</div>
+          <div className="text-3xl font-bold">0</div>
           <button className="mt-4 bg-[#46217C] text-white px-6 py-2 rounded-full flex items-center">
-            Create Bot
+          <Link href={`/createBot`}>
+            <span>Create Bot</span>
+          </Link>
             <span className="ml-2 text-xl">+</span>
           </button>
         </div>
@@ -36,8 +39,8 @@ const DashBoard: React.FC = () => {
             {/* Add your circular progress component here */}
             <div>
               <SqureCardOne 
-                 sessionLeft={1002}
-                 sessionTotal={1821}
+                 sessionLeft={10000}
+                 sessionTotal={10000}
               />
             </div>
           </div>
