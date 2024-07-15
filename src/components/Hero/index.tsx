@@ -1,17 +1,26 @@
 // 'use client';
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Modal from '../signupModal/page';
 import { BackgroundAnimation } from '../BackgroundAnimation/backgroundAnimation';
 import LoginModal from '../loginModal/loginModal';
-import { signInRequest, signUpDataAction } from '@/redux/actions/authActions';
-import { useDispatch } from 'react-redux';
+import {
+  verifyUserDataAction,
+  loginRequest,
+} from '@/redux/actions/authActions';
+import { useDispatch, useSelector } from 'react-redux';
 import './hero.css';
-import { useRouter } from 'next/router';
-import { redirect } from 'next/navigation';
+import { useRouter } from 'next/navigation';
+import { RootState } from '@/redux/configureStore';
 const Hero = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
+  const googleVerifyRedux = useSelector(
+    (state: RootState) => state.root.googleLogin
+  );
+  const userRedux = useSelector((state: RootState) => state?.root?.user);
+
+  const router = useRouter();
   const dispatch = useDispatch();
 
   const handleButtonClick = () => {
@@ -27,7 +36,7 @@ const Hero = () => {
   };
 
   const handleSignIn = () => {
-    dispatch(signInRequest());
+    dispatch(loginRequest());
   };
   const handleLoginButtonClick = () => {
     setIsLoginModalOpen(true);
@@ -36,6 +45,19 @@ const Hero = () => {
   const closeLoginModal = () => {
     setIsLoginModalOpen(false);
   };
+  useEffect(() => {
+    if (googleVerifyRedux) {
+      const [firstName, lastName] = userRedux?.displayName.split(' ');
+      const email = userRedux?.email;
+      const payload = {
+        firstName: firstName,
+        lastName: lastName,
+        emailId: email,
+        mobileNo: '77797979779',
+      };
+      dispatch(verifyUserDataAction(email));
+    }
+  }, [googleVerifyRedux]);
 
   return (
     <section>

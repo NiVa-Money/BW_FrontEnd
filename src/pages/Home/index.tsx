@@ -6,20 +6,47 @@ import Hero from '@/components/Hero';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@/redux/configureStore';
 import { useEffect } from 'react';
-import { fetchUserDataAction } from '@/redux/actions/authActions';
+import {
+  verifyUserDataActionn,
+  signUpDataAction,
+} from '@/redux/actions/authActions';
 import Testimonials from '@/components/testemonial/Testimonials';
+import { useRouter } from 'next/navigation';
 const LandingPage: React.FC = () => {
   const userEmail = useSelector((state: RootState) => state.root?.user?.email);
   const userVerify = useSelector((state: RootState) => state.root?.userVerify);
+  const userRedux = useSelector((state: RootState) => state?.root?.user);
+
+  const googleVerifyRedux = useSelector(
+    (state: RootState) => state.root.googleLogin
+  );
   const dispatch = useDispatch();
+  const router = useRouter();
+
   useEffect(() => {
-    if (userEmail?.length) {
-      dispatch(fetchUserDataAction(userEmail));
+    if (userEmail?.length && !googleVerifyRedux) {
+      dispatch(verifyUserDataActionnn(userEmail));
     }
   }, [userEmail]);
   useEffect(() => {
-    if (userEmail?.length) {
-      dispatch(fetchUserDataAction(userEmail));
+    if (userEmail?.length && !googleVerifyRedux) {
+      dispatch(verifyUserDataAction(userEmail));
+    }
+    if (userVerify) {
+      console.log('dash');
+      router.push('/dashBoard');
+    } else {
+      if (googleVerifyRedux) {
+        const [firstName, lastName] = userRedux?.displayName.split(' ');
+        const email = userRedux?.email;
+        const payload = {
+          firstName: firstName,
+          lastName: lastName,
+          emailId: email,
+          mobileNo: '77797979779',
+        };
+        dispatch(signUpDataAction(payload));
+      }
     }
   }, [userVerify]);
 

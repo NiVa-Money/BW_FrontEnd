@@ -1,19 +1,18 @@
 import {
-  FETCH_USER_DATA_FAILURE,
-  FETCH_USER_DATA_SUCCESS,
+  VERIFY_USER_DATA_FAILURE,
+  VERIFY_USER_DATA_SUCCESS,
   FETCH_USER_METRICTS_FAILURE,
   FETCH_USER_METRICTS_SUCCESS,
+  LOGIN_SUCCESS,
+  LOGIN_FAILURE,
   LOGOUT_USER,
   SET_PATHNAME,
   SET_USER,
-  SIGN_IN_FAILURE,
-  SIGN_IN_SUCCESS,
   SIGN_UP_DATA,
   SIGN_UP_DATA_FAILURE,
   SIGN_UP_DATA_SUCCESS,
 } from '@/redux/actions/actionTypes';
 import initialState from '../initialState';
-
 export default function globalReducers(state = initialState.root, action: any) {
   switch (action.type) {
     case SET_PATHNAME:
@@ -31,15 +30,20 @@ export default function globalReducers(state = initialState.root, action: any) {
         ...state,
         user: null,
       };
-    case SIGN_IN_SUCCESS:
+
+    case LOGIN_SUCCESS:
       return {
         ...state,
         user: action.payload,
+        userVerify: false,
+        googleLogin: true,
         error: null,
       };
-    case SIGN_IN_FAILURE:
+    case LOGIN_FAILURE:
       return {
         ...state,
+        user: null,
+        googleLogin: false,
         error: action.payload,
       };
     case SIGN_UP_DATA:
@@ -63,13 +67,13 @@ export default function globalReducers(state = initialState.root, action: any) {
         userData: { ...action.payload, ...state.userData },
         userVerify: false,
       };
-    case FETCH_USER_DATA_SUCCESS:
+    case VERIFY_USER_DATA_SUCCESS:
       return {
         ...state,
         userData: action.payload,
         userVerify: true,
       };
-    case FETCH_USER_DATA_FAILURE:
+    case VERIFY_USER_DATA_FAILURE:
       return {
         ...state,
         userData: action.payload,
