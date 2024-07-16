@@ -35,8 +35,26 @@ export const fetchUserData = async (userEmail: string) => {
 //for fetching data
 export const fetchUserMetrics = async (payload: any) => {
   try {
-    const response = await axiosInstance.get(`user/metrics/${payload}`, {});
+    const user_id = localStorage.getItem('user_id');
+
+    const response = await axiosInstance.get(`user/metrics/${user_id}`, {});
     console.log('User metrics:', response.data);
+    return response.data;
+  } catch (error: any) {
+    console.error(
+      'Error fetching user metrics:',
+      error.response ? error.response.data : error.message
+    );
+    throw new Error('Error fetching user metrics');
+  }
+};
+export const getUserProfileService = async (payload: any) => {
+  try {
+    const response = await axiosInstance.get(
+      `user/getUserProfile/?emailId=${payload}`,
+      {}
+    );
+    console.log('User profile:', response.data);
     return response.data;
   } catch (error: any) {
     console.error(

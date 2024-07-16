@@ -8,11 +8,20 @@ import {
   FETCH_USER_METRICTS,
   FETCH_USER_METRICTS_FAILURE,
   FETCH_USER_METRICTS_SUCCESS,
+  GET_USER_PROFILE_FAILURE,
+  GET_USER_PROFILE_SUCCESS,
+  SIGN_IN_REQUEST,
   SIGN_UP_DATA,
   SIGN_UP_DATA_FAILURE,
   SIGN_UP_DATA_SUCCESS,
+  GET_USER_PROFILE,
 } from '../actions/actionTypes';
-import { fetchUserData, fetchUserMetrics, signUpUserData } from '../services';
+import {
+  fetchUserData,
+  fetchUserMetrics,
+  getUserProfileService,
+  signUpUserData,
+} from '../services';
 
 export function* verifyUserSaga({
   type,
@@ -97,10 +106,30 @@ function* logoutSaga({ payload }: any) {
   }
 }
 
+export function* getUserProfileSaga({
+  type,
+  payload,
+}: {
+  type: string;
+  payload: any;
+}): Generator<any> {
+  try {
+    const userProfileData = yield call(getUserProfileService, payload);
+    yield put({
+      type: GET_USER_PROFILE_SUCCESS,
+      payload: userProfileData,
+    });
+  } catch (error: any) {
+    yield put({
+      type: GET_USER_PROFILE_FAILURE,
+    });
+  }
+}
 export default function* rootSaga() {
   yield takeLatest(VERIFY_USER_DATA, verifyUserSaga);
   yield takeLatest(SIGN_UP_DATA, signUpUserSaga);
   yield takeLatest(FETCH_USER_METRICTS, fetchuserMetricSaga);
   yield takeLatest('LOGIN_REQUEST', loginSaga);
   yield takeEvery('LOGOUT_REQUEST', logoutSaga);
+  yield takeEvery(GET_USER_PROFILE, getUserProfileSaga);
 }
