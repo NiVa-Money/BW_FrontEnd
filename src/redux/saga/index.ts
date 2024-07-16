@@ -1,34 +1,19 @@
 import { auth, provider } from '@/auth/firebase';
 import { UserCredential, signInWithPopup } from 'firebase/auth';
-import { all, call, fork, put, takeLatest } from 'redux-saga/effects';
-import { signInFailure, signInSuccess } from '../actions/authActions';
+import { call, put, takeEvery, takeLatest } from 'redux-saga/effects';
 import {
-  FETCH_USER_DATA,
-  FETCH_USER_DATA_FAILURE,
-  FETCH_USER_DATA_SUCCESS,
+  VERIFY_USER_DATA,
+  VERIFY_USER_DATA_FAILURE,
+  VERIFY_USER_DATA_SUCCESS,
   FETCH_USER_METRICTS,
   FETCH_USER_METRICTS_FAILURE,
   FETCH_USER_METRICTS_SUCCESS,
-  SIGN_IN_REQUEST,
   SIGN_UP_DATA,
   SIGN_UP_DATA_FAILURE,
   SIGN_UP_DATA_SUCCESS,
 } from '../actions/actionTypes';
 import { fetchUserData, fetchUserMetrics, signUpUserData } from '../services';
-function* signInSaga() {
-  try {
-    const result: UserCredential = yield call(signInWithPopup, auth, provider);
-    const user: any = result.user;
-    const plainUser = {
-      uid: user.uid,
-      email: user.email,
-      displayName: user.displayName,
-    };
-    yield put(signInSuccess(plainUser));
-  } catch (error) {
-    yield put(signInFailure(error));
-  }
-}
+
 export function* verifyUserSaga({
   type,
   payload,
@@ -40,12 +25,12 @@ export function* verifyUserSaga({
     // Api call
     const verifyUser = yield call(fetchUserData, payload);
     yield put({
-      type: FETCH_USER_DATA_SUCCESS,
+      type: VERIFY_USER_DATA_SUCCESS,
       payload: verifyUser,
     });
   } catch (error: any) {
     yield put({
-      type: FETCH_USER_DATA_FAILURE,
+      type: VERIFY_USER_DATA_FAILURE,
       payload: false,
     });
   }
@@ -77,7 +62,7 @@ export function* fetchuserMetricSaga({
   payload: any;
 }): Generator<any> {
   try {
-    const fetchuserMetricData = yield call(fetchUserMetrics);
+    const fetchuserMetricData = yield call(fetchUserMetrics, payload);
     yield put({
       type: FETCH_USER_METRICTS_SUCCESS,
       payload: fetchuserMetricData,
@@ -88,9 +73,34 @@ export function* fetchuserMetricSaga({
     });
   }
 }
+function* loginSaga({ payload }: any) {
+  try {
+    const result: UserCredential = yield call(signInWithPopup, auth, provider);
+    console.log('re', result);
+    const resObject: any = {
+      displayName: result?.user?.displayName,
+      email: result?.user?.email,
+    };
+    yield put({ type: 'LOGIN_SUCCESS', payload: resObject });
+  } catch (error) {
+    yield put({ type: 'LOGIN_FAILURE', payload });
+  }
+}
+
+function* logoutSaga({ payload }: any) {
+  const signOut: any = () => auth.signOut();
+  try {
+    yield call(signOut, auth);
+    yield put({ type: 'LOGOUT_SUCCESS' });
+  } catch (error) {
+    yield put({ type: 'LOGOUT_FAILURE', payload });
+  }
+}
+
 export default function* rootSaga() {
-  yield takeLatest(SIGN_IN_REQUEST, signInSaga);
-  yield takeLatest(FETCH_USER_DATA, verifyUserSaga);
+  yield takeLatest(VERIFY_USER_DATA, verifyUserSaga);
   yield takeLatest(SIGN_UP_DATA, signUpUserSaga);
   yield takeLatest(FETCH_USER_METRICTS, fetchuserMetricSaga);
+  yield takeLatest('LOGIN_REQUEST', loginSaga);
+  yield takeEvery('LOGOUT_REQUEST', logoutSaga);
 }

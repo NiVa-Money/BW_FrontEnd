@@ -1,8 +1,8 @@
-import * as React from "react";
-import { SqureCardOne } from "@/components/dashBoardComponents/squreCardOne";
-import { SqureCardTwo } from "@/components/dashBoardComponents/squreCardTwo";
-import { CardHeader1 } from "@/components/dashBoardComponents/headerCard";
-import Link from "next/link";
+import * as React from 'react';
+import { SqureCardOne } from '@/components/dashBoardComponents/squreCardOne';
+import { SqureCardTwo } from '@/components/dashBoardComponents/squreCardTwo';
+import { CardHeader1 } from '@/components/dashBoardComponents/headerCard';
+import Link from 'next/link';
 const DashBoard: React.FC = () => {
   return (
     <div className="flex flex-col p-8 bg-[#0B031E] text-white">
@@ -23,9 +23,9 @@ const DashBoard: React.FC = () => {
           <div className="text-lg">Active Bots</div>
           <div className="text-3xl font-bold">0</div>
           <button className="mt-4 bg-[#46217C] text-white px-6 py-2 rounded-full flex items-center">
-          <Link href={`/createBot`}>
-            <span>Create Bot</span>
-          </Link>
+            <Link href={`/createBot`}>
+              <span>Create Bot</span>
+            </Link>
             <span className="ml-2 text-xl">+</span>
           </button>
         </div>
@@ -35,13 +35,9 @@ const DashBoard: React.FC = () => {
         <div className="bg-[#1E1935] rounded-2xl p-4">
           <div className="text-lg mb-4">Session Usage</div>
           <div className="relative h-48 w-48 mx-auto">
-           
             {/* Add your circular progress component here */}
             <div>
-              <SqureCardOne 
-                 sessionLeft={10000}
-                 sessionTotal={10000}
-              />
+              <SqureCardOne sessionLeft={10000} sessionTotal={10000} />
             </div>
           </div>
         </div>
@@ -67,7 +63,11 @@ const DashBoard: React.FC = () => {
           <div className="flex items-center mb-4">
             <div className="bg-[#46217C] rounded-full p-2 mr-2">
               <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
-                <path fillRule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clipRule="evenodd" />
+                <path
+                  fillRule="evenodd"
+                  d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
+                  clipRule="evenodd"
+                />
               </svg>
             </div>
             <div className="text-lg">User Profile</div>

@@ -35,10 +35,11 @@ const Modal: React.FC<ModalProps> = ({ closeModal, handleSignUp }) => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-
     try {
       console.log('form', formData);
       // First, sign up the user
+      localStorage.setItem('emailId', formData.emailId);
+
       dispatch(signUpDataAction(formData));
 
       // Then, verify the email
@@ -136,7 +137,6 @@ const Modal: React.FC<ModalProps> = ({ closeModal, handleSignUp }) => {
                 required
               />
             </label>
-
             <button
               type="submit"
               className="w-full text-white p-2 rounded mt-8"

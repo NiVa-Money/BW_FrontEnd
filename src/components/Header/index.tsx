@@ -40,7 +40,7 @@ const Header: React.FC = () => {
         </Link>
         <nav className="flex gap-5 justify-between items-center py-2 pl-3 text-sm leading-5 max-md:flex-wrap ">
           <ul className="flex gap-10">
-          <Link className={`link ${pathname === '/' ? 'active' : ''}`} href="/">
+          <Link className={`link ${pathname === '/home' ? 'active' : ''}`} href="/home">
             Home
           </Link>
           <Link className={`link ${pathname === '/aboutUs' ? 'active' : ''}`} href="/aboutUs">
