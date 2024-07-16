@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@/redux/configureStore';
 import { useEffect } from 'react';
 import {
-  verifyUserDataActionn,
+  verifyUserDataAction,
   signUpDataAction,
 } from '@/redux/actions/authActions';
 import Testimonials from '@/components/testemonial/Testimonials';
@@ -25,7 +25,7 @@ const LandingPage: React.FC = () => {
 
   useEffect(() => {
     if (userEmail?.length && !googleVerifyRedux) {
-      dispatch(verifyUserDataActionnn(userEmail));
+      dispatch(verifyUserDataAction(userEmail));
     }
   }, [userEmail]);
   useEffect(() => {
