@@ -2,8 +2,17 @@ import * as React from 'react';
 import { SqureCardOne } from '@/components/dashBoardComponents/squreCardOne';
 import { SqureCardTwo } from '@/components/dashBoardComponents/squreCardTwo';
 import { CardHeader1 } from '@/components/dashBoardComponents/headerCard';
+import { useSelector } from 'react-redux';
+import { RootState } from '@/redux/configureStore';
+
 import Link from 'next/link';
 const DashBoard: React.FC = () => {
+  const sessionTotal = useSelector(
+    (state: RootState) => state.root.userMetric.data.sessionTotal
+  );
+  const sessionLeft = useSelector(
+    (state: RootState) => state.root.userMetric.data.sessionLeft
+  );
   return (
     <div className="flex flex-col p-8 bg-[#0B031E] text-white">
       <div className="grid grid-cols-4 gap-4">
@@ -37,7 +46,7 @@ const DashBoard: React.FC = () => {
           <div className="relative h-48 w-48 mx-auto">
             {/* Add your circular progress component here */}
             <div>
-              <SqureCardOne sessionLeft={10000} sessionTotal={10000} />
+            <SqureCardOne sessionTotal={sessionTotal} sessionLeft={sessionLeft} />
             </div>
           </div>
         </div>

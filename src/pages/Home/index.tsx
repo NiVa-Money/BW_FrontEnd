@@ -33,7 +33,7 @@ const LandingPage: React.FC = () => {
       dispatch(verifyUserDataAction(userEmail));
     }
     if (userVerify) {
-      console.log('dash');
+    
       router.push('/dashBoard');
     } else {
       if (googleVerifyRedux) {
