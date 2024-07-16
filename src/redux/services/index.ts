@@ -58,7 +58,7 @@ export const getUserProfileService = async (payload: any) => {
     return response.data;
   } catch (error: any) {
     console.error(
-      'Error fetching user metrics:',
+      'Error fetching user profile:',
       error.response ? error.response.data : error.message
     );
     throw new Error('Error fetching user metrics');
