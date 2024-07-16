@@ -2,6 +2,7 @@ import {
   VERIFY_USER_DATA,
   VERIFY_USER_DATA_SUCCESS,
   FETCH_USER_METRICTS,
+  GET_USER_PROFILE,
   LOGOUT_USER,
   SIGN_UP_DATA,
 } from '../actionTypes';
@@ -32,3 +33,8 @@ export const fetchMetricsAction = (user_id: any) => ({
 
 export const loginRequest = () => ({ type: 'LOGIN_REQUEST' });
 export const logoutRequest = () => ({ type: 'LOGOUT_REQUEST' });
+
+export const getUserProfileAction = (userData: any) => ({
+  type: GET_USER_PROFILE,
+  payload: userData,
+});

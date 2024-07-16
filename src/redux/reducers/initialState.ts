@@ -10,6 +10,10 @@ const initialState: any = {
       data: {},
       loader: true,
     },
+    userProfile: {
+      data: {},
+      loader: true,
+    },
   },
 };
 

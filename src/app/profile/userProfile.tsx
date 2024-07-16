@@ -1,14 +1,44 @@
-import * as React from "react";
+'use client';
+import { getUserProfileAction } from '@/redux/actions/authActions';
+import { RootState } from '@/redux/configureStore';
+import * as React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
 const ProfileComponent: React.FC = () => {
+  const userEmail = useSelector((state: RootState) => state.root?.user?.email);
+  const userDataRedux = useSelector(
+    (state: RootState) => state.root?.userProfile?.data
+  );
+  const pathName = useSelector((state: RootState) => state.root?.pathName);
+  const [profileData, setProfileData] = React.useState<any>(userDataRedux);
+  const dispatch = useDispatch();
+
+  React.useEffect(() => {
+    setProfileData(userDataRedux);
+  }, [userDataRedux]);
+
+  React.useEffect(() => {
+    if (userEmail?.length || pathName === '/profile') {
+      dispatch(getUserProfileAction(userEmail));
+    }
+  }, [userEmail, pathName]);
+  React.useEffect(() => {
+    if (userEmail?.length) {
+      dispatch(getUserProfileAction(userEmail));
+    }
+  }, []);
+
   return (
     <div className="flex flex-col p-6 bg-[#0B031E] text-white">
       <h1 className="text-4xl font-bold text-center mb-10">Profile</h1>
       <div className="space-y-5">
-        <ProfileField label="Name" value="manushree verma" />
-        <ProfileField label="Email" value="test@gmail.com" />
+        <ProfileField
+          label="Name"
+          value={`${profileData?.firstName} ${profileData?.lastName}`}
+        />
+        <ProfileField label="Email" value={`${profileData?.emailId}`} />
         <ProfileField label="Country" value="United states" />
-        <ProfileField label="Phone number" value="+1 5885187952" />
+        <ProfileField label="Phone number" value={`${profileData?.mobileNo}`} />
       </div>
     </div>
   );

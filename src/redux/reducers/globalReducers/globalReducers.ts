@@ -11,6 +11,9 @@ import {
   SIGN_UP_DATA,
   SIGN_UP_DATA_FAILURE,
   SIGN_UP_DATA_SUCCESS,
+  GET_USER_PROFILE,
+  GET_USER_PROFILE_SUCCESS,
+  GET_USER_PROFILE_FAILURE,
 } from '@/redux/actions/actionTypes';
 import initialState from '../initialState';
 export default function globalReducers(state = initialState.root, action: any) {
@@ -96,6 +99,32 @@ export default function globalReducers(state = initialState.root, action: any) {
           ...state.userMetric,
           data: action.payload,
           loader: true,
+        },
+      };
+    case GET_USER_PROFILE:
+      return {
+        ...state,
+        userProfile: {
+          ...state.userProfile,
+          loader: true,
+        },
+      };
+    case GET_USER_PROFILE_SUCCESS:
+      return {
+        ...state,
+        userProfile: {
+          ...state.userProfile,
+          data: action.payload,
+          loader: false,
+        },
+      };
+    case GET_USER_PROFILE_FAILURE:
+      return {
+        ...state,
+        userProfile: {
+          ...state.userProfile,
+          data: action.payload,
+          loader: false,
         },
       };
     default:
