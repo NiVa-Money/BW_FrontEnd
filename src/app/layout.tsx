@@ -17,7 +17,7 @@ export default function RootLayout({
 }>) {
   const routeWithoutHeader: string[] = ['/MyChatBots', '/createBot','/editBot',"/knowledgeBase","/profile","/memberShip","/faq","/dashBoard","/createKnowledgeBase","/newchat"];
   const routeWithoutFooter: string[] = ['/MyChatBots', '/createBot','/editBot',"/knowledgeBase","/profile","/memberShip","/faq","/dashBoard","/createKnowledgeBase","/newchat"];
-  const routeWithoutSidebar: string[] = ['/createBot','/editBot',"/aboutUs","/pricing","/blog","/contactUs"];
+  const routeWithoutSidebar: string[] = ['/createBot','/editBot',"/aboutUs","/pricing","/blog","/contactUs","/home"];
 
   return (
     <Provider store={store}>
