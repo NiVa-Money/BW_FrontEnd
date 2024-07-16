@@ -29,5 +29,6 @@ export const fetchMetricsAction = (user_id: any) => ({
   type: FETCH_USER_METRICTS,
   payload: user_id,
 });
+
 export const loginRequest = () => ({ type: 'LOGIN_REQUEST' });
 export const logoutRequest = () => ({ type: 'LOGOUT_REQUEST' });
