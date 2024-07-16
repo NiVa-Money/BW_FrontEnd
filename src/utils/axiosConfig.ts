@@ -1,7 +1,8 @@
 import axios, { AxiosRequestConfig } from 'axios';
 
 const axiosInstance = axios.create({
-  baseURL: 'http://13.235.189.116:8000',
+  // baseURL_prod: 'http://13.235.189.116:8000',
+  baseURL: 'http://13.71.119.166:8000/',
 });
 
 axiosInstance.interceptors.request.use(
@@ -10,12 +11,12 @@ axiosInstance.interceptors.request.use(
     if (token) {
       config.headers = {
         ...config.headers,
-        'Authorization': `Bearer ${token}`
+        Authorization: `Bearer ${token}`,
       };
     }
     config.headers = {
       ...config.headers,
-      'Accept': 'application/json'
+      Accept: 'application/json',
     };
     return config;
   },

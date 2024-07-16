@@ -3,17 +3,14 @@ const initialState: any = {
     pathName: '',
     user: null,
     error: null,
+    googleLogin: false,
     userData: null,
     userVerify: false,
     userMetric: {
-      data:{
-
-      },
+      data: {},
       loader: true,
-    }
+    },
   },
-  
-  
 };
 
 export default initialState;
