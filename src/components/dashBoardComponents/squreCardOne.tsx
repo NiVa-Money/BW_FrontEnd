@@ -17,14 +17,18 @@ interface SqureCardOneProps {
 export function SqureCardOne({ sessionTotal, sessionLeft }: SqureCardOneProps) {
   const dispatch = useDispatch();
   const verifyVal = useSelector((state: RootState) => state.root.userVerify);
-  const userId = useSelector((state: RootState) => state.root?.userData?.user_id);
+  const userId = useSelector(
+    (state: RootState) => state.root?.userData?.user_id
+  );
+  const pathName = useSelector((state: RootState) => state.root?.pathName);
+
   const metrics = useSelector((state: RootState) => state.root.userMetric.data);
 
   const [metricData, setMetricData] = useState({
     sessionTotal: 0,
     sessionLeft: 0,
   });
-console.log(metricData)
+  console.log(metricData);
   useEffect(() => {
     const savedMetrics = localStorage.getItem('metricsData');
     if (savedMetrics) {
@@ -37,17 +41,20 @@ console.log(metricData)
   }, []);
 
   useEffect(() => {
-    if (verifyVal) {
+    if (verifyVal || pathName === '/dashBoard') {
       dispatch(fetchMetricsAction(userId));
     }
-  }, [verifyVal]);
+  }, [verifyVal, pathName]);
 
   useEffect(() => {
     if (metrics && Object.keys(metrics).length > 0) {
       const { sessionTotal = 0, sessionLeft = 0 } = metrics;
       setMetricData({ sessionTotal, sessionLeft });
       try {
-        localStorage.setItem('metricsData', JSON.stringify({ sessionTotal, sessionLeft }));
+        localStorage.setItem(
+          'metricsData',
+          JSON.stringify({ sessionTotal, sessionLeft })
+        );
       } catch (error) {
         console.error('Failed to save metrics data to local storage', error);
       }

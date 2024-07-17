@@ -419,4 +419,4 @@ const CreateBotComponent: React.FC = () => {
     </div>
   );
 };
-export default CreateBotComponent
+export default CreateBotComponent;

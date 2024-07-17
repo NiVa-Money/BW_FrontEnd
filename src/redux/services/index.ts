@@ -64,7 +64,116 @@ export const getUserProfileService = async (payload: any) => {
     throw new Error('Error fetching user metrics');
   }
 };
+// create user bot profile
+export const createUserBotProfileService = async (payload: any) => {
+  try {
+    const response = await axiosInstance.post('user/createBotProfile', payload);
+    return response.data;
+  } catch (error: any) {
+    console.error(
+      'Error response:',
+      error.response ? error.response.data : error.message
+    );
+    throw new Error('Error fetching user data');
+  }
+};
 
+// edit user bot profile
+export const editUserBotProfileService = async (payload: any) => {
+  try {
+    const response = await axiosInstance.post('user/editBotProfile', payload);
+    return response.data;
+  } catch (error: any) {
+    console.error(
+      'Error response:',
+      error.response ? error.response.data : error.message
+    );
+    throw new Error('Error fetching user data');
+  }
+};
+
+//get userBotProfileServices
+export const getUserBotProfileService = async (payload: any) => {
+  try {
+    const response = await axiosInstance.get(
+      `user/getUserBotProfiles/?userId=${payload}`,
+      {}
+    );
+    return response.data;
+  } catch (error: any) {
+    console.error(
+      'Error fetching user Bot profile:',
+      error.response ? error.response.data : error.message
+    );
+    throw new Error('Error fetching user metrics');
+  }
+};
+
+//delete BotProfileServices
+export const deleteBotProfileService = async (payload: any) => {
+  try {
+    const response = await axiosInstance.put(
+      `user/deleteBotProfile/?userId=${payload}`,
+      {}
+    );
+    return response.data;
+  } catch (error: any) {
+    console.error(
+      'Error fetching user Bot profile:',
+      error.response ? error.response.data : error.message
+    );
+    throw new Error('Error fetching user metrics');
+  }
+};
+
+//create Knowledge base
+
+export const createKnowledgeBaseService = async (payload: any) => {
+  try {
+    const response = await axiosInstance.post(
+      'user/createKnowledgeBase',
+      payload
+    );
+    return response.data;
+  } catch (error) {
+    console.error('Error signing up user:', error);
+    2;
+    throw new Error('Error signing up user');
+  }
+};
+
+// get knowledge base
+export const getUserKnowledgeBaseService = async (payload: any) => {
+  try {
+    const response = await axiosInstance.get(
+      `user/getUserKnowledgeBase/?userId=${payload}`,
+      {}
+    );
+    return response.data;
+  } catch (error: any) {
+    console.error(
+      'Error fetching user Bot profile:',
+      error.response ? error.response.data : error.message
+    );
+    throw new Error('Error fetching user metrics');
+  }
+};
+
+//delete knowledge base
+export const deleteUserKnowledgeBaseService = async (payload: any) => {
+  try {
+    const response = await axiosInstance.put(
+      `user/deleteUserKnowledgeBase/?userId=${payload}`
+    );
+    return response.data;
+  } catch (error: any) {
+    console.error(
+      'Error fetching user Bot profile:',
+      error.response ? error.response.data : error.message
+    );
+    throw new Error('Error fetching user metrics');
+  }
+};
 //for logout
 export const logoutUser = () => {
   try {

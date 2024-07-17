@@ -12,11 +12,27 @@ const initialState: any = {
     },
     userProfile: {
       data: {},
-      loader: true,
+      loader: false,
+    },
+    botProfile: {
+      create: {
+        data: {},
+        loader: false,
+      },
+      edit: {
+        data: {},
+        loader: false,
+      },
+      botProfiles: {
+        data: [],
+        loader: false,
+      },
+      delete: {
+        data: {},
+        loader: false,
+      },
     },
   },
 };
 
 export default initialState;
-
-
