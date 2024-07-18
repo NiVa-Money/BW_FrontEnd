@@ -16,7 +16,7 @@
 // sagaMiddleware.run(rootSaga);
 import { configureStore } from '@reduxjs/toolkit';
 import createSagaMiddleware from 'redux-saga';
-import globalReducers from './reducers/globalReducers/globalReducers';
+import globalReducers from './reducers/globalReducers';
 import rootSaga from './saga';
 
 const sagaMiddleware = createSagaMiddleware();

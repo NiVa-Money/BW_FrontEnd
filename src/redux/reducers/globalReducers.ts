@@ -15,7 +15,7 @@ import {
   GET_USER_PROFILE_SUCCESS,
   GET_USER_PROFILE_FAILURE,
 } from '@/redux/actions/actionTypes';
-import initialState from '../initialState';
+import initialState from './initialState';
 export default function globalReducers(state = initialState.root, action: any) {
   switch (action.type) {
     case SET_PATHNAME:
