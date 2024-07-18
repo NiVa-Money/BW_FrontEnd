@@ -15,10 +15,25 @@ import {
   SIGN_UP_DATA_FAILURE,
   SIGN_UP_DATA_SUCCESS,
   GET_USER_PROFILE,
+  CREATE_BOT_PROFILE_FAILURE,
+  EDIT_BOT_PROFILE_SUCCESS,
+  EDIT_BOT_PROFILE_FAILURE,
+  GET_USER_BOT_PROFILE_SUCCESS,
+  GET_USER_BOT_PROFILE_FAILURE,
+  DELETE_BOT_PROFILE_SUCCESS,
+  DELETE_BOT_PROFILE_FAILURE,
+  CREATE_BOT_PROFILE,
+  EDIT_BOT_PROFILE,
+  DELETE_BOT_PROFILE,
+  GET_USER_BOT_PROFILE,
 } from '../actions/actionTypes';
 import {
+  createUserBotProfileService,
+  deleteBotProfileService,
+  editUserBotProfileService,
   fetchUserData,
   fetchUserMetrics,
+  getUserBotProfileService,
   getUserProfileService,
   signUpUserData,
 } from '../services';
@@ -64,8 +79,8 @@ export function* signUpUserSaga({
   }
 }
 export function* fetchuserMetricSaga({
-  type,
   payload,
+  type,
 }: {
   type: string;
   payload: any;
@@ -107,7 +122,6 @@ function* logoutSaga({ payload }: any) {
 }
 
 export function* getUserProfileSaga({
-  type,
   payload,
 }: {
   type: string;
@@ -125,6 +139,86 @@ export function* getUserProfileSaga({
     });
   }
 }
+//bot profile sagas
+export function* createBotProfileSaga({
+  payload,
+}: {
+  type: string;
+  payload: any;
+}): Generator<any> {
+  try {
+    const createBot = yield call(createUserBotProfileService, payload);
+    yield put({
+      type: CREATE_BOT_PROFILE_FAILURE,
+      payload: createBot,
+    });
+  } catch (error: any) {
+    yield put({
+      type: CREATE_BOT_PROFILE_FAILURE,
+    });
+  }
+}
+
+export function* editBotProfileSaga({
+  type,
+  payload,
+}: {
+  type: string;
+  payload: any;
+}): Generator<any> {
+  try {
+    const editBot = yield call(editUserBotProfileService, payload);
+    yield put({
+      type: EDIT_BOT_PROFILE_SUCCESS,
+      payload: editBot,
+    });
+  } catch (error: any) {
+    yield put({
+      type: EDIT_BOT_PROFILE_FAILURE,
+    });
+  }
+}
+
+export function* getBotProfilesSaga({
+  payload,
+  type,
+}: {
+  type: string;
+  payload: any;
+}): Generator<any> {
+  try {
+    const botProfiles = yield call(getUserBotProfileService, payload);
+    yield put({
+      type: GET_USER_BOT_PROFILE_SUCCESS,
+      payload: botProfiles,
+    });
+  } catch (error: any) {
+    yield put({
+      type: GET_USER_BOT_PROFILE_FAILURE,
+    });
+  }
+}
+
+export function* deleteBotProfilesSaga({
+  payload,
+  type,
+}: {
+  type: string;
+  payload: any;
+}): Generator<any> {
+  try {
+    const botProfiles = yield call(deleteBotProfileService, payload);
+    yield put({
+      type: DELETE_BOT_PROFILE_SUCCESS,
+      payload: botProfiles,
+    });
+  } catch (error: any) {
+    yield put({
+      type: DELETE_BOT_PROFILE_FAILURE,
+    });
+  }
+}
+
 export default function* rootSaga() {
   yield takeLatest(VERIFY_USER_DATA, verifyUserSaga);
   yield takeLatest(SIGN_UP_DATA, signUpUserSaga);
@@ -132,4 +226,8 @@ export default function* rootSaga() {
   yield takeLatest('LOGIN_REQUEST', loginSaga);
   yield takeEvery('LOGOUT_REQUEST', logoutSaga);
   yield takeEvery(GET_USER_PROFILE, getUserProfileSaga);
+  yield takeEvery(CREATE_BOT_PROFILE, createBotProfileSaga);
+  yield takeEvery(EDIT_BOT_PROFILE, editBotProfileSaga);
+  yield takeEvery(DELETE_BOT_PROFILE, deleteBotProfilesSaga);
+  yield takeEvery(GET_USER_BOT_PROFILE, getBotProfilesSaga);
 }
