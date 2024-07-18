@@ -5,6 +5,7 @@ import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import Link from 'next/link';
 
 interface ChatBot {
+  botId?: any;
   name: string;
   description: string;
   icon: string;
@@ -37,6 +38,50 @@ const chatBots: ChatBot[] = [
 ];
 
 const ChatBotList: React.FC = () => {
+  
+  // Function to handle delete action
+  const handleDelete = async (index: number) => {
+    const botToDelete = chatBots[index];
+
+    // Prepare the request data
+    const requestData = {
+      botId: botToDelete.botId, // Replace with actual botId from your data structure
+      userId: 'currentUserId', // Replace with actual userId from your authentication/session
+    };
+
+    try {
+      // Make the API request
+      const response = await fetch('/user/deleteBotProfile', {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(requestData),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to delete bot');
+      }
+
+      // Assuming success, update state or perform necessary actions
+      const updatedBots = [...chatBots];
+      updatedBots.splice(index, 1);
+      // Update state or perform necessary actions
+
+    } catch (error) {
+      console.error('Error deleting bot:', error);
+      // Handle error, show message, retry logic, etc.
+    }
+  };
+
+  // Function to handle edit action
+  const handleEdit = (index: number) => {
+    // Implement edit logic here
+    console.log(`Editing bot at index ${index}`);
+    // Example: Redirect or navigate to edit page
+    // Example: Pass data to edit form
+  };
+
   return (
     <main className="flex flex-col">
       <header className="flex gap-2.5 px-5 max-md:flex-wrap">
@@ -52,7 +97,14 @@ const ChatBotList: React.FC = () => {
       </header>
       <section className="mt-12 px-10">
         {chatBots.map((bot, index) => (
-          <ChatBotCard key={index} bot={bot} />
+          <ChatBotCard
+            key={index}
+            bot={bot}
+            actions={{
+              onDelete: () => handleDelete(index),
+              onEdit: () => handleEdit(index),
+            }}
+          />
         ))}
       </section>
     </main>

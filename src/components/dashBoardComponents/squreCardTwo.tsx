@@ -6,15 +6,15 @@ import { BarChart } from '@tremor/react';
 const chartdata = [
   {
     name: 'User 1',
-    'Uses per hours': 2488,
+    'Uses per hours': 0,
   },
   {
     name: 'User 2',
-    'Uses per hours': 1445,
+    'Uses per hours': 0,
   },
   {
     name: 'User 3',
-    'Uses per hours': 743,
+    'Uses per hours': 0,
   },
   {
     name: 'User 4',
