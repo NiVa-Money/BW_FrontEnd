@@ -73,6 +73,24 @@ const CreateBotComponent: React.FC = () => {
   const handleBack = () => {
     if (step > 1) setStep(step - 1);
   };
+
+  const handleSave = () => {
+    
+    const saveData = {
+      botName,
+      botTone,
+      botColor: chatColor,
+      botIconType: imageSrc ? imageSrc : botProfile, 
+      docName: filename,
+      docType: knowledgeBase.length > 0 ? 'pdf' : '', 
+      docId: '', 
+      userId: '', 
+      file: imageSrc ? imageSrc : '', 
+    };
+
+    console.log('Save data:', saveData);
+
+  };
   const botSamples = [
     {
       imageUrl: bot1.src,
@@ -120,14 +138,18 @@ const CreateBotComponent: React.FC = () => {
       imageUrl: bot15.src,
     },
   ];
+
   const handleBotSampleClick = (imageUrl: any) => {
     setImageSrc(imageUrl);
   };
+
   const renderStep1 = () => (
     <>
       <div className="mb-4">
         <label className="block text-gray-200 mb-2">Bot Name</label>
+        {/* need to give name */}
         <input
+          name= "botName"
           type="text"
           value={botName}
           onChange={(e) => setBotName(e.target.value)}
@@ -336,14 +358,13 @@ const CreateBotComponent: React.FC = () => {
             <span className="mr-4">Step {step} of 2</span>
           </div>
           <div>
+            {/* onclick => on save button need to give a object that take all the value of all fields object into a single object */}
             <button
-              onClick={
-                step === 2 ? () => console.log('Save bot') : handleContinue
-              }
-              className="bg-[#3F2181] w-[Hug (287px)px] rounded-[99px] text-white px-6 py-2 "
-            >
-              {step === 2 ? 'Save' : 'Continue'}
-            </button>
+          onClick={step === 2 ? handleSave : handleContinue}
+          className="bg-[#3F2181] text-white px-4 py-2 rounded"
+        >
+          {step === 2 ? 'Save' : 'Continue'}
+        </button>
           </div>
         </div>
 
