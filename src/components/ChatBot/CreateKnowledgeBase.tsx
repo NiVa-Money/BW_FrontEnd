@@ -189,6 +189,7 @@
 // }
 
 // export default CreateKnowledgeBase
+
 'use client'
 
 import * as React from 'react'
