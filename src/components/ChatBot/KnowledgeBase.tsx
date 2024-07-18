@@ -54,7 +54,7 @@
 // }
 
 // export default KnowledgeBase;
-
+"use client"
 
 import React, { useEffect, useState } from 'react';
 import ChatBotCard from '../ChatBot/ChatBotCard';

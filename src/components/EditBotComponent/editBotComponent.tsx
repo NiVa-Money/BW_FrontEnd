@@ -26,7 +26,7 @@ const EditBotComponent: React.FC = () => {
   const [step, setStep] = useState(1);
   const [botName, setBotName] = useState('BotWot Assistant');
   const [botTone, setBotTone] = useState('Formal Tone');
-  const [chatColor, setChatColor] = useState('#3B82F6'); // Default blue color
+  const [chatColor, setChatColor] = useState('#3B82F6'); 
   const [botProfile, setBotProfile] = useState(
     '/path/to/default/bot/image.png'
   );

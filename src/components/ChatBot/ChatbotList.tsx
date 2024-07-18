@@ -1,8 +1,10 @@
+"use client"
 import React from 'react';
 import ChatBotCard from './ChatBotCard';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import Link from 'next/link';
+
 
 interface ChatBot {
   botId?: any;
