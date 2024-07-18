@@ -67,8 +67,8 @@ const CreateBotComponent: React.FC = () => {
     const file = event.target.files?.[0]
     if (file && file.size <= 2 * 1024 * 1024 && file.type === 'application/pdf') {
       setSelectedFile(file)
-      
-      await handleSave()
+      setFileName(file.name);
+      // await handleSave()
     } else {
       alert('File must be a PDF and less than 2MB')
     }
@@ -76,6 +76,7 @@ const CreateBotComponent: React.FC = () => {
 
   const handleFileUpload = (event: any) => {
     const file = event.target.files[0];
+    console.log("img",file)
     setImageName(file.name);
 
     // Read file as binary string
@@ -108,8 +109,7 @@ const CreateBotComponent: React.FC = () => {
   
 
   const handleSave = async () => {
-    console.log("formData")
-    console.log(viewerRef)
+    console.log("formData",filename,selectedFile)
     const docId = uuidv4();
     const formData = new FormData();
     formData.append('botName', botName);
@@ -122,13 +122,22 @@ const CreateBotComponent: React.FC = () => {
     formData.append('userId', userId);
      
     if (selectedFile) {
-
       formData.append('file', selectedFile);
     } else {
       console.error('No file selected');
     }   
+ 
+    const formDataObject = {};
+    for (const [key, value] of formData.entries()) {
+        formDataObject[key] = value;
+    }
+   
+    delete formDataObject.file;
 
-    dispatch(createBotProfileAction(formData))
+    const response = await createUserBotProfileService(formData)
+    console.log("res",response)
+
+    dispatch(createBotProfileAction(formDataObject))
   };
 
 //
@@ -258,8 +267,8 @@ const CreateBotComponent: React.FC = () => {
           </div>
           <input
             type="file"
-            onChange={handleFileChange}
-            ref={viewerRef}
+            onChange={handleFileUpload}
+            // ref={viewerRef}
             accept="image/*"
             id="file-upload"
             className="absolute top-[0] opacity-0 "
@@ -330,7 +339,8 @@ const CreateBotComponent: React.FC = () => {
             </div>
             <input
               type="file"
-              onChange={handleDocumentUpload}
+              onChange={handleFileChange}
+              ref={viewerRef}
               accept="pdf/*"
               id="file-upload"
               className="absolute top-[0] opacity-0 -[12px]"
@@ -402,7 +412,7 @@ const CreateBotComponent: React.FC = () => {
             {/* onclick => on save button need to give a object that take all the value of all fields object into a single object */}
             <button
             
-              onClick={step === 2 ? ()=> handleSave() : handleContinue}
+              onClick={step === 2 ? () => handleSave() : handleContinue}
               className="bg-[#3F2181] text-white px-4 py-2 rounded"
             >
               {step === 2 ? 'Save' : 'Continue'}
