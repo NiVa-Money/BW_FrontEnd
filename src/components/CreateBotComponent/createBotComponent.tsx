@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState,useRef } from 'react';
 import Image from 'next/image';
 import bot1 from '@/public/assets/bot1.svg';
 import bot2 from '@/public/assets/bot2.svg';
@@ -26,6 +26,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '@/redux/configureStore';
 import { createUserBotProfileService } from '@/redux/services';
 import { v4 as uuidv4 } from 'uuid';
+import { createBotProfileAction } from '@/redux/actions/BotProfileActions';
 
 const CreateBotComponent: React.FC = () => {
   const [step, setStep] = useState(1);
@@ -35,6 +36,8 @@ const CreateBotComponent: React.FC = () => {
   const [botProfile, setBotProfile] = useState(
     '/path/to/default/bot/image.png'
   );
+  // 
+  const viewerRef = useRef(null); 
   const [botIdentity, setBotIdentity] = useState(
     "You're a helpful customer support chatbot with excellent product knowledge. You assist customers with inquiries about our products, including offers app functionality troubleshooting account management and more."
   );
@@ -54,10 +57,23 @@ const CreateBotComponent: React.FC = () => {
   const [imageSrc, setImageSrc] = useState('');
   const [imagename, setImageName] = useState('');
   const [filename, setFileName] = useState('');
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const dispatch = useDispatch();
   const [textVal, setTextVal] = useState('');
   console.log(imageSrc);
   // Function to handle file upload
+
+  const handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0]
+    if (file && file.size <= 2 * 1024 * 1024 && file.type === 'application/pdf') {
+      setSelectedFile(file)
+      
+      await handleSave()
+    } else {
+      alert('File must be a PDF and less than 2MB')
+    }
+  }
+
   const handleFileUpload = (event: any) => {
     const file = event.target.files[0];
     setImageName(file.name);
@@ -92,27 +108,30 @@ const CreateBotComponent: React.FC = () => {
   
 
   const handleSave = async () => {
+    console.log("formData")
+    console.log(viewerRef)
     const docId = uuidv4();
-    const saveData = {
-      botName,
-      botTone,
-      botColor: chatColor,
-      botIconType: imageSrc || botProfile,
-      docName: filename,
-      docType: knowledgeBase.length > 0 ? 'pdf' : '',
-      docId,
-      userId: userId,
-      file: imageSrc || '',
-    };
-     console.log(saveData)
-    try {
-      const response =  dispatch(await createUserBotProfileService(saveData));
-      console.log('Save response:', response);
-    } catch (error) {
-      console.error('Error:', error);
-    
-    }
+    const formData = new FormData();
+    formData.append('botName', botName);
+    formData.append('botTone', botTone);
+    formData.append('botColor', chatColor);
+    formData.append('botIconType', imageSrc);
+    formData.append('docName', filename);
+    formData.append('docType', knowledgeBase.length >0 ? 'pdf': '');
+    formData.append('docId', docId);
+    formData.append('userId', userId);
+     
+    if (selectedFile) {
+
+      formData.append('file', selectedFile);
+    } else {
+      console.error('No file selected');
+    }   
+
+    dispatch(createBotProfileAction(formData))
   };
+
+//
 
   const botSamples = [
     {
@@ -239,7 +258,8 @@ const CreateBotComponent: React.FC = () => {
           </div>
           <input
             type="file"
-            onChange={handleFileUpload}
+            onChange={handleFileChange}
+            ref={viewerRef}
             accept="image/*"
             id="file-upload"
             className="absolute top-[0] opacity-0 "
@@ -381,7 +401,8 @@ const CreateBotComponent: React.FC = () => {
           <div>
             {/* onclick => on save button need to give a object that take all the value of all fields object into a single object */}
             <button
-              onClick={step === 2 ? handleSave : handleContinue}
+            
+              onClick={step === 2 ? ()=> handleSave() : handleContinue}
               className="bg-[#3F2181] text-white px-4 py-2 rounded"
             >
               {step === 2 ? 'Save' : 'Continue'}
