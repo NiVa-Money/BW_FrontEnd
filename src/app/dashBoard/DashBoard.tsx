@@ -2,35 +2,92 @@ import * as React from 'react';
 import { SqureCardOne } from '@/components/dashBoardComponents/squreCardOne';
 import { SqureCardTwo } from '@/components/dashBoardComponents/squreCardTwo';
 import { CardHeader1 } from '@/components/dashBoardComponents/headerCard';
-import { useSelector } from 'react-redux';
+import { useSelector,useDispatch } from 'react-redux';
 import { RootState } from '@/redux/configureStore';
-
+import  { useEffect, useState } from 'react';
 import Link from 'next/link';
+import { fetchMetricsAction } from '@/redux/actions/authActions';
+import { getUserProfileAction } from '@/redux/actions/authActions';
+
+
+
 const DashBoard: React.FC = () => {
-  const sessionTotal = useSelector(
-    (state: RootState) => state.root.userMetric.data.sessionTotal
+  const pathName = useSelector((state: RootState) => state.root?.pathName);
+  const dispatch = useDispatch();
+  const verifyVal = useSelector((state: RootState) => state.root.userVerify);
+  const userId = useSelector((state: RootState) => state.root?.userData?.user_id);
+
+  const userMetricData = useSelector(
+    (state: RootState) => state?.root?.userMetric?.data
   );
-  const sessionLeft = useSelector(
-    (state: RootState) => state.root.userMetric.data.sessionLeft
+  const userEmail = useSelector((state: RootState) => state.root?.user?.email);
+  const userDataRedux = useSelector(
+    (state: RootState) => state.root?.userProfile?.data
   );
+  const [profileData, setProfileData] = React.useState<any>(userDataRedux);
+
+
+  React.useEffect(() => {
+    setProfileData(userDataRedux);
+  }, [userDataRedux]);
+
+  React.useEffect(() => {
+    if (userEmail?.length || pathName === '/profile') {
+      dispatch(getUserProfileAction(userEmail));
+    }
+  }, [userEmail, pathName]);
+  React.useEffect(() => {
+    if (userEmail?.length) {
+      dispatch(getUserProfileAction(userEmail));
+    }
+  }, []);
+
+
+  const [metricData, setMetricData] = useState(userMetricData);
+  
+  useEffect(() => {
+    const savedMetrics = localStorage.getItem('metricsData');
+    if (savedMetrics) {
+      try {
+        setMetricData(JSON.parse(savedMetrics));
+      } catch (error) {
+        console.error('Failed to parse metrics data from local storage', error);
+      }
+    }
+  }, []);
+  
+  useEffect(() => {
+    if (verifyVal || pathName==="/dashBoard") {
+      dispatch(fetchMetricsAction(userId));
+    }
+  }, [verifyVal]);
+    
+
+useEffect(() => {
+  if(userMetricData && Object?.keys(userMetricData).length>0  ){
+  setMetricData(userMetricData)
+  }
+}, [userMetricData])
+console.log("dasfaesc",metricData)
   return (
     <div className="flex flex-col p-8 bg-[#0B031E] text-white">
       <div className="grid grid-cols-4 gap-4">
         <div className="bg-[#8E2DA0] rounded-2xl p-4">
           <div className="text-sm">Sessions Consumed</div>
-          <div className="text-3xl font-bold">0</div>
+          <div className="text-3xl font-bold">{metricData?.sessionConsumed}</div>
         </div>
         <div className="bg-[#46217C] rounded-2xl p-4">
           <div className="text-sm">Sessions Left</div>
-          <div className="text-3xl font-bold">0</div>
+          <div className="text-3xl font-bold">{metricData?.sessionLeft}</div>
         </div>
         <div className="bg-[#6E54EF] rounded-2xl p-4">
           <div className="text-sm">Total Sessions</div>
-          <div className="text-3xl font-bold">0</div>
+          <div className="text-3xl font-bold">{metricData?.sessionTotal}</div>
         </div>
         <div className="bg-[#1E1935] rounded-2xl p-4 flex flex-col items-center">
           <div className="text-lg">Active Bots</div>
-          <div className="text-3xl font-bold">0</div>
+          <div className="text-3xl font-bold">{metricData?.activeBots}</div>
+
           <button className="mt-4 bg-[#46217C] text-white px-6 py-2 rounded-full flex items-center">
             <Link href={`/createBot`}>
               <span>Create Bot</span>
@@ -39,14 +96,13 @@ const DashBoard: React.FC = () => {
           </button>
         </div>
       </div>
-
       <div className="grid grid-cols-3 gap-4 mt-4">
         <div className="bg-[#1E1935] rounded-2xl p-4">
           <div className="text-lg mb-4">Session Usage</div>
           <div className="relative h-48 w-48 mx-auto">
             {/* Add your circular progress component here */}
             <div>
-            <SqureCardOne sessionTotal={sessionTotal} sessionLeft={sessionLeft} />
+            <SqureCardOne sessionTotal={metricData?.sessionTotal} sessionLeft={metricData?.sessionLeft} />
             </div>
           </div>
         </div>
@@ -81,9 +137,9 @@ const DashBoard: React.FC = () => {
             </div>
             <div className="text-lg">User Profile</div>
           </div>
-          <div className="text-sm text-gray-400">Name</div>
+          <div className="text-sm text-gray-400">Name {profileData?.firstName}</div>
           {/* <div className="mb-2">Manushree Verma</div> */}
-          <div className="text-sm text-gray-400">User ID</div>
+          <div className="text-sm text-gray-400">User ID {profileData?.emailId}</div>
           {/* <div>Manushree1234@gmail.com</div> */}
         </div>
         <div className="bg-[#1E1935] rounded-2xl p-4 col-span-2">
