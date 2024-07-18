@@ -44,8 +44,10 @@ const EditBotComponent: React.FC = () => {
   const [step, setStep] = useState(1);
   const [botName, setBotName] = useState('BotWot Assistant');
   const [botTone, setBotTone] = useState('Formal Tone');
-  const [chatColor, setChatColor] = useState('#3B82F6'); // Default blue color
-  const [botProfile, setBotProfile] = useState('/path/to/default/bot/image.png');
+  const [chatColor, setChatColor] = useState('#3B82F6'); 
+  const [botProfile, setBotProfile] = useState(
+    '/path/to/default/bot/image.png'
+  );
   const [systemPrompt, setSystemPrompt] = useState(
     `You're a helpful customer support chatbot with excellent product
     knowledge. You assist customers with inquiries about our products,

@@ -21,6 +21,12 @@ import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import FileUploadIcon from '@mui/icons-material/FileUpload';
 import ZoomOutMapIcon from '@mui/icons-material/ZoomOutMap';
 import Link from 'next/link';
+//redux post 
+import { useSelector, useDispatch } from 'react-redux';
+import { RootState } from '@/redux/configureStore';
+import { createUserBotProfileService } from '@/redux/services';
+import { v4 as uuidv4 } from 'uuid';
+
 const CreateBotComponent: React.FC = () => {
   const [step, setStep] = useState(1);
   const [botName, setBotName] = useState('BotWot Assistant');
@@ -48,16 +54,25 @@ const CreateBotComponent: React.FC = () => {
   const [imageSrc, setImageSrc] = useState('');
   const [imagename, setImageName] = useState('');
   const [filename, setFileName] = useState('');
-
+  const dispatch = useDispatch();
   const [textVal, setTextVal] = useState('');
   console.log(imageSrc);
   // Function to handle file upload
   const handleFileUpload = (event: any) => {
     const file = event.target.files[0];
     setImageName(file.name);
-    const imageUrl = URL.createObjectURL(file); // Creates a blob URL
-    setImageSrc(imageUrl);
+
+    // Read file as binary string
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const binaryString = reader.result as string;
+      console.log('Binary String:', binaryString);
+
+    };
+
+    reader.readAsBinaryString(file);
   };
+
   const handleDocumentUpload = (event: any) => {
     const file = event.target.files[0];
     setFileName(file.name);
@@ -73,24 +88,32 @@ const CreateBotComponent: React.FC = () => {
   const handleBack = () => {
     if (step > 1) setStep(step - 1);
   };
+  const userId = useSelector((state: RootState) => state.root?.userData?.user_id);
+  
 
-  const handleSave = () => {
-    
+  const handleSave = async () => {
+    const docId = uuidv4();
     const saveData = {
       botName,
       botTone,
       botColor: chatColor,
-      botIconType: imageSrc ? imageSrc : botProfile, 
+      botIconType: imageSrc || botProfile,
       docName: filename,
-      docType: knowledgeBase.length > 0 ? 'pdf' : '', 
-      docId: '', 
-      userId: '', 
-      file: imageSrc ? imageSrc : '', 
+      docType: knowledgeBase.length > 0 ? 'pdf' : '',
+      docId,
+      userId: userId,
+      file: imageSrc || '',
     };
-
-    console.log('Save data:', saveData);
-
+     console.log(saveData)
+    try {
+      const response =  dispatch(await createUserBotProfileService(saveData));
+      console.log('Save response:', response);
+    } catch (error) {
+      console.error('Error:', error);
+    
+    }
   };
+
   const botSamples = [
     {
       imageUrl: bot1.src,
@@ -138,7 +161,7 @@ const CreateBotComponent: React.FC = () => {
       imageUrl: bot15.src,
     },
   ];
-
+   
   const handleBotSampleClick = (imageUrl: any) => {
     setImageSrc(imageUrl);
   };
@@ -149,7 +172,7 @@ const CreateBotComponent: React.FC = () => {
         <label className="block text-gray-200 mb-2">Bot Name</label>
         {/* need to give name */}
         <input
-          name= "botName"
+          name="botName"
           type="text"
           value={botName}
           onChange={(e) => setBotName(e.target.value)}
@@ -170,11 +193,10 @@ const CreateBotComponent: React.FC = () => {
             <button
               key={color}
               onClick={() => setChatColor(color)}
-              className={`w-8 h-8 rounded-full ${
-                color === 'rainbow'
+              className={`w-8 h-8 rounded-full ${color === 'rainbow'
                   ? 'bg-gradient-to-r from-red-500 via-green-500 to-blue-500'
                   : ''
-              }`}
+                }`}
               style={{
                 backgroundColor: color !== 'rainbow' ? color : undefined,
               }}
@@ -249,11 +271,10 @@ const CreateBotComponent: React.FC = () => {
             <button
               key={tone}
               onClick={() => setBotTone(tone)}
-              className={`px-4 py-2 rounded ${
-                botTone === tone
+              className={`px-4 py-2 rounded ${botTone === tone
                   ? 'bg-[#3F2181] text-white h-[Hug (38px)px] rounded-[24px]'
                   : 'text-gray-200'
-              }`}
+                }`}
             >
               {tone}
             </button>
@@ -360,11 +381,11 @@ const CreateBotComponent: React.FC = () => {
           <div>
             {/* onclick => on save button need to give a object that take all the value of all fields object into a single object */}
             <button
-          onClick={step === 2 ? handleSave : handleContinue}
-          className="bg-[#3F2181] text-white px-4 py-2 rounded"
-        >
-          {step === 2 ? 'Save' : 'Continue'}
-        </button>
+              onClick={step === 2 ? handleSave : handleContinue}
+              className="bg-[#3F2181] text-white px-4 py-2 rounded"
+            >
+              {step === 2 ? 'Save' : 'Continue'}
+            </button>
           </div>
         </div>
 
