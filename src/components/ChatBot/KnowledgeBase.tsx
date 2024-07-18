@@ -56,8 +56,6 @@
 // export default KnowledgeBase;
 
 
-'use client'
-
 import React, { useEffect, useState } from 'react';
 import ChatBotCard from '../ChatBot/ChatBotCard';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -65,6 +63,7 @@ import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import Link from 'next/link';
 
 interface KnowledgeBaseCardProps {
+  docId: any;
   name: string;
   description: string;
   icon: string;
@@ -95,6 +94,38 @@ const KnowledgeBase: React.FC = () => {
     fetchKnowledgeBase();
   }, []);
 
+  const handleDelete = async (index: number) => {
+    try {
+      const docId = knowledgebase[index].docId; // Assuming docId is part of knowledgebase entry
+      const userId = 'YOUR_USER_ID'; // Replace with actual userId
+
+      const response = await fetch(`/user/deleteUserKnowledgeBase?docId=${docId}&userId=${userId}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to delete knowledge base entry');
+      }
+
+      // Update state or handle UI after successful deletion
+      const updatedKnowledgeBase = [...knowledgebase];
+      updatedKnowledgeBase.splice(index, 1);
+      setKnowledgebase(updatedKnowledgeBase);
+
+      console.log('Knowledge base entry deleted successfully');
+    } catch (error) {
+      console.error('Error deleting knowledge base entry:', error);
+    }
+  };
+
+  const handleDownload = (index: number) => {
+    // Implement download functionality
+    console.log(`Download bot at index ${index}`);
+  };
+
   return (
     <main className="flex flex-col">
       <header className="flex gap-2.5 px-5 max-md:flex-wrap">
@@ -110,7 +141,14 @@ const KnowledgeBase: React.FC = () => {
       </header>
       <section className="mt-12 px-10">
         {knowledgebase.map((bot, index) => (
-          <ChatBotCard key={index} bot={bot} />
+          <ChatBotCard
+            key={index}
+            bot={bot}
+            actions={{
+              onDelete: () => handleDelete(index),
+              onDownload: () => handleDownload(index),
+            }}
+          />
         ))}
       </section>
     </main>
@@ -118,4 +156,3 @@ const KnowledgeBase: React.FC = () => {
 }
 
 export default KnowledgeBase;
-
