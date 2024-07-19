@@ -42,7 +42,7 @@
 //     <div className="flex flex-col content-start self-stretch bg-[#0B031E]">
 //       <div className="flex gap-5 px-5 w-full text-3xl font-bold leading-6 text-white max-md:flex-wrap max-md:max-w-full">
 //         <div className="flex-1 pt-10 max-md:max-w-full">Knowledge Base</div>
-        
+
 //       </div>
 //       <div
 //         className="flex justify-center items-center px-16 py-5 mt-12 w-full text-xl rounded-xl border border-solid border-zinc-600 max-md:px-5 max-md:mt-10 max-md:max-w-full"
@@ -73,7 +73,7 @@
 //           >
 //             {selectedFile ? selectedFile.name : 'Upload'}
 //           </label>
-          
+
 //         </div>
 //       </div>
 //     </div>
@@ -145,7 +145,7 @@
 //       } catch (error) {
 //         console.error('Error uploading file:', error)
 //       }
-//     } 
+//     }
 //   }
 
 //   return (
@@ -190,73 +190,71 @@
 
 // export default CreateKnowledgeBase
 
-'use client'
+'use client';
 
-import * as React from 'react'
-import { useState } from 'react'
+import { createBotProfileAction } from '@/redux/actions/BotProfileActions';
+import * as React from 'react';
+import { useState } from 'react';
+import { useDispatch } from 'react-redux';
 
 const CreateKnowledgeBase: React.FC = () => {
-  const [selectedFile, setSelectedFile] = useState<File | null>(null)
-  const [docName, setDocName] = useState('Sample Document Name')
-  const [docType, setDocType] = useState('pdf')
-  const [docId, setDocId] = useState('12345')
-  const [userId, setUserId] = useState('user123')
-  const [botId, setBotId] = useState('bot123')
-
-  const handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0]
-    if (file && file.size <= 2 * 1024 * 1024 && file.type === 'application/pdf') {
-      setSelectedFile(file)
-      await handleUpload(file)
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [docName, setDocName] = useState('Sample Document Name');
+  const [docType, setDocType] = useState('pdf');
+  const [docId, setDocId] = useState('12345');
+  const [userId, setUserId] = useState('user123');
+  const [botId, setBotId] = useState('bot123');
+  const dispatch = useDispatch();
+  const handleFileChange = async (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const file = event.target.files?.[0];
+    if (
+      file &&
+      file.size <= 2 * 1024 * 1024 &&
+      file.type === 'application/pdf'
+    ) {
+      setSelectedFile(file);
+      await handleUpload(file);
     } else {
-      alert('File must be a PDF and less than 2MB')
+      alert('File must be a PDF and less than 2MB');
     }
-  }
+  };
 
   const handleDragOver = (event: React.DragEvent<HTMLDivElement>) => {
-    event.preventDefault()
-  }
+    event.preventDefault();
+  };
 
   const handleDrop = async (event: React.DragEvent<HTMLDivElement>) => {
-    event.preventDefault()
-    const file = event.dataTransfer.files[0]
-    if (file && file.size <= 2 * 1024 * 1024 && file.type === 'application/pdf') {
-      setSelectedFile(file)
-      await handleUpload(file)
+    event.preventDefault();
+    const file = event.dataTransfer.files[0];
+    if (
+      file &&
+      file.size <= 2 * 1024 * 1024 &&
+      file.type === 'application/pdf'
+    ) {
+      setSelectedFile(file);
+      await handleUpload(file);
     } else {
-      alert('File must be a PDF and less than 2MB')
+      alert('File must be a PDF and less than 2MB');
     }
-  }
+  };
 
   const handleUpload = async (file: File) => {
     if (docName && docType && docId && userId) {
-      const formData = new FormData()
-      formData.append('docName', docName)
-      formData.append('docType', docType)
-      formData.append('docId', docId)
-      formData.append('userId', userId)
-      formData.append('botId', botId)
-      formData.append('file', file)
+      const formData = new FormData();
+      formData.append('docName', docName);
+      formData.append('docType', docType);
+      formData.append('docId', docId);
+      formData.append('userId', userId);
+      formData.append('botId', botId);
+      formData.append('file', file);
 
-      try {
-        const response = await fetch('/user/createKnowledgeBase', {
-          method: 'POST',
-          body: formData
-        })
-
-        if (!response.ok) {
-          throw new Error('Network response was not ok')
-        }
-
-        const result = await response.json()
-        console.log('Success:', result)
-      } catch (error) {
-        console.error('Error uploading file:', error)
-      }
+      dispatch(createBotProfileAction(formData));
     } else {
-      alert('Please fill in all required fields and select a file')
+      alert('Please fill in all required fields and select a file');
     }
-  }
+  };
 
   return (
     <div className="flex flex-col content-start self-stretch bg-[#0B031E]">
@@ -295,8 +293,7 @@ const CreateKnowledgeBase: React.FC = () => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default CreateKnowledgeBase
-
+export default CreateKnowledgeBase;
