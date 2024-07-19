@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import Image from 'next/image';
 import bot1 from '@/public/assets/bot1.svg';
 import bot2 from '@/public/assets/bot2.svg';
@@ -21,6 +21,13 @@ import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import FileUploadIcon from '@mui/icons-material/FileUpload';
 import ZoomOutMapIcon from '@mui/icons-material/ZoomOutMap';
 import Link from 'next/link';
+//redux post
+import { useSelector, useDispatch } from 'react-redux';
+import { RootState } from '@/redux/configureStore';
+import { createUserBotProfileService } from '@/redux/services';
+import { v4 as uuidv4 } from 'uuid';
+import { createBotProfileAction } from '@/redux/actions/BotProfileActions';
+
 const CreateBotComponent: React.FC = () => {
   const [step, setStep] = useState(1);
   const [botName, setBotName] = useState('BotWot Assistant');
@@ -29,6 +36,8 @@ const CreateBotComponent: React.FC = () => {
   const [botProfile, setBotProfile] = useState(
     '/path/to/default/bot/image.png'
   );
+  //
+  const viewerRef = useRef(null);
   const [botIdentity, setBotIdentity] = useState(
     "You're a helpful customer support chatbot with excellent product knowledge. You assist customers with inquiries about our products, including offers app functionality troubleshooting account management and more."
   );
@@ -48,16 +57,45 @@ const CreateBotComponent: React.FC = () => {
   const [imageSrc, setImageSrc] = useState('');
   const [imagename, setImageName] = useState('');
   const [filename, setFileName] = useState('');
-
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const dispatch = useDispatch();
   const [textVal, setTextVal] = useState('');
+  const [botIconType, setBotIconType] = useState('second');
   console.log(imageSrc);
   // Function to handle file upload
+
+  const handleFileChange = async (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const file = event.target.files?.[0];
+    if (
+      file &&
+      file.size <= 2 * 1024 * 1024 &&
+      file.type === 'application/pdf'
+    ) {
+      setSelectedFile(file);
+      setFileName(file.name);
+      // await handleSave()
+    } else {
+      alert('File must be a PDF and less than 2MB');
+    }
+  };
+
   const handleFileUpload = (event: any) => {
     const file = event.target.files[0];
+    console.log('img', file);
     setImageName(file.name);
-    const imageUrl = URL.createObjectURL(file); // Creates a blob URL
-    setImageSrc(imageUrl);
+
+    // Read file as binary string
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const binaryString = reader.result as string;
+      console.log('Binary String:', binaryString);
+    };
+
+    reader.readAsBinaryString(file);
   };
+
   const handleDocumentUpload = (event: any) => {
     const file = event.target.files[0];
     setFileName(file.name);
@@ -73,74 +111,110 @@ const CreateBotComponent: React.FC = () => {
   const handleBack = () => {
     if (step > 1) setStep(step - 1);
   };
+  const userId = useSelector(
+    (state: RootState) => state.root?.userData?.user_id
+  );
 
-  const handleSave = () => {
-    
-    const saveData = {
-      botName,
-      botTone,
-      botColor: chatColor,
-      botIconType: imageSrc ? imageSrc : botProfile, 
-      docName: filename,
-      docType: knowledgeBase.length > 0 ? 'pdf' : '', 
-      docId: '', 
-      userId: '', 
-      file: imageSrc ? imageSrc : '', 
-    };
+  const handleSave = async () => {
+    console.log('formData', filename, selectedFile);
+    const docId = uuidv4();
+    const formData = new FormData();
+    formData.append('botName', botName);
+    formData.append('botTone', botTone);
+    formData.append('botColor', chatColor);
+    formData.append('botIconType', botIconType);
+    formData.append('docName', filename);
+    formData.append('docType', knowledgeBase.length > 0 ? 'pdf' : '');
+    formData.append('docId', docId);
+    formData.append('userId', userId);
 
-    console.log('Save data:', saveData);
+    if (selectedFile) {
+      formData.append('file', selectedFile);
+    } else {
+      console.error('No file selected');
+    }
 
+    // const formDataObject: any = {};
+    // for (const [key, value] of formData.entries()) {
+    //   formDataObject[key] = value;
+    // }
+
+    // delete formDataObject.file;
+
+    // const response = await createUserBotProfileService(formData)
+    // console.log("res",response)
+
+    dispatch(createBotProfileAction(formData));
   };
+
+  //
+
   const botSamples = [
     {
       imageUrl: bot1.src,
+      iconType: bot1,
     },
     {
       imageUrl: bot2.src,
+      iconType: bot2,
     },
     {
       imageUrl: bot3.src,
+      iconType: bot3,
     },
     {
       imageUrl: bot4.src,
+      iconType: bot4,
     },
     {
       imageUrl: bot5.src,
+      iconType: bot5,
     },
     {
       imageUrl: bot6.src,
+      iconType: bot6,
     },
     {
       imageUrl: bot7.src,
+      iconType: bot7,
     },
     {
       imageUrl: bot8.src,
+      iconType: bot8,
     },
     {
       imageUrl: bot9.src,
+      iconType: bot9,
     },
     {
       imageUrl: bot10.src,
+      iconType: bot10,
     },
     {
       imageUrl: bot11.src,
+      iconType: bot11,
     },
     {
       imageUrl: bot12.src,
+      iconType: bot12,
     },
     {
       imageUrl: bot13.src,
+      iconType: bot13,
     },
     {
       imageUrl: bot14.src,
+      iconType: bot14,
     },
     {
       imageUrl: bot15.src,
+      iconType: bot15,
     },
   ];
 
-  const handleBotSampleClick = (imageUrl: any) => {
-    setImageSrc(imageUrl);
+  const handleBotSampleClick = (item: any) => {
+    setImageSrc(item?.imageUrl);
+    setBotIconType(item?.iconType);
   };
 
   const renderStep1 = () => (
@@ -149,7 +223,7 @@ const CreateBotComponent: React.FC = () => {
         <label className="block text-gray-200 mb-2">Bot Name</label>
         {/* need to give name */}
         <input
-          name= "botName"
+          name="botName"
           type="text"
           value={botName}
           onChange={(e) => setBotName(e.target.value)}
@@ -193,7 +267,7 @@ const CreateBotComponent: React.FC = () => {
               alt="logo"
               width={90}
               height={80}
-              onClick={() => handleBotSampleClick(item.imageUrl)}
+              onClick={() => handleBotSampleClick(item)}
             />
           ))}
         </div>
@@ -218,6 +292,7 @@ const CreateBotComponent: React.FC = () => {
           <input
             type="file"
             onChange={handleFileUpload}
+            // ref={viewerRef}
             accept="image/*"
             id="file-upload"
             className="absolute top-[0] opacity-0 "
@@ -289,7 +364,8 @@ const CreateBotComponent: React.FC = () => {
             </div>
             <input
               type="file"
-              onChange={handleDocumentUpload}
+              onChange={handleFileChange}
+              ref={viewerRef}
               accept="pdf/*"
               id="file-upload"
               className="absolute top-[0] opacity-0 -[12px]"
@@ -360,11 +436,11 @@ const CreateBotComponent: React.FC = () => {
           <div>
             {/* onclick => on save button need to give a object that take all the value of all fields object into a single object */}
             <button
-          onClick={step === 2 ? handleSave : handleContinue}
-          className="bg-[#3F2181] text-white px-4 py-2 rounded"
-        >
-          {step === 2 ? 'Save' : 'Continue'}
-        </button>
+              onClick={step === 2 ? () => handleSave() : handleContinue}
+              className="bg-[#3F2181] text-white px-4 py-2 rounded"
+            >
+              {step === 2 ? 'Save' : 'Continue'}
+            </button>
           </div>
         </div>
 

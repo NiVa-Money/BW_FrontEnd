@@ -25,7 +25,6 @@ import FileUploadIcon from '@mui/icons-material/FileUpload';
 import ZoomOutMapIcon from '@mui/icons-material/ZoomOutMap';
 import Link from 'next/link';
 
-
 interface BotData {
   botId: string;
   botName: string;
@@ -46,7 +45,9 @@ const EditBotComponent: React.FC = () => {
   const [botTone, setBotTone] = useState('Formal Tone');
   const [botLimit, setBotLimit] = useState('50-100');
   const [chatColor, setChatColor] = useState('#3B82F6'); // Default blue color
-  const [botProfile, setBotProfile] = useState('/path/to/default/bot/image.png');
+  const [botProfile, setBotProfile] = useState(
+    '/path/to/default/bot/image.png'
+  );
   const [systemPrompt, setSystemPrompt] = useState(
     `You're a helpful customer support chatbot with excellent product
     knowledge. You assist customers with inquiries about our products,

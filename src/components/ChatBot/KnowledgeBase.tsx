@@ -54,13 +54,16 @@
 // }
 
 // export default KnowledgeBase;
-
+'use client';
 
 import React, { useEffect, useState } from 'react';
 import ChatBotCard from '../ChatBot/ChatBotCard';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import Link from 'next/link';
+import { RootState } from '@/redux/configureStore';
+import { useDispatch, useSelector } from 'react-redux';
+import { getUserKnowledgeBaseAction } from '@/redux/actions/knowledgeBaseActions';
 
 interface KnowledgeBaseCardProps {
   docId: any;
@@ -74,37 +77,37 @@ interface KnowledgeBaseCardProps {
 }
 
 const KnowledgeBase: React.FC = () => {
-  const [knowledgebase, setKnowledgebase] = useState<KnowledgeBaseCardProps[]>([]);
+  const [knowledgebase, setKnowledgebase] = useState<KnowledgeBaseCardProps[]>(
+    []
+  );
+  const userId = useSelector(
+    (state: RootState) => state.root?.userData?.user_id
+  );
+  const dispatch = useDispatch();
+  const pathName = useSelector((state: RootState) => state.root?.pathName);
 
   useEffect(() => {
-    const fetchKnowledgeBase = async () => {
-      try {
-        const userId = 'YOUR_USER_ID'; // Replace with actual userId
-        const response = await fetch(`/user/getUserKnowledgeBase?userId=${userId}`);
-        if (!response.ok) {
-          throw new Error('Failed to fetch knowledge base');
-        }
-        const data = await response.json();
-        setKnowledgebase(data);
-      } catch (error) {
-        console.error('Error fetching knowledge base:', error);
+    if (userId !== undefined) {
+      if (userId?.length || pathName === '/knowledgeBase') {
+        dispatch(getUserKnowledgeBaseAction(userId));
       }
-    };
-
-    fetchKnowledgeBase();
-  }, []);
+    }
+  }, [userId, pathName]);
 
   const handleDelete = async (index: number) => {
     try {
       const docId = knowledgebase[index].docId; // Assuming docId is part of knowledgebase entry
       const userId = 'YOUR_USER_ID'; // Replace with actual userId
 
-      const response = await fetch(`/user/deleteUserKnowledgeBase?docId=${docId}&userId=${userId}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
+      const response = await fetch(
+        `/user/deleteUserKnowledgeBase?docId=${docId}&userId=${userId}`,
+        {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      );
 
       if (!response.ok) {
         throw new Error('Failed to delete knowledge base entry');
@@ -153,6 +156,6 @@ const KnowledgeBase: React.FC = () => {
       </section>
     </main>
   );
-}
+};
 
 export default KnowledgeBase;

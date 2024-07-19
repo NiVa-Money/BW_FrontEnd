@@ -41,14 +41,12 @@ export function SqureCardOne({ sessionTotal, sessionLeft }: SqureCardOneProps) {
     }
   }, []);
 
-
   console.log('verifyVal', verifyVal);
   useEffect(() => {
     if (verifyVal || pathName === '/dashBoard') {
       dispatch(fetchMetricsAction(userId));
     }
   }, [verifyVal, pathName]);
-
 
   useEffect(() => {
     if (metrics && Object.keys(metrics).length > 0) {
@@ -64,8 +62,6 @@ export function SqureCardOne({ sessionTotal, sessionLeft }: SqureCardOneProps) {
       }
     }
   }, [metrics]);
-
-
 
   const data = [
     { name: 'Sessions Total', value: sessionTotal },

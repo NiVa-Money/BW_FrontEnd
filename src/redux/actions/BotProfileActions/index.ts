@@ -4,10 +4,12 @@ import {
   GET_USER_BOT_PROFILE,
 } from '../actionTypes';
 
-export const createBotProfileAction = (data: any) => ({
+export const createBotProfileAction = (data: any) => {
+  console.log("data",data)
+  return({
   type: CREATE_BOT_PROFILE,
   payload: data,
-});
+})};
 export const editBotProfileAction = (data: any) => ({
   type: EDIT_BOT_PROFILE,
   payload: data,

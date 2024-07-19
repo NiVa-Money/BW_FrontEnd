@@ -26,14 +26,27 @@ import {
   EDIT_BOT_PROFILE,
   DELETE_BOT_PROFILE,
   GET_USER_BOT_PROFILE,
+  CREATE_KNOWLEDGE_BASE_SUCCESS,
+  CREATE_KNOWLEDGE_BASE_FAILURE,
+  GET_USER_KNOWLEDGE_BASE_SUCCESS,
+  GET_USER_KNOWLEDGE_BASE_FAILURE,
+  DELETE_USER_KNOWLEDGE_BASE_SUCCESS,
+  DELETE_USER_KNOWLEDGE_BASE_FAILURE,
+  GET_USER_KNOWLEDGE_BASE,
+  CREATE_KNOWLEDGE_BASE,
+  DELETE_USER_KNOWLEDGE_BASE,
 } from '../actions/actionTypes';
+
 import {
+  createKnowledgeBaseService,
   createUserBotProfileService,
   deleteBotProfileService,
+  deleteUserKnowledgeBaseService,
   editUserBotProfileService,
   fetchUserData,
   fetchUserMetrics,
   getUserBotProfileService,
+  getUserKnowledgeBaseService,
   getUserProfileService,
   signUpUserData,
 } from '../services';
@@ -143,7 +156,7 @@ export function* getUserProfileSaga({
 export function* createBotProfileSaga({
   payload,
 }: {
-  type: string;
+  type: any;
   payload: any;
 }): Generator<any> {
   try {
@@ -219,6 +232,68 @@ export function* deleteBotProfilesSaga({
   }
 }
 
+//knowledge base sagas
+
+export function* createKnowledgeBaseSaga({
+  payload,
+  type,
+}: {
+  type: string;
+  payload: any;
+}): Generator<any> {
+  try {
+    const knowledgebase = yield call(createKnowledgeBaseService, payload);
+    yield put({
+      type: CREATE_KNOWLEDGE_BASE_SUCCESS,
+      payload: knowledgebase,
+    });
+  } catch (error: any) {
+    yield put({
+      type: CREATE_KNOWLEDGE_BASE_FAILURE,
+    });
+  }
+}
+
+export function* getUserKnowledgeBaseSaga({
+  payload,
+  type,
+}: {
+  type: string;
+  payload: any;
+}): Generator<any> {
+  try {
+    const botProfiles = yield call(getUserKnowledgeBaseService, payload);
+    yield put({
+      type: GET_USER_KNOWLEDGE_BASE_SUCCESS,
+      payload: botProfiles,
+    });
+  } catch (error: any) {
+    yield put({
+      type: GET_USER_KNOWLEDGE_BASE_FAILURE,
+    });
+  }
+}
+
+export function* deleteUserKnowledgeBaseSaga({
+  payload,
+  type,
+}: {
+  type: string;
+  payload: any;
+}): Generator<any> {
+  try {
+    const botProfiles = yield call(deleteUserKnowledgeBaseService, payload);
+    yield put({
+      type: DELETE_USER_KNOWLEDGE_BASE_SUCCESS,
+      payload: botProfiles,
+    });
+  } catch (error: any) {
+    yield put({
+      type: DELETE_USER_KNOWLEDGE_BASE_FAILURE,
+    });
+  }
+}
+
 export default function* rootSaga() {
   yield takeLatest(VERIFY_USER_DATA, verifyUserSaga);
   yield takeLatest(SIGN_UP_DATA, signUpUserSaga);
@@ -230,4 +305,7 @@ export default function* rootSaga() {
   yield takeEvery(EDIT_BOT_PROFILE, editBotProfileSaga);
   yield takeEvery(DELETE_BOT_PROFILE, deleteBotProfilesSaga);
   yield takeEvery(GET_USER_BOT_PROFILE, getBotProfilesSaga);
+  yield takeEvery(GET_USER_KNOWLEDGE_BASE, getUserKnowledgeBaseSaga);
+  yield takeEvery(CREATE_KNOWLEDGE_BASE, createKnowledgeBaseSaga);
+  yield takeEvery(DELETE_USER_KNOWLEDGE_BASE, deleteUserKnowledgeBaseSaga);
 }

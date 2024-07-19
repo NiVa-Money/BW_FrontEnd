@@ -14,23 +14,37 @@ const initialState: any = {
       data: {},
       loader: false,
     },
-    botProfile: {
-      create: {
-        data: {},
-        loader: false,
-      },
-      edit: {
-        data: {},
-        loader: false,
-      },
-      botProfiles: {
-        data: [],
-        loader: false,
-      },
-      delete: {
-        data: {},
-        loader: false,
-      },
+  },
+  botProfile: {
+    create: {
+      data: {},
+      loader: false,
+    },
+    edit: {
+      data: {},
+      loader: false,
+    },
+    botProfiles: {
+      data: [],
+      loader: false,
+    },
+    delete: {
+      data: {},
+      loader: false,
+    },
+  },
+  KnowledgeBase: {
+    create: {
+      data: {},
+      loader: false,
+    },
+    delete: {
+      data: {},
+      loader: false,
+    },
+    user: {
+      data: [],
+      loader: false,
     },
   },
 };

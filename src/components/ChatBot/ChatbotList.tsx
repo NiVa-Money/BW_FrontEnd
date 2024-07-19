@@ -1,6 +1,4 @@
-
-
-"use client"
+'use client';
 
 import React from 'react';
 import ChatBotCard from './ChatBotCard';
@@ -44,6 +42,8 @@ const chatBots: ChatBot[] = [
 ];
 
 const ChatBotList: React.FC = () => {
+  // Function to handle delete action
+  const handleDelete = async (index: number) => {
     const dispatch = useDispatch(); 
 
    // Function to handle delete action
