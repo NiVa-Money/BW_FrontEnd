@@ -399,7 +399,7 @@ const CreateBotComponent: React.FC = () => {
                 <h3 className="mt-4 text-2xl font-bold leading-9 text-center text-white">
                   {botName}
                 </h3>
-                <p className="mt-6 text-sm leading-6 text-[#8D8997] mb-6 text-center w-[344px]">
+                <p className="mt-6 text-sm leading-6 text-[#8D8997] mb-6 text-center text-neutral-400 w-[344px]">
                   I'm your customer support, ready to answer your
                   <br />
                   questions
