@@ -1,6 +1,4 @@
-
-
-"use client"
+'use client';
 
 import React from 'react';
 import ChatBotCard from './ChatBotCard';
@@ -42,7 +40,6 @@ const chatBots: ChatBot[] = [
 ];
 
 const ChatBotList: React.FC = () => {
-  
   // Function to handle delete action
   const handleDelete = async (index: number) => {
     const botToDelete = chatBots[index];
@@ -71,7 +68,6 @@ const ChatBotList: React.FC = () => {
       const updatedBots = [...chatBots];
       updatedBots.splice(index, 1);
       // Update state or perform necessary actions
-
     } catch (error) {
       console.error('Error deleting bot:', error);
       // Handle error, show message, retry logic, etc.

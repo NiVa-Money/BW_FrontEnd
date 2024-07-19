@@ -77,7 +77,6 @@ export const createUserBotProfileService = async (payload: any) => {
     throw new Error('Error fetching user data');
   }
 };
-
 // edit user bot profile
 export const editUserBotProfileService = async (payload: any) => {
   try {
