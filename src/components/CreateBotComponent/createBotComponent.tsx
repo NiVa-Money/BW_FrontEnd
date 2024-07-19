@@ -298,7 +298,7 @@ const CreateBotComponent: React.FC = () => {
             className="absolute top-[0] opacity-0 "
           />
         </div>
-        <button className="rounded-[70px] bg-[#3F2181] mt-12  text-white px-4 py-2 rounded flex justify-center">
+        <button className="rounded-[70px] bg-[#3F2181] mt-12  text-white px-4 py-2 flex justify-center">
           <span>Upload</span>
           <FileUploadIcon />
         </button>
@@ -372,7 +372,7 @@ const CreateBotComponent: React.FC = () => {
             />
           </div>
         </div>
-        <button className="rounded-[70px] bg-[#3F2181] mt-[66px]  text-white px-4 py-2 rounded flex justify-center">
+        <button className="rounded-[70px] bg-[#3F2181] mt-[66px]  text-white px-4 py-2 flex justify-center">
           <span>Upload</span>
           <FileUploadIcon />
         </button>
@@ -449,9 +449,9 @@ const CreateBotComponent: React.FC = () => {
             {step === 1 ? renderStep1() : renderStep2()}
           </div>
           <div className="w-2/5">
-            <aside className="flex w-full flex-col ml-5 w-6/12 max-md:ml-0 max-md:w-full">
+            <aside className="flex w-full flex-col ml-5 max-md:ml-0 max-md:w-full">
               <div className="flex flex-col grow items-center px-6 pt-3.5 pb-7 mt-4 w-full bg-[#171029] rounded-2xl shadow-sm text-zinc-400 max-md:pl-5 max-md:mt-10 max-md:max-w-full">
-                <div className="flex gap-5 justify-between items-center w-full max-w-full text-xl font-bold leading-7 text-black whitespace-nowrap w-[351px]">
+                <div className="flex gap-5 justify-between items-center w-full max-w-full text-xl font-bold leading-7 text-black whitespace-nowrap">
                   <h2 className="my-auto p-5 text-white">Preview</h2>
                   <ZoomOutMapIcon style={{ color: 'white' }} />
                 </div>
@@ -475,7 +475,7 @@ const CreateBotComponent: React.FC = () => {
                 <h3 className="mt-4 text-2xl font-bold leading-9 text-center text-white">
                   {botName}
                 </h3>
-                <p className="mt-6 text-sm leading-6 text-[#8D8997] mb-6 text-center text-neutral-400 w-[344px]">
+                <p className="mt-6 text-sm leading-6 text-[#8D8997] mb-6 text-center w-[344px]">
                   I'm your customer support, ready to answer your
                   <br />
                   questions

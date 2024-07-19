@@ -3,7 +3,7 @@
 import { fetchMetricsAction } from '@/redux/actions/authActions';
 import { RootState } from '@/redux/configureStore';
 import { DonutChart } from '@tremor/react';
-import React, { useEffect,useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 const valueFormatter = (number: number) =>
@@ -41,14 +41,12 @@ export function SqureCardOne({ sessionTotal, sessionLeft }: SqureCardOneProps) {
     }
   }, []);
 
-
   console.log('verifyVal', verifyVal);
   useEffect(() => {
     if (verifyVal || pathName === '/dashBoard') {
       dispatch(fetchMetricsAction(userId));
     }
   }, [verifyVal, pathName]);
-
 
   useEffect(() => {
     if (metrics && Object.keys(metrics).length > 0) {
@@ -64,8 +62,6 @@ export function SqureCardOne({ sessionTotal, sessionLeft }: SqureCardOneProps) {
       }
     }
   }, [metrics]);
-
-
 
   const data = [
     { name: 'Sessions Total', value: sessionTotal },

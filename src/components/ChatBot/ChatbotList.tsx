@@ -1,10 +1,10 @@
-"use client"
+'use client';
+
 import React from 'react';
 import ChatBotCard from './ChatBotCard';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import Link from 'next/link';
-
 
 interface ChatBot {
   botId?: any;
@@ -40,7 +40,6 @@ const chatBots: ChatBot[] = [
 ];
 
 const ChatBotList: React.FC = () => {
-  
   // Function to handle delete action
   const handleDelete = async (index: number) => {
     const botToDelete = chatBots[index];
@@ -69,7 +68,6 @@ const ChatBotList: React.FC = () => {
       const updatedBots = [...chatBots];
       updatedBots.splice(index, 1);
       // Update state or perform necessary actions
-
     } catch (error) {
       console.error('Error deleting bot:', error);
       // Handle error, show message, retry logic, etc.
@@ -78,10 +76,9 @@ const ChatBotList: React.FC = () => {
 
   // Function to handle edit action
   const handleEdit = (index: number) => {
-    // Implement edit logic here
-    console.log(`Editing bot at index ${index}`);
-    // Example: Redirect or navigate to edit page
-    // Example: Pass data to edit form
+    // Navigate to the edit page with the botId as a query parameter
+    window.location.href = `/editBot?botId=${chatBots[index].botId}`;
+    console.log('navigating');
   };
 
   return (
