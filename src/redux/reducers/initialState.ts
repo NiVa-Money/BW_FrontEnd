@@ -32,6 +32,20 @@ const initialState: any = {
         loader: false,
       },
     },
+    KnowledgeBase: {
+      create: {
+        data: {},
+        loader: false,
+      },
+      delete: {
+        data: {},
+        loader: false,
+      },
+      user: {
+        data: {},
+        loader: false,
+      },
+    },
   },
 };
 
