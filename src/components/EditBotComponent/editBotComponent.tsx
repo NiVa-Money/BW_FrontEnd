@@ -1,6 +1,8 @@
 'use client';
 
 import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { editBotProfileAction } from '../../redux/actions/BotProfileActions'; // Adjust the import path according to your project structure
 import Image from 'next/image';
 import bot1 from '@/public/assets/bot1.svg';
 import bot2 from '@/public/assets/bot2.svg';
@@ -22,19 +24,33 @@ import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import FileUploadIcon from '@mui/icons-material/FileUpload';
 import ZoomOutMapIcon from '@mui/icons-material/ZoomOutMap';
 import Link from 'next/link';
+
+
+interface BotData {
+  botId: string;
+  botName: string;
+  botTone: string;
+  botGreetingMessage: string;
+  botSmartness: boolean;
+  botIdentity: string;
+  supportNumber: string;
+  supportEmail: string;
+  wordLimitPerMessage: number;
+  userId: string;
+}
+
 const EditBotComponent: React.FC = () => {
+  const dispatch = useDispatch();
   const [step, setStep] = useState(1);
   const [botName, setBotName] = useState('BotWot Assistant');
   const [botTone, setBotTone] = useState('Formal Tone');
   const [chatColor, setChatColor] = useState('#3B82F6'); // Default blue color
-  const [botProfile, setBotProfile] = useState(
-    '/path/to/default/bot/image.png'
-  );
+  const [botProfile, setBotProfile] = useState('/path/to/default/bot/image.png');
   const [systemPrompt, setSystemPrompt] = useState(
     `You're a helpful customer support chatbot with excellent product
-knowledge. You assist customers with inquiries about our products,
-including offers app functionality troubleshooting account management
-and more.`
+    knowledge. You assist customers with inquiries about our products,
+    including offers app functionality troubleshooting account management
+    and more.`
   );
   const [knowledgeBase, setKnowledgeBase] = useState(['Assistant.pdf']);
   const [greetingMessage, setGreetingMessage] = useState(
@@ -48,8 +64,8 @@ and more.`
   const [imageSrc, setImageSrc] = useState('');
   const [imagename, setImageName] = useState('');
   const [fileName, setFileName] = useState('');
-
   const [textVal, setTextVal] = useState('');
+
   // Function to handle file upload
   const handleFileUpload = (event: any) => {
     const file = event.target.files[0];
@@ -57,6 +73,7 @@ and more.`
     const imageUrl = URL.createObjectURL(file); // Creates a blob URL
     setImageSrc(imageUrl);
   };
+
   const handleDocumentUpload = (event: any) => {
     const file = event.target.files[0];
     setFileName(file.name);
@@ -65,11 +82,29 @@ and more.`
   const handleContinue = () => {
     if (step < 2) setStep(step + 1);
   };
+
   const handleDivClick = (text: any) => {
     setTextVal(text);
   };
 
- 
+  const handleSave = () => {
+    const botData: BotData = {
+      botId: '6669870ee3403661eda80e58',
+      botName,
+      botTone,
+      botGreetingMessage: greetingMessage,
+      botSmartness: false,
+      botIdentity: 'Sales',
+      supportNumber: '9876543210',
+      supportEmail: 'support@botwot.io',
+      wordLimitPerMessage: 100,
+      userId: '6669870ee3403661eda80e58',
+    };
+
+    dispatch(editBotProfileAction(botData));
+    // You can also redirect or show a success message here if needed
+  };
+
   const renderStep1 = () => (
     <>
       <div className="mb-4">
@@ -105,7 +140,7 @@ and more.`
           </div>
         ))}
       </div>
-      <button className="rounded-[70px] bg-[#3F2181] mt-4  text-white px-4 py-2 rounded flex justify-center">
+      <button className="rounded-[70px] bg-[#3F2181] mt-4  text-white px-4 py-2 flex justify-center">
         <span>Add</span>
         <AddIcon />
       </button>
@@ -133,7 +168,7 @@ and more.`
             className="absolute top-[0] opacity-0 "
           />
         </div>
-        <button className="rounded-[70px] bg-[#3F2181] mt-18  text-white px-4 py-2 rounded flex justify-center">
+        <button className="rounded-[70px] bg-[#3F2181] mt-18  text-white px-4 py-2 flex justify-center">
           <span>Upload</span>
           <FileUploadIcon />
         </button>
@@ -146,28 +181,23 @@ and more.`
       <div className="max-w-[80%] mx-auto">
         <div className="flex justify-between items-center mb-8">
           <div className="flex gap-[8px]">
-            
-              <Link href={`/MyChatBots`}>
-                <ArrowBackIosNewIcon />
-              </Link>
-            
+            <Link href={`/MyChatBots`}>
+              <ArrowBackIosNewIcon />
+            </Link>
             <h1 className="text-3xl font-bold">Edit Bot</h1>
           </div>
 
           <div>
             <button
-              onClick={
-                step === 2 ? () => console.log('Save bot') : handleContinue
-              }
+              onClick={step === 2 ? handleSave : handleContinue}
               className="bg-[#3F2181] w-[Hug (287px)px] rounded-[99px] text-white px-6 py-2 "
             >
-              { 'Save' }
+              {step === 2 ? 'Save' : 'Continue'}
             </button>
           </div>
         </div>
 
         <div className="flex space-x-8">
-            {/* <Image src={bot2.src} height={200} width={200}/> */}
           <div className="w-3/5">{renderStep1()}</div>
           <div className="w-2/5">
             <aside className="flex w-full flex-col ml-5 w-6/12 max-md:ml-0 max-md:w-full">
@@ -186,17 +216,11 @@ and more.`
                   />
                 ) : (
                   <span className="mr-2">Choose Profile</span>
-                )}{' '}
-                {/* <img
-                  loading="lazy"
-                  src=""
-                  alt="BotWot Assistant"
-                  className="mt-5 max-w-full aspect-square w-[115px] max-md:mt-10"
-                /> */}
+                )}
                 <h3 className="mt-4 text-2xl font-bold leading-9 text-center text-white">
                   {botName}
                 </h3>
-                <p className="mt-6 text-sm leading-6 text-[#8D8997] mb-6 text-center text-neutral-400 w-[344px]">
+                <p className="mt-6 text-sm leading-6 mb-6 text-center text-neutral-400 w-[344px]">
                   I'm your customer support, ready to answer your
                   <br />
                   questions
