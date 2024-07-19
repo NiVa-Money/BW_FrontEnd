@@ -27,7 +27,7 @@ import { RootState } from '@/redux/configureStore';
 import { createUserBotProfileService } from '@/redux/services';
 import { v4 as uuidv4 } from 'uuid';
 import { createBotProfileAction } from '@/redux/actions/BotProfileActions';
-
+import Switch from '@mui/material/Switch';
 const CreateBotComponent: React.FC = () => {
   const [step, setStep] = useState(1);
   const [botName, setBotName] = useState('BotWot Assistant');
@@ -42,7 +42,9 @@ const CreateBotComponent: React.FC = () => {
     "You're a helpful customer support chatbot with excellent product knowledge. You assist customers with inquiries about our products, including offers app functionality troubleshooting account management and more."
   );
   const [knowledgeBase, setKnowledgeBase] = useState(['Assistant.pdf']);
-  const [botLimit, setBotLimit] = useState('50-100');
+  const [botLimit, setBotLimit] = useState<any>(50);
+  // const [botIdentity, setBotIdentity] = useState('sales');
+  const [botSmartnessVal, setbotSmartnessVal] = useState<any>(false);
   const [supportEmail, setSupportEmail] = useState('');
   const [supportPhone, setSupportPhone] = useState('');
   const [greetingMessage, setGreetingMessage] = useState(
@@ -60,7 +62,7 @@ const CreateBotComponent: React.FC = () => {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const dispatch = useDispatch();
   const [textVal, setTextVal] = useState('');
-  const [botIconType, setBotIconType] = useState('second');
+  const [botIconType, setBotIconType] = useState();
   console.log(imageSrc);
   // Function to handle file upload
 
@@ -127,7 +129,13 @@ const CreateBotComponent: React.FC = () => {
     formData.append('docType', knowledgeBase.length > 0 ? 'pdf' : '');
     formData.append('docId', docId);
     formData.append('userId', userId);
-
+    formData.append('supportNumber', supportPhone);
+    formData.append('supportEmail', supportEmail);
+    formData.append('wordLimitPerMessage', botLimit);
+    formData.append('botIdentity', botIdentity);
+    formData.append('botSmartness', botSmartnessVal);
+    formData.append('botGreetingMessage', greetingMessage);
+    console.log('t', typeof botSmartnessVal, typeof botLimit);
     if (selectedFile) {
       formData.append('file', selectedFile);
     } else {
@@ -214,6 +222,7 @@ const CreateBotComponent: React.FC = () => {
 
   const handleBotSampleClick = (item: any) => {
     setImageSrc(item?.imageUrl);
+    console.log(item);
     setBotIconType(item?.iconType);
   };
 
@@ -275,7 +284,7 @@ const CreateBotComponent: React.FC = () => {
       <div className="mb-4">
         <label className="block text-gray-200 mb-2">Custom photo</label>
         <div className="relative mb-4">
-          <div className="flex items-center bg-[#171029] p-2 w-full rounded-[12px] absolute ">
+          {/* <div className="flex items-center bg-[#171029] p-2 w-full rounded-[12px] absolute ">
             <span className="mr-2">
               {imagename?.length ? imagename : 'Choose Image'}
             </span>
@@ -296,12 +305,18 @@ const CreateBotComponent: React.FC = () => {
             accept="image/*"
             id="file-upload"
             className="absolute top-[0] opacity-0 "
-          />
+          /> */}
         </div>
-        <button className="rounded-[70px] bg-[#3F2181] mt-12  text-white px-4 py-2 flex justify-center">
-          <span>Upload</span>
-          <FileUploadIcon />
-        </button>
+        <div className="flex items-start">
+          <button
+            disabled
+            className="rounded-[70px] bg-[#3F2181] mt-0  text-white px-4 py-2 flex justify-center"
+          >
+            <span>Upload</span>
+            <FileUploadIcon />
+          </button>
+          <span className="text-white mb-2 ml-6">Coming Soon..</span>
+        </div>
       </div>
       <div className="mb-4">
         <label className="block text-gray-200 mb-2">Bot Greeting Message</label>
@@ -372,10 +387,19 @@ const CreateBotComponent: React.FC = () => {
             />
           </div>
         </div>
-        <button className="rounded-[70px] bg-[#3F2181] mt-[66px]  text-white px-4 py-2 flex justify-center">
-          <span>Upload</span>
-          <FileUploadIcon />
-        </button>
+        <div className="flex">
+          <button className="rounded-[70px] bg-[#3F2181] mt-[66px]  text-white px-4 py-2 flex justify-center">
+            <span>Upload</span>
+            <FileUploadIcon />
+          </button>
+          <div className="mb-4">
+            <label className="block text-gray-200 mb-2">Enable Smartness</label>
+            <Switch
+              checked={Boolean(botSmartnessVal)}
+              onChange={(): any => setbotSmartnessVal(!botSmartnessVal)}
+            />
+          </div>
+        </div>
       </div>
       <div className="mb-4">
         <label className="block text-gray-200 mb-2">
@@ -383,14 +407,26 @@ const CreateBotComponent: React.FC = () => {
         </label>
         <select
           value={botLimit}
-          onChange={(e) => setBotLimit(e.target.value)}
+          onChange={(e) => setBotLimit(Number(e.target.value))}
           className="w-full bg-[#171029] text-white p-2 rounded-[12px]"
         >
-          <option value="50-100">50-100</option>
-          <option value="100-200">100-200</option>
-          <option value="200-400">200-400</option>
+          <option value={50}>50-100</option>
+          <option value={100}>100-200</option>
+          <option value={200}>200-400</option>
         </select>
       </div>
+      {/* <div className="mb-4">
+        <label className="block text-gray-200 mb-2">Bot Identity</label>
+        <select
+          value={botLimit}
+          onChange={(e) => setBotSmartness(e.target.value)}
+          className="w-full bg-[#171029] text-white p-2 rounded-[12px]"
+        >
+          <option value="Sales">Sales</option>
+          <option value="Finance">Finance</option>
+          <option value="Support">Support</option>
+        </select>
+      </div> */}
       <div className="mb-4">
         <label className="block text-gray-200 mb-2">Support email</label>
         <input
