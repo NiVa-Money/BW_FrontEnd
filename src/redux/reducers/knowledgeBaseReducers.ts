@@ -10,8 +10,8 @@ import {
   GET_USER_KNOWLEDGE_BASE_SUCCESS,
 } from '@/redux/actions/actionTypes';
 import initialState from './initialState';
-export default function globalReducers(
-  state = initialState.root.KnowledgeBase,
+export default function knowledgeBaseReducers(
+  state = initialState.KnowledgeBase,
   action: any
 ) {
   switch (action.type) {
@@ -60,14 +60,15 @@ export default function globalReducers(
         },
       };
     case GET_USER_KNOWLEDGE_BASE_SUCCESS:
+      console.log('s', action);
       return {
         ...state,
-        delete: { data: action.payload, loader: false },
+        user: { data: action.payload, loader: false },
       };
     case GET_USER_KNOWLEDGE_BASE_FAILURE:
       return {
         ...state,
-        delete: { data: action.payload, loader: false },
+        user: { data: action.payload, loader: false },
       };
 
     default:
