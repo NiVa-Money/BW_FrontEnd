@@ -1,10 +1,12 @@
-'use client';
+"use client"
 
 import React from 'react';
 import ChatBotCard from './ChatBotCard';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import Link from 'next/link';
+import { deleteBotProfileServiceAction } from '@/redux/actions/BotProfileActions';
+import { useDispatch } from 'react-redux';
 
 interface ChatBot {
   botId?: any;
@@ -40,8 +42,10 @@ const chatBots: ChatBot[] = [
 ];
 
 const ChatBotList: React.FC = () => {
-  // Function to handle delete action
-  const handleDelete = async (index: number) => {
+    const dispatch = useDispatch(); 
+
+   // Function to handle delete action
+   const handleDelete = (index: number) => {
     const botToDelete = chatBots[index];
 
     // Prepare the request data
@@ -50,28 +54,13 @@ const ChatBotList: React.FC = () => {
       userId: 'currentUserId', // Replace with actual userId from your authentication/session
     };
 
-    try {
-      // Make the API request
-      const response = await fetch('/user/deleteBotProfile', {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(requestData),
-      });
+    // Dispatch the action
+    dispatch(deleteBotProfileServiceAction(requestData));
 
-      if (!response.ok) {
-        throw new Error('Failed to delete bot');
-      }
-
-      // Assuming success, update state or perform necessary actions
-      const updatedBots = [...chatBots];
-      updatedBots.splice(index, 1);
-      // Update state or perform necessary actions
-    } catch (error) {
-      console.error('Error deleting bot:', error);
-      // Handle error, show message, retry logic, etc.
-    }
+    // Update local state to reflect the deletion
+    const updatedBots = [...chatBots];
+    updatedBots.splice(index, 1);
+    // Update state or perform necessary actions
   };
 
   // Function to handle edit action

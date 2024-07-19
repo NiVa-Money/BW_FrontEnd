@@ -1,5 +1,4 @@
 
-// export default ChatBotCard;
 
 import React from 'react';
 import { faPencilAlt, faTrash, faDownload } from '@fortawesome/free-solid-svg-icons';
