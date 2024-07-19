@@ -25,6 +25,20 @@ import FileUploadIcon from '@mui/icons-material/FileUpload';
 import ZoomOutMapIcon from '@mui/icons-material/ZoomOutMap';
 import Link from 'next/link';
 
+
+interface BotData {
+  botId: string;
+  botName: string;
+  botTone: string;
+  botGreetingMessage: string;
+  botSmartness: boolean;
+  botIdentity: string;
+  supportNumber: string;
+  supportEmail: string;
+  wordLimitPerMessage: number;
+  userId: string;
+}
+
 const EditBotComponent: React.FC = () => {
   const dispatch = useDispatch();
   const [step, setStep] = useState(1);
@@ -74,14 +88,17 @@ const EditBotComponent: React.FC = () => {
   };
 
   const handleSave = () => {
-    const botData = {
+    const botData: BotData = {
+      botId: '6669870ee3403661eda80e58',
       botName,
       botTone,
-      chatColor,
-      botProfile,
-      systemPrompt,
-      knowledgeBase,
-      greetingMessage,
+      botGreetingMessage: greetingMessage,
+      botSmartness: false,
+      botIdentity: 'Sales',
+      supportNumber: '9876543210',
+      supportEmail: 'support@botwot.io',
+      wordLimitPerMessage: 100,
+      userId: '6669870ee3403661eda80e58',
     };
 
     dispatch(editBotProfileAction(botData));
