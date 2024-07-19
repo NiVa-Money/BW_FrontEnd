@@ -143,7 +143,7 @@ export function* getUserProfileSaga({
 export function* createBotProfileSaga({
   payload,
 }: {
-  type: string;
+  type: any;
   payload: any;
 }): Generator<any> {
   try {
