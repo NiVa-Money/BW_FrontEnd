@@ -1,3 +1,7 @@
+
+
+"use client"
+
 import React from 'react';
 import ChatBotCard from './ChatBotCard';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -76,10 +80,9 @@ const ChatBotList: React.FC = () => {
 
   // Function to handle edit action
   const handleEdit = (index: number) => {
-    // Implement edit logic here
-    console.log(`Editing bot at index ${index}`);
-    // Example: Redirect or navigate to edit page
-    // Example: Pass data to edit form
+    // Navigate to the edit page with the botId as a query parameter
+    window.location.href = `/editBot?botId=${chatBots[index].botId}`;
+    console.log('navigating');
   };
 
   return (
