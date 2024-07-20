@@ -67,6 +67,7 @@ export const getUserProfileService = async (payload: any) => {
 // create user bot profile
 export const createUserBotProfileService = async (payload: any) => {
   try {
+   
     const response = await axiosInstance.post('user/createBotProfile', payload);
     return response.data;
   } catch (error: any) {
@@ -98,7 +99,9 @@ export const getUserBotProfileService = async (payload: any) => {
       `user/getUserBotProfiles/?userId=${payload}`,
       {}
     );
+   
     return response.data;
+    
   } catch (error: any) {
     console.error(
       'Error fetching user Bot profile:',
