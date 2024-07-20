@@ -23,6 +23,7 @@ interface ChatBotCardProps {
   };
 }
 
+
 const ChatBotCard: React.FC<ChatBotCardProps> = ({ bot, actions }) => {
   const botColor = bot.botColor?.toLowerCase() || 'default';
 
