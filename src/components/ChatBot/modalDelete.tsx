@@ -24,4 +24,5 @@ const ConfirmModal: React.FC<ConfirmModalProps> = ({ isOpen, onClose, onConfirm,
   );
 };
 
+
 export default ConfirmModal;
