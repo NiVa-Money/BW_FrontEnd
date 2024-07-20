@@ -21,6 +21,7 @@ import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import FileUploadIcon from '@mui/icons-material/FileUpload';
 import ZoomOutMapIcon from '@mui/icons-material/ZoomOutMap';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 //redux post
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '@/redux/configureStore';
@@ -62,8 +63,8 @@ const CreateBotComponent: React.FC = () => {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const dispatch = useDispatch();
   const [textVal, setTextVal] = useState('');
-  const [botIconType, setBotIconType] = useState();
-  console.log(imageSrc);
+  const [botIconType, setBotIconType] = useState('second');
+  const router = useRouter();
   // Function to handle file upload
 
   const handleFileChange = async (
@@ -85,14 +86,12 @@ const CreateBotComponent: React.FC = () => {
 
   const handleFileUpload = (event: any) => {
     const file = event.target.files[0];
-    console.log('img', file);
     setImageName(file.name);
 
     // Read file as binary string
     const reader = new FileReader();
     reader.onload = (e) => {
       const binaryString = reader.result as string;
-      console.log('Binary String:', binaryString);
     };
 
     reader.readAsBinaryString(file);
@@ -118,7 +117,6 @@ const CreateBotComponent: React.FC = () => {
   );
 
   const handleSave = async () => {
-    console.log('formData', filename, selectedFile);
     const docId = uuidv4();
     const formData = new FormData();
     formData.append('botName', botName);
@@ -135,24 +133,15 @@ const CreateBotComponent: React.FC = () => {
     formData.append('botIdentity', botIdentity);
     formData.append('botSmartness', botSmartnessVal);
     formData.append('botGreetingMessage', greetingMessage);
-    console.log('t', typeof botSmartnessVal, typeof botLimit);
+  
     if (selectedFile) {
       formData.append('file', selectedFile);
     } else {
       console.error('No file selected');
     }
 
-    // const formDataObject: any = {};
-    // for (const [key, value] of formData.entries()) {
-    //   formDataObject[key] = value;
-    // }
-
-    // delete formDataObject.file;
-
-    // const response = await createUserBotProfileService(formData)
-    // console.log("res",response)
-
     dispatch(createBotProfileAction(formData));
+    router.push('/MyChatBots');
   };
 
   //
@@ -222,7 +211,6 @@ const CreateBotComponent: React.FC = () => {
 
   const handleBotSampleClick = (item: any) => {
     setImageSrc(item?.imageUrl);
-    console.log(item);
     setBotIconType(item?.iconType);
   };
 

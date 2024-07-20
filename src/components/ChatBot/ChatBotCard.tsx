@@ -1,18 +1,16 @@
-
-// export default ChatBotCard;
-
 import React from 'react';
 import { faPencilAlt, faTrash, faDownload } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Link from 'next/link';
 
 interface ChatBot {
-  name: string;
+  _id?: string;
+  botName: string;
   description: string;
   icon: string;
-  tone?: string;
+  botTone?: string;
   file: string;
-  color?: string;
+  botColor?: string;
   createdAt: string;
 }
 
@@ -26,15 +24,15 @@ interface ChatBotCardProps {
 }
 
 const ChatBotCard: React.FC<ChatBotCardProps> = ({ bot, actions }) => {
-  const botColor = bot.color?.toLowerCase() || 'default';
+  const botColor = bot.botColor?.toLowerCase() || 'default';
 
   return (
     <article className="flex gap-7 justify-between px-8 py-5 mb-6 w-full bg-gray-900 rounded-xl max-md:flex-wrap max-md:px-5 max-md:max-w-full">
       <div className="flex flex-col max-md:max-w-full">
         <div className="flex gap-2.5 self-start">
-          <img loading="lazy" src={bot.icon} alt={`${bot.name} icon`} className="shrink-0 aspect-[1.04] w-[70px]" />
+          <img loading="lazy" src={bot.icon} alt={`${bot.botName} icon`} className="shrink-0 aspect-[1.04] w-[70px]" />
           <div className="flex flex-col">
-            <h2 className="text-xl font-medium text-gray-100">{bot.name}</h2>
+            <h2 className="text-xl font-medium text-gray-100">{bot.botName}</h2>
             <p className="mt-1.5 text-base leading-3 text-zinc-400">{bot.description}</p>
           </div>
         </div>
@@ -46,13 +44,13 @@ const ChatBotCard: React.FC<ChatBotCardProps> = ({ bot, actions }) => {
                 <span>Name</span>
               </div>
               <div className="flex gap-5 justify-between mt-7 text-sm leading-5 text-gray-100">
-                <img loading="lazy" src={bot.icon} alt={`${bot.name} small icon`} className="shrink-0 aspect-[0.97] w-[35px]" />
-                <span className="my-auto">{bot.name}</span>
+                <img loading="lazy" src={bot.icon} alt={`${bot.botName} small icon`} className="shrink-0 aspect-[0.97] w-[35px]" />
+                <span className="my-auto">{bot.botName}</span>
               </div>
             </div>
             <div className="flex flex-col self-start text-neutral-400">
               <span className="self-start ml-3 text-base max-md:ml-2.5">Tone</span>
-              <span className="mt-8 text-sm leading-5 text-center">{bot.tone}</span>
+              <span className="mt-8 text-sm leading-5 text-center">{bot.botTone}</span>
             </div>
           </div>
           <div className="flex flex-col justify-end pt-3 whitespace-nowrap text-neutral-400">
@@ -66,7 +64,7 @@ const ChatBotCard: React.FC<ChatBotCardProps> = ({ bot, actions }) => {
             <span className="self-start ml-2.5 text-base">Color</span>
             <div className="flex gap-2.5 p-2.5 mt-4 text-sm leading-5 text-center rounded-full">
               <div className={`shrink-0 w-6 h-6 ${botColor === 'blue' ? 'bg-blue-500' : botColor === 'fuchsia' ? 'bg-fuchsia-600' : 'bg-gray-500'}`} />
-              <span className="my-auto">{bot.color || ''}</span>
+              <span className="my-auto">{bot.botColor || ''}</span>
             </div>
           </div>
           <div className="flex flex-col justify-end pt-4 pb-2.5 text-neutral-400">
@@ -86,7 +84,7 @@ const ChatBotCard: React.FC<ChatBotCardProps> = ({ bot, actions }) => {
           <button aria-label="Edit bot" className="text-blue-500" onClick={actions.onEdit}>
             <FontAwesomeIcon icon={faPencilAlt} />
             <Link href={`/editBot`}>
-            <span>Edit</span>
+              <span>Edit</span>
             </Link>
           </button>
         )}
@@ -99,7 +97,6 @@ const ChatBotCard: React.FC<ChatBotCardProps> = ({ bot, actions }) => {
       </div>
     </article>
   );
-}
+};
 
 export default ChatBotCard;
-

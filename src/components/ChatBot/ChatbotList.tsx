@@ -2,46 +2,33 @@
 
 "use client"
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import ChatBotCard from './ChatBotCard';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import Link from 'next/link';
+<<<<<<< HEAD
+=======
+import { RootState } from '@/redux/configureStore';
+import { useDispatch, useSelector } from 'react-redux';
+// import { getUserKnowledgeBaseAction } from '@/redux/actions/knowledgeBaseActions';
+import { getUserBotProfileAction,deleteBotProfileServiceAction } from '@/redux/actions/BotProfileActions';
+import ConfirmModal from './modalDelete';
+>>>>>>> 228d8c6 (added get put and post for createChat bot)
 
 interface ChatBot {
-  botId?: any;
-  name: string;
+  _id?: any;
+  botName: string;
   description: string;
   icon: string;
-  tone: string;
+  botTone: string;
   file: string;
-  color: string;
+  botColor: string;
   createdAt: string;
 }
 
-const chatBots: ChatBot[] = [
-  {
-    name: 'TalentTalker',
-    description: 'Chatbot for or Human Resources with a playful twist',
-    icon: 'https://cdn.builder.io/api/v1/image/assets/TEMP/83ca9326c329ecba81bf2f6263aaec95e0712d60070b29a4af7f07b5ebeb0c93?apiKey=555c811dd3f44fc79b6b2689129389e8&',
-    tone: 'Formal Tone',
-    file: 'Fintech.PDF',
-    color: 'Blue',
-    createdAt: 'Jun 14, 2024 at 12:10 pm',
-  },
-  {
-    name: 'MarketBot',
-    description:
-      'Provide comprehensive assistance in the field of market research',
-    icon: 'https://cdn.builder.io/api/v1/image/assets/TEMP/f9c775da8197f3375ae992ec7dd5a00c8e6aa140bdc20e55e78babc3bbfd5a1f?apiKey=555c811dd3f44fc79b6b2689129389e8&',
-    tone: 'Formal Tone',
-    file: 'Fintech.PDF',
-    color: 'Pink',
-    createdAt: 'Jun 14, 2024 at 12:10 pm',
-  },
-];
-
 const ChatBotList: React.FC = () => {
+<<<<<<< HEAD
   // Function to handle delete action
   // const handleDelete = async (index: number) => {
   //   const botToDelete = chatBots[index];
@@ -75,20 +62,53 @@ const ChatBotList: React.FC = () => {
       // Handle error, show message, retry logic, etc.
     }
   };
+=======
+  const botDataRedux = useSelector((state: RootState) => state.botProfile?.botProfiles?.data);
+  const [chatBotList, setChatBotList] = useState<ChatBot[]>([]);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [botIdToDelete, setBotIdToDelete] = useState<string | null>(null);
+  const dispatch = useDispatch();
+  const userId = useSelector((state: RootState) => state.root?.userData?.user_id);
+  const pathName = useSelector((state: RootState) => state.root?.pathName);
+>>>>>>> 228d8c6 (added get put and post for createChat bot)
 
   // Function to handle edit action
   const handleEdit = (index: number) => {
     // Navigate to the edit page with the botId as a query parameter
-    window.location.href = `/editBot?botId=${chatBots[index].botId}`;
-    console.log('navigating');
+    window.location.href = `/editBot?botId=${chatBotList[index]._id}`;
   };
-  useEffect(() => {
-    if (userId !== undefined) {
-      if (userId?.length || pathName === '/MyChatBots') {
-        dispatch(getUserBotProfileAction(userId));
-      }
+
+  // Function to handle delete action
+  const handleDelete = (index: number) => {
+    setBotIdToDelete(chatBotList[index]._id);
+    setIsModalOpen(true);
+  };
+
+  // Confirm deletion
+  const confirmDelete = () => {
+    if (botIdToDelete && userId) {
+      dispatch(deleteBotProfileServiceAction({ botId: botIdToDelete, userId }));
+      setIsModalOpen(false);
     }
-  }, [userId, pathName]);
+  };
+
+  // Close the modal
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setBotIdToDelete(null);
+  };
+
+  useEffect(() => {
+    if (botDataRedux && botDataRedux.length) {
+      setChatBotList(botDataRedux);
+    }
+  }, [botDataRedux]);
+
+  useEffect(() => {
+    if (userId?.length || pathName === '/MyChatBots') {
+      dispatch(getUserBotProfileAction(userId));
+    }
+  }, [userId]);
 
   return (
     <main className="flex flex-col">
@@ -104,17 +124,24 @@ const ChatBotList: React.FC = () => {
         </button>
       </header>
       <section className="mt-12 px-10">
-        {chatBots.map((bot, index) => (
+        {chatBotList.map((chatBot, index) => (
           <ChatBotCard
             key={index}
-            bot={bot}
+            bot={chatBot}
             actions={{
-              // onDelete: () => handleDelete(index),
+              onDelete: () => handleDelete(index),
               onEdit: () => handleEdit(index),
             }}
           />
         ))}
       </section>
+
+      <ConfirmModal
+        isOpen={isModalOpen}
+        onClose={closeModal}
+        onConfirm={confirmDelete}
+        message="Are you sure you want to delete this chatbot?"
+      />
     </main>
   );
 };

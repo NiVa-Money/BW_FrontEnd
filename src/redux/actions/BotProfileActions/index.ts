@@ -5,7 +5,6 @@ import {
 } from '../actionTypes';
 
 export const createBotProfileAction = (data: any) => {
-  console.log("data",data)
   return({
   type: CREATE_BOT_PROFILE,
   payload: data,
