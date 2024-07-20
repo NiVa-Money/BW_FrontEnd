@@ -64,13 +64,13 @@ const ChatBotList: React.FC = () => {
   }, [botDataRedux]);
 
   useEffect(() => {
-    if (userId === undefined ) {
+   
     if (userId?.length || pathName === '/MyChatBots') {
       dispatch(getUserBotProfileAction(userId));
-    }
+    
   }
   }, [userId,pathName]);
-//notes - userId === undefined in that case then take userId from local storage if route is MyChatBots 
+//notes - userId === undefined in that case then take userId from local storage if route
   return (
     <main className="flex flex-col">
       <header className="flex gap-2.5 px-5 max-md:flex-wrap">

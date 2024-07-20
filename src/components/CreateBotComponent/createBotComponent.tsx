@@ -141,7 +141,7 @@ const CreateBotComponent: React.FC = () => {
     }
 
     dispatch(createBotProfileAction(formData));
-    // router.push('/MyChatBots');
+    router.push('/MyChatBots');
   };
 
   //
