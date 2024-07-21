@@ -1,3 +1,5 @@
+'use client'
+
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import createSagaMiddleware from 'redux-saga';
 import globalReducers from './reducers/globalReducers';
