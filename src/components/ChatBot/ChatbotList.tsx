@@ -1,20 +1,14 @@
-
-
 "use client"
-
 import React, { useEffect, useState } from 'react';
 import ChatBotCard from './ChatBotCard';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import Link from 'next/link';
-<<<<<<< HEAD
-=======
 import { RootState } from '@/redux/configureStore';
 import { useDispatch, useSelector } from 'react-redux';
 // import { getUserKnowledgeBaseAction } from '@/redux/actions/knowledgeBaseActions';
-import { getUserBotProfileAction,deleteBotProfileServiceAction } from '@/redux/actions/BotProfileActions';
+import { getUserBotProfileAction, deleteBotProfileServiceAction } from '@/redux/actions/BotProfileActions';
 import ConfirmModal from './modalDelete';
->>>>>>> 228d8c6 (added get put and post for createChat bot)
 
 interface ChatBot {
   _id?: any;
@@ -28,49 +22,14 @@ interface ChatBot {
 }
 
 const ChatBotList: React.FC = () => {
-<<<<<<< HEAD
-  // Function to handle delete action
-  // const handleDelete = async (index: number) => {
-  //   const botToDelete = chatBots[index];
-
-  //   // Prepare the request data
-  //   const requestData = {
-  //     botId: botToDelete.botId, // Replace with actual botId from your data structure
-  //     userId: 'currentUserId', // Replace with actual userId from your authentication/session
-  //   };
-
-  //   try {
-  //     // Make the API request
-  //     const response = await fetch('/user/deleteBotProfile', {
-  //       method: 'PUT',
-  //       headers: {
-  //         'Content-Type': 'application/json',
-  //       },
-  //       body: JSON.stringify(requestData),
-  //     });
-
-  //     if (!response.ok) {
-  //       throw new Error('Failed to delete bot');
-  //     }
-
-      // Assuming success, update state or perform necessary actions
-      const updatedBots = [...chatBots];
-      updatedBots.splice(index, 1);
-      // Update state or perform necessary actions
-    } catch (error) {
-      console.error('Error deleting bot:', error);
-      // Handle error, show message, retry logic, etc.
-    }
-  };
-=======
   const botDataRedux = useSelector((state: RootState) => state.botProfile?.botProfiles?.data);
   const [chatBotList, setChatBotList] = useState<ChatBot[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [botIdToDelete, setBotIdToDelete] = useState<string | null>(null);
+  const userIdRex = useSelector((state: RootState) => state.root?.userData?.user_id);
+  const [userIdLocal, setuserIdLocal] = useState(userIdRex)
   const dispatch = useDispatch();
-  const userId = useSelector((state: RootState) => state.root?.userData?.user_id);
   const pathName = useSelector((state: RootState) => state.root?.pathName);
->>>>>>> 228d8c6 (added get put and post for createChat bot)
 
   // Function to handle edit action
   const handleEdit = (index: number) => {
@@ -86,8 +45,8 @@ const ChatBotList: React.FC = () => {
 
   // Confirm deletion
   const confirmDelete = () => {
-    if (botIdToDelete && userId) {
-      dispatch(deleteBotProfileServiceAction({ botId: botIdToDelete, userId }));
+    if (botIdToDelete && userIdRex) {
+      dispatch(deleteBotProfileServiceAction({ botId: botIdToDelete, userIdRex }));
       setIsModalOpen(false);
     }
   };
@@ -99,19 +58,27 @@ const ChatBotList: React.FC = () => {
   };
 
   useEffect(() => {
+    if(userIdRex?.length ){
+      setuserIdLocal(userIdRex)
+    }
+  }, [userIdRex])
+
+
+  useEffect(() => {
     if (botDataRedux && botDataRedux.length) {
       setChatBotList(botDataRedux);
     }
   }, [botDataRedux]);
 
   useEffect(() => {
-   
-    if (userId?.length || pathName === '/MyChatBots') {
-      dispatch(getUserBotProfileAction(userId));
-    
-  }
-  }, [userId,pathName]);
-//notes - userId === undefined in that case then take userId from local storage if route
+    // const storedUserId = localStorage.getItem('user_id');
+    // const idToUse = userIdRex !== null && userIdRex !== undefined ? userIdRex : storedUserId;
+    // console.log("hello", userIdRex !== null && userIdRex !== undefined ? userIdRex : storedUserId)
+    if (userIdLocal || pathName === '/MyChatBots') {
+      dispatch(getUserBotProfileAction(userIdLocal));
+    }
+  }, [userIdRex, pathName]);
+  //notes - userIdRex === undefined in that case then take userIdRex from local storage if route
   return (
     <main className="flex flex-col">
       <header className="flex gap-2.5 px-5 max-md:flex-wrap">
