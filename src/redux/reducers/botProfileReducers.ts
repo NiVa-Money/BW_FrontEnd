@@ -35,7 +35,7 @@ export default function botProfileReducers(
       return {
         ...state,
         create: { data: action.payload, loader: false },
-      };
+      }; 
     case EDIT_BOT_PROFILE:
       return {
         ...state,

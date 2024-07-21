@@ -54,16 +54,17 @@
 // }
 
 // export default KnowledgeBase;
+
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import ChatBotCard from '../ChatBot/ChatBotCard';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import Link from 'next/link';
 import { RootState } from '@/redux/configureStore';
 import { useDispatch, useSelector } from 'react-redux';
-import { getUserKnowledgeBaseAction } from '@/redux/actions/knowledgeBaseActions';
+import { deleteUserKnowledgeBaseAction, getUserKnowledgeBaseAction } from '@/redux/actions/knowledgeBaseActions';
 
 interface KnowledgeBaseCardProps {
   docId: any;
@@ -77,12 +78,8 @@ interface KnowledgeBaseCardProps {
 }
 
 const KnowledgeBase: React.FC = () => {
-  const [knowledgebase, setKnowledgebase] = useState<KnowledgeBaseCardProps[]>(
-    []
-  );
-  const userId = useSelector(
-    (state: RootState) => state.root?.userData?.user_id
-  );
+  const knowledgebase = useSelector((state: RootState) => state.root.KnowledgeBase.user.data) || [];
+  const userId = useSelector((state: RootState) => state.root?.userData?.user_id);
   const dispatch = useDispatch();
   const pathName = useSelector((state: RootState) => state.root?.pathName);
 
@@ -92,35 +89,13 @@ const KnowledgeBase: React.FC = () => {
         dispatch(getUserKnowledgeBaseAction(userId));
       }
     }
-  }, [userId, pathName]);
+  }, [userId, pathName, dispatch]);
 
-  const handleDelete = async (index: number) => {
-    try {
-      const docId = knowledgebase[index].docId; // Assuming docId is part of knowledgebase entry
-      const userId = 'YOUR_USER_ID'; // Replace with actual userId
-
-      const response = await fetch(
-        `/user/deleteUserKnowledgeBase?docId=${docId}&userId=${userId}`,
-        {
-          method: 'PUT',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        }
-      );
-
-      if (!response.ok) {
-        throw new Error('Failed to delete knowledge base entry');
-      }
-
-      // Update state or handle UI after successful deletion
-      const updatedKnowledgeBase = [...knowledgebase];
-      updatedKnowledgeBase.splice(index, 1);
-      setKnowledgebase(updatedKnowledgeBase);
-
-      console.log('Knowledge base entry deleted successfully');
-    } catch (error) {
-      console.error('Error deleting knowledge base entry:', error);
+  const handleDelete = (docId: string) => {
+    if (confirm('Are you sure you want to delete this entry?')) {
+      dispatch(deleteUserKnowledgeBaseAction(docId));
+      // You may need to handle state update directly in your reducer or use an effect to update the UI
+      alert('Knowledge base entry deleted successfully');
     }
   };
 
@@ -143,19 +118,25 @@ const KnowledgeBase: React.FC = () => {
         </button>
       </header>
       <section className="mt-12 px-10">
-        {knowledgebase.map((bot, index) => (
-          <ChatBotCard
-            key={index}
-            bot={bot}
-            actions={{
-              onDelete: () => handleDelete(index),
-              onDownload: () => handleDownload(index),
-            }}
-          />
-        ))}
+        {Array.isArray(knowledgebase) && knowledgebase.length > 0 ? (
+          knowledgebase.map((bot: KnowledgeBaseCardProps, index: number) => (
+            <ChatBotCard
+              key={bot.docId} // Prefer using a unique identifier rather than index
+              bot={bot}
+              actions={{
+                onDelete: () => handleDelete(bot.docId),
+                onDownload: () => handleDownload(index),
+              }}
+            />
+          ))
+        ) : (
+          <p>No knowledge base entries available.</p>
+        )}
       </section>
     </main>
   );
 };
 
 export default KnowledgeBase;
+
+

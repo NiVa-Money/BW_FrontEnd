@@ -138,9 +138,8 @@ export const createKnowledgeBaseService = async (payload: any) => {
     );
     return response.data;
   } catch (error) {
-    console.error('Error signing up user:', error);
-    2;
-    throw new Error('Error signing up user');
+    console.error('Error creating knowledge base:', error);
+    throw new Error('Error creating knowledge base');
   }
 };
 
@@ -188,3 +187,35 @@ export const logoutUser = () => {
     throw new Error('Error logging out user');
   }
 };
+
+// user chat with bot
+
+export const getUserChatService = async (payload: any) => {
+  try {
+    const response = await axiosInstance.post(
+      'user/sessionChat',
+      payload
+    );
+    return response.data;
+  } catch (error) {
+    console.error('Error signing up user:', error);
+    2;
+    throw new Error('Error signing up user');
+  }
+};
+
+export const getUserAllSessionService = async (payload: any) => {
+  try {
+    console.log("get user getsession",payload)
+    const response = await axiosInstance.post(
+      `user/getSession`,payload
+      );
+      console.log("res all session",response)
+    return response.data;
+  } catch (error) {
+    console.error('Error signing up user:', error);
+    2;
+    throw new Error('Error signing up user');
+  }
+};
+
