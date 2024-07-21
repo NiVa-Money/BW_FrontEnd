@@ -1,6 +1,9 @@
 'use client';
 
 import React, { useState } from 'react';
+
+import { useDispatch } from 'react-redux';
+
 import { editBotProfileAction } from '../../redux/actions/BotProfileActions'; // Adjust the import path according to your project structure
 import Image from 'next/image';
 import bot1 from '@/public/assets/bot1.svg';
@@ -23,8 +26,10 @@ import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import FileUploadIcon from '@mui/icons-material/FileUpload';
 import ZoomOutMapIcon from '@mui/icons-material/ZoomOutMap';
 import Link from 'next/link';
+
 import { RootState } from '@/redux/configureStore';
 import { useDispatch, useSelector } from 'react-redux';
+
 
 
 interface BotData {
@@ -36,7 +41,8 @@ interface BotData {
   botIdentity: string;
   supportNumber: string;
   supportEmail: string;
-  wordLimitPerMessage: string;
+
+  wordLimitPerMessage: number;
   userId: string;
 }
 
@@ -70,8 +76,11 @@ const EditBotComponent: React.FC = () => {
   );
   const [imageSrc, setImageSrc] = useState('');
   const [imagename, setImageName] = useState('');
+
+
+  const [fileName, setFileName] = useState('');
   const [textVal, setTextVal] = useState('');
-  const [filename, setFileName] = useState('');
+
 
   // Function to handle file upload
   const handleFileUpload = (event: any) => {
@@ -93,21 +102,30 @@ const EditBotComponent: React.FC = () => {
   const handleDivClick = (text: any) => {
     setTextVal(text);
   };
+
   const userId = useSelector((state: RootState) => state.root?.userData?.user_id);
   const botDataRedux = useSelector((state: RootState) => state.botProfile?.botProfiles?._id);
  
   const handleSave = () => {
     const botData: BotData = {
       botId: botDataRedux,
+
+
+  const handleSave = () => {
+    const botData: BotData = {
+      botId: '6669870ee3403661eda80e58',
+
       botName,
       botTone,
       botGreetingMessage: greetingMessage,
       botSmartness: false,
+
       botIdentity,
       supportNumber : supportPhone,
       supportEmail,
       wordLimitPerMessage: botLimit,
       userId: userId,
+
     };
 
     dispatch(editBotProfileAction(botData));
@@ -209,8 +227,7 @@ const EditBotComponent: React.FC = () => {
             <span className="p-[10px]"> {value}</span>
           </div>
         ))}
-      </div> */}
-      {/* <button className="rounded-[70px] bg-[#3F2181] mt-4  text-white px-4 py-2 flex justify-center">
+
         <span>Add</span>
         <AddIcon />
       </button> */}
@@ -239,6 +256,7 @@ const EditBotComponent: React.FC = () => {
           />
         </div>
         <button className="rounded-[70px] bg-[#3F2181] mt-18  text-white px-4 py-2 flex justify-center">
+
           <span>Upload</span>
           <FileUploadIcon />
         </button>
@@ -271,6 +289,7 @@ const EditBotComponent: React.FC = () => {
           </div>
         </div>
         <button className="rounded-[70px] bg-[#3F2181] mt-[66px]  text-white px-4 py-2 flex justify-center">
+
           <span>Upload</span>
           <FileUploadIcon />
         </button>

@@ -1,14 +1,18 @@
-"use client"
-import React, { useEffect, useState } from 'react';
+
+
+import React, { useEffect } from 'react';
+
 import ChatBotCard from './ChatBotCard';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import Link from 'next/link';
 import { RootState } from '@/redux/configureStore';
 import { useDispatch, useSelector } from 'react-redux';
+
 // import { getUserKnowledgeBaseAction } from '@/redux/actions/knowledgeBaseActions';
 import { getUserBotProfileAction, deleteBotProfileServiceAction } from '@/redux/actions/BotProfileActions';
 import ConfirmModal from './modalDelete';
+
 
 interface ChatBot {
   _id?: any;
@@ -22,6 +26,7 @@ interface ChatBot {
 }
 
 const ChatBotList: React.FC = () => {
+
   const botDataRedux = useSelector((state: RootState) => state.botProfile?.botProfiles?.data);
   const [chatBotList, setChatBotList] = useState<ChatBot[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -55,7 +60,61 @@ const ChatBotList: React.FC = () => {
   const closeModal = () => {
     setIsModalOpen(false);
     setBotIdToDelete(null);
+
+  const dispatch = useDispatch();
+  const userId = useSelector(
+    (state: RootState) => state.root?.userData?.user_id
+  );
+  const pathName = useSelector((state: RootState) => state.root?.pathName);
+
+  // Function to handle delete action
+  // const handleDelete = async (index: number) => {
+  //   const botToDelete = chatBots[index];
+
+  //   // Prepare the request data
+  //   const requestData = {
+  //     botId: botToDelete.botId, // Replace with actual botId from your data structure
+  //     userId: 'currentUserId', // Replace with actual userId from your authentication/session
+  //   };
+
+  //   try {
+  //     // Make the API request
+  //     const response = await fetch('/user/deleteBotProfile', {
+  //       method: 'PUT',
+  //       headers: {
+  //         'Content-Type': 'application/json',
+  //       },
+  //       body: JSON.stringify(requestData),
+  //     });
+
+  //     if (!response.ok) {
+  //       throw new Error('Failed to delete bot');
+  //     }
+
+  //     // Assuming success, update state or perform necessary actions
+  //     const updatedBots = [...chatBots];
+  //     updatedBots.splice(index, 1);
+  //     // Update state or perform necessary actions
+  //   } catch (error) {
+  //     console.error('Error deleting bot:', error);
+  //     // Handle error, show message, retry logic, etc.
+  //   }
+  // };
+
+  // Function to handle edit action
+  const handleEdit = (index: number) => {
+    // Navigate to the edit page with the botId as a query parameter
+    window.location.href = `/editBot?botId=${chatBots[index].botId}`;
+    console.log('navigating');
+
   };
+  useEffect(() => {
+    if (userId !== undefined) {
+      if (userId?.length || pathName === '/MyChatBots') {
+        dispatch(getUserBotProfileAction(userId));
+      }
+    }
+  }, [userId, pathName]);
 
   useEffect(() => {
     if(userIdRex?.length ){
@@ -98,7 +157,7 @@ const ChatBotList: React.FC = () => {
             key={index}
             bot={chatBot}
             actions={{
-              onDelete: () => handleDelete(index),
+              // onDelete: () => handleDelete(index),
               onEdit: () => handleEdit(index),
             }}
           />

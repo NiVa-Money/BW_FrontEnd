@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { faPencilAlt, faTrash, faDownload } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -85,7 +86,9 @@ const ChatBotCard: React.FC<ChatBotCardProps> = ({ bot, actions }) => {
           <button aria-label="Edit bot" className="text-blue-500" onClick={actions.onEdit}>
             <FontAwesomeIcon icon={faPencilAlt} />
             <Link href={`/editBot`}>
+
               <span>Edit</span>
+
             </Link>
           </button>
         )}
