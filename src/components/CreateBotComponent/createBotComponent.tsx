@@ -264,11 +264,10 @@ const CreateBotComponent: React.FC = () => {
             <button
               key={color}
               onClick={() => setChatColor(color)}
-              className={`w-8 h-8 rounded-full ${
-                color === 'rainbow'
+              className={`w-8 h-8 rounded-full ${color === 'rainbow'
                   ? 'bg-gradient-to-r from-red-500 via-green-500 to-blue-500'
                   : ''
-              }`}
+                }`}
               style={{
                 backgroundColor: color !== 'rainbow' ? color : undefined,
               }}
@@ -350,11 +349,10 @@ const CreateBotComponent: React.FC = () => {
             <button
               key={tone}
               onClick={() => setBotTone(tone)}
-              className={`px-4 py-2 rounded ${
-                botTone === tone
+              className={`px-4 py-2 rounded ${botTone === tone
                   ? 'bg-[#3F2181] text-white h-[Hug (38px)px] rounded-[24px]'
                   : 'text-gray-200'
-              }`}
+                }`}
             >
               {tone}
             </button>
@@ -398,19 +396,20 @@ const CreateBotComponent: React.FC = () => {
             />
           </div>
         </div>
-        <div className="flex">
-          <button className="rounded-[70px] bg-[#3F2181] mt-[66px]  text-white px-4 py-2 flex justify-center">
+        <div className="flex items-center space-x-4 mt-[66px]">
+          <button className="rounded-[70px] bg-[#3F2181] text-white px-4 py-2 flex items-center justify-center">
             <span>Upload</span>
             <FileUploadIcon />
           </button>
-          <div className="mb-4">
-            <label className="block text-gray-200 mb-2">Enable Smartness</label>
+          <div className="flex items-center">
+            <label className="block text-white mr-2">Enable Smartness</label>
             <Switch
               checked={Boolean(botSmartnessVal)}
-              onChange={(): any => setbotSmartnessVal(!botSmartnessVal)}
+              onChange={() => setbotSmartnessVal(!botSmartnessVal)}
             />
           </div>
         </div>
+
       </div>
       <div className="mb-4">
         <label className="block text-gray-200 mb-2">
