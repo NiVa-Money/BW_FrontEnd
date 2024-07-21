@@ -5,6 +5,7 @@ import * as React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import './newchat.css';
 import {
+  filteredSession,
   getAllSession,
   sendUserQuestion,
   sendUserQuestionOnly,
@@ -15,21 +16,16 @@ const NewChatComponent: React.FC = () => {
   const [isBotProfileOpen, setIsBotProfileOpen] = React.useState(false);
   const [isChatHistoryOpen, setIsChatHistoryOpen] = React.useState(false);
   const [activeBotIndex, setActiveBotIndex] = React.useState(null);
-  const [sessionId, setSessionId] = React.useState<any>('');
+  // const [sessionId, setSessionId] = React.useState<any>('');
   const [botId, setBotId] = React.useState<any>(null);
   const chatContainerRef = React.useRef<any>(null);
+  const [sessionId, setSessionId] = React.useState<string>('');
   const [question, setQuestion] = React.useState<any>({
     text: 'tell me about this pdf',
   });
   const [newMessage, setNewMessage] = React.useState<any>('');
   const [messages, setMessages] = React.useState<any>([]);
 
-  const handleBotClick = (index: any, botId: any) => {
-    setActiveBotIndex(index);
-    console.log('Selected Bot ID:', botId);
-    setBotId(botId);
-    setIsBotProfileOpen(!isBotProfileOpen);
-  };
   const botProfiles = useSelector((state: RootState) => state.botProfile);
   const userId = useSelector(
     (state: RootState) => state.root?.userData?.user_id
@@ -41,40 +37,19 @@ const NewChatComponent: React.FC = () => {
     (state: RootState) => state?.userChat?.allSession
   );
 
-  // React.useEffect(()=>{
-  //   console.log("userChatMessages",userChatMessagesRes)
-  //   setSessionId(userChatMessagesRes?.data?.sessionId);
-  //   if (userChatMessagesRes?.data?.chats && userChatMessagesRes?.data.chats.length > 0) {
-  //     // const apiResponseMessage = {
-  //     //   text: userChatMessagesRes.data.chats[userChatMessagesRes.data.chats.length-1].answer,
-  //     //   sender: "other",
-  //     // };
-  //     // const apiResponseMessageQues = {
-  //     //   text: userChatMessagesRes?.data?.chats[userChatMessagesRes.data.chats.length-1]?.question,
-  //     //   sender: "user",
-  //     // };
-  //     // setMessages([...messages, apiResponseMessage , apiResponseMessageQues]);
-  //     const newMessages = userChatMessagesRes.data.chats.flatMap((chat:any) => [
-  //       {
-  //         text: chat.question,
-  //         sender: "user",
-  //       },
-  //       {
-  //         text: chat.answer,
-  //         sender: "other",
-  //       }
-  //     ]);
-
-  //     setMessages([...newMessages]);
-  //   }
-  // },[userChatMessagesRes])
-
   React.useEffect(() => {
     if (chatContainerRef.current) {
       chatContainerRef.current.scrollTop =
         chatContainerRef.current.scrollHeight;
     }
   }, [messages]);
+
+  const handleBotClick = (index: any, botId: any) => {
+    setActiveBotIndex(index);
+    console.log('Selected Bot ID:', botId);
+    setBotId(botId);
+    setIsBotProfileOpen(!isBotProfileOpen);
+  };
 
   const getChatHistory = () => {
     console.log('userId', userId);
@@ -91,7 +66,8 @@ const NewChatComponent: React.FC = () => {
       setMessages([...messages, { text: newMessage, sender: 'user' }]);
       dispatch(sendUserQuestionOnly({ text: newMessage, sender: 'user' }));
       setNewMessage('');
-      let data = {
+      console.log("sessionId ganesh",sessionId)
+      const data = {
         userId: userId,
         sessionId: sessionId,
         question: newMessage,
@@ -113,8 +89,11 @@ const NewChatComponent: React.FC = () => {
   };
 
   const getSession = (sessionId:any) => {
+    // setSessionId(sessionId)
     const filteredSessions = allSession.data.sessions.filter((session :any)=> session._id === sessionId);
-    console.log("filterSession",filteredSessions)
+    console.log("filterSession",filteredSessions[0].sessions)
+    dispatch(filteredSession(filteredSessions))
+    setSessionId(sessionId);
   }
 
   React.useEffect(() => {
@@ -188,7 +167,11 @@ const NewChatComponent: React.FC = () => {
                 {allSession.data.sessions?.map(
                   (session: any, index: number) => (
                     <div className="px-3 py-2 text-white" key={index}>
-                      <div><button onClick={()=>getSession(session._id)}>session Chat {index+1}</button></div>
+                      <div><button onClick={()=>{
+                        getSession(session._id)
+                        setSessionId(session._id)
+                        console.log("sessionId jjj",sessionId)
+                      }}>session Chat {index+1}</button></div>
                     </div>
                   )
                 )}

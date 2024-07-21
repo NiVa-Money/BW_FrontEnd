@@ -5,7 +5,8 @@ import {
     GET_USER_CHAT_SUCCESS,
     USER_ALL_SESSION,
     USER_CHAT_DATA,
-    USER_OUESTION_SESSION
+    USER_OUESTION_SESSION,
+    USER_SESSION_HISTORY
   } from '@/redux/actions/actionTypes';
   import initialState from './initialState';
   export default function userChatReducers(state = initialState.userChat, action: any) {
@@ -29,6 +30,13 @@ import {
         return {
           ...state,
           sessionChat: { data: newData ,loader: true },
+      };
+
+      case USER_SESSION_HISTORY:
+        console.log("USER_OUESTION_SESSION",action.payload)
+        return {
+          ...state,
+          sessionChat: { data: action.payload ,loader: true },
       };
         
       case GET_USER_CHAT_SUCCESS:
