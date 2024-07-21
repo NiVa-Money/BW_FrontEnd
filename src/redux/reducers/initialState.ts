@@ -58,6 +58,7 @@ const initialState: any = {
     },
     sessionChat:{
       data:[],
+      sessionId:null,
       loader:false,
     }
   }

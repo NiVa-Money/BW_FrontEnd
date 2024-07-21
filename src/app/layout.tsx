@@ -56,7 +56,7 @@ export default function RootLayout({
     <html lang="en">
       <body className="flex flex-col min-h-screen">
         <Provider store={store}>
-          <PersistGate loading={<div>Loading...</div>} persistor={persistor}>
+          {/* <PersistGate loading={<div>Loading...</div>} persistor={persistor}> */}
             <PathnameHandler />
             <ConditionalHeader routeWithoutHeader={routeWithoutHeader} />
             <div className="flex flex-grow">
@@ -64,7 +64,7 @@ export default function RootLayout({
               <main className="flex-grow">{children}</main>
             </div>
             <ConditionalFooter routeWithoutFooter={routeWithoutFooter} />
-          </PersistGate>
+          {/* </PersistGate> */}
         </Provider>
       </body>
     </html>

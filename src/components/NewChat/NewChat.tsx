@@ -4,7 +4,11 @@ import { RootState } from '@/redux/configureStore';
 import * as React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import './newchat.css';
-import { getAllSession, sendUserQuestion } from '@/redux/actions/userChatAction';
+import {
+  getAllSession,
+  sendUserQuestion,
+  sendUserQuestionOnly,
+} from '@/redux/actions/userChatAction';
 
 const NewChatComponent: React.FC = () => {
   const dispatch = useDispatch();
@@ -20,16 +24,22 @@ const NewChatComponent: React.FC = () => {
   const [newMessage, setNewMessage] = React.useState<any>('');
   const [messages, setMessages] = React.useState<any>([]);
 
-  const handleBotClick = (index: any,botId:any) => {
+  const handleBotClick = (index: any, botId: any) => {
     setActiveBotIndex(index);
     console.log('Selected Bot ID:', botId);
-    setBotId(botId)
+    setBotId(botId);
     setIsBotProfileOpen(!isBotProfileOpen);
   };
   const botProfiles = useSelector((state: RootState) => state.botProfile);
-  const userId = useSelector((state: RootState) => state.root?.userData?.user_id);
-  const userChatMessagesRes = useSelector((state: RootState) => state?.userChat?.sessionChat);
-  const allSession = useSelector((state: RootState) => state?.userChat?.allSession);
+  const userId = useSelector(
+    (state: RootState) => state.root?.userData?.user_id
+  );
+  const userChatMessagesRes = useSelector(
+    (state: RootState) => state?.userChat?.sessionChat
+  );
+  const allSession = useSelector(
+    (state: RootState) => state?.userChat?.allSession
+  );
 
   // React.useEffect(()=>{
   //   console.log("userChatMessages",userChatMessagesRes)
@@ -54,7 +64,7 @@ const NewChatComponent: React.FC = () => {
   //         sender: "other",
   //       }
   //     ]);
-  
+
   //     setMessages([...newMessages]);
   //   }
   // },[userChatMessagesRes])
@@ -66,10 +76,10 @@ const NewChatComponent: React.FC = () => {
     }
   }, [messages]);
 
-  const getChatHistory = () =>{
-    console.log("userId",userId)
-    dispatch(getAllSession(userId))
-  }
+  const getChatHistory = () => {
+    console.log('userId', userId);
+    dispatch(getAllSession(userId));
+  };
 
   const handleSubmit = (event: any) => {
     event.preventDefault();
@@ -78,18 +88,19 @@ const NewChatComponent: React.FC = () => {
       console.log('botProfiles', newMessage);
 
       setQuestion(newMessage);
-      setMessages([...messages, { text: newMessage, sender: "user" }]);
+      setMessages([...messages, { text: newMessage, sender: 'user' }]);
+      dispatch(sendUserQuestionOnly({ text: newMessage, sender: 'user' }));
       setNewMessage('');
       let data = {
-        "userId": userId,
-        "sessionId": sessionId,
-        "question": newMessage,
-        "subscriptionPlanId": "subscriptionPlanId1",
-        "botId": botId
-      }
-      console.log("data user chat",data)
+        userId: userId,
+        sessionId: sessionId,
+        question: newMessage,
+        subscriptionPlanId: 'subscriptionPlanId1',
+        botId: botId,
+      };
+      console.log('data user chat', data);
       // sendDataToBackend(data);
-      dispatch(sendUserQuestion(data))
+      dispatch(sendUserQuestion(data));
     }
   };
 
@@ -101,12 +112,18 @@ const NewChatComponent: React.FC = () => {
     setIsChatHistoryOpen(!isChatHistoryOpen);
   };
 
+  const getSession = (sessionId:any) => {
+    const filteredSessions = allSession.data.sessions.filter((session :any)=> session._id === sessionId);
+    console.log("filterSession",filteredSessions)
+  }
+
   React.useEffect(() => {
-    console.log('allSession', allSession);
+    console.log('allSession', allSession.data.sessions);
   }, [allSession]);
 
   React.useEffect(() => {
     console.log('userChatMessagesRes', userChatMessagesRes);
+    setSessionId(userChatMessagesRes?.sessionId);
     console.log('newMessage', newMessage);
     console.log('botProfiles', botProfiles);
   }, [userChatMessagesRes]);
@@ -137,7 +154,7 @@ const NewChatComponent: React.FC = () => {
                   className={`mb-2  cursor-pointer ${
                     activeBotIndex === index ? 'bg-[#3E3556]' : ''
                   }`}
-                  onClick={() => handleBotClick(index,bot._id)}
+                  onClick={() => handleBotClick(index, bot._id)}
                 >
                   <div className="justify-center px-3 py-2 text-white">
                     {bot.botName}
@@ -153,7 +170,9 @@ const NewChatComponent: React.FC = () => {
             className="flex gap-2.5 justify-center p-2.5 text-xl font-medium bg-[#2D2640] text-white rounded-t-lg cursor-pointer"
             onClick={toggleChatHistory}
           >
-            <div><button onClick={getChatHistory}>Chat History</button></div>
+            <div>
+              <button onClick={getChatHistory}>Chat History</button>
+            </div>
             <img
               loading="lazy"
               src="https://cdn.builder.io/api/v1/image/assets/TEMP/ecfab022e56ef6ff0a58045a291327eda3e871d2c6c2576eee117363bc12ecf0?apiKey=555c811dd3f44fc79b6b2689129389e8&"
@@ -164,10 +183,16 @@ const NewChatComponent: React.FC = () => {
             />
           </div>
           {isChatHistoryOpen && (
-            <div className="flex flex-col py-2 text-base tracking-wide leading-6 bg-[#1E1533] rounded-b-lg shadow max-w-[280px] absolute top-full left-0 right-0 z-10">
-              <div className="px-3 py-2 text-white">Recent Chat 1</div>
-              <div className="px-3 py-2 text-white">Recent Chat 2</div>
-              <div className="px-3 py-2 text-white">Recent Chat 3</div>
+            <div className="flex w-full">
+              <div className="flex flex-col py-2 text-base tracking-wide leading-6 bg-[#1E1533] rounded-b-lg shadow max-w-[280px] absolute top-full left-0 right-0 z-10">
+                {allSession.data.sessions?.map(
+                  (session: any, index: number) => (
+                    <div className="px-3 py-2 text-white" key={index}>
+                      <div><button onClick={()=>getSession(session._id)}>session Chat {index+1}</button></div>
+                    </div>
+                  )
+                )}
+              </div>
             </div>
           )}
         </div>
@@ -216,7 +241,10 @@ const NewChatComponent: React.FC = () => {
         </div>
       </div> */}
       <div className="mt-10 w-full max-w-[930px] max-md:mt-10 max-md:max-w-full h-[350px] rounded-lg relative">
-        <div ref={chatContainerRef} className="flex flex-col gap-5 max-md:gap-0 h-full overflow-y-auto pr-2 scrollbar-thin scrollbar-thumb-white scrollbar-track-transparent">
+        <div
+          ref={chatContainerRef}
+          className="flex flex-col gap-5 max-md:gap-0 h-full overflow-y-auto pr-2 scrollbar-thin scrollbar-thumb-white scrollbar-track-transparent"
+        >
           {userChatMessagesRes?.data?.map((message: any, index: any) => (
             <div className="flex w-full" key={index}>
               <div

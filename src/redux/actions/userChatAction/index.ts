@@ -1,6 +1,7 @@
 import {
     USER_CHAT_DATA,
-    USER_ALL_SESSION
+    USER_ALL_SESSION,
+    USER_OUESTION_SESSION
   } from '../actionTypes';
   
   export const sendUserQuestion = (userChatData: any) => ({
@@ -12,3 +13,8 @@ import {
     type: USER_ALL_SESSION ,
     payload: userId
   });
+
+  export const sendUserQuestionOnly = (payload:any) => ( {
+    type: USER_OUESTION_SESSION,
+    payload
+  })

@@ -312,22 +312,15 @@ export function* getUserChatSaga({
 }): Generator<any> {
   try {
     console.log("api userChat with bot payload  --->",payload)
-    yield put({
-      type: GET_USER_CHAT_SUCCESS,
-      payload: {
-        text: payload.question,
-        sender: "user",
-      },
-    });
-    
     const userChat = yield call(getUserChatService, payload);
-    console.log("api userChat with bot res",userChat)
+    // console.log("api userChat with bot res",userChat)
     const answerOfQuestion = userChat.chats[userChat.chats.length-1].answer
     yield put({
       type: GET_USER_CHAT_SUCCESS,
       payload: {
         text: answerOfQuestion,
         sender: "other",
+        sessionId: userChat.sessionId
       },
     });
   } catch (error: any) {
