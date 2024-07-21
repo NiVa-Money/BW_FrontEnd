@@ -13,8 +13,8 @@ import {
   GET_USER_BOT_PROFILE_SUCCESS,
 } from '@/redux/actions/actionTypes';
 import initialState from './initialState';
-export default function globalReducers(
-  state = initialState.root.botProfile,
+export default function botProfileReducers(
+  state = initialState.botProfile,
   action: any
 ) {
   switch (action.type) {
@@ -35,7 +35,7 @@ export default function globalReducers(
       return {
         ...state,
         create: { data: action.payload, loader: false },
-      };
+      }; 
     case EDIT_BOT_PROFILE:
       return {
         ...state,

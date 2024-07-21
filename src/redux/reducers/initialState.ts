@@ -14,39 +14,53 @@ const initialState: any = {
       data: {},
       loader: false,
     },
-    botProfile: {
-      create: {
-        data: {},
-        loader: false,
-      },
-      edit: {
-        data: {},
-        loader: false,
-      },
-      botProfiles: {
-        data: [],
-        loader: false,
-      },
-      delete: {
-        data: {},
-        loader: false,
-      },
+  },
+  botProfile: {
+    create: {
+      data: {},
+      loader: false,
     },
-    KnowledgeBase: {
-      create: {
-        data: {},
-        loader: false,
-      },
-      delete: {
-        data: {},
-        loader: false,
-      },
-      user: {
-        data: {},
-        loader: false,
-      },
+    edit: {
+      data: {},
+      loader: false,
+    },
+    botProfiles: {
+      data: [],
+      loader: false,
+    },
+    delete: {
+      data: {},
+      loader: false,
     },
   },
+  KnowledgeBase: {
+    create: {
+      data: {},
+      loader: false,
+    },
+    delete: {
+      data: {},
+      loader: false,
+    },
+    user: {
+      data: [],
+      loader: false,
+    },
+  },
+  userChat:{
+    session:{
+      data:[],
+      loader:false,
+    },
+    allSession:{
+      data:[],
+      loader:false,
+    },
+    sessionChat:{
+      data:[],
+      loader:false,
+    }
+  }
 };
 
 export default initialState;

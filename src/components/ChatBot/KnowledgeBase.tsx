@@ -84,8 +84,10 @@ const KnowledgeBase: React.FC = () => {
   const pathName = useSelector((state: RootState) => state.root?.pathName);
 
   useEffect(() => {
-    if (userId?.length || pathName === '/knowledgeBase') {
-      dispatch(getUserKnowledgeBaseAction(userId));
+    if (userId !== undefined) {
+      if (userId?.length || pathName === '/knowledgeBase') {
+        dispatch(getUserKnowledgeBaseAction(userId));
+      }
     }
   }, [userId, pathName, dispatch]);
 

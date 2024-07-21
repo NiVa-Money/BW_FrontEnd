@@ -1,10 +1,15 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import ChatBotCard from './ChatBotCard';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import Link from 'next/link';
+import { RootState } from '@/redux/configureStore';
+import { useDispatch, useSelector } from 'react-redux';
+
+import { getUserKnowledgeBaseAction } from '@/redux/actions/knowledgeBaseActions';
+import { getUserBotProfileAction } from '@/redux/actions/BotProfileActions';
 
 interface ChatBot {
   botId?: any;
@@ -40,39 +45,45 @@ const chatBots: ChatBot[] = [
 ];
 
 const ChatBotList: React.FC = () => {
+  const dispatch = useDispatch();
+  const userId = useSelector(
+    (state: RootState) => state.root?.userData?.user_id
+  );
+  const pathName = useSelector((state: RootState) => state.root?.pathName);
+
   // Function to handle delete action
-  const handleDelete = async (index: number) => {
-    const botToDelete = chatBots[index];
+  // const handleDelete = async (index: number) => {
+  //   const botToDelete = chatBots[index];
 
-    // Prepare the request data
-    const requestData = {
-      botId: botToDelete.botId, // Replace with actual botId from your data structure
-      userId: 'currentUserId', // Replace with actual userId from your authentication/session
-    };
+  //   // Prepare the request data
+  //   const requestData = {
+  //     botId: botToDelete.botId, // Replace with actual botId from your data structure
+  //     userId: 'currentUserId', // Replace with actual userId from your authentication/session
+  //   };
 
-    try {
-      // Make the API request
-      const response = await fetch('/user/deleteBotProfile', {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(requestData),
-      });
+  //   try {
+  //     // Make the API request
+  //     const response = await fetch('/user/deleteBotProfile', {
+  //       method: 'PUT',
+  //       headers: {
+  //         'Content-Type': 'application/json',
+  //       },
+  //       body: JSON.stringify(requestData),
+  //     });
 
-      if (!response.ok) {
-        throw new Error('Failed to delete bot');
-      }
+  //     if (!response.ok) {
+  //       throw new Error('Failed to delete bot');
+  //     }
 
-      // Assuming success, update state or perform necessary actions
-      const updatedBots = [...chatBots];
-      updatedBots.splice(index, 1);
-      // Update state or perform necessary actions
-    } catch (error) {
-      console.error('Error deleting bot:', error);
-      // Handle error, show message, retry logic, etc.
-    }
-  };
+  //     // Assuming success, update state or perform necessary actions
+  //     const updatedBots = [...chatBots];
+  //     updatedBots.splice(index, 1);
+  //     // Update state or perform necessary actions
+  //   } catch (error) {
+  //     console.error('Error deleting bot:', error);
+  //     // Handle error, show message, retry logic, etc.
+  //   }
+  // };
 
   // Function to handle edit action
   const handleEdit = (index: number) => {
@@ -80,6 +91,13 @@ const ChatBotList: React.FC = () => {
     window.location.href = `/editBot?botId=${chatBots[index].botId}`;
     console.log('navigating');
   };
+  useEffect(() => {
+    if (userId !== undefined) {
+      if (userId?.length || pathName === '/MyChatBots') {
+        dispatch(getUserBotProfileAction(userId));
+      }
+    }
+  }, [userId, pathName]);
 
   return (
     <main className="flex flex-col">
@@ -100,7 +118,7 @@ const ChatBotList: React.FC = () => {
             key={index}
             bot={bot}
             actions={{
-              onDelete: () => handleDelete(index),
+              // onDelete: () => handleDelete(index),
               onEdit: () => handleEdit(index),
             }}
           />
