@@ -47,6 +47,20 @@ const initialState: any = {
       loader: false,
     },
   },
+  userChat:{
+    session:{
+      data:[],
+      loader:false,
+    },
+    allSession:{
+      data:[],
+      loader:false,
+    },
+    sessionChat:{
+      data:[],
+      loader:false,
+    }
+  }
 };
 
 export default initialState;
