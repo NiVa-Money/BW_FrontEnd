@@ -10,10 +10,31 @@ import {
   GET_USER_KNOWLEDGE_BASE_SUCCESS,
 } from '@/redux/actions/actionTypes';
 import initialState from './initialState';
+
+interface KnowledgeBaseState {
+  create: {
+    data: any;
+    loader: boolean;
+  };
+  delete: {
+    data: any;
+    loader: boolean;
+  };
+  user: {
+    data: any;
+    loader: boolean;
+  };
+}
+
+interface Action {
+  type: string;
+  payload?: any;
+}
+
 export default function globalReducers(
-  state = initialState.root.KnowledgeBase,
-  action: any
-) {
+  state = initialState.root.KnowledgeBase as KnowledgeBaseState,
+  action: Action
+): KnowledgeBaseState {
   switch (action.type) {
     case CREATE_KNOWLEDGE_BASE:
       return {
@@ -26,12 +47,18 @@ export default function globalReducers(
     case CREATE_KNOWLEDGE_BASE_SUCCESS:
       return {
         ...state,
-        create: { data: action.payload, loader: false },
+        create: {
+          data: action.payload,
+          loader: false,
+        },
       };
     case CREATE_KNOWLEDGE_BASE_FAILURE:
       return {
         ...state,
-        create: { data: action.payload, loader: false },
+        create: {
+          data: action.payload,
+          loader: false,
+        },
       };
     case DELETE_USER_KNOWLEDGE_BASE:
       return {
@@ -44,12 +71,18 @@ export default function globalReducers(
     case DELETE_USER_KNOWLEDGE_BASE_SUCCESS:
       return {
         ...state,
-        delete: { data: action.payload, loader: false },
+        delete: {
+          data: action.payload,
+          loader: false,
+        },
       };
     case DELETE_USER_KNOWLEDGE_BASE_FAILURE:
       return {
         ...state,
-        delete: { data: action.payload, loader: false },
+        delete: {
+          data: action.payload,
+          loader: false,
+        },
       };
     case GET_USER_KNOWLEDGE_BASE:
       return {
@@ -62,14 +95,19 @@ export default function globalReducers(
     case GET_USER_KNOWLEDGE_BASE_SUCCESS:
       return {
         ...state,
-        delete: { data: action.payload, loader: false },
+        user: {
+          data: action.payload,
+          loader: false,
+        },
       };
     case GET_USER_KNOWLEDGE_BASE_FAILURE:
       return {
         ...state,
-        delete: { data: action.payload, loader: false },
+        user: {
+          data: action.payload,
+          loader: false,
+        },
       };
-
     default:
       return state;
   }

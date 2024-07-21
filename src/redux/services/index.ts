@@ -135,9 +135,8 @@ export const createKnowledgeBaseService = async (payload: any) => {
     );
     return response.data;
   } catch (error) {
-    console.error('Error signing up user:', error);
-    2;
-    throw new Error('Error signing up user');
+    console.error('Error creating knowledge base:', error);
+    throw new Error('Error creating knowledge base');
   }
 };
 
