@@ -130,43 +130,28 @@ const CreateBotComponent: React.FC = () => {
     formData.append('botTone', botTone);
     formData.append('botColor', chatColor);
     formData.append('botIconType', botIconType);
+    formData.append('botGreetingMessage', greetingMessage);
+    formData.append('botSmartness', botSmartnessVal);
+    formData.append('botIdentity', botIdentity);
+    formData.append('supportNumber', supportPhone);
+    formData.append('supportEmail', supportEmail);
+    formData.append('wordLimitPerMessage', botLimit);
     formData.append('docName', filename);
     formData.append('docType', knowledgeBase.length > 0 ? 'pdf' : '');
     formData.append('docId', docId);
     formData.append('userId', userId);
-    formData.append('supportNumber', supportPhone);
-    formData.append('supportEmail', supportEmail);
-    formData.append('wordLimitPerMessage', botLimit);
-    formData.append('botIdentity', botIdentity);
-    formData.append('botSmartness', botSmartnessVal);
-    formData.append('botGreetingMessage', greetingMessage);
-
     if (selectedFile) {
       formData.append('file', selectedFile);
     } else {
+
       console.error('No file selected');
     }
 
-
     dispatch(createBotProfileAction(formData));
     router.push('/MyChatBots');
-
-
-    // const formDataObject: any = {};
-    // for (const [key, value] of formData.entries()) {
-    //   formDataObject[key] = value;
-    // }
-
-    // delete formDataObject.file;
-
-    // const response = await createUserBotProfileService(formData)
-    // console.log("res",response)
-
     dispatch(createBotProfileAction(formData));
 
   };
-
-  //
 
   const botSamples = [
     {
@@ -294,28 +279,7 @@ const CreateBotComponent: React.FC = () => {
       <div className="mb-4">
         <label className="block text-gray-200 mb-2">Custom photo</label>
         <div className="relative mb-4">
-          {/* <div className="flex items-center bg-[#171029] p-2 w-full rounded-[12px] absolute ">
-            <span className="mr-2">
-              {imagename?.length ? imagename : 'Choose Image'}
-            </span>
-            <button
-              onClick={() => {
-                setImageName('');
-                setImageSrc('');
-              }}
-              className="ml-auto text-white"
-            >
-              ×
-            </button>
-          </div>
-          <input
-            type="file"
-            onChange={handleFileUpload}
-            // ref={viewerRef}
-            accept="image/*"
-            id="file-upload"
-            className="absolute top-[0] opacity-0 "
-          /> */}
+          
         </div>
         <div className="flex items-start">
           <button

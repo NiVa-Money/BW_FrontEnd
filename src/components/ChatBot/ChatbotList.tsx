@@ -11,9 +11,10 @@ import { RootState } from '@/redux/configureStore';
 import { useDispatch, useSelector } from 'react-redux';
 import { getUserBotProfileAction, deleteBotProfileServiceAction } from '@/redux/actions/BotProfileActions';
 import ConfirmModal from './modalDelete';
+import { useRouter } from 'next/navigation';
 
 interface ChatBot {
-  _id?: any;
+  botId?: any;
   botName: string;
   description: string;
   icon: string;
@@ -32,23 +33,24 @@ const ChatBotList: React.FC = () => {
   const [userIdLocal, setUserIdLocal] = useState(userIdRex);
   const dispatch = useDispatch();
   const pathName = useSelector((state: RootState) => state.root?.pathName);
+  const router = useRouter();
 
   // Function to handle edit action
   const handleEdit = (index: number) => {
     // Navigate to the edit page with the botId as a query parameter
-    window.location.href = `/editBot?botId=${chatBotList[index]._id}`;
+    router.push(`/editBot?botId=${chatBotList[index].botId}`);
   };
 
   // Function to handle delete action
   const handleDelete = (index: number) => {
-    setBotIdToDelete(chatBotList[index]._id);
+    setBotIdToDelete(chatBotList[index].botId);
     setIsModalOpen(true);
   };
 
   // Confirm deletion
   const confirmDelete = () => {
-    if (botIdToDelete && userIdRex) {
-      dispatch(deleteBotProfileServiceAction({ botId: botIdToDelete, userId: userIdRex }));
+    if (userIdRex) {
+      dispatch(deleteBotProfileServiceAction({ botId: userIdRex, userId: userIdRex }));
       setIsModalOpen(false);
     }
   };

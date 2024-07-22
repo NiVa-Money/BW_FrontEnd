@@ -1,39 +1,17 @@
 'use client';
 
 import React, { useState } from 'react';
-
-import { useDispatch } from 'react-redux';
-
-import { editBotProfileAction } from '../../redux/actions/BotProfileActions'; // Adjust the import path according to your project structure
+import { editBotProfileAction } from '../../redux/actions/BotProfileActions'; 
 import Image from 'next/image';
-import bot1 from '@/public/assets/bot1.svg';
-import bot2 from '@/public/assets/bot2.svg';
-import bot3 from '@/public/assets/bot3.svg';
-import bot4 from '@/public/assets/bot4.svg';
-import bot5 from '@/public/assets/bot5.svg';
-import bot6 from '@/public/assets/bot6.svg';
-import bot7 from '@/public/assets/bot7.svg';
-import bot8 from '@/public/assets/bot8.svg';
-import bot9 from '@/public/assets/bot9.svg';
-import bot10 from '@/public/assets/bot10.svg';
-import bot11 from '@/public/assets/bot11.svg';
-import bot12 from '@/public/assets/bot12.svg';
-import bot13 from '@/public/assets/bot13.svg';
-import bot14 from '@/public/assets/bot14.svg';
-import bot15 from '@/public/assets/bot15.svg';
-import AddIcon from '@mui/icons-material/Add';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import FileUploadIcon from '@mui/icons-material/FileUpload';
 import ZoomOutMapIcon from '@mui/icons-material/ZoomOutMap';
 import Link from 'next/link';
-
 import { RootState } from '@/redux/configureStore';
 import { useDispatch, useSelector } from 'react-redux';
 
-
-
 interface BotData {
-  botId: string;
+  botId?: string;
   botName: string;
   botTone: string;
   botGreetingMessage: string;
@@ -41,8 +19,7 @@ interface BotData {
   botIdentity: string;
   supportNumber: string;
   supportEmail: string;
-
-  wordLimitPerMessage: number;
+  wordLimitPerMessage: string;
   userId: string;
 }
 
@@ -76,12 +53,8 @@ const EditBotComponent: React.FC = () => {
   );
   const [imageSrc, setImageSrc] = useState('');
   const [imagename, setImageName] = useState('');
-
-
-  const [fileName, setFileName] = useState('');
   const [textVal, setTextVal] = useState('');
-
-
+  const [filename, setFileName] = useState('');
   // Function to handle file upload
   const handleFileUpload = (event: any) => {
     const file = event.target.files[0];
@@ -102,34 +75,21 @@ const EditBotComponent: React.FC = () => {
   const handleDivClick = (text: any) => {
     setTextVal(text);
   };
-
   const userId = useSelector((state: RootState) => state.root?.userData?.user_id);
-  const botDataRedux = useSelector((state: RootState) => state.botProfile?.botProfiles?._id);
- 
   const handleSave = () => {
     const botData: BotData = {
-      botId: botDataRedux,
-
-
-  const handleSave = () => {
-    const botData: BotData = {
-      botId: '6669870ee3403661eda80e58',
-
+      botId: userId,
       botName,
       botTone,
       botGreetingMessage: greetingMessage,
       botSmartness: false,
-
       botIdentity,
       supportNumber : supportPhone,
-      supportEmail,
+      supportEmail :supportEmail,
       wordLimitPerMessage: botLimit,
       userId: userId,
-
     };
-
     dispatch(editBotProfileAction(botData));
-    // You can also redirect or show a success message here if needed
   };
 
   const renderStep1 = () => (
@@ -161,15 +121,6 @@ const EditBotComponent: React.FC = () => {
           ))}
         </div>
       </div>
-      {/* <div className="mb-4">
-        <label className="block text-gray-200 mb-2">System Prompt</label>
-        <textarea
-          value={systemPrompt}
-          onChange={(e) => setSystemPrompt(e.target.value)}
-          className="w-full bg-[#171029] text-white p-2 rounded-[12px]"
-          rows={4}
-        />
-      </div> */}
         <div className="mb-4">
         <label className="block text-gray-200 mb-2">Bot Identity</label>
         <textarea
@@ -213,54 +164,6 @@ const EditBotComponent: React.FC = () => {
           className="w-full bg-[#171029] text-white p-2 rounded-[12px]"
         />
       </div>
-      {/* <div className="flex flex-col w-full">
-        <label className="block text-gray-200 mb-2">
-          Conversation Starters(4)
-        </label>
-
-        {questionsSamples.map((value, index) => (
-          <div
-            key={index}
-            className="clickable-div border-[1px] border-[solid] bg-[#171029] rounded-[12px] flex mt-2 mb-2 "
-            onClick={() => handleDivClick(value)}
-          >
-            <span className="p-[10px]"> {value}</span>
-          </div>
-        ))}
-
-        <span>Add</span>
-        <AddIcon />
-      </button> */}
-      {/* <div className="mb-4 mt-4">
-        <label className="block text-gray-200 mb-2">Knowledge Base</label>
-        <div className="relative mb-8 mt-8">
-          <div className="flex items-center bg-[#171029] p-2 w-full rounded-[12px] absolute ">
-            <span className="mr-2">
-              {fileName?.length ? fileName : 'Choose File'}
-            </span>
-            <button
-              onClick={() => {
-                setFileName('');
-              }}
-              className="ml-auto text-white"
-            >
-              ×
-            </button>
-          </div>
-          <input
-            type="file"
-            onChange={handleFileUpload}
-            accept="image/*"
-            id="file-upload"
-            className="absolute top-[0] opacity-0 "
-          />
-        </div>
-        <button className="rounded-[70px] bg-[#3F2181] mt-18  text-white px-4 py-2 flex justify-center">
-
-          <span>Upload</span>
-          <FileUploadIcon />
-        </button>
-      </div> */}
       <div className="mb-4">
         <label className="block text-gray-200 mb-2">Knowledge base</label>
         <div className="mb-4">
@@ -289,7 +192,6 @@ const EditBotComponent: React.FC = () => {
           </div>
         </div>
         <button className="rounded-[70px] bg-[#3F2181] mt-[66px]  text-white px-4 py-2 flex justify-center">
-
           <span>Upload</span>
           <FileUploadIcon />
         </button>

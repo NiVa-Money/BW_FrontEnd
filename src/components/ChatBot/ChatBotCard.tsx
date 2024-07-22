@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Link from 'next/link';
 
 interface ChatBot {
-  _id?: string;
+  botId?: string;
   botName: string;
   description: string;
   icon: string;
@@ -26,6 +26,7 @@ interface ChatBotCardProps {
 
 
 const ChatBotCard: React.FC<ChatBotCardProps> = ({ bot, actions }) => {
+ 
   const botColor = bot.botColor?.toLowerCase() || 'default';
   return (
     
