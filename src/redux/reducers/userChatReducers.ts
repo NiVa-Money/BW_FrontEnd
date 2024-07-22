@@ -23,9 +23,9 @@ import {
         };
 
       case USER_OUESTION_SESSION:
-        console.log("USER_OUESTION_SESSION",action.payload)
+        // console.log("USER_OUESTION_SESSION",action.payload)
         const previousData = state.sessionChat.data
-        console.log("previousdata",previousData)
+        // console.log("previousdata",previousData)
         const newData = previousData ? [...previousData, action.payload] : [action.payload];
         return {
           ...state,
@@ -42,7 +42,7 @@ import {
       };
         
       case GET_USER_CHAT_SUCCESS:
-        console.log("GET_USER_CHAT_SUCCESS",action.payload)
+        // console.log("GET_USER_CHAT_SUCCESS",action.payload)
         const data = {
           text: action.payload.text,
           sender: action.payload.sender,

@@ -208,11 +208,11 @@ export const getUserChatService = async (payload: any) => {
 
 export const getUserAllSessionService = async (payload: any) => {
   try {
-    console.log("get user getsession",payload)
+    // console.log("get user getsession",payload)
     const response = await axiosInstance.post(
       `user/getSession`,payload
       );
-      console.log("res all session",response)
+      // console.log("res all session",response)
     return response.data;
   } catch (error) {
     console.error('Error signing up user:', error);

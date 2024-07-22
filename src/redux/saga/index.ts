@@ -121,7 +121,7 @@ export function* fetchuserMetricSaga({
 function* loginSaga({ payload }: any) {
   try {
     const result: UserCredential = yield call(signInWithPopup, auth, provider);
-    console.log('re', result);
+    // console.log('re', result);
     const resObject: any = {
       displayName: result?.user?.displayName,
       email: result?.user?.email,
@@ -338,13 +338,13 @@ export function* getUserAllSessionSaga({
   payload: any;
 }): Generator<any> {
   try {
-    console.log("payload",payload)
+    // console.log("payload",payload)
     const data = {
       "userId":payload
     }
-    console.log("getSession ganesh",data)
+    // console.log("getSession ",data)
     const userChat = yield call(getUserAllSessionService,data);
-    console.log("api userChat with bot res All session",userChat)
+    // console.log("api userChat with bot res All session",userChat)
     yield put({
       type: GET_USER_All_SESSION_SUCCESS,
       payload: userChat,

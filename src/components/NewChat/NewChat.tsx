@@ -48,19 +48,19 @@ const NewChatComponent: React.FC = () => {
 
   const handleBotClick = (index: any, botId: any) => {
     setActiveBotIndex(index);
-    console.log('allSession', allSession.data.sessions);
+    // console.log('allSession', allSession.data.sessions);
     const data = {
       filteredSessions:[],
       sessionId:null
     }
     dispatch(filteredSession(data))
-    console.log('Selected Bot ID:', botId);
+    // console.log('Selected Bot ID:', botId);
     setBotId(botId);
     setIsBotProfileOpen(!isBotProfileOpen);
   };
 
   const getChatHistory = () => {
-    console.log('userId', userId);
+    // console.log('userId', userId);
     dispatch(getAllSession(userId));
   };
 
@@ -68,13 +68,13 @@ const NewChatComponent: React.FC = () => {
     event.preventDefault();
     // console.log('botProfiles', newMessage);
     if (newMessage.trim() !== '') {
-      console.log('botProfiles', newMessage);
+      // console.log('botProfiles', newMessage);
 
       setQuestion(newMessage);
       setMessages([...messages, { text: newMessage, sender: 'user' }]);
       dispatch(sendUserQuestionOnly({ text: newMessage, sender: 'user' }));
       setNewMessage('');
-      console.log("sessionId ganesh",sessionId)
+      // console.log("sessionId",sessionId)
       const data = {
         userId: userId,
         sessionId: sessionId,
@@ -82,7 +82,7 @@ const NewChatComponent: React.FC = () => {
         subscriptionPlanId: 'subscriptionPlanId1',
         botId: botId,
       };
-      console.log('data user chat', data);
+      // console.log('data user chat', data);
       // sendDataToBackend(data);
       dispatch(sendUserQuestion(data));
     }
@@ -119,11 +119,11 @@ const NewChatComponent: React.FC = () => {
   };
 
   React.useEffect(() => {
-    console.log('allSession', allSession.data.sessions);
+    // console.log('allSession', allSession.data.sessions);
   }, [allSession]);
 
   React.useEffect(() => {
-    console.log('allSession', allSession.data.sessions);
+    // console.log('allSession', allSession.data.sessions);
     const data = {
       filteredSessions:[],
       sessionId:null
@@ -132,14 +132,14 @@ const NewChatComponent: React.FC = () => {
   }, []);
 
   React.useEffect(() => {
-    console.log('sessionId useEffect', sessionId);
+    // console.log('sessionId useEffect', sessionId);
   }, [sessionId]);
 
   React.useEffect(() => {
-    console.log('userChatMessagesRes', userChatMessagesRes);
+    // console.log('userChatMessagesRes', userChatMessagesRes);
     setSessionId(userChatMessagesRes?.sessionId);
-    console.log('newMessage', newMessage);
-    console.log('botProfiles', botProfiles);
+    // console.log('newMessage', newMessage);
+    // console.log('botProfiles', botProfiles);
   }, [userChatMessagesRes]);
 
   return (

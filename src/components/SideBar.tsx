@@ -72,8 +72,8 @@ const SideBar: React.FC = () => {
   };
 
   const getUserBotProfiles = () => {
-    console.log('user_id', userData);
-    console.log('userData.user_id', userData?.user_id);
+    // console.log('user_id', userData);
+    // console.log('userData.user_id', userData?.user_id);
     dispatch(getUserBotProfileAction(userData?.user_id));
   };
 
