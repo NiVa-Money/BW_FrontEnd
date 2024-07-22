@@ -30,7 +30,7 @@ const NewChatComponent: React.FC = () => {
 
   const botProfiles = useSelector((state: RootState) => state.botProfile);
   const userId = useSelector(
-    (state: RootState) => state.root?.userData?.user_id
+    (state: RootState) => state?.root?.userData?.user_id
   );
   const userChatMessagesRes = useSelector(
     (state: RootState) => state?.userChat?.sessionChat
@@ -103,7 +103,7 @@ const NewChatComponent: React.FC = () => {
 
   const getSession = (sessionId:any) => {
     // setSessionId(sessionId)
-    const filteredSessions = allSession.data.sessions.filter((session :any)=> session._id === sessionId);
+    const filteredSessions = allSession?.data?.sessions?.filter((session :any)=> session._id === sessionId);
     // console.log("filterSession",filteredSessions[0].sessions)
     const data = {
       filteredSessions,
@@ -203,7 +203,7 @@ const NewChatComponent: React.FC = () => {
           {isChatHistoryOpen && (
             <div className="flex w-full">
               <div className="flex flex-col py-2 text-base tracking-wide leading-6 bg-[#1E1533] rounded-b-lg shadow max-w-[280px] absolute top-full left-0 right-0 z-10">
-                {allSession?.data.sessions?.map(
+                {allSession?.data?.sessions?.map(
                   (session: any, index: number) => (
                     <div className="px-3 py-2 text-white" key={index}>
                       <div><button onClick={()=>{
