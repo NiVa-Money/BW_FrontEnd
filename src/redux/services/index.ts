@@ -163,7 +163,7 @@ export const deleteUserKnowledgeBaseService = async (payload: any) => {
   try {
     console.log('del', payload);
     const response = await axiosInstance.put(
-      `user/deleteUserKnowledgeBase/?docId=${payload.docId}&userId=${payload?.userId}`
+      `user/deleteUserKnowledgeBase?docId=${payload.docId}&userId=${payload?.userId}`
     );
     return response.data;
   } catch (error: any) {
