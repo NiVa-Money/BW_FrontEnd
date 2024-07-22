@@ -10,8 +10,6 @@ import { fetchMetricsAction } from '@/redux/actions/authActions';
 import { getUserProfileAction } from '@/redux/actions/authActions';
 import withAuth from '@/components/withAuth';
 
-
-
 const DashBoard: React.FC = () => {
   const pathName = useSelector((state: RootState) => state.root?.pathName);
   const dispatch = useDispatch();
@@ -69,7 +67,7 @@ useEffect(() => {
   setMetricData(userMetricData)
   }
 }, [userMetricData])
-console.log("dasfaesc",metricData)
+// console.log("dasfaesc",metricData)
   return (
     <div className="flex flex-col p-8 bg-[#0B031E] text-white">
       <div className="grid grid-cols-4 gap-4">
