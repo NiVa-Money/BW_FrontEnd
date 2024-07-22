@@ -1,6 +1,4 @@
-
-
-'use client'
+'use client';
 
 import React, { useEffect, useState } from 'react';
 import ChatBotCard from './ChatBotCard';
@@ -9,7 +7,10 @@ import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import Link from 'next/link';
 import { RootState } from '@/redux/configureStore';
 import { useDispatch, useSelector } from 'react-redux';
-import { getUserBotProfileAction, deleteBotProfileServiceAction } from '@/redux/actions/BotProfileActions';
+import {
+  getUserBotProfileAction,
+  deleteBotProfileServiceAction,
+} from '@/redux/actions/BotProfileActions';
 import ConfirmModal from './modalDelete';
 import { useRouter } from 'next/navigation';
 import withAuth from '../withAuth';
@@ -23,16 +24,19 @@ interface ChatBot {
   file: string;
   botColor: string;
   createdAt: string;
+  _id: string;
 }
 
 const ChatBotList: React.FC = () => {
-  const botDataRedux = useSelector((state: RootState) => state.botProfile?.botProfiles?.data);
+  const botDataRedux = useSelector(
+    (state: RootState) => state.botProfile?.botProfiles?.data
+  );
   const [chatBotList, setChatBotList] = useState<ChatBot[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [botIdToDelete, setBotIdToDelete] = useState<string | null>(null);
   const userId = useSelector(
     (state: RootState) => state.root?.userData?.user_id
-  );  
+  );
   const [userIdLocal, setUserIdLocal] = useState(userId);
   const dispatch = useDispatch();
   const pathName = useSelector((state: RootState) => state.root?.pathName);
@@ -45,19 +49,21 @@ const ChatBotList: React.FC = () => {
   };
 
   // Function to handle delete action
-  const handleDelete = (index: number) => {
-    setBotIdToDelete(chatBotList[index]?.botId);
+  const handleDelete: any = (index: string) => {
+    setBotIdToDelete(index);
     setIsModalOpen(true);
   };
-console.log({userId})
+  console.log({ userId });
   // Confirm deletion
   const confirmDelete = () => {
     if (userId) {
-      dispatch(deleteBotProfileServiceAction({ botId: userId, userId: userId }));
+      dispatch(
+        deleteBotProfileServiceAction({ botId: botIdToDelete, userId: userId })
+      );
       setIsModalOpen(false);
     }
   };
-2
+  2;
   // Close the modal
   const closeModal = () => {
     setIsModalOpen(false);
@@ -109,7 +115,7 @@ console.log({userId})
             key={index}
             bot={chatBot}
             actions={{
-              onDelete: () => handleDelete(index),
+              onDelete: () => handleDelete(chatBot?._id),
               onEdit: () => handleEdit(index),
             }}
           />

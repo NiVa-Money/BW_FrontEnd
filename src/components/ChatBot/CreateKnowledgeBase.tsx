@@ -5,13 +5,14 @@ import { createKnowledgebaseAction } from '@/redux/actions/knowledgeBaseActions'
 import * as React from 'react';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
+import { v4 as uuidv4 } from 'uuid';
 
 const CreateKnowledgeBase: React.FC = () => {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [docName, setDocName] = useState('Sample Document Name');
   const [docType, setDocType] = useState('pdf');
-  const [docId, setDocId] = useState('12345');
-  const [userId, setUserId] = useState("669bea6783f712df352b1331"); // Example valid ObjectId
+  const [docId, setDocId] = useState<string>(uuidv4().replace(/-/g, ''));
+  const [userId, setUserId] = useState('669bea6783f712df352b1331'); // Example valid ObjectId
   const [botId, setBotId] = useState('60f7c2d12f9f9b02ec6a1c46'); // Example valid ObjectId
   const dispatch = useDispatch();
 
@@ -49,7 +50,6 @@ const CreateKnowledgeBase: React.FC = () => {
   };
 
   const handleUpload = async () => {
-    
     if (selectedFile && docName && docType && docId && userId) {
       const formData = new FormData();
       formData.append('docName', docName);
@@ -60,8 +60,8 @@ const CreateKnowledgeBase: React.FC = () => {
       formData.append('file', selectedFile);
 
       formData.forEach((value, key) => {
-      console.log(key, value);
-    });
+        console.log(key, value);
+      });
 
       dispatch(createKnowledgebaseAction(formData));
     } else {
@@ -103,11 +103,11 @@ const CreateKnowledgeBase: React.FC = () => {
           >
             {selectedFile ? selectedFile.name : 'Upload'}
           </label>
-          <button 
+          <button
             className="justify-center items-center self-stretch px-8 py-4 mt-5 text-gray-100 whitespace-nowrap text-center bg-indigo-900 rounded-[99px] max-md:px-5 max-md:max-w-full cursor-pointer"
             onClick={handleUpload}
           >
-            Submit 
+            Submit
           </button>
         </div>
       </div>

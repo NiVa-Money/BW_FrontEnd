@@ -113,7 +113,7 @@ export const getUserBotProfileService = async (payload: any) => {
 export const deleteBotProfileService = async (payload: any) => {
   try {
     const response = await axiosInstance.put(
-      `user/deleteBotProfile/?userId=${payload}`,
+      `user/deleteBotProfile/?botId=${payload.botId}&userId=${payload?.userId}`,
       {}
     );
     return response.data;
@@ -207,10 +207,8 @@ export const getUserChatService = async (payload: any) => {
 export const getUserAllSessionService = async (payload: any) => {
   try {
     // console.log("get user getsession",payload)
-    const response = await axiosInstance.post(
-      `user/getSession`,payload
-      );
-      // console.log("res all session",response)
+    const response = await axiosInstance.post(`user/getSession`, payload);
+    // console.log("res all session",response)
     return response.data;
   } catch (error) {
     console.error('Error signing up user:', error);
