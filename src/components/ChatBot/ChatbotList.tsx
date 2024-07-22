@@ -30,8 +30,10 @@ const ChatBotList: React.FC = () => {
   const [chatBotList, setChatBotList] = useState<ChatBot[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [botIdToDelete, setBotIdToDelete] = useState<string | null>(null);
-  const userIdRex = useSelector((state: RootState) => state.root?.userData?.user_id);
-  const [userIdLocal, setUserIdLocal] = useState(userIdRex);
+  const userId = useSelector(
+    (state: RootState) => state.root?.userData?.user_id
+  );  
+  const [userIdLocal, setUserIdLocal] = useState(userId);
   const dispatch = useDispatch();
   const pathName = useSelector((state: RootState) => state.root?.pathName);
   const router = useRouter();
@@ -44,18 +46,18 @@ const ChatBotList: React.FC = () => {
 
   // Function to handle delete action
   const handleDelete = (index: number) => {
-    setBotIdToDelete(chatBotList[index].botId);
+    setBotIdToDelete(chatBotList[index]?.botId);
     setIsModalOpen(true);
   };
-
+console.log({userId})
   // Confirm deletion
   const confirmDelete = () => {
-    if (userIdRex) {
-      dispatch(deleteBotProfileServiceAction({ botId: userIdRex, userId: userIdRex }));
+    if (userId) {
+      dispatch(deleteBotProfileServiceAction({ botId: userId, userId: userId }));
       setIsModalOpen(false);
     }
   };
-
+2
   // Close the modal
   const closeModal = () => {
     setIsModalOpen(false);
@@ -63,18 +65,18 @@ const ChatBotList: React.FC = () => {
   };
 
   useEffect(() => {
-    if (userIdRex !== undefined) {
-      if (userIdRex?.length || pathName === '/MyChatBots') {
-        dispatch(getUserBotProfileAction(userIdRex));
+    if (userId !== undefined) {
+      if (userId?.length || pathName === '/MyChatBots') {
+        dispatch(getUserBotProfileAction(userId));
       }
     }
-  }, [userIdRex, pathName, dispatch]);
+  }, [userId, pathName, dispatch]);
 
   useEffect(() => {
-    if (userIdRex?.length) {
-      setUserIdLocal(userIdRex);
+    if (userId?.length) {
+      setUserIdLocal(userId);
     }
-  }, [userIdRex]);
+  }, [userId]);
 
   useEffect(() => {
     if (botDataRedux && botDataRedux.length) {
