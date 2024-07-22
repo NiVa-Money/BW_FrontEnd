@@ -23,7 +23,7 @@ export const sendUserQuestionOnly = (payload: any) => ({
 export const filteredSession = (payload: any) => {
   const processedSessions:any = [];
 
-  payload.filteredSessions[0].sessions.forEach((session:any) => {
+  payload?.filteredSessions[0]?.sessions.forEach((session:any) => {
     if (session.question) {
       processedSessions.push({
         text: session.question,

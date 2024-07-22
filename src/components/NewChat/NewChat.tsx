@@ -16,6 +16,7 @@ const NewChatComponent: React.FC = () => {
   const dispatch = useDispatch();
   const [isBotProfileOpen, setIsBotProfileOpen] = React.useState(false);
   const [isChatHistoryOpen, setIsChatHistoryOpen] = React.useState(false);
+  const [showPopup, setShowPopup] = React.useState<any>(false);
   const [activeBotIndex, setActiveBotIndex] = React.useState(null);
   // const [sessionId, setSessionId] = React.useState<any>('');
   const [botId, setBotId] = React.useState<any>(null);
@@ -57,7 +58,7 @@ const NewChatComponent: React.FC = () => {
     dispatch(getAllSession(userId));
   };
 
-  const handleSubmit = (event: any) => {
+  const sendMessage = (event: any) => {
     event.preventDefault();
     // console.log('botProfiles', newMessage);
     if (newMessage.trim() !== '') {
@@ -83,10 +84,12 @@ const NewChatComponent: React.FC = () => {
 
   const toggleBotProfile = () => {
     setIsBotProfileOpen(!isBotProfileOpen);
+    setShowPopup(false);
   };
 
   const toggleChatHistory = () => {
     setIsChatHistoryOpen(!isChatHistoryOpen);
+    setShowPopup(false);
   };
 
   const getSession = (sessionId:any) => {
@@ -100,9 +103,27 @@ const NewChatComponent: React.FC = () => {
     dispatch(filteredSession(data))
   }
 
+  const handleSubmit = (e:any) => {
+    e.preventDefault();
+    if (!botId) {
+      setShowPopup(true);
+    } else {
+      sendMessage(e);
+    }
+  };
+
   React.useEffect(() => {
     console.log('allSession', allSession.data.sessions);
   }, [allSession]);
+
+  React.useEffect(() => {
+    console.log('allSession', allSession.data.sessions);
+    const data = {
+      filteredSessions:[],
+      sessionId:null
+    }
+    dispatch(filteredSession(data))
+  }, []);
 
   React.useEffect(() => {
     console.log('sessionId useEffect', sessionId);
@@ -172,7 +193,7 @@ const NewChatComponent: React.FC = () => {
           {isChatHistoryOpen && (
             <div className="flex w-full">
               <div className="flex flex-col py-2 text-base tracking-wide leading-6 bg-[#1E1533] rounded-b-lg shadow max-w-[280px] absolute top-full left-0 right-0 z-10">
-                {allSession.data.sessions?.map(
+                {allSession?.data.sessions?.map(
                   (session: any, index: number) => (
                     <div className="px-3 py-2 text-white" key={index}>
                       <div><button onClick={()=>{
@@ -273,6 +294,12 @@ const NewChatComponent: React.FC = () => {
         </div>
       </div>
 
+      {showPopup && (
+        <div className="popup">
+          <p>Please select a bot profile</p>
+          {/* Add more bot options as needed */}
+        </div>
+      )}
       <div className="flex gap-2.5 px-8 py-5 mt-2.5 w-full text-base whitespace-nowrap bg-[#2D2640] rounded-xl max-w-[930px] text-gray-300 max-md:flex-wrap max-md:px-5 max-md:max-w-full">
         <form onSubmit={handleSubmit} className="Input-container">
           <input
