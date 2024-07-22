@@ -48,6 +48,12 @@ const NewChatComponent: React.FC = () => {
 
   const handleBotClick = (index: any, botId: any) => {
     setActiveBotIndex(index);
+    console.log('allSession', allSession.data.sessions);
+    const data = {
+      filteredSessions:[],
+      sessionId:null
+    }
+    dispatch(filteredSession(data))
     console.log('Selected Bot ID:', botId);
     setBotId(botId);
     setIsBotProfileOpen(!isBotProfileOpen);
