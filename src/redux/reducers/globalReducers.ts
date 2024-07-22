@@ -31,7 +31,20 @@ export default function globalReducers(state = initialState.root, action: any) {
     case LOGOUT_USER:
       return {
         ...state,
+        pathName: '',
         user: null,
+        error: null,
+        googleLogin: false,
+        userData: null,
+        userVerify: false,
+        userMetric: {
+          data: {},
+          loader: true,
+        },
+        userProfile: {
+          data: {},
+          loader: false,
+        },
       };
 
     case LOGIN_SUCCESS:

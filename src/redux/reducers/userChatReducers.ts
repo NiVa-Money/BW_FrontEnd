@@ -4,7 +4,9 @@ import {
     GET_USER_CHAT_FAILURE,
     GET_USER_CHAT_SUCCESS,
     USER_ALL_SESSION,
-    USER_CHAT_DATA
+    USER_CHAT_DATA,
+    USER_OUESTION_SESSION,
+    USER_SESSION_HISTORY
   } from '@/redux/actions/actionTypes';
   import initialState from './initialState';
   export default function userChatReducers(state = initialState.userChat, action: any) {
@@ -19,12 +21,36 @@ import {
             loader: true,
             },
         };
+
+      case USER_OUESTION_SESSION:
+        // console.log("USER_OUESTION_SESSION",action.payload)
+        const previousData = state.sessionChat.data
+        // console.log("previousdata",previousData)
+        const newData = previousData ? [...previousData, action.payload] : [action.payload];
+        return {
+          ...state,
+          sessionChat: { data: newData ,loader: true },
+      };
+
+      case USER_SESSION_HISTORY:
+        // console.log("USER_OUESTION_SESSION",action.payload)
+        const userSessionData = action.payload.sessionData
+        const selecSessionId = action.payload.sessionId
+        return {
+          ...state,
+          sessionChat: { data: userSessionData ,sessionId:selecSessionId,loader: true },
+      };
         
       case GET_USER_CHAT_SUCCESS:
-        console.log("GET_USER_CHAT_SUCCESS")
+        // console.log("GET_USER_CHAT_SUCCESS",action.payload)
+        const data = {
+          text: action.payload.text,
+          sender: action.payload.sender,
+        }
+        const sessionId = action.payload.sessionId
         return {
             ...state,
-            sessionChat: { data: [...state.sessionChat.data,action.payload], loader: true },
+            sessionChat: { data: [...state.sessionChat.data,data], sessionId ,loader: true },
         };
       case GET_USER_CHAT_FAILURE:
         return {

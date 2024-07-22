@@ -175,17 +175,21 @@ export const deleteUserKnowledgeBaseService = async (payload: any) => {
   }
 };
 //for logout
-export const logoutUser = () => {
-  try {
-    localStorage.removeItem('user_id');
-    localStorage.removeItem('token');
+// export const logoutUser = () => {
+//   try {
 
-    window.location.href = '/';
-  } catch (error) {
-    console.error('Error logging out user:', error);
-    throw new Error('Error logging out user');
-  }
-};
+//     console.log("logut user ")
+//     localStorage.removeItem('user_id');
+//     localStorage.removeItem('token');
+
+//     console.log("logut user ",localStorage.getItem('token'))
+
+//     window.location.href = '/';
+//   } catch (error) {
+//     console.error('Error logging out user:', error);
+//     throw new Error('Error logging out user');
+//   }
+// };
 
 // user chat with bot
 
@@ -202,9 +206,11 @@ export const getUserChatService = async (payload: any) => {
 
 export const getUserAllSessionService = async (payload: any) => {
   try {
-    console.log('get user getsession', payload);
-    const response = await axiosInstance.post(`user/getSession`, payload);
-    console.log('res all session', response);
+    // console.log("get user getsession",payload)
+    const response = await axiosInstance.post(
+      `user/getSession`,payload
+      );
+      // console.log("res all session",response)
     return response.data;
   } catch (error) {
     console.error('Error signing up user:', error);

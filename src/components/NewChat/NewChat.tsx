@@ -4,60 +4,43 @@ import { RootState } from '@/redux/configureStore';
 import * as React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import './newchat.css';
-import { getAllSession, sendUserQuestion } from '@/redux/actions/userChatAction';
+import {
+  filteredSession,
+  getAllSession,
+  sendUserQuestion,
+  sendUserQuestionOnly,
+} from '@/redux/actions/userChatAction';
+import withAuth from '../withAuth';
 
 const NewChatComponent: React.FC = () => {
   const dispatch = useDispatch();
   const [isBotProfileOpen, setIsBotProfileOpen] = React.useState(false);
   const [isChatHistoryOpen, setIsChatHistoryOpen] = React.useState(false);
+  const [showPopup, setShowPopup] = React.useState<any>(false);
   const [activeBotIndex, setActiveBotIndex] = React.useState(null);
-  const [sessionId, setSessionId] = React.useState<any>('');
+  // const [sessionId, setSessionId] = React.useState<any>('');
   const [botId, setBotId] = React.useState<any>(null);
   const chatContainerRef = React.useRef<any>(null);
+  const [sessionId, setSessionId] = React.useState<string>('');
   const [question, setQuestion] = React.useState<any>({
     text: 'tell me about this pdf',
   });
   const [newMessage, setNewMessage] = React.useState<any>('');
   const [messages, setMessages] = React.useState<any>([]);
 
-  const handleBotClick = (index: any,botId:any) => {
-    setActiveBotIndex(index);
-    console.log('Selected Bot ID:', botId);
-    setBotId(botId)
-    setIsBotProfileOpen(!isBotProfileOpen);
-  };
   const botProfiles = useSelector((state: RootState) => state.botProfile);
-  const userId = useSelector((state: RootState) => state.root?.userData?.user_id);
-  const userChatMessagesRes = useSelector((state: RootState) => state?.userChat?.sessionChat);
-  const allSession = useSelector((state: RootState) => state?.userChat?.allSession);
-
-  // React.useEffect(()=>{
-  //   console.log("userChatMessages",userChatMessagesRes)
-  //   setSessionId(userChatMessagesRes?.data?.sessionId);
-  //   if (userChatMessagesRes?.data?.chats && userChatMessagesRes?.data.chats.length > 0) {
-  //     // const apiResponseMessage = {
-  //     //   text: userChatMessagesRes.data.chats[userChatMessagesRes.data.chats.length-1].answer,
-  //     //   sender: "other",
-  //     // };
-  //     // const apiResponseMessageQues = {
-  //     //   text: userChatMessagesRes?.data?.chats[userChatMessagesRes.data.chats.length-1]?.question,
-  //     //   sender: "user",
-  //     // };
-  //     // setMessages([...messages, apiResponseMessage , apiResponseMessageQues]);
-  //     const newMessages = userChatMessagesRes.data.chats.flatMap((chat:any) => [
-  //       {
-  //         text: chat.question,
-  //         sender: "user",
-  //       },
-  //       {
-  //         text: chat.answer,
-  //         sender: "other",
-  //       }
-  //     ]);
-  
-  //     setMessages([...newMessages]);
-  //   }
-  // },[userChatMessagesRes])
+  const userId = useSelector(
+    (state: RootState) => state?.root?.userData?.user_id
+  );
+  const userChatMessagesRes = useSelector(
+    (state: RootState) => state?.userChat?.sessionChat
+  );
+  const allSession = useSelector(
+    (state: RootState) => state?.userChat?.allSession
+  );
+  const messagesLeft = useSelector(
+    (state: RootState) => state?.root?.userMetric?.data?.sessionLeft
+  );
 
   React.useEffect(() => {
     if (chatContainerRef.current) {
@@ -66,49 +49,101 @@ const NewChatComponent: React.FC = () => {
     }
   }, [messages]);
 
-  const getChatHistory = () =>{
-    console.log("userId",userId)
-    dispatch(getAllSession(userId))
-  }
+  const handleBotClick = (index: any, botId: any) => {
+    setActiveBotIndex(index);
+    // console.log('allSession', allSession.data.sessions);
+    const data = {
+      filteredSessions:[],
+      sessionId:null
+    }
+    dispatch(filteredSession(data))
+    // console.log('Selected Bot ID:', botId);
+    setBotId(botId);
+    setIsBotProfileOpen(!isBotProfileOpen);
+  };
 
-  const handleSubmit = (event: any) => {
+  const getChatHistory = () => {
+    // console.log('userId', userId);
+    dispatch(getAllSession(userId));
+  };
+
+  const sendMessage = (event: any) => {
     event.preventDefault();
     // console.log('botProfiles', newMessage);
     if (newMessage.trim() !== '') {
-      console.log('botProfiles', newMessage);
+      // console.log('botProfiles', newMessage);
 
       setQuestion(newMessage);
-      setMessages([...messages, { text: newMessage, sender: "user" }]);
+      setMessages([...messages, { text: newMessage, sender: 'user' }]);
+      dispatch(sendUserQuestionOnly({ text: newMessage, sender: 'user' }));
       setNewMessage('');
-      let data = {
-        "userId": userId,
-        "sessionId": sessionId,
-        "question": newMessage,
-        "subscriptionPlanId": "subscriptionPlanId1",
-        "botId": botId
-      }
-      console.log("data user chat",data)
+      // console.log("sessionId",sessionId)
+      const data = {
+        userId: userId,
+        sessionId: sessionId,
+        question: newMessage,
+        subscriptionPlanId: 'subscriptionPlanId1',
+        botId: botId,
+      };
+      // console.log('data user chat', data);
       // sendDataToBackend(data);
-      dispatch(sendUserQuestion(data))
+      dispatch(sendUserQuestion(data));
     }
   };
 
   const toggleBotProfile = () => {
     setIsBotProfileOpen(!isBotProfileOpen);
+    setShowPopup(false);
   };
 
   const toggleChatHistory = () => {
     setIsChatHistoryOpen(!isChatHistoryOpen);
+    setShowPopup(false);
+  };
+
+  const getSession = (sessionId:any) => {
+    // setSessionId(sessionId)
+    const filteredSessions = allSession?.data?.sessions?.filter((session :any)=> session._id === sessionId);
+    // console.log("filterSession",filteredSessions[0].sessions)
+    const data = {
+      filteredSessions,
+      sessionId
+    }
+    dispatch(filteredSession(data))
+  }
+
+  const handleSubmit = (e:any) => {
+    e.preventDefault();
+    if (!botId) {
+      setShowPopup(true);
+    } else {
+      sendMessage(e);
+    }
   };
 
   React.useEffect(() => {
-    console.log('allSession', allSession);
+    // console.log('allSession', allSession.data.sessions);
   }, [allSession]);
 
   React.useEffect(() => {
-    console.log('userChatMessagesRes', userChatMessagesRes);
-    console.log('newMessage', newMessage);
-    console.log('botProfiles', botProfiles);
+    console.log("messagesLeft",messagesLeft)
+    // console.log('allSession', allSession.data.sessions);
+    const data = {
+      filteredSessions:[],
+      sessionId:null
+    }
+    dispatch(filteredSession(data))
+  }, []);
+
+  React.useEffect(() => {
+    // console.log('sessionId useEffect', sessionId);
+  }, [sessionId]);
+
+  React.useEffect(() => {
+    // console.log('userChatMessagesRes', userChatMessagesRes);
+    setSessionId(userChatMessagesRes?.sessionId);
+    // console.log('newMessage', newMessage);
+    // console.log('botProfiles', botProfiles);
   }, [userChatMessagesRes]);
 
   return (
@@ -137,7 +172,7 @@ const NewChatComponent: React.FC = () => {
                   className={`mb-2  cursor-pointer ${
                     activeBotIndex === index ? 'bg-[#3E3556]' : ''
                   }`}
-                  onClick={() => handleBotClick(index,bot._id)}
+                  onClick={() => handleBotClick(index, bot._id)}
                 >
                   <div className="justify-center px-3 py-2 text-white">
                     {bot.botName}
@@ -153,7 +188,9 @@ const NewChatComponent: React.FC = () => {
             className="flex gap-2.5 justify-center p-2.5 text-xl font-medium bg-[#2D2640] text-white rounded-t-lg cursor-pointer"
             onClick={toggleChatHistory}
           >
-            <div><button onClick={getChatHistory}>Chat History</button></div>
+            <div>
+              <button onClick={getChatHistory}>Chat History</button>
+            </div>
             <img
               loading="lazy"
               src="https://cdn.builder.io/api/v1/image/assets/TEMP/ecfab022e56ef6ff0a58045a291327eda3e871d2c6c2576eee117363bc12ecf0?apiKey=555c811dd3f44fc79b6b2689129389e8&"
@@ -164,10 +201,19 @@ const NewChatComponent: React.FC = () => {
             />
           </div>
           {isChatHistoryOpen && (
-            <div className="flex flex-col py-2 text-base tracking-wide leading-6 bg-[#1E1533] rounded-b-lg shadow max-w-[280px] absolute top-full left-0 right-0 z-10">
-              <div className="px-3 py-2 text-white">Recent Chat 1</div>
-              <div className="px-3 py-2 text-white">Recent Chat 2</div>
-              <div className="px-3 py-2 text-white">Recent Chat 3</div>
+            <div className="flex w-full">
+              <div className="flex flex-col py-2 text-base tracking-wide leading-6 bg-[#1E1533] rounded-b-lg shadow max-w-[280px] absolute top-full left-0 right-0 z-10">
+                {allSession?.data?.sessions?.map(
+                  (session: any, index: number) => (
+                    <div className="px-3 py-2 text-white" key={index}>
+                      <div><button onClick={()=>{
+                        getSession(session._id)
+                        setSessionId(session._id)
+                      }}>session Chat {index+1}</button></div>
+                    </div>
+                  )
+                )}
+              </div>
             </div>
           )}
         </div>
@@ -180,7 +226,7 @@ const NewChatComponent: React.FC = () => {
           </div>
           <div className="flex flex-col py-2.5 px-4 rounded-xl border border-gray-700 border-solid">
             <div className="text-base text-gray-300">Messages left:</div>
-            <div className="mt-2.5 text-3xl font-semibold text-white">9765</div>
+            <div className="mt-2.5 text-3xl font-semibold text-white">{messagesLeft}</div>
           </div>
           <div className="flex flex-col py-2.5 px-4 whitespace-nowrap rounded-xl border border-gray-700 border-solid">
             <div className="text-base text-gray-300">Membership:</div>
@@ -216,7 +262,10 @@ const NewChatComponent: React.FC = () => {
         </div>
       </div> */}
       <div className="mt-10 w-full max-w-[930px] max-md:mt-10 max-md:max-w-full h-[350px] rounded-lg relative">
-        <div ref={chatContainerRef} className="flex flex-col gap-5 max-md:gap-0 h-full overflow-y-auto pr-2 scrollbar-thin scrollbar-thumb-white scrollbar-track-transparent">
+        <div
+          ref={chatContainerRef}
+          className="flex flex-col gap-5 max-md:gap-0 h-full overflow-y-auto pr-2 scrollbar-thin scrollbar-thumb-white scrollbar-track-transparent"
+        >
           {userChatMessagesRes?.data?.map((message: any, index: any) => (
             <div className="flex w-full" key={index}>
               <div
@@ -255,11 +304,17 @@ const NewChatComponent: React.FC = () => {
         </div>
       </div>
 
-      <div className="flex gap-2.5 px-8 py-5 mt-2.5 w-full text-base whitespace-nowrap bg-[#2D2640] rounded-xl max-w-[930px] text-gray-300 max-md:flex-wrap max-md:px-5 max-md:max-w-full">
+      {showPopup && (
+        <div className="popup">
+          <p>Please select a bot profile</p>
+          {/* Add more bot options as needed */}
+        </div>
+      )}
+      <div className="flex gap-2.5 px-8 py-5 mt-2.5 w-[98%] h-[69px] text-base whitespace-nowrap bg-[#2D2640] rounded-xl max-w-[930px] text-gray-300 max-md:flex-wrap max-md:px-5 max-md:max-w-full">
         <form onSubmit={handleSubmit} className="Input-container">
           <input
             type="text"
-            placeholder="Message"
+            placeholder="Enter your message..."
             className="flex-1 bg-transparent outline-none"
             onChange={(e) => setNewMessage(e.target.value)}
             value={newMessage}
@@ -283,4 +338,4 @@ const NewChatComponent: React.FC = () => {
   );
 };
 
-export default NewChatComponent;
+export default withAuth(NewChatComponent);

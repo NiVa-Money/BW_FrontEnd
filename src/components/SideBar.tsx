@@ -6,12 +6,11 @@ import '@fortawesome/fontawesome-free/css/all.min.css';
 import { Icon } from '@iconify/react';
 import Image from 'next/image';
 import mainLogo from '@/public/assets/mainLogo.svg';
-import { logoutUser } from '@/redux/services';
 import ClearConversation from './clearConversation/clearConversation';
 import { RootState } from '@/redux/configureStore';
 import { useDispatch, useSelector } from 'react-redux';
 import { getUserBotProfileAction } from '@/redux/actions/BotProfileActions';
-import { LOGOUT_USER } from '@/redux/actions/actionTypes';
+import { logoutUser } from '@/redux/actions/authActions';
 
 interface SidebarItemProps {
   path?: string;
@@ -48,22 +47,12 @@ const SIDENAV_ITEMS: SidebarItemProps[] = [
   },
 ];
 
-const LogoutButton = () => {
-  const dispatch =useDispatch()
-  // const handleLogout = () => {
-  // dispatch(logoutUser())
-  console.log("logout ....")
-    
-    logoutUser();
-  // };
-};
-
 const SIDENAV_ITEMS2: SidebarItemProps[] = [
   { icon: 'fa-user', text: 'Profile', path: '/profile' },
   { icon: 'fa-trash', text: 'Clear Conversations', onClick: undefined },
   { icon: 'fa-crown', text: 'Membership', path: '/memberShip' },
   { icon: 'fa-question-circle', text: 'Updates & FAQ', path: '/faq' },
-  { icon: 'fa-sign-out-alt', text: 'Log Out', onClick: LogoutButton },
+  { icon: 'fa-sign-out-alt', text: 'Log Out', path: '/' },
 ];
 
 
@@ -75,9 +64,16 @@ const SideBar: React.FC = () => {
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
 
+  const LogoutButton = () => {
+    console.log("app logout ... ")
+    localStorage.removeItem('user_id');
+    localStorage.removeItem('token');
+    dispatch(logoutUser());
+  };
+
   const getUserBotProfiles = () => {
-    console.log('user_id', userData);
-    console.log('userData.user_id', userData?.user_id);
+    // console.log('user_id', userData);
+    // console.log('userData.user_id', userData?.user_id);
     dispatch(getUserBotProfileAction(userData?.user_id));
   };
 
@@ -112,7 +108,7 @@ const SideBar: React.FC = () => {
             key={idx}
             item={item}
             onClick={
-              item.text === 'Clear Conversations' ? openModal : item.text === 'Log Out' ? item.onClick : undefined
+              item.text === 'Clear Conversations' ? openModal : item.text === 'Log Out' ? LogoutButton : undefined
             }
           />
         ))}

@@ -121,7 +121,7 @@ export function* fetchuserMetricSaga({
 function* loginSaga({ payload }: any) {
   try {
     const result: UserCredential = yield call(signInWithPopup, auth, provider);
-    console.log('re', result);
+    // console.log('re', result);
     const resObject: any = {
       displayName: result?.user?.displayName,
       email: result?.user?.email,
@@ -323,23 +323,16 @@ export function* getUserChatSaga({
   payload: any;
 }): Generator<any> {
   try {
-    console.log('api userChat with bot payload  --->', payload);
-    yield put({
-      type: GET_USER_CHAT_SUCCESS,
-      payload: {
-        text: payload.question,
-        sender: 'user',
-      },
-    });
-
+    console.log("api userChat with bot payload  --->",payload)
     const userChat = yield call(getUserChatService, payload);
-    console.log('api userChat with bot res', userChat);
-    const answerOfQuestion = userChat.chats[userChat.chats.length - 1].answer;
+    // console.log("api userChat with bot res",userChat)
+    const answerOfQuestion = userChat.chats[userChat.chats.length-1].answer
     yield put({
       type: GET_USER_CHAT_SUCCESS,
       payload: {
         text: answerOfQuestion,
-        sender: 'other',
+        sender: "other",
+        sessionId: userChat.sessionId
       },
     });
   } catch (error: any) {
@@ -357,13 +350,13 @@ export function* getUserAllSessionSaga({
   payload: any;
 }): Generator<any> {
   try {
-    console.log('payload', payload);
+    // console.log("payload",payload)
     const data = {
-      userId: payload,
-    };
-    console.log('getSession ganesh', data);
-    const userChat = yield call(getUserAllSessionService, data);
-    console.log('api userChat with bot res All session', userChat);
+      "userId":payload
+    }
+    // console.log("getSession ",data)
+    const userChat = yield call(getUserAllSessionService,data);
+    // console.log("api userChat with bot res All session",userChat)
     yield put({
       type: GET_USER_All_SESSION_SUCCESS,
       payload: userChat,

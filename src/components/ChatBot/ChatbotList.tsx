@@ -12,6 +12,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getUserBotProfileAction, deleteBotProfileServiceAction } from '@/redux/actions/BotProfileActions';
 import ConfirmModal from './modalDelete';
 import { useRouter } from 'next/navigation';
+import withAuth from '../withAuth';
 
 interface ChatBot {
   botId?: any;
@@ -123,4 +124,4 @@ const ChatBotList: React.FC = () => {
   );
 };
 
-export default ChatBotList;
+export default withAuth(ChatBotList);
