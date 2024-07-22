@@ -126,6 +126,7 @@ const NewChatComponent: React.FC = () => {
   }, [allSession]);
 
   React.useEffect(() => {
+    console.log("messagesLeft",messagesLeft)
     // console.log('allSession', allSession.data.sessions);
     const data = {
       filteredSessions:[],
