@@ -162,7 +162,6 @@
 
 // export default KnowledgeBase;
 
-
 'use client';
 
 import React, { useEffect, useState } from 'react';
@@ -172,7 +171,10 @@ import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import Link from 'next/link';
 import { RootState } from '@/redux/configureStore';
 import { useDispatch, useSelector } from 'react-redux';
-import { getUserKnowledgeBaseAction, deleteUserKnowledgeBaseAction } from '@/redux/actions/knowledgeBaseActions';
+import {
+  getUserKnowledgeBaseAction,
+  deleteUserKnowledgeBaseAction,
+} from '@/redux/actions/knowledgeBaseActions';
 import ConfirmModal from './modalDelete';
 
 interface KnowledgeBaseCardProps {
@@ -188,22 +190,31 @@ interface KnowledgeBaseCardProps {
 }
 
 const KnowledgeBase: React.FC = () => {
-  const knowledgeBaseData = useSelector((state: RootState) => state.KnowledgeBase?.data);
-  const [knowledgebase, setKnowledgebase] = useState<KnowledgeBaseCardProps[]>([]);
+  const knowledgeBaseData = useSelector(
+    (state: RootState) => state.KnowledgeBase?.user?.data
+  );
+  const [knowledgebase, setKnowledgebase] = useState<KnowledgeBaseCardProps[]>(
+    []
+  );
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [docIdToDelete, setDocIdToDelete] = useState<string | null>(null);
-  const userId = useSelector((state: RootState) => state.root?.userData?.user_id);
+  const userId = useSelector(
+    (state: RootState) => state.root?.userData?.user_id
+  );
   const dispatch = useDispatch();
   const pathName = useSelector((state: RootState) => state.root?.pathName);
-
+  const [userIdLocal, setUserIdLocal] = useState(userId);
+  useEffect(() => {
+    if (userId?.length) {
+      setUserIdLocal(userId);
+    }
+  }, [userId]);
   // Fetch knowledge base data
   useEffect(() => {
-    if (userId !== undefined) {
-      if (userId?.length || pathName === '/knowledgeBase') {
-        dispatch(getUserKnowledgeBaseAction(userId));
-      }
+    if (userIdLocal || pathName === '/knowledgeBase') {
+      dispatch(getUserKnowledgeBaseAction(userIdLocal));
     }
-  }, [userId, pathName, dispatch]);
+  }, [userIdLocal, pathName, dispatch]);
 
   // Set local state with Redux state
   useEffect(() => {
@@ -214,7 +225,12 @@ const KnowledgeBase: React.FC = () => {
 
   // Handle delete action
   const handleDelete = (index: number) => {
-    setDocIdToDelete(knowledgebase[index].docId);
+    // const deletePayload: any = {
+    //   docId: knowledgebase[index]?.docId,
+    //   userId: userIdLocal,
+    // };
+    // console.log('del', deletePayload);
+    setDocIdToDelete(knowledgebase[index]?.docId);
     setIsModalOpen(true);
   };
 
@@ -251,7 +267,7 @@ const KnowledgeBase: React.FC = () => {
         </button>
       </header>
       <section className="mt-12 px-10">
-        {knowledgebase.map((bot, index) => (
+        {knowledgebase?.map((bot, index) => (
           <ChatBotCard
             key={index}
             bot={bot}

@@ -67,7 +67,6 @@ export const getUserProfileService = async (payload: any) => {
 // create user bot profile
 export const createUserBotProfileService = async (payload: any) => {
   try {
-   
     const response = await axiosInstance.post('user/createBotProfile', payload);
     return response.data;
   } catch (error: any) {
@@ -99,9 +98,8 @@ export const getUserBotProfileService = async (payload: any) => {
       `user/getUserBotProfiles/?userId=${payload}`,
       {}
     );
-   
+
     return response.data;
-    
   } catch (error: any) {
     console.error(
       'Error fetching user Bot profile:',
@@ -163,8 +161,9 @@ export const getUserKnowledgeBaseService = async (payload: any) => {
 //delete knowledge base
 export const deleteUserKnowledgeBaseService = async (payload: any) => {
   try {
+    console.log('del', payload);
     const response = await axiosInstance.put(
-      `user/deleteUserKnowledgeBase/?userId=${payload}`
+      `user/deleteUserKnowledgeBase/?docId=${payload.docId}&userId=${payload?.userId}`
     );
     return response.data;
   } catch (error: any) {
@@ -192,10 +191,7 @@ export const logoutUser = () => {
 
 export const getUserChatService = async (payload: any) => {
   try {
-    const response = await axiosInstance.post(
-      'user/sessionChat',
-      payload
-    );
+    const response = await axiosInstance.post('user/sessionChat', payload);
     return response.data;
   } catch (error) {
     console.error('Error signing up user:', error);
@@ -206,11 +202,9 @@ export const getUserChatService = async (payload: any) => {
 
 export const getUserAllSessionService = async (payload: any) => {
   try {
-    console.log("get user getsession",payload)
-    const response = await axiosInstance.post(
-      `user/getSession`,payload
-      );
-      console.log("res all session",response)
+    console.log('get user getsession', payload);
+    const response = await axiosInstance.post(`user/getSession`, payload);
+    console.log('res all session', response);
     return response.data;
   } catch (error) {
     console.error('Error signing up user:', error);
@@ -218,4 +212,3 @@ export const getUserAllSessionService = async (payload: any) => {
     throw new Error('Error signing up user');
   }
 };
-

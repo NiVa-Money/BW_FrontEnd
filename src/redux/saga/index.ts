@@ -295,6 +295,18 @@ export function* deleteUserKnowledgeBaseSaga({
       type: DELETE_USER_KNOWLEDGE_BASE_SUCCESS,
       payload: botProfiles,
     });
+
+    try {
+      const botProfiles = yield call(getUserKnowledgeBaseService, payload);
+      yield put({
+        type: GET_USER_KNOWLEDGE_BASE_SUCCESS,
+        payload: botProfiles,
+      });
+    } catch (error: any) {
+      yield put({
+        type: GET_USER_KNOWLEDGE_BASE_FAILURE,
+      });
+    }
   } catch (error: any) {
     yield put({
       type: DELETE_USER_KNOWLEDGE_BASE_FAILURE,
@@ -311,23 +323,23 @@ export function* getUserChatSaga({
   payload: any;
 }): Generator<any> {
   try {
-    console.log("api userChat with bot payload  --->",payload)
+    console.log('api userChat with bot payload  --->', payload);
     yield put({
       type: GET_USER_CHAT_SUCCESS,
       payload: {
         text: payload.question,
-        sender: "user",
+        sender: 'user',
       },
     });
-    
+
     const userChat = yield call(getUserChatService, payload);
-    console.log("api userChat with bot res",userChat)
-    const answerOfQuestion = userChat.chats[userChat.chats.length-1].answer
+    console.log('api userChat with bot res', userChat);
+    const answerOfQuestion = userChat.chats[userChat.chats.length - 1].answer;
     yield put({
       type: GET_USER_CHAT_SUCCESS,
       payload: {
         text: answerOfQuestion,
-        sender: "other",
+        sender: 'other',
       },
     });
   } catch (error: any) {
@@ -345,13 +357,13 @@ export function* getUserAllSessionSaga({
   payload: any;
 }): Generator<any> {
   try {
-    console.log("payload",payload)
+    console.log('payload', payload);
     const data = {
-      "userId":payload
-    }
-    console.log("getSession ganesh",data)
-    const userChat = yield call(getUserAllSessionService,data);
-    console.log("api userChat with bot res All session",userChat)
+      userId: payload,
+    };
+    console.log('getSession ganesh', data);
+    const userChat = yield call(getUserAllSessionService, data);
+    console.log('api userChat with bot res All session', userChat);
     yield put({
       type: GET_USER_All_SESSION_SUCCESS,
       payload: userChat,
@@ -362,7 +374,6 @@ export function* getUserAllSessionSaga({
     });
   }
 }
-
 
 export default function* rootSaga() {
   yield takeLatest(VERIFY_USER_DATA, verifyUserSaga);
@@ -378,6 +389,6 @@ export default function* rootSaga() {
   yield takeEvery(GET_USER_KNOWLEDGE_BASE, getUserKnowledgeBaseSaga);
   yield takeEvery(CREATE_KNOWLEDGE_BASE, createKnowledgeBaseSaga);
   yield takeEvery(DELETE_USER_KNOWLEDGE_BASE, deleteUserKnowledgeBaseSaga);
-  yield takeEvery(USER_CHAT_DATA, getUserChatSaga );
-  yield takeEvery(USER_ALL_SESSION, getUserAllSessionSaga );
+  yield takeEvery(USER_CHAT_DATA, getUserChatSaga);
+  yield takeEvery(USER_ALL_SESSION, getUserAllSessionSaga);
 }
