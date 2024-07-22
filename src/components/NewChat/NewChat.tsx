@@ -38,6 +38,9 @@ const NewChatComponent: React.FC = () => {
   const allSession = useSelector(
     (state: RootState) => state?.userChat?.allSession
   );
+  const messagesLeft = useSelector(
+    (state: RootState) => state?.root?.userMetric?.data?.sessionLeft
+  );
 
   React.useEffect(() => {
     if (chatContainerRef.current) {
@@ -222,7 +225,7 @@ const NewChatComponent: React.FC = () => {
           </div>
           <div className="flex flex-col py-2.5 px-4 rounded-xl border border-gray-700 border-solid">
             <div className="text-base text-gray-300">Messages left:</div>
-            <div className="mt-2.5 text-3xl font-semibold text-white">9765</div>
+            <div className="mt-2.5 text-3xl font-semibold text-white">{messagesLeft}</div>
           </div>
           <div className="flex flex-col py-2.5 px-4 whitespace-nowrap rounded-xl border border-gray-700 border-solid">
             <div className="text-base text-gray-300">Membership:</div>
