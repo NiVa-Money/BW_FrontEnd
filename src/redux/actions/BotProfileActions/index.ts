@@ -2,6 +2,7 @@ import {
   CREATE_BOT_PROFILE,
   EDIT_BOT_PROFILE,
   GET_USER_BOT_PROFILE,
+  DELETE_BOT_PROFILE
 } from '../actionTypes';
 
 export const createBotProfileAction = (data: any) => {
@@ -20,6 +21,6 @@ export const getUserBotProfileAction = (data: any) => ({
 });
 
 export const deleteBotProfileServiceAction = (data: any) => ({
-  type: GET_USER_BOT_PROFILE,
+  type: DELETE_BOT_PROFILE,
   payload: data,
 });
