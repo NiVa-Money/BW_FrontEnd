@@ -28,13 +28,13 @@ const LandingPage: React.FC = () => {
       dispatch(verifyUserDataAction(userEmail));
     }
   }, [userEmail]);
+  
   useEffect(() => {
     if (userEmail?.length && !googleVerifyRedux) {
       dispatch(verifyUserDataAction(userEmail));
     }
     if (userVerify) {
-    
-      router.push('/dashBoard');
+     router.replace('/dashBoard');
     } else {
       if (googleVerifyRedux) {
         const [firstName, lastName] = userRedux?.displayName.split(' ');

@@ -10,6 +10,7 @@ import {
   sendUserQuestion,
   sendUserQuestionOnly,
 } from '@/redux/actions/userChatAction';
+import withAuth from '../withAuth';
 
 const NewChatComponent: React.FC = () => {
   const dispatch = useDispatch();
@@ -300,4 +301,4 @@ const NewChatComponent: React.FC = () => {
   );
 };
 
-export default NewChatComponent;
+export default withAuth(NewChatComponent);
