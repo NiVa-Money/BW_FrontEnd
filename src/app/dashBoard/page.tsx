@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 
 import styles from "./dashboard.module.css";
 import DashBoard from './DashBoard';
+import withAuth from '@/components/withAuth';
 
 const Page = () => {
   
@@ -14,4 +15,4 @@ const Page = () => {
     );
 }
 
-export default Page;
+export default withAuth(Page);

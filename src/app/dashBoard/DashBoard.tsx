@@ -8,6 +8,7 @@ import  { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { fetchMetricsAction } from '@/redux/actions/authActions';
 import { getUserProfileAction } from '@/redux/actions/authActions';
+import withAuth from '@/components/withAuth';
 
 
 
@@ -163,4 +164,4 @@ console.log("dasfaesc",metricData)
   );
 };
 
-export default DashBoard;
+export default withAuth(DashBoard);
