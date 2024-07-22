@@ -21,6 +21,9 @@ import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import FileUploadIcon from '@mui/icons-material/FileUpload';
 import ZoomOutMapIcon from '@mui/icons-material/ZoomOutMap';
 import Link from 'next/link';
+
+import { useRouter } from 'next/navigation';
+
 //redux post
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '@/redux/configureStore';
@@ -62,8 +65,10 @@ const CreateBotComponent: React.FC = () => {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const dispatch = useDispatch();
   const [textVal, setTextVal] = useState('');
-  const [botIconType, setBotIconType] = useState();
-  console.log(imageSrc);
+
+  const [botIconType, setBotIconType] = useState('second');
+  const router = useRouter();
+
   // Function to handle file upload
 
   const handleFileChange = async (
@@ -92,7 +97,7 @@ const CreateBotComponent: React.FC = () => {
     const reader = new FileReader();
     reader.onload = (e) => {
       const binaryString = reader.result as string;
-      console.log('Binary String:', binaryString);
+
     };
 
     reader.readAsBinaryString(file);
@@ -118,44 +123,35 @@ const CreateBotComponent: React.FC = () => {
   );
 
   const handleSave = async () => {
-    console.log('formData', filename, selectedFile);
+
     const docId = uuidv4();
     const formData = new FormData();
     formData.append('botName', botName);
     formData.append('botTone', botTone);
     formData.append('botColor', chatColor);
     formData.append('botIconType', botIconType);
+    formData.append('botGreetingMessage', greetingMessage);
+    formData.append('botSmartness', botSmartnessVal);
+    formData.append('botIdentity', botIdentity);
+    formData.append('supportNumber', supportPhone);
+    formData.append('supportEmail', supportEmail);
+    formData.append('wordLimitPerMessage', botLimit);
     formData.append('docName', filename);
     formData.append('docType', knowledgeBase.length > 0 ? 'pdf' : '');
     formData.append('docId', docId);
     formData.append('userId', userId);
-    formData.append('supportNumber', supportPhone);
-    formData.append('supportEmail', supportEmail);
-    formData.append('wordLimitPerMessage', botLimit);
-    formData.append('botIdentity', botIdentity);
-    formData.append('botSmartness', botSmartnessVal);
-    formData.append('botGreetingMessage', greetingMessage);
-    console.log('t', typeof botSmartnessVal, typeof botLimit);
     if (selectedFile) {
       formData.append('file', selectedFile);
     } else {
+
       console.error('No file selected');
     }
 
-    // const formDataObject: any = {};
-    // for (const [key, value] of formData.entries()) {
-    //   formDataObject[key] = value;
-    // }
-
-    // delete formDataObject.file;
-
-    // const response = await createUserBotProfileService(formData)
-    // console.log("res",response)
-
     dispatch(createBotProfileAction(formData));
-  };
+    router.push('/MyChatBots');
+    dispatch(createBotProfileAction(formData));
 
-  //
+  };
 
   const botSamples = [
     {
@@ -222,7 +218,7 @@ const CreateBotComponent: React.FC = () => {
 
   const handleBotSampleClick = (item: any) => {
     setImageSrc(item?.imageUrl);
-    console.log(item);
+
     setBotIconType(item?.iconType);
   };
 
@@ -253,11 +249,10 @@ const CreateBotComponent: React.FC = () => {
             <button
               key={color}
               onClick={() => setChatColor(color)}
-              className={`w-8 h-8 rounded-full ${
-                color === 'rainbow'
+              className={`w-8 h-8 rounded-full ${color === 'rainbow'
                   ? 'bg-gradient-to-r from-red-500 via-green-500 to-blue-500'
                   : ''
-              }`}
+                }`}
               style={{
                 backgroundColor: color !== 'rainbow' ? color : undefined,
               }}
@@ -284,28 +279,7 @@ const CreateBotComponent: React.FC = () => {
       <div className="mb-4">
         <label className="block text-gray-200 mb-2">Custom photo</label>
         <div className="relative mb-4">
-          {/* <div className="flex items-center bg-[#171029] p-2 w-full rounded-[12px] absolute ">
-            <span className="mr-2">
-              {imagename?.length ? imagename : 'Choose Image'}
-            </span>
-            <button
-              onClick={() => {
-                setImageName('');
-                setImageSrc('');
-              }}
-              className="ml-auto text-white"
-            >
-              ×
-            </button>
-          </div>
-          <input
-            type="file"
-            onChange={handleFileUpload}
-            // ref={viewerRef}
-            accept="image/*"
-            id="file-upload"
-            className="absolute top-[0] opacity-0 "
-          /> */}
+          
         </div>
         <div className="flex items-start">
           <button
@@ -339,11 +313,10 @@ const CreateBotComponent: React.FC = () => {
             <button
               key={tone}
               onClick={() => setBotTone(tone)}
-              className={`px-4 py-2 rounded ${
-                botTone === tone
+              className={`px-4 py-2 rounded ${botTone === tone
                   ? 'bg-[#3F2181] text-white h-[Hug (38px)px] rounded-[24px]'
                   : 'text-gray-200'
-              }`}
+                }`}
             >
               {tone}
             </button>
@@ -387,19 +360,20 @@ const CreateBotComponent: React.FC = () => {
             />
           </div>
         </div>
-        <div className="flex">
-          <button className="rounded-[70px] bg-[#3F2181] mt-[66px]  text-white px-4 py-2 flex justify-center">
+        <div className="flex items-center space-x-4 mt-[66px]">
+          <button className="rounded-[70px] bg-[#3F2181] text-white px-4 py-2 flex items-center justify-center">
             <span>Upload</span>
             <FileUploadIcon />
           </button>
-          <div className="mb-4">
-            <label className="block text-gray-200 mb-2">Enable Smartness</label>
+          <div className="flex items-center">
+            <label className="block text-white mr-2">Enable Smartness</label>
             <Switch
               checked={Boolean(botSmartnessVal)}
-              onChange={(): any => setbotSmartnessVal(!botSmartnessVal)}
+              onChange={() => setbotSmartnessVal(!botSmartnessVal)}
             />
           </div>
         </div>
+
       </div>
       <div className="mb-4">
         <label className="block text-gray-200 mb-2">

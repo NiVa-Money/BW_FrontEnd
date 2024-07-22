@@ -26,12 +26,18 @@ export default function knowledgeBaseReducers(
     case CREATE_KNOWLEDGE_BASE_SUCCESS:
       return {
         ...state,
-        create: { data: action.payload, loader: false },
+        create: {
+          data: action.payload,
+          loader: false,
+        },
       };
     case CREATE_KNOWLEDGE_BASE_FAILURE:
       return {
         ...state,
-        create: { data: action.payload, loader: false },
+        create: {
+          data: action.payload,
+          loader: false,
+        },
       };
     case DELETE_USER_KNOWLEDGE_BASE:
       return {
@@ -44,12 +50,18 @@ export default function knowledgeBaseReducers(
     case DELETE_USER_KNOWLEDGE_BASE_SUCCESS:
       return {
         ...state,
-        delete: { data: action.payload, loader: false },
+        delete: {
+          data: action.payload,
+          loader: false,
+        },
       };
     case DELETE_USER_KNOWLEDGE_BASE_FAILURE:
       return {
         ...state,
-        delete: { data: action.payload, loader: false },
+        delete: {
+          data: action.payload,
+          loader: false,
+        },
       };
     case GET_USER_KNOWLEDGE_BASE:
       return {
@@ -63,14 +75,19 @@ export default function knowledgeBaseReducers(
       console.log('s', action);
       return {
         ...state,
-        user: { data: action.payload, loader: false },
+        user: {
+          data: action.payload,
+          loader: false,
+        },
       };
     case GET_USER_KNOWLEDGE_BASE_FAILURE:
       return {
         ...state,
-        user: { data: action.payload, loader: false },
+        user: {
+          data: action.payload,
+          loader: false,
+        },
       };
-
     default:
       return state;
   }

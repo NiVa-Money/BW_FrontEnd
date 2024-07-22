@@ -295,6 +295,18 @@ export function* deleteUserKnowledgeBaseSaga({
       type: DELETE_USER_KNOWLEDGE_BASE_SUCCESS,
       payload: botProfiles,
     });
+
+    try {
+      const botProfiles = yield call(getUserKnowledgeBaseService, payload);
+      yield put({
+        type: GET_USER_KNOWLEDGE_BASE_SUCCESS,
+        payload: botProfiles,
+      });
+    } catch (error: any) {
+      yield put({
+        type: GET_USER_KNOWLEDGE_BASE_FAILURE,
+      });
+    }
   } catch (error: any) {
     yield put({
       type: DELETE_USER_KNOWLEDGE_BASE_FAILURE,
@@ -356,7 +368,6 @@ export function* getUserAllSessionSaga({
   }
 }
 
-
 export default function* rootSaga() {
   yield takeLatest(VERIFY_USER_DATA, verifyUserSaga);
   yield takeLatest(SIGN_UP_DATA, signUpUserSaga);
@@ -371,6 +382,6 @@ export default function* rootSaga() {
   yield takeEvery(GET_USER_KNOWLEDGE_BASE, getUserKnowledgeBaseSaga);
   yield takeEvery(CREATE_KNOWLEDGE_BASE, createKnowledgeBaseSaga);
   yield takeEvery(DELETE_USER_KNOWLEDGE_BASE, deleteUserKnowledgeBaseSaga);
-  yield takeEvery(USER_CHAT_DATA, getUserChatSaga );
-  yield takeEvery(USER_ALL_SESSION, getUserAllSessionSaga );
+  yield takeEvery(USER_CHAT_DATA, getUserChatSaga);
+  yield takeEvery(USER_ALL_SESSION, getUserAllSessionSaga);
 }
