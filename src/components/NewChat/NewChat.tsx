@@ -306,11 +306,11 @@ const NewChatComponent: React.FC = () => {
           {/* Add more bot options as needed */}
         </div>
       )}
-      <div className="flex gap-2.5 px-8 py-5 mt-2.5 w-full text-base whitespace-nowrap bg-[#2D2640] rounded-xl max-w-[930px] text-gray-300 max-md:flex-wrap max-md:px-5 max-md:max-w-full">
+      <div className="flex gap-2.5 px-8 py-5 mt-2.5 w-[98%] h-[69px] text-base whitespace-nowrap bg-[#2D2640] rounded-xl max-w-[930px] text-gray-300 max-md:flex-wrap max-md:px-5 max-md:max-w-full">
         <form onSubmit={handleSubmit} className="Input-container">
           <input
             type="text"
-            placeholder="Message"
+            placeholder="Enter your message..."
             className="flex-1 bg-transparent outline-none"
             onChange={(e) => setNewMessage(e.target.value)}
             value={newMessage}
