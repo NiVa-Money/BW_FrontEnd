@@ -33,10 +33,12 @@ import {
       };
 
       case USER_SESSION_HISTORY:
-        console.log("USER_OUESTION_SESSION",action.payload)
+        // console.log("USER_OUESTION_SESSION",action.payload)
+        const userSessionData = action.payload.sessionData
+        const selecSessionId = action.payload.sessionId
         return {
           ...state,
-          sessionChat: { data: action.payload ,loader: true },
+          sessionChat: { data: userSessionData ,sessionId:selecSessionId,loader: true },
       };
         
       case GET_USER_CHAT_SUCCESS:

@@ -91,14 +91,21 @@ const NewChatComponent: React.FC = () => {
   const getSession = (sessionId:any) => {
     // setSessionId(sessionId)
     const filteredSessions = allSession.data.sessions.filter((session :any)=> session._id === sessionId);
-    console.log("filterSession",filteredSessions[0].sessions)
-    dispatch(filteredSession(filteredSessions))
-    setSessionId(sessionId);
+    // console.log("filterSession",filteredSessions[0].sessions)
+    const data = {
+      filteredSessions,
+      sessionId
+    }
+    dispatch(filteredSession(data))
   }
 
   React.useEffect(() => {
     console.log('allSession', allSession.data.sessions);
   }, [allSession]);
+
+  React.useEffect(() => {
+    console.log('sessionId useEffect', sessionId);
+  }, [sessionId]);
 
   React.useEffect(() => {
     console.log('userChatMessagesRes', userChatMessagesRes);
@@ -170,7 +177,6 @@ const NewChatComponent: React.FC = () => {
                       <div><button onClick={()=>{
                         getSession(session._id)
                         setSessionId(session._id)
-                        console.log("sessionId jjj",sessionId)
                       }}>session Chat {index+1}</button></div>
                     </div>
                   )

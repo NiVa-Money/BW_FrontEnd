@@ -20,10 +20,10 @@ export const sendUserQuestionOnly = (payload: any) => ({
   payload,
 });
 
-export const filteredSession = (filteredSessions: any) => {
+export const filteredSession = (payload: any) => {
   const processedSessions:any = [];
 
-  filteredSessions[0].sessions.forEach((session:any) => {
+  payload.filteredSessions[0].sessions.forEach((session:any) => {
     if (session.question) {
       processedSessions.push({
         text: session.question,
@@ -40,9 +40,14 @@ export const filteredSession = (filteredSessions: any) => {
 
   // console.log(processedSessions);
 
-  console.log(processedSessions);
+  const data = {
+    sessionData: processedSessions,
+    sessionId:payload.sessionId
+  }
+
+  // console.log(processedSessions);
   return {
     type: USER_SESSION_HISTORY,
-    payload: processedSessions,
+    payload: data,
   };
 };
