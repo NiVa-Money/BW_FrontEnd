@@ -65,6 +65,7 @@ const CreateBotComponent: React.FC = () => {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const dispatch = useDispatch();
   const [textVal, setTextVal] = useState('');
+  const [error, setError] = useState('');
 
   const [botIconType, setBotIconType] = useState('second');
   const router = useRouter();
@@ -122,6 +123,19 @@ const CreateBotComponent: React.FC = () => {
     (state: RootState) => state.root?.userData?.user_id
   );
 
+  const validateEmail = (email: string) => {
+    const emailRegex = /^[^\s@]+@gmail\.com$/;
+    return emailRegex.test(email);
+  };
+
+  
+  const validatePhoneNumber = (phoneNumber: string) => {
+    // Example: Phone number must be 10 digits
+    const phoneNumberRegex = /^\d{10}$/;
+    return phoneNumberRegex.test(phoneNumber);
+  };
+
+
   const handleSave = async () => {
 
     const docId = uuidv4();
@@ -142,8 +156,16 @@ const CreateBotComponent: React.FC = () => {
     formData.append('userId', userId);
     if (selectedFile) {
       formData.append('file', selectedFile);
-    } else {
-
+    }
+    if (!validateEmail(supportEmail)) {
+      setError('Please enter a valid email address.');
+      return;
+    }
+    if (!validatePhoneNumber(supportPhone)) {
+      setError('Please enter a valid phone number with 10 digits.');
+      return;
+    }
+    else {
       console.error('No file selected');
     }
 
