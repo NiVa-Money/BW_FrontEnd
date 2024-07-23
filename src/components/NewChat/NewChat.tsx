@@ -53,13 +53,13 @@ const NewChatComponent: React.FC = () => {
     setActiveBotIndex(index);
     // console.log('allSession', allSession.data.sessions);
     const data = {
-      filteredSessions:[],
-      sessionId:null
-    }
-    dispatch(filteredSession(data))
+      filteredSessions: [],
+      sessionId: null,
+    };
+    dispatch(filteredSession(data));
     // console.log('Selected Bot ID:', botId);
     setBotId(botId);
-    setIsBotProfileOpen(!isBotProfileOpen);
+    // setIsBotProfileOpen(!isBotProfileOpen);
   };
 
   const getChatHistory = () => {
@@ -101,18 +101,20 @@ const NewChatComponent: React.FC = () => {
     setShowPopup(false);
   };
 
-  const getSession = (sessionId:any) => {
+  const getSession = (sessionId: any) => {
     // setSessionId(sessionId)
-    const filteredSessions = allSession?.data?.sessions?.filter((session :any)=> session._id === sessionId);
+    const filteredSessions = allSession?.data?.sessions?.filter(
+      (session: any) => session._id === sessionId
+    );
     // console.log("filterSession",filteredSessions[0].sessions)
     const data = {
       filteredSessions,
-      sessionId
-    }
-    dispatch(filteredSession(data))
-  }
+      sessionId,
+    };
+    dispatch(filteredSession(data));
+  };
 
-  const handleSubmit = (e:any) => {
+  const handleSubmit = (e: any) => {
     e.preventDefault();
     if (!botId) {
       setShowPopup(true);
@@ -126,13 +128,13 @@ const NewChatComponent: React.FC = () => {
   }, [allSession]);
 
   React.useEffect(() => {
-    console.log("messagesLeft",messagesLeft)
+    // console.log('messagesLeft', messagesLeft);
     // console.log('allSession', allSession.data.sessions);
     const data = {
-      filteredSessions:[],
-      sessionId:null
-    }
-    dispatch(filteredSession(data))
+      filteredSessions: [],
+      sessionId: null,
+    };
+    dispatch(filteredSession(data));
   }, []);
 
   React.useEffect(() => {
@@ -147,11 +149,35 @@ const NewChatComponent: React.FC = () => {
   }, [userChatMessagesRes]);
 
   return (
-    <div className="flex flex-col justify-end items-center px-20 py-12 bg-[#0B031E] min-h-screen max-md:px-5">
-      <div className="flex gap-5 items-start w-full max-w-[905px] max-md:flex-wrap max-md:max-w-full">
+    <div className="relative flex flex-col justify-end items-center px-10 py-10 bg-[#0B031E] min-h-screen max-md:px-5 overflow-hidden">
+       <div className="absolute inset-0">
+        <svg className="moving-svg" viewBox="0 0 1480 1774" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect width="1440" height="1287" transform="translate(20 20)" fill="#0B031E" />
+          <g filter="url(#filter0_f_180_721)" className=''>
+            <circle className="moving-circle" cx="300" cy="1022" r="252" fill="#C00DC8" />
+          </g>
+          <g filter="url(#filter1_f_180_721)" className=''>
+            <circle className="moving-circle" cx="1285" cy="150" r="252" fill="#C00DC8" />
+          </g>
+          <defs>
+            <filter id="filter0_f_180_721" x="-66" y="270" width="1504" height="1504" filterUnits="userSpaceOnUse" colorInterpolationFilters="sRGB">
+              <feFlood floodOpacity="0" result="BackgroundImageFix" />
+              <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape" />
+              <feGaussianBlur stdDeviation="250" result="effect1_foregroundBlur_180_721" />
+            </filter>
+            <filter id="filter1_f_180_721" x="533" y="-480" width="1504" height="1504" filterUnits="userSpaceOnUse" colorInterpolationFilters="sRGB">
+              <feFlood floodOpacity="0" result="BackgroundImageFix" />
+              <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape" />
+              <feGaussianBlur stdDeviation="250" result="effect1_foregroundBlur_180_721" />
+            </filter>
+          </defs>
+        </svg>
+      </div>
+
+      <div className="flex gap-1 max-md:flex-wrap max-md:max-w-full mb-12 z-10">
         <div className="flex flex-col self-stretch relative">
           <div
-            className="flex gap-2.5 justify-center p-2.5 text-xl font-medium bg-[#2D2640] text-white rounded-t-lg cursor-pointer"
+            className="flex gap-2.5 justify-center p-2.5 text-xl font-medium text-white rounded-t-lg cursor-pointer"
             onClick={toggleBotProfile}
           >
             <div>Bot Profile</div>
@@ -184,7 +210,7 @@ const NewChatComponent: React.FC = () => {
           )}
         </div>
         <div className="flex flex-col self-stretch relative">
-          <div
+          {/* <div
             className="flex gap-2.5 justify-center p-2.5 text-xl font-medium bg-[#2D2640] text-white rounded-t-lg cursor-pointer"
             onClick={toggleChatHistory}
           >
@@ -215,20 +241,22 @@ const NewChatComponent: React.FC = () => {
                 )}
               </div>
             </div>
-          )}
+          )} */}
         </div>
-        <div className="flex flex-1 justify-between">
-          <div className="flex flex-col py-2.5 px-4 rounded-xl border border-gray-700 border-solid">
+        <div className="flex gap-3 flex-1 justify-between">
+          <div className="flex w-[8vw] flex-col bg-[#B21888] py-2.5 px-1 rounded-xl border border-gray-700 border-solid">
             <div className="text-base text-gray-300">Number of bots:</div>
             <div className="mt-2.5 text-3xl font-semibold text-white">
               {botProfiles?.botProfiles?.data?.length}
             </div>
           </div>
-          <div className="flex flex-col py-2.5 px-4 rounded-xl border border-gray-700 border-solid">
+          <div className="flex w-[8vw] flex-col py-2.5 bg-[#2BCD94] px-1 rounded-xl border border-gray-700 border-solid">
             <div className="text-base text-gray-300">Messages left:</div>
-            <div className="mt-2.5 text-3xl font-semibold text-white">{messagesLeft}</div>
+            <div className="mt-2.5 text-3xl font-semibold text-white">
+              {messagesLeft}
+            </div>
           </div>
-          <div className="flex flex-col py-2.5 px-4 whitespace-nowrap rounded-xl border border-gray-700 border-solid">
+          <div className="flex w-[8vw] flex-col py-2.5 bg-[#3F2181] px-1 whitespace-nowrap rounded-xl border border-gray-700 border-solid">
             <div className="text-base text-gray-300">Membership:</div>
             <div className="mt-2.5 text-3xl font-semibold text-white">
               Basic
@@ -310,7 +338,7 @@ const NewChatComponent: React.FC = () => {
           {/* Add more bot options as needed */}
         </div>
       )}
-      <div className="flex gap-2.5 px-8 py-5 mt-2.5 w-[98%] h-[69px] text-base whitespace-nowrap bg-[#2D2640] rounded-xl max-w-[930px] text-gray-300 max-md:flex-wrap max-md:px-5 max-md:max-w-full">
+      <div className="flex gap-2.5 z-10 px-8 py-5 mt-2.5 w-[98%] h-[69px] text-base whitespace-nowrap bg-[#2D2640] rounded-xl max-w-[930px] text-gray-300 max-md:flex-wrap max-md:px-5 max-md:max-w-full">
         <form onSubmit={handleSubmit} className="Input-container">
           <input
             type="text"
@@ -320,16 +348,22 @@ const NewChatComponent: React.FC = () => {
             value={newMessage}
           />
           <button
-            className="shrink-0 w-8 h-8 flex items-center justify-center bg-[#5D39AD] rounded-full hover:bg-[#4A2E8B] transition-colors duration-300"
+            className="shrink-0 w-8 h-8 flex items-center justify-center rounded-full hover:bg-[#4A2E8B] transition-colors duration-300"
             aria-label="Send message"
           >
             <svg
+              width="22"
+              height="22"
+              viewBox="0 0 22 22"
+              fill="none"
               xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
-              fill="currentColor"
-              className="w-5 h-5 text-white transform rotate-45"
             >
-              <path d="M3.478 2.405a.75.75 0 00-.926.94l2.432 7.905H13.5a.75.75 0 010 1.5H4.984l-2.432 7.905a.75.75 0 00.926.94 60.519 60.519 0 0018.445-8.986.75.75 0 000-1.218A60.517 60.517 0 003.478 2.405z" />
+              <path
+                d="M20.0708 1.92961L9.40683 12.5936M2.27149 7.23529L18.8774 1.47406C19.9 1.11927 20.8811 2.1004 20.5264 3.12303L14.7651 19.7289C14.3704 20.8665 12.773 20.8977 12.3342 19.7764L9.69727 13.0377C9.56558 12.7011 9.29931 12.4348 8.96275 12.3031L2.22402 9.66625C1.10268 9.22746 1.13387 7.62997 2.27149 7.23529Z"
+                stroke="#EEEEF0"
+                stroke-width="2"
+                stroke-linecap="round"
+              />
             </svg>
           </button>
         </form>
