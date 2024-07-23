@@ -9,7 +9,7 @@ import ZoomOutMapIcon from '@mui/icons-material/ZoomOutMap';
 import Link from 'next/link';
 import { RootState } from '@/redux/configureStore';
 import { useDispatch, useSelector } from 'react-redux';
-
+import Switch from '@mui/material/Switch';
 interface BotData {
   botId?: string;
   botName: string;
@@ -19,7 +19,7 @@ interface BotData {
   botIdentity: string;
   supportNumber: string;
   supportEmail: string;
-  wordLimitPerMessage: string;
+  wordLimitPerMessage: any;
   userId: string;
 }
 
@@ -29,8 +29,7 @@ const EditBotComponent: React.FC = () => {
   const [botName, setBotName] = useState('BotWot Assistant');
   const [botTone, setBotTone] = useState('Formal Tone');
   const [botLimit, setBotLimit] = useState('50-100');
-  const [chatColor, setChatColor] = useState('#3B82F6'); // Default blue color
-  const [botProfile, setBotProfile] = useState('/path/to/default/bot/image.png');
+  const [botSmartnessVal, setbotSmartnessVal] = useState<any>(false);
   const [systemPrompt, setSystemPrompt] = useState(
     `You're a helpful customer support chatbot with excellent product
     knowledge. You assist customers with inquiries about our products,
@@ -55,11 +54,13 @@ const EditBotComponent: React.FC = () => {
   const [imagename, setImageName] = useState('');
   const [textVal, setTextVal] = useState('');
   const [filename, setFileName] = useState('');
+  const [botIdToEdit, setBotIdToEdit] = useState<string | null>(null);
+
   // Function to handle file upload
   const handleFileUpload = (event: any) => {
     const file = event.target.files[0];
     setImageName(file.name);
-    const imageUrl = URL.createObjectURL(file); // Creates a blob URL
+    const imageUrl = URL.createObjectURL(file); 
     setImageSrc(imageUrl);
   };
 
@@ -121,6 +122,22 @@ const EditBotComponent: React.FC = () => {
           ))}
         </div>
       </div>
+      <div className="mb-4">
+        <label className="block text-gray-200 mb-2">Bot Greeting Message</label>
+        <input
+          type="text"
+          value={greetingMessage}
+          onChange={(e) => setGreetingMessage(e.target.value)}
+          className="w-full bg-[#171029] text-white p-2 rounded-[12px]"
+        />
+      </div>
+      <div className="flex items-center mt-4 mb-6">
+            <label className="block text-white mr-2">Enable Smartness</label>
+            <Switch
+              checked={Boolean(botSmartnessVal)}
+              onChange={() => setbotSmartnessVal(!botSmartnessVal)}
+            />
+          </div>
         <div className="mb-4">
         <label className="block text-gray-200 mb-2">Bot Identity</label>
         <textarea

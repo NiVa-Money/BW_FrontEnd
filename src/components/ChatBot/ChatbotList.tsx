@@ -53,7 +53,7 @@ const ChatBotList: React.FC = () => {
     setBotIdToDelete(index);
     setIsModalOpen(true);
   };
-  console.log({ userId });
+
   // Confirm deletion
   const confirmDelete = () => {
     if (userId) {
