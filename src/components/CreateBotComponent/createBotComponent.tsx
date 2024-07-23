@@ -2,21 +2,7 @@
 
 import React, { useState, useRef } from 'react';
 import Image from 'next/image';
-import bot1 from '@/public/assets/bot1.svg';
-import bot2 from '@/public/assets/bot2.svg';
-import bot3 from '@/public/assets/bot3.svg';
-import bot4 from '@/public/assets/bot4.svg';
-import bot5 from '@/public/assets/bot5.svg';
-import bot6 from '@/public/assets/bot6.svg';
-import bot7 from '@/public/assets/bot7.svg';
-import bot8 from '@/public/assets/bot8.svg';
-import bot9 from '@/public/assets/bot9.svg';
-import bot10 from '@/public/assets/bot10.svg';
-import bot11 from '@/public/assets/bot11.svg';
-import bot12 from '@/public/assets/bot12.svg';
-import bot13 from '@/public/assets/bot13.svg';
-import bot14 from '@/public/assets/bot14.svg';
-import bot15 from '@/public/assets/bot15.svg';
+
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import FileUploadIcon from '@mui/icons-material/FileUpload';
 import ZoomOutMapIcon from '@mui/icons-material/ZoomOutMap';
@@ -31,6 +17,7 @@ import { createUserBotProfileService } from '@/redux/services';
 import { v4 as uuidv4 } from 'uuid';
 import { createBotProfileAction } from '@/redux/actions/BotProfileActions';
 import Switch from '@mui/material/Switch';
+import { botImageBaseUrl } from '@/utils/constant';
 const CreateBotComponent: React.FC = () => {
   const [step, setStep] = useState(1);
   const [botName, setBotName] = useState('BotWot Assistant');
@@ -98,7 +85,6 @@ const CreateBotComponent: React.FC = () => {
     const reader = new FileReader();
     reader.onload = (e) => {
       const binaryString = reader.result as string;
-
     };
 
     reader.readAsBinaryString(file);
@@ -128,16 +114,13 @@ const CreateBotComponent: React.FC = () => {
     return emailRegex.test(email);
   };
 
-  
   const validatePhoneNumber = (phoneNumber: string) => {
     // Example: Phone number must be 10 digits
     const phoneNumberRegex = /^\d{10}$/;
     return phoneNumberRegex.test(phoneNumber);
   };
 
-
   const handleSave = async () => {
-
     const docId = uuidv4();
     const formData = new FormData();
     formData.append('botName', botName);
@@ -164,77 +147,75 @@ const CreateBotComponent: React.FC = () => {
     if (!validatePhoneNumber(supportPhone)) {
       setError('Please enter a valid phone number with 10 digits.');
       return;
-    }
-    else {
+    } else {
       console.error('No file selected');
     }
 
     dispatch(createBotProfileAction(formData));
     router.push('/MyChatBots');
     dispatch(createBotProfileAction(formData));
-
   };
 
   const botSamples = [
     {
-      imageUrl: bot1.src,
-      iconType: bot1,
+      imageUrl: `${botImageBaseUrl}bot1.svg`,
+      iconType: 'bot1',
     },
     {
-      imageUrl: bot2.src,
-      iconType: bot2,
+      imageUrl: `${botImageBaseUrl}bot2.svg`,
+      iconType: 'bot2',
     },
     {
-      imageUrl: bot3.src,
-      iconType: bot3,
+      imageUrl: `${botImageBaseUrl}bot3.svg`,
+      iconType: 'bot3',
     },
     {
-      imageUrl: bot4.src,
-      iconType: bot4,
+      imageUrl: `${botImageBaseUrl}bot4.svg`,
+      iconType: 'bot4',
     },
     {
-      imageUrl: bot5.src,
-      iconType: bot5,
+      imageUrl: `${botImageBaseUrl}bot5.svg`,
+      iconType: 'bot5',
     },
     {
-      imageUrl: bot6.src,
-      iconType: bot6,
+      imageUrl: `${botImageBaseUrl}bot6.svg`,
+      iconType: 'bot6',
     },
     {
-      imageUrl: bot7.src,
-      iconType: bot7,
+      imageUrl: `${botImageBaseUrl}bot7.svg`,
+      iconType: 'bot7',
     },
     {
-      imageUrl: bot8.src,
-      iconType: bot8,
+      imageUrl: `${botImageBaseUrl}bot8.svg`,
+      iconType: 'bot8',
     },
     {
-      imageUrl: bot9.src,
-      iconType: bot9,
+      imageUrl: `${botImageBaseUrl}bot9.svg`,
+      iconType: 'bot9',
     },
     {
-      imageUrl: bot10.src,
-      iconType: bot10,
+      imageUrl: `${botImageBaseUrl}bot10.svg`,
+      iconType: 'bot10',
     },
     {
-      imageUrl: bot11.src,
-      iconType: bot11,
+      imageUrl: `${botImageBaseUrl}bot11.svg`,
+      iconType: 'bot11',
     },
     {
-      imageUrl: bot12.src,
-      iconType: bot12,
+      imageUrl: `${botImageBaseUrl}bot12.svg`,
+      iconType: 'bot12',
     },
     {
-      imageUrl: bot13.src,
-      iconType: bot13,
+      imageUrl: `${botImageBaseUrl}bot13.svg`,
+      iconType: 'bot13',
     },
     {
-      imageUrl: bot14.src,
-      iconType: bot14,
+      imageUrl: `${botImageBaseUrl}bot14.svg`,
+      iconType: 'bot14',
     },
     {
-      imageUrl: bot15.src,
-      iconType: bot15,
+      imageUrl: `${botImageBaseUrl}bot15.svg`,
+      iconType: 'bot15',
     },
   ];
 
@@ -271,10 +252,11 @@ const CreateBotComponent: React.FC = () => {
             <button
               key={color}
               onClick={() => setChatColor(color)}
-              className={`w-8 h-8 rounded-full ${color === 'rainbow'
+              className={`w-8 h-8 rounded-full ${
+                color === 'rainbow'
                   ? 'bg-gradient-to-r from-red-500 via-green-500 to-blue-500'
                   : ''
-                }`}
+              }`}
               style={{
                 backgroundColor: color !== 'rainbow' ? color : undefined,
               }}
@@ -287,7 +269,7 @@ const CreateBotComponent: React.FC = () => {
         <div className="grid grid-cols-5 gap-2">
           {/* Add bot profile images here */}
           {botSamples.map((item, idx) => (
-            <Image
+            <img
               key={idx}
               src={item.imageUrl}
               alt="logo"
@@ -300,9 +282,7 @@ const CreateBotComponent: React.FC = () => {
       </div>
       <div className="mb-4">
         <label className="block text-gray-200 mb-2">Custom photo</label>
-        <div className="relative mb-4">
-          
-        </div>
+        <div className="relative mb-4"></div>
         <div className="flex items-start">
           <button
             disabled
@@ -335,10 +315,11 @@ const CreateBotComponent: React.FC = () => {
             <button
               key={tone}
               onClick={() => setBotTone(tone)}
-              className={`px-4 py-2 rounded ${botTone === tone
+              className={`px-4 py-2 rounded ${
+                botTone === tone
                   ? 'bg-[#3F2181] text-white h-[Hug (38px)px] rounded-[24px]'
                   : 'text-gray-200'
-                }`}
+              }`}
             >
               {tone}
             </button>
@@ -395,7 +376,6 @@ const CreateBotComponent: React.FC = () => {
             />
           </div>
         </div>
-
       </div>
       <div className="mb-4">
         <label className="block text-gray-200 mb-2">
