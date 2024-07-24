@@ -6,6 +6,7 @@ import {
   GET_USER_All_SESSION_SUCCESS,
     GET_USER_CHAT_FAILURE,
     GET_USER_CHAT_SUCCESS,
+    REMOVE_ADVANCE_FEATURE,
     USER_ALL_SESSION,
     USER_CHAT_DATA,
     USER_OUESTION_SESSION,
@@ -98,7 +99,29 @@ import {
                 ...state,
                 advanceFeature : { data: action.payload, loader: false },
             };
-            
+
+        case REMOVE_ADVANCE_FEATURE:
+          console.log("REMOVE_ADVANCE_FEATURE")
+          return {
+              ...state,
+              session:{
+                data:[],
+                loader:false,
+              },
+              allSession:{
+                data:[],
+                loader:false,
+              },
+              sessionChat:{
+                data:[],
+                sessionId:null,
+                loader:false,
+              },
+              advanceFeature:{
+                data:{},
+                loader:false,
+              }
+          };
     default:
         return state;
     }

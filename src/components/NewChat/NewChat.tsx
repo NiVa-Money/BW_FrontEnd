@@ -28,6 +28,7 @@ const NewChatComponent: React.FC = () => {
   const [sessionId, setSessionId] = React.useState<string>('');
   const [reasonDetails, setReasonDetails] = React.useState<string>('');
   const [summary, setSummary] = React.useState<string>('');
+  const [continueAdv, setContinueAdv] = React.useState<any>(false);
   const [sentimentAnalysis, setSentimentAnalysis] = React.useState<any>({});
   const [nextSteps, setNextSteps] = React.useState<string>('');
   const [question, setQuestion] = React.useState<any>({
@@ -80,8 +81,13 @@ const NewChatComponent: React.FC = () => {
   };
 
   const botSesssion = () => {
-    dispatch(getAdvanceFeature(sessionId));
-    setIsPopupOpen(false);
+    if (sessionId) {
+      dispatch(getAdvanceFeature(sessionId));
+      setIsPopupOpen(false);
+      setContinueAdv(false)
+    } else {
+      setContinueAdv(true);
+    }
   };
 
   const sendMessage = (event: any) => {
@@ -469,16 +475,16 @@ const NewChatComponent: React.FC = () => {
             >
               Reason & Details
             </button>
-            <div className="pl-6 pr-6">{reasonDetails}</div>
+            <div className="w-[80%] flex justify-center items-center">{reasonDetails}</div>
             <button className="custom-button bg-[#FFFFFF] bg-opacity-10">
               Summary
             </button>
-            <div className="pl-6 pr-6">{summary}</div>
+            <div className="w-[80%]">{summary}</div>
             <button className="custom-button bg-[#FFFFFF] bg-opacity-10">
               Sentiment Analysis
             </button>
             {sentimentAnalysis && (
-              <div className="">
+              <div className="w-[80%] flex flex-col justify-center items-center">
                 <div>negative: {sentimentAnalysis?.negative} </div>
                 <div>neutral: {sentimentAnalysis?.neutral} </div>
                 <div>positive: {sentimentAnalysis?.negative} </div>
@@ -487,7 +493,7 @@ const NewChatComponent: React.FC = () => {
             <button className="custom-button bg-[#FFFFFF] bg-opacity-10">
               Next Steps
             </button>
-            <div className="pl-6 pr-6">{nextSteps}</div>
+            <div className="w-[80%]">{nextSteps}</div>
           </div>
           {/* image */}
           <div className="flex justify-center items-center mt-6 mb-3">
@@ -583,11 +589,23 @@ const NewChatComponent: React.FC = () => {
             </div>
             <div className="flex flex-col gap-5 items-center justify-center z-10">
               <div className="flex bg-black rounded adv-fe-popup flex-col items-center text-white justify-center text-center">
-                <span>You will lose 5 messages once you use advanced features.</span>
+                <span>
+                  You will lose 5 messages once you use advanced features.
+                </span>
                 <span>Still want to continue?</span>
               </div>
+              {continueAdv && <div className='text-red-500'>Please select Session or chat first then use</div>}
               <button className="Continue-btn mt-4" onClick={botSesssion}>
                 Continue
+              </button>
+              <button
+                className="Continue-btn mt-4"
+                onClick={() => {
+                  setIsPopupOpen(false);
+                  setContinueAdv(false);
+                }}
+              >
+                close
               </button>
             </div>
           </div>
