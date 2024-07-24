@@ -60,7 +60,9 @@ import {
   signUpUserData,
 } from '../services';
 import { useRouter } from 'next/navigation';
-
+interface BotData {
+  userChat: any;
+}
 export function* verifyUserSaga({
   type,
   payload,
@@ -332,13 +334,15 @@ export function* deleteUserKnowledgeBaseSaga({
 export function* getUserChatSaga({
   payload,
   type,
+  
 }: {
   type: string;
   payload: any;
+  
 }): Generator<any> {
   try {
     console.log('api userChat with bot payload  --->', payload);
-    const userChat = yield call(getUserChatService, payload);
+    const userChat:any = yield call(getUserChatService, payload);
     const answerOfQuestion = userChat.chats[userChat.chats.length - 1].answer;
     yield put({
       type: GET_USER_CHAT_SUCCESS,
