@@ -29,7 +29,7 @@ export default function botProfileReducers(
     case CREATE_BOT_PROFILE_SUCCESS:
       return {
         ...state,
-        create: { data: action.payload, loader: false },
+        create: { data: action.payload, loader: true },
       };
     case CREATE_BOT_PROFILE_FAILURE:
       return {

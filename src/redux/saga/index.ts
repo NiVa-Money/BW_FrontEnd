@@ -41,6 +41,7 @@ import {
   USER_ALL_SESSION,
   GET_USER_All_SESSION_SUCCESS,
   GET_USER_All_SESSION_FAILURE,
+  CREATE_BOT_PROFILE_SUCCESS,
 } from '../actions/actionTypes';
 
 import {
@@ -58,6 +59,7 @@ import {
   getUserProfileService,
   signUpUserData,
 } from '../services';
+import { useRouter } from 'next/navigation';
 
 export function* verifyUserSaga({
   type,
@@ -170,8 +172,20 @@ export function* createBotProfileSaga({
   try {
     const createBot = yield call(createUserBotProfileService, payload);
     yield put({
-      type: CREATE_BOT_PROFILE_FAILURE,
+      type: CREATE_BOT_PROFILE_SUCCESS,
       payload: createBot,
+    });
+    let userId = null;
+    for (const [key, value] of payload.entries()) {
+      if (key === 'userId') {
+        userId = value;
+        break;
+      }
+    }
+    const botProfiles = yield call(getUserBotProfileService, userId);
+    yield put({
+      type: GET_USER_BOT_PROFILE_SUCCESS,
+      payload: botProfiles,
     });
   } catch (error: any) {
     yield put({
@@ -323,16 +337,16 @@ export function* getUserChatSaga({
   payload: any;
 }): Generator<any> {
   try {
-    console.log("api userChat with bot payload  --->",payload)
+    console.log('api userChat with bot payload  --->', payload);
     const userChat = yield call(getUserChatService, payload);
     // console.log("api userChat with bot res",userChat)
-    const answerOfQuestion = userChat.chats[userChat.chats.length-1].answer
+    const answerOfQuestion = userChat.chats[userChat.chats.length - 1].answer;
     yield put({
       type: GET_USER_CHAT_SUCCESS,
       payload: {
         text: answerOfQuestion,
-        sender: "other",
-        sessionId: userChat.sessionId
+        sender: 'other',
+        sessionId: userChat.sessionId,
       },
     });
   } catch (error: any) {
@@ -352,10 +366,10 @@ export function* getUserAllSessionSaga({
   try {
     // console.log("payload",payload)
     const data = {
-      "userId":payload
-    }
+      userId: payload,
+    };
     // console.log("getSession ",data)
-    const userChat = yield call(getUserAllSessionService,data);
+    const userChat = yield call(getUserAllSessionService, data);
     // console.log("api userChat with bot res All session",userChat)
     yield put({
       type: GET_USER_All_SESSION_SUCCESS,

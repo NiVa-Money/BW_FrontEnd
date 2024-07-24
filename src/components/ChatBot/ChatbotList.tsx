@@ -110,7 +110,7 @@ const ChatBotList: React.FC = () => {
         </button>
       </header>
       <section className="mt-12 px-10">
-        {chatBotList.map((chatBot, index) => (
+        {chatBotList?.map((chatBot:any, index:any) => (
           <ChatBotCard
             key={index}
             bot={chatBot}

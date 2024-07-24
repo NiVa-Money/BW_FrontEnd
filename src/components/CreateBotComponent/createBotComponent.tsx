@@ -13,9 +13,9 @@ import { useRouter } from 'next/navigation';
 //redux post
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '@/redux/configureStore';
-import { createUserBotProfileService } from '@/redux/services';
+import { createUserBotProfileService, getUserBotProfileService } from '@/redux/services';
 import { v4 as uuidv4 } from 'uuid';
-import { createBotProfileAction } from '@/redux/actions/BotProfileActions';
+import { createBotProfileAction, getUserBotProfileAction } from '@/redux/actions/BotProfileActions';
 import Switch from '@mui/material/Switch';
 import { botImageBaseUrl } from '@/utils/constant';
 const CreateBotComponent: React.FC = () => {
@@ -139,7 +139,10 @@ const CreateBotComponent: React.FC = () => {
     formData.append('userId', userId);
     if (selectedFile) {
       formData.append('file', selectedFile);
+    }else {
+      console.error('No file selected');
     }
+
     if (!validateEmail(supportEmail)) {
       setError('Please enter a valid email address.');
       return;
@@ -147,13 +150,11 @@ const CreateBotComponent: React.FC = () => {
     if (!validatePhoneNumber(supportPhone)) {
       setError('Please enter a valid phone number with 10 digits.');
       return;
-    } else {
-      console.error('No file selected');
     }
 
-    dispatch(createBotProfileAction(formData));
-    router.push('/MyChatBots');
-    dispatch(createBotProfileAction(formData));
+    dispatch(createBotProfileAction(formData))
+    // dispatch(getUserBotProfileAction(userId));
+    router.push('/MyChatBots')
   };
 
   const botSamples = [
