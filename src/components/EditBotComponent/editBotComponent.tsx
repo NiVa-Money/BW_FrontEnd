@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import { editBotProfileAction } from '../../redux/actions/BotProfileActions'; 
 import Image from 'next/image';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
@@ -10,6 +10,8 @@ import Link from 'next/link';
 import { RootState } from '@/redux/configureStore';
 import { useDispatch, useSelector } from 'react-redux';
 import Switch from '@mui/material/Switch';
+import { useRouter } from 'next/navigation';
+
 interface BotData {
   botId?: string;
   botName: string;
@@ -24,6 +26,7 @@ interface BotData {
 }
 
 const EditBotComponent: React.FC = () => {
+  const botDataRedux = useSelector((state: RootState) => state.botProfile?.botProfiles?.data);
   const dispatch = useDispatch();
   const [step, setStep] = useState(1);
   const [botName, setBotName] = useState('BotWot Assistant');
@@ -55,6 +58,7 @@ const EditBotComponent: React.FC = () => {
   const [textVal, setTextVal] = useState('');
   const [filename, setFileName] = useState('');
   const [botIdToEdit, setBotIdToEdit] = useState<string | null>(null);
+  const router = useRouter();
 
   // Function to handle file upload
   const handleFileUpload = (event: any) => {
@@ -91,8 +95,25 @@ const EditBotComponent: React.FC = () => {
       userId: userId,
     };
     dispatch(editBotProfileAction(botData));
+    router.push('/MyChatBots');
   };
-
+  useEffect(() => {
+    if (botDataRedux) {
+      const botToEdit = botDataRedux[0]; 
+      if (botToEdit) {
+        setBotName(botToEdit.botName);
+        setBotTone(botToEdit.botTone);
+        setGreetingMessage(botToEdit.botGreetingMessage);
+        setbotSmartnessVal(botToEdit.botSmartness);
+        setBotIdentity(botToEdit.botIdentity);
+        setSupportEmail(botToEdit.supportEmail);
+        setSupportPhone(botToEdit.supportNumber);
+        setBotLimit(botToEdit.wordLimitPerMessage);
+        // Set any other properties as needed
+      }
+    }
+  }, [botDataRedux]);
+ 
   const renderStep1 = () => (
     <>
       <div className="mb-4">
@@ -208,10 +229,10 @@ const EditBotComponent: React.FC = () => {
             />
           </div>
         </div>
-        <button className="rounded-[70px] bg-[#3F2181] mt-[66px]  text-white px-4 py-2 flex justify-center">
+        {/* <button className="rounded-[70px] bg-[#3F2181] mt-[66px]  text-white px-4 py-2 flex justify-center">
           <span>Upload</span>
           <FileUploadIcon />
-        </button>
+        </button> */}
       </div>
     </>
   );
