@@ -88,7 +88,7 @@ const ChatBotList: React.FC = () => {
   }, [userId]);
 
   useEffect(() => {
-    console.log('botDataRedux:', botDataRedux);
+    console.log('botDataRedux:', botloader);
     if (botDataRedux && botDataRedux.length) {
       setChatBotList(botDataRedux);
     }

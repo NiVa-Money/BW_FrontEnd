@@ -339,7 +339,6 @@ export function* getUserChatSaga({
   try {
     console.log('api userChat with bot payload  --->', payload);
     const userChat = yield call(getUserChatService, payload);
-    // console.log("api userChat with bot res",userChat)
     const answerOfQuestion = userChat.chats[userChat.chats.length - 1].answer;
     yield put({
       type: GET_USER_CHAT_SUCCESS,
