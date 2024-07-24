@@ -48,7 +48,7 @@ const ChatBotList: React.FC = () => {
   // Function to handle edit action
   const handleEdit = (index: number) => {
     // Navigate to the edit page with the botId as a query parameter
-    router.push(`/editBot?botId=${chatBotList[index].botId}`);
+    router.push(`/editBot`);
   };
 
   // Function to handle delete action
@@ -88,6 +88,7 @@ const ChatBotList: React.FC = () => {
   }, [userId]);
 
   useEffect(() => {
+    console.log('botDataRedux:', botDataRedux);
     if (botDataRedux && botDataRedux.length) {
       setChatBotList(botDataRedux);
     }
