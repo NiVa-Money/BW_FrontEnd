@@ -475,16 +475,16 @@ const NewChatComponent: React.FC = () => {
             >
               Reason & Details
             </button>
-            <div className="w-[80%] flex justify-center items-center">{reasonDetails}</div>
+            <div className="w-[80%] flex justify-center items-center mt-2 rounded-full border-4 border-[#DB88DB] py-4 px-10 text-base">{reasonDetails}</div>
             <button className="custom-button bg-[#FFFFFF] bg-opacity-10">
               Summary
             </button>
-            <div className="w-[80%]">{summary}</div>
+            <div className="w-[80%] flex justify-center items-center mt-2 rounded-full border-4 border-[#DB88DB] py-4 px-10 text-base">{summary}</div>
             <button className="custom-button bg-[#FFFFFF] bg-opacity-10">
               Sentiment Analysis
             </button>
             {sentimentAnalysis && (
-              <div className="w-[80%] flex flex-col justify-center items-center">
+              <div className="w-[80%] flex justify-center items-center mt-2 rounded-full border-4 border-[#DB88DB] py-4 px-10 text-base">
                 <div>negative: {sentimentAnalysis?.negative} </div>
                 <div>neutral: {sentimentAnalysis?.neutral} </div>
                 <div>positive: {sentimentAnalysis?.negative} </div>
@@ -493,7 +493,7 @@ const NewChatComponent: React.FC = () => {
             <button className="custom-button bg-[#FFFFFF] bg-opacity-10">
               Next Steps
             </button>
-            <div className="w-[80%]">{nextSteps}</div>
+            <div className="w-[80%] flex justify-center items-center mt-2 rounded-full border-4 border-[#DB88DB] py-4 px-10 text-base">{nextSteps}</div>
           </div>
           {/* image */}
           <div className="flex justify-center items-center mt-6 mb-3">
