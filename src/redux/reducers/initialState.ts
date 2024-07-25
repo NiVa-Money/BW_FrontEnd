@@ -60,6 +60,10 @@ const initialState: any = {
       data:[],
       sessionId:null,
       loader:false,
+    },
+    advanceFeature:{
+      data:{},
+      loader:false,
     }
   }
 };

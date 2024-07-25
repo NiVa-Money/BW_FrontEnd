@@ -42,6 +42,9 @@ import {
   GET_USER_All_SESSION_SUCCESS,
   GET_USER_All_SESSION_FAILURE,
   CREATE_BOT_PROFILE_SUCCESS,
+  ADVANCE_FEATURE,
+  ADVANCE_FEATURE_SUCCESS,
+  ADVANCE_FEATURE_FAILURE,
 } from '../actions/actionTypes';
 
 import {
@@ -52,6 +55,7 @@ import {
   editUserBotProfileService,
   fetchUserData,
   fetchUserMetrics,
+  getAdvanceFeatureService,
   getUserAllSessionService,
   getUserBotProfileService,
   getUserChatService,
@@ -385,6 +389,34 @@ export function* getUserAllSessionSaga({
   }
 }
 
+export function* getAdvanceFeatureSaga({
+  payload,
+  type,
+}: {
+  type: string;
+  payload: any;
+}): Generator<any> {
+  try {
+    // console.log("payload",payload)
+    const data = {
+      sessionId: payload,
+    };
+    // console.log("getSession ",data)
+    const userChat = yield call(getAdvanceFeatureService, data);
+    // console.log("api userChat with bot res All session",userChat)
+    yield put({
+      type: ADVANCE_FEATURE_SUCCESS,
+      payload: userChat,
+    });
+  } catch (error: any) {
+    yield put({
+      type: ADVANCE_FEATURE_FAILURE,
+    });
+  }
+}
+
+
+
 export default function* rootSaga() {
   yield takeLatest(VERIFY_USER_DATA, verifyUserSaga);
   yield takeLatest(SIGN_UP_DATA, signUpUserSaga);
@@ -401,4 +433,5 @@ export default function* rootSaga() {
   yield takeEvery(DELETE_USER_KNOWLEDGE_BASE, deleteUserKnowledgeBaseSaga);
   yield takeEvery(USER_CHAT_DATA, getUserChatSaga);
   yield takeEvery(USER_ALL_SESSION, getUserAllSessionSaga);
+  yield takeEvery(ADVANCE_FEATURE, getAdvanceFeatureSaga);
 }

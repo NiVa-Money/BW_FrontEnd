@@ -11,6 +11,7 @@ import {
   GET_USER_BOT_PROFILE,
   GET_USER_BOT_PROFILE_FAILURE,
   GET_USER_BOT_PROFILE_SUCCESS,
+  REMOVE_BOT_PROFILES,
 } from '@/redux/actions/actionTypes';
 import initialState from './initialState';
 export default function botProfileReducers(
@@ -90,6 +91,27 @@ export default function botProfileReducers(
         ...state,
         botProfiles: { data: action.payload, loader: false },
       };
+
+    case REMOVE_BOT_PROFILES:
+      return {
+        ...state,
+        create: {
+          data: {},
+          loader: false,
+        },
+        edit: {
+          data: {},
+          loader: false,
+        },
+        botProfiles: {
+          data: [],
+          loader: false,
+        },
+        delete: {
+          data: {},
+          loader: false,
+        },
+      }
 
     default:
       return state;

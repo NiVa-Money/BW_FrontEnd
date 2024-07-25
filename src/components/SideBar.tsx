@@ -9,7 +9,7 @@ import mainLogo from '@/public/assets/mainLogo.svg';
 import ClearConversation from './clearConversation/clearConversation';
 import { RootState } from '@/redux/configureStore';
 import { useDispatch, useSelector } from 'react-redux';
-import { getUserBotProfileAction } from '@/redux/actions/BotProfileActions';
+import { getUserBotProfileAction, removeAdvanceFeature, removeFromReduxbot } from '@/redux/actions/BotProfileActions';
 import { logoutUser } from '@/redux/actions/authActions';
 
 interface SidebarItemProps {
@@ -69,6 +69,8 @@ const SideBar: React.FC = () => {
     localStorage.removeItem('user_id');
     localStorage.removeItem('token');
     dispatch(logoutUser());
+    dispatch(removeFromReduxbot())
+    dispatch(removeAdvanceFeature())
   };
 
   const getUserBotProfiles = () => {

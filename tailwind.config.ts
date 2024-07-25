@@ -14,6 +14,7 @@ const config: Config = {
     extend: {
       colors: {
         // light mode
+        'custom-purple': '#C00DC8',
         tremor: {
           brand: {
             faint: colors.blue[50],

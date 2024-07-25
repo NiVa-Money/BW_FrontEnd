@@ -2,7 +2,9 @@ import {
   CREATE_BOT_PROFILE,
   EDIT_BOT_PROFILE,
   GET_USER_BOT_PROFILE,
-  DELETE_BOT_PROFILE
+  DELETE_BOT_PROFILE,
+  REMOVE_BOT_PROFILES,
+  REMOVE_ADVANCE_FEATURE
 } from '../actionTypes';
 
 export const createBotProfileAction = (data: any) => {
@@ -24,3 +26,11 @@ export const deleteBotProfileServiceAction = (data: any) => ({
   type: DELETE_BOT_PROFILE,
   payload: data,
 });
+
+export const removeFromReduxbot = () => ({
+  type: REMOVE_BOT_PROFILES,
+})
+
+export const removeAdvanceFeature = () => ({
+  type: REMOVE_ADVANCE_FEATURE
+})
