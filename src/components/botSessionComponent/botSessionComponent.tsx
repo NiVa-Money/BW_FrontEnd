@@ -7,6 +7,8 @@ import { RootState } from '@/redux/configureStore';
 import * as React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import icon from '../../public/assets/chatBotSymbol.svg';
+import mainLogo from '@/public/assets/mainLogo.svg';
+
 import '../NewChat/newchat.css';
 import {
   filteredSession,
@@ -17,6 +19,7 @@ import {
 } from '@/redux/actions/userChatAction';
 import withAuth from '../withAuth';
 import Image from 'next/image';
+import Link from 'next/link';
 
 const BotSessionComponent: React.FC = () => {
   const dispatch = useDispatch();
@@ -79,8 +82,13 @@ const BotSessionComponent: React.FC = () => {
   };
 
   const getChatHistory = () => {
+    const data = {
+      userId: userId,
+      botId: '669ab96f83f712df352b0c42',
+      sessionId: '669ab96f83f712df352b0c42',
+    };
     // console.log('userId', userId);
-    dispatch(getAllSession(userId));
+    dispatch(getAllSession(data));
   };
 
   const botSesssion = () => {
@@ -181,10 +189,40 @@ const BotSessionComponent: React.FC = () => {
     // console.log('newMessage', newMessage);
     // console.log('botProfiles', botProfiles);
   }, [userChatMessagesRes]);
+  React.useEffect(() => {
+    getChatHistory();
+  }, []);
 
   return (
     <div className="flex">
-      <div>sidebar</div>
+      <div className="w-64 flex flex-col">
+        <div className="w-full mt-8 flex justify-center items-center">
+          {' '}
+          <Image src={mainLogo.src} alt="logo" width={90} height={80} />
+        </div>
+        <div className="text-white mt-[54px]">
+          <Link
+            href={'/dashBoard'}
+            className={`flex items-center space-x-3 py-2 px-3 text-gray-300 hover:bg-white' 
+          }`}
+          >
+            {/* <i className={`fas ${item.icon}`}></i> */}
+            <span>
+              {' '}
+              <i className="fas fa-gauge-high" />
+              Dashboard
+            </span>
+          </Link>
+        </div>
+        <div className="text-white mt-[8px] px-3">
+          {/* <i className={`fas ${item.icon}`}></i> */}
+          <span>
+            {' '}
+            <i className="fas fa-comment" />
+            Sessions
+          </span>
+        </div>
+      </div>
       <div className="relative w-[100%] h-[100vh] flex justify-end items-center pl-10 py-10 bg-[#0B031E] min-h-screen max-md:px-5 overflow-hidden">
         <div className="absolute inset-0">
           <svg
