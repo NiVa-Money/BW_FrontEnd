@@ -9,7 +9,11 @@ import mainLogo from '@/public/assets/mainLogo.svg';
 import ClearConversation from './clearConversation/clearConversation';
 import { RootState } from '@/redux/configureStore';
 import { useDispatch, useSelector } from 'react-redux';
-import { getUserBotProfileAction, removeAdvanceFeature, removeFromReduxbot } from '@/redux/actions/BotProfileActions';
+import {
+  getUserBotProfileAction,
+  removeAdvanceFeature,
+  removeFromReduxbot,
+} from '@/redux/actions/BotProfileActions';
 import { logoutUser } from '@/redux/actions/authActions';
 
 interface SidebarItemProps {
@@ -19,7 +23,12 @@ interface SidebarItemProps {
   onClick?: () => void;
   isActive?: boolean;
   hasDropdown?: boolean;
-  subMenuItems?: { path?: string; title: string }[];
+  subMenuItems?: {
+    path?: string;
+    title: string;
+    hasDropdown?: boolean | any;
+    subChildItems?: any[] | any;
+  }[];
 }
 
 const DashboardItem: SidebarItemProps = {
@@ -34,7 +43,14 @@ const SIDENAV_ITEMS: SidebarItemProps[] = [
     icon: 'fa-comment',
     text: 'Chat',
     hasDropdown: true,
-    subMenuItems: [{ title: 'All Chats', path:"/botSession" }, { title: 'Customs' }],
+    subMenuItems: [
+      {
+        title: 'All Chats',
+        hasDropdown: true,
+        subChildItems: [{ title: 'hey' }],
+      },
+      { title: 'Customs' },
+    ],
   },
   {
     icon: 'fa-robot',
@@ -55,7 +71,6 @@ const SIDENAV_ITEMS2: SidebarItemProps[] = [
   { icon: 'fa-sign-out-alt', text: 'Log Out', path: '/' },
 ];
 
-
 const SideBar: React.FC = () => {
   const dispatch = useDispatch();
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -65,19 +80,20 @@ const SideBar: React.FC = () => {
   const closeModal = () => setIsModalOpen(false);
 
   const LogoutButton = () => {
-    console.log("app logout ... ")
+    console.log('app logout ... ');
     localStorage.removeItem('user_id');
     localStorage.removeItem('token');
     dispatch(logoutUser());
-    dispatch(removeFromReduxbot())
-    dispatch(removeAdvanceFeature())
+    dispatch(removeFromReduxbot());
+    dispatch(removeAdvanceFeature());
   };
 
   const getUserBotProfiles = () => {
-    // console.log('user_id', userData);
-    // console.log('userData.user_id', userData?.user_id);
     dispatch(getUserBotProfileAction(userData?.user_id));
   };
+  useEffect(() => {
+    getUserBotProfiles();
+  }, [userData?.user_id]);
 
   return (
     <div className="w-64 p-4 flex flex-col h-screen relative">
@@ -110,7 +126,11 @@ const SideBar: React.FC = () => {
             key={idx}
             item={item}
             onClick={
-              item.text === 'Clear Conversations' ? openModal : item.text === 'Log Out' ? LogoutButton : undefined
+              item.text === 'Clear Conversations'
+                ? openModal
+                : item.text === 'Log Out'
+                ? LogoutButton
+                : undefined
             }
           />
         ))}
@@ -129,7 +149,10 @@ interface MenuItemProps {
 const MenuItem: React.FC<MenuItemProps> = ({ item, onClick }) => {
   const pathname = usePathname();
   const [subMenuOpen, setSubMenuOpen] = useState(false);
+  const [subMenuChildOpen, setSubMenuChildOpen] = useState(false);
+
   const toggleSubMenu = () => setSubMenuOpen(!subMenuOpen);
+  const toggleSubMenuChild = () => setSubMenuChildOpen(!subMenuChildOpen);
 
   return (
     <div>
@@ -152,9 +175,8 @@ const MenuItem: React.FC<MenuItemProps> = ({ item, onClick }) => {
           {subMenuOpen && (
             <div className="ml-4">
               {item.subMenuItems?.map((subItem, idx) => (
-                <Link
+                <button
                   key={idx}
-                  href={subItem.path ?? ''}
                   className="text-gray-300 hover:bg-white hover:bg-opacity-10 rounded-full cursor-pointer"
                 >
                   <div
@@ -163,8 +185,9 @@ const MenuItem: React.FC<MenuItemProps> = ({ item, onClick }) => {
                     }`}
                   >
                     <span>{subItem.title}</span>
+
                   </div>
-                </Link>
+                </button>
               ))}
             </div>
           )}
