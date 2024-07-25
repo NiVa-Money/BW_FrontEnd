@@ -478,25 +478,25 @@ const NewChatComponent: React.FC = () => {
             >
               Reason & Details
             </button>
-            <div className="w-[80%] flex justify-center items-center mt-2 rounded-full border-4 border-[#DB88DB] py-4 px-10 text-base">{reasonDetails}</div>
+            {reasonDetails ? <div className="w-[80%] flex justify-center items-center mt-2 rounded-full border-4 border-[#DB88DB] py-4 px-10 text-base">{reasonDetails}</div>:''}
             <button className="custom-button bg-[#FFFFFF] bg-opacity-10">
               Summary
             </button>
-            <div className="w-[80%] flex justify-center items-center mt-2 rounded-full border-4 border-[#DB88DB] py-4 px-10 text-base">{summary}</div>
+            {summary ?<div className="w-[80%] flex justify-center items-center mt-2 rounded-full border-4 border-[#DB88DB] py-4 px-10 text-base">{summary}</div> : ''}
             <button className="custom-button bg-[#FFFFFF] bg-opacity-10">
               Sentiment Analysis
             </button>
-            {sentimentAnalysis && (
+            {sentimentAnalysis ? (
               <div className="w-[80%] flex justify-center items-center mt-2 rounded-full border-4 border-[#DB88DB] py-4 px-10 text-base">
                 <div>negative: {sentimentAnalysis?.negative} </div>
                 <div>neutral: {sentimentAnalysis?.neutral} </div>
                 <div>positive: {sentimentAnalysis?.negative} </div>
               </div>
-            )}
+            ) : ''}
             <button className="custom-button bg-[#FFFFFF] bg-opacity-10">
               Next Steps
             </button>
-            <div className="w-[80%] flex justify-center items-center mt-2 rounded-full border-4 border-[#DB88DB] py-4 px-10 text-base">{nextSteps}</div>
+            {nextSteps ? <div className="w-[80%] flex justify-center items-center mt-2 rounded-full border-4 border-[#DB88DB] py-4 px-10 text-base">{nextSteps}</div>:''}
           </div>
           {/* image */}
           <div className="flex justify-center items-center mt-6 mb-3">
