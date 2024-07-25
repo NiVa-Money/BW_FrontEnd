@@ -496,7 +496,7 @@ const NewChatComponent: React.FC = () => {
               <div className="w-[80%] flex flex-col justify-center items-center">
                 <div>negative: {sentimentAnalysis?.negative} </div>
                 <div>neutral: {sentimentAnalysis?.neutral} </div>
-                <div>positive: {sentimentAnalysis?.negative} </div>
+                <div>positive: {sentimentAnalysis?.positive} </div>
               </div>
             )}
             <button className="custom-button bg-[#FFFFFF] bg-opacity-10">
