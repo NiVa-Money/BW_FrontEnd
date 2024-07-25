@@ -49,6 +49,8 @@ const CreateBotComponent: React.FC = () => {
   const [imageSrc, setImageSrc] = useState('');
   const [imagename, setImageName] = useState('');
   const [filename, setFileName] = useState('');
+  const [emailWarning, setEmailWarning] = useState('');
+  const [phoneWarning, setPhoneWarning] = useState('');
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const dispatch = useDispatch();
   const [textVal, setTextVal] = useState('');
@@ -110,7 +112,7 @@ const CreateBotComponent: React.FC = () => {
   );
 
   const validateEmail = (email: string) => {
-    const emailRegex = /^[^\s@]+@gmail\.com$/;
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
   };
 
@@ -120,6 +122,27 @@ const CreateBotComponent: React.FC = () => {
     return phoneNumberRegex.test(phoneNumber);
   };
 
+  const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const email = e.target.value;
+    setSupportEmail(email);
+
+    if (validateEmail(email)) {
+      setEmailWarning('');
+    } else {
+      setEmailWarning('Please enter a valid email address.');
+    }
+  };
+
+  const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const phone = e.target.value;
+    setSupportPhone(phone);
+
+    if (validatePhoneNumber(phone)) {
+      setPhoneWarning('');
+    } else {
+      setPhoneWarning('Please enter a valid phone number.');
+    }
+  };
   const handleSave = async () => {
     const docId = uuidv4();
     const formData = new FormData();
@@ -365,10 +388,10 @@ const CreateBotComponent: React.FC = () => {
           </div>
         </div>
         <div className="flex items-center space-x-4 mt-[66px]">
-          <button className="rounded-[70px] bg-[#3F2181] text-white px-4 py-2 flex items-center justify-center">
+          {/* <button className="rounded-[70px] bg-[#3F2181] text-white px-4 py-2 flex items-center justify-center">
             <span>Upload</span>
             <FileUploadIcon />
-          </button>
+          </button> */}
           <div className="flex items-center">
             <label className="block text-white mr-2">Enable Smartness</label>
             <Switch
@@ -392,37 +415,28 @@ const CreateBotComponent: React.FC = () => {
           <option value={200}>200-400</option>
         </select>
       </div>
-      {/* <div className="mb-4">
-        <label className="block text-gray-200 mb-2">Bot Identity</label>
-        <select
-          value={botLimit}
-          onChange={(e) => setBotSmartness(e.target.value)}
-          className="w-full bg-[#171029] text-white p-2 rounded-[12px]"
-        >
-          <option value="Sales">Sales</option>
-          <option value="Finance">Finance</option>
-          <option value="Support">Support</option>
-        </select>
-      </div> */}
+   
       <div className="mb-4">
         <label className="block text-gray-200 mb-2">Support email</label>
         <input
           type="email"
           value={supportEmail}
-          onChange={(e) => setSupportEmail(e.target.value)}
+          onChange={handleEmailChange}
           placeholder="Enter Your Email"
           className="w-full bg-[#171029] text-white p-2 rounded-[12px]"
         />
+          {emailWarning && <p className="text-red-500 text-sm mt-1">{emailWarning}</p>}
       </div>
       <div className="mb-4">
         <label className="block text-gray-200 mb-2">Support Phone Number</label>
         <input
           type="tel"
           value={supportPhone}
-          onChange={(e) => setSupportPhone(e.target.value)}
+          onChange={handlePhoneChange}
           placeholder="Enter Your Phone Number"
           className="w-full bg-[#171029] text-white p-2 rounded-[12px]"
         />
+         {phoneWarning && <p className="text-red-500 text-sm mt-1">{phoneWarning}</p>}
       </div>
     </>
   );

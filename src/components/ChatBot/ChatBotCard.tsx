@@ -23,17 +23,39 @@ interface ChatBotCardProps {
     onDownload?: () => void;
   };
 }
-
-
+const getBackgroundColor = (color: string): string => {
+  switch (color.toLowerCase()) {
+    case '#3b82f6':
+      return 'bg-blue-500';
+    case '#ec4899':
+      return 'bg-pink-500';
+    case '#eab308':
+      return 'bg-yellow-500';
+    case '#4b5563':
+      return 'bg-gray-500';
+    case '#22c55e':
+      return 'bg-green-500';
+    case 'rainbow':
+      return 'bg-gradient-to-r from-red-500 via-yellow-500 to-blue-500';
+    default:
+      return 'bg-gray-500';
+  }
+};
 const ChatBotCard: React.FC<ChatBotCardProps> = ({ bot, actions }) => {
- 
+
   const botColor = bot.botColor?.toLowerCase() || 'default';
   return (
-    
+
     <article className="flex gap-7 justify-between px-8 py-5 mb-6 w-full bg-gray-900 rounded-xl max-md:flex-wrap max-md:px-5 max-md:max-w-full">
       <div className="flex flex-col max-md:max-w-full">
         <div className="flex gap-2.5 self-start">
-          <img loading="lazy" src={bot.icon} alt={`${bot.botName} icon`} className="shrink-0 aspect-[1.04] w-[70px]" />
+          <img
+            loading="lazy"
+            src={bot.icon ? bot.icon : 'https://botwot-user-knowledgebase.s3.ap-south-1.amazonaws.com/bot14.svg'}
+            alt={`${bot.botName} icon`}
+            className="shrink-0 aspect-[1.04] w-[70px]"
+          />
+
           <div className="flex flex-col">
             <h2 className="text-xl font-medium text-gray-100">{bot.botName}</h2>
             <p className="mt-1.5 text-base leading-3 text-zinc-400">{bot.description}</p>
@@ -42,13 +64,13 @@ const ChatBotCard: React.FC<ChatBotCardProps> = ({ bot, actions }) => {
         <div className="flex gap-5 px-20 mt-6 max-md:flex-wrap max-md:px-5">
           <div className="flex gap-5 justify-between pt-2.5 pr-2.5">
             <div className="flex flex-col whitespace-nowrap">
-              <div className="flex gap-5 justify-between text-base text-neutral-400">
+              {/* <div className="flex gap-5 justify-between text-base text-neutral-400">
                 <span>Icon</span>
                 <span>Name</span>
-              </div>
+              </div> */}
               <div className="flex gap-5 justify-between mt-7 text-sm leading-5 text-gray-100">
-                <img loading="lazy" src={bot.icon} alt={`${bot.botName} small icon`} className="shrink-0 aspect-[0.97] w-[35px]" />
-                <span className="my-auto">{bot.botName}</span>
+                {/* <img loading="lazy" src={bot.icon} alt={`${bot.botName} small icon`} className="shrink-0 aspect-[0.97] w-[35px]" /> */}
+                {/* <span className="my-auto">{bot.botName}</span> */}
               </div>
             </div>
             <div className="flex flex-col self-start text-neutral-400">
@@ -60,13 +82,17 @@ const ChatBotCard: React.FC<ChatBotCardProps> = ({ bot, actions }) => {
             <span className="self-start ml-2.5 text-base">File</span>
             <div className="flex gap-2.5 p-2.5 mt-4 text-sm leading-5 text-center rounded-xl">
               <img loading="lazy" src="https://cdn.builder.io/api/v1/image/assets/TEMP/216ef81b1307e56bac33de96edb3047cf27218916242cd7c47a7551edb14a929?apiKey=555c811dd3f44fc79b6b2689129389e8&" alt="" className="shrink-0 w-6 aspect-square" />
-              <span className="my-auto">{bot.file}</span>
+              <span className="my-auto">{bot.file || 'knowledgebase.pdf'}</span>
+
             </div>
           </div>
           <div className="flex flex-col justify-end pt-3 whitespace-nowrap text-neutral-400">
             <span className="self-start ml-2.5 text-base">Color</span>
             <div className="flex gap-2.5 p-2.5 mt-4 text-sm leading-5 text-center rounded-full">
-              <div className={`shrink-0 w-6 h-6 ${botColor === 'blue' ? 'bg-blue-500' : botColor === 'fuchsia' ? 'bg-fuchsia-600' : 'bg-gray-500'}`} />
+              <div
+                className={`shrink-0 w-6 h-6 ${getBackgroundColor(botColor)}`}
+              />
+
               <span className="my-auto">{bot.botColor || ''}</span>
             </div>
           </div>
@@ -87,9 +113,7 @@ const ChatBotCard: React.FC<ChatBotCardProps> = ({ bot, actions }) => {
           <button aria-label="Edit bot" className="text-blue-500" onClick={actions.onEdit}>
             <FontAwesomeIcon icon={faPencilAlt} />
             <Link href={`/editBot`}>
-
               <span>Edit</span>
-
             </Link>
           </button>
         )}
