@@ -84,7 +84,7 @@ const NewChatComponent: React.FC = () => {
     if (sessionId) {
       dispatch(getAdvanceFeature(sessionId));
       setIsPopupOpen(false);
-      setContinueAdv(false)
+      setContinueAdv(false);
     } else {
       setContinueAdv(true);
     }
@@ -406,7 +406,14 @@ const NewChatComponent: React.FC = () => {
                             : 'p-2.5 bg-[#2D2640] rounded-xl chat-box-size'
                         }`}
                       >
-                        {message?.text}
+                        {message?.text
+                          .split('\n')
+                          .map((line: any, index: any) => (
+                            <React.Fragment key={index}>
+                              {line}
+                              <br />
+                            </React.Fragment>
+                          ))}
                       </div>
                     </div>
                   </div>
@@ -475,7 +482,9 @@ const NewChatComponent: React.FC = () => {
             >
               Reason & Details
             </button>
-            <div className="w-[80%] flex justify-center items-center">{reasonDetails}</div>
+            <div className="w-[80%] flex justify-center items-center">
+              {reasonDetails}
+            </div>
             <button className="custom-button bg-[#FFFFFF] bg-opacity-10">
               Summary
             </button>
@@ -594,7 +603,11 @@ const NewChatComponent: React.FC = () => {
                 </span>
                 <span>Still want to continue?</span>
               </div>
-              {continueAdv && <div className='text-red-500'>Please select Session or chat first then use</div>}
+              {continueAdv && (
+                <div className="text-red-500">
+                  Please select Session or chat first then use
+                </div>
+              )}
               <button className="Continue-btn mt-4" onClick={botSesssion}>
                 Continue
               </button>
