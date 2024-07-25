@@ -16,6 +16,7 @@ import {
 } from '@/redux/actions/BotProfileActions';
 import { logoutUser } from '@/redux/actions/authActions';
 import { botSessionId } from '@/redux/actions/userChatAction';
+import { useRouter } from 'next/router';
 
 interface SidebarItemProps {
   path?: string;
@@ -155,6 +156,7 @@ interface MenuItemProps {
 }
 const MenuItem: React.FC<MenuItemProps> = ({ item, onClick }) => {
   const pathname = usePathname();
+  const router = useRouter()
   const [subMenuOpen, setSubMenuOpen] = useState(false);
   const [subMenuChildOpen, setSubMenuChildOpen] = useState<{
     [key: number]: boolean;
@@ -176,6 +178,7 @@ const MenuItem: React.FC<MenuItemProps> = ({ item, onClick }) => {
       userId
     }
     dispatch(botSessionId(data))
+    router.push('/botSession')
   }
 
   useEffect(()=>{
