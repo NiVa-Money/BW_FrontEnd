@@ -64,6 +64,10 @@ const initialState: any = {
     advanceFeature:{
       data:{},
       loader:false,
+    },
+    botProfileSelect:{
+      data:{},
+      loader:false
     }
   }
 };

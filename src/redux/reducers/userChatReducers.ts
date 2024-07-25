@@ -2,6 +2,7 @@ import {
   ADVANCE_FEATURE,
   ADVANCE_FEATURE_FAILURE,
   ADVANCE_FEATURE_SUCCESS,
+  BOTSESSION_ID,
   GET_USER_All_SESSION_FAILURE,
   GET_USER_All_SESSION_SUCCESS,
     GET_USER_CHAT_FAILURE,
@@ -99,6 +100,13 @@ import {
                 ...state,
                 advanceFeature : { data: action.payload, loader: false },
             };
+        
+        case BOTSESSION_ID:
+          console.log("BOTSESSION_ID")
+          return {
+            ...state,
+            botProfileSelect : { data: action.payload, loader: true },
+        };
 
         case REMOVE_ADVANCE_FEATURE:
           console.log("REMOVE_ADVANCE_FEATURE")
