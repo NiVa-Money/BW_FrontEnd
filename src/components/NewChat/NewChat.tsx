@@ -1,5 +1,5 @@
 'use client';
-import { getUserBotProfileAction } from '@/redux/actions/BotProfileActions';
+import { getUserBotProfileAction, removeAdvanceFeature } from '@/redux/actions/BotProfileActions';
 import { RootState } from '@/redux/configureStore';
 import * as React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -160,6 +160,7 @@ const NewChatComponent: React.FC = () => {
       filteredSessions: [],
       sessionId: null,
     };
+    dispatch(removeAdvanceFeature())
     dispatch(filteredSession(data));
   }, []);
 
@@ -177,6 +178,8 @@ const NewChatComponent: React.FC = () => {
     // console.log('newMessage', newMessage);
     // console.log('botProfiles', botProfiles);
   }, [userChatMessagesRes]);
+
+  
 
   return (
     <div className="relative w-[100%] h-[100vh] flex justify-end items-center pl-10 py-10 bg-[#0B031E] min-h-screen max-md:px-5 overflow-hidden">
