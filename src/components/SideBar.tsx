@@ -34,7 +34,7 @@ const SIDENAV_ITEMS: SidebarItemProps[] = [
     icon: 'fa-comment',
     text: 'Chat',
     hasDropdown: true,
-    subMenuItems: [{ title: 'All Chats' }, { title: 'Customs' }],
+    subMenuItems: [{ title: 'All Chats', path:"/botSession" }, { title: 'Customs' }],
   },
   {
     icon: 'fa-robot',
