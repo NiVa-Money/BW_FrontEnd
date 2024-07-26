@@ -28,6 +28,7 @@ export default function RootLayout({
     '/dashBoard',
     '/createKnowledgeBase',
     '/newchat',
+    '/botSession'
   ];
   const routeWithoutFooter: string[] = [
     '/MyChatBots',
@@ -40,6 +41,7 @@ export default function RootLayout({
     '/dashBoard',
     '/createKnowledgeBase',
     '/newchat',
+    '/botSession'
   ];
   const routeWithoutSidebar: string[] = [
     '/createBot',
@@ -49,6 +51,7 @@ export default function RootLayout({
     '/blog',
     '/contactUs',
     '/home',
+    '/botSession'
   ];
   
   let persistor = persistStore(store);

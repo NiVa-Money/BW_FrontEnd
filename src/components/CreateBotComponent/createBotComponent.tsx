@@ -110,7 +110,7 @@ const CreateBotComponent: React.FC = () => {
   );
 
   const validateEmail = (email: string) => {
-    const emailRegex = /^[^\s@]+@gmail\.com$/;
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
   };
 
@@ -121,6 +121,7 @@ const CreateBotComponent: React.FC = () => {
   };
 
   const handleSave = async () => {
+    
     const docId = uuidv4();
     const formData = new FormData();
     formData.append('botName', botName);
@@ -365,10 +366,10 @@ const CreateBotComponent: React.FC = () => {
           </div>
         </div>
         <div className="flex items-center space-x-4 mt-[66px]">
-          <button className="rounded-[70px] bg-[#3F2181] text-white px-4 py-2 flex items-center justify-center">
+          {/* <button className="rounded-[70px] bg-[#3F2181] text-white px-4 py-2 flex items-center justify-center">
             <span>Upload</span>
             <FileUploadIcon />
-          </button>
+          </button> */}
           <div className="flex items-center">
             <label className="block text-white mr-2">Enable Smartness</label>
             <Switch
