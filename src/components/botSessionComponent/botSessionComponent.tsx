@@ -215,11 +215,20 @@ const BotSessionComponent: React.FC = () => {
     }
   }, [botIdLocal, pathName, dispatch]);
   React.useEffect(() => {
+    console.log('tempArray before if');
     if (userChatSessionsRedux?.length) {
-      setBotSessionsList(userChatSessionsRedux);
+      console.log('tempArray after if');
+
+      const tempArray = userChatSessionsRedux;
+      setBotSessionsList(tempArray);
     }
   }, [userChatSessionsRedux]);
-  console.log('botSessionsList', botSessionsList);
+  console.log(
+    'botSessionsList',
+    botSessionsList?.map((item: any) => {
+      return item;
+    })
+  );
   return (
     <div className="flex">
       <div className="w-64 flex flex-col">
@@ -249,16 +258,16 @@ const BotSessionComponent: React.FC = () => {
             Sessions
           </span>
         </div>
-        {botSessionsList &&
-          botSessionsList?.map((item: any, id: any) => {
-            <div className="text-white mt-[8px] px-3">
-              <div className="flex flex-col">
-                <span>Session{id + 1}</span>
-
-                <span>{item?.sessions[0]?.question}</span>
-              </div>
-            </div>;
-          })}
+        <div className="text-white mt-[8px] px-3">
+          {botSessionsList?.map((item: any, id: any) => (
+            <div key={id} className="flex flex-col mt-[22px]">
+              <span className="w-[Hug (307px)px] h-[Hug (34px)px] top-[268px]">
+                Session {id + 1}
+              </span>
+              <span className="w-[247px] h-[25px] top-[302px] left-[43px] ">{item.sessions[item.sessions.length - 1]?.question}</span>
+            </div>
+          ))}
+        </div>
       </div>
       <div className="relative w-[100%] h-[100vh] flex justify-end items-center pl-10 py-10 bg-[#0B031E] min-h-screen max-md:px-5 overflow-hidden">
         <div className="absolute inset-0">
