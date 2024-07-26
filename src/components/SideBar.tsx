@@ -1,7 +1,7 @@
 'use client';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useReducer, useState } from 'react';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import { Icon } from '@iconify/react';
 import Image from 'next/image';
@@ -9,8 +9,13 @@ import mainLogo from '@/public/assets/mainLogo.svg';
 import ClearConversation from './clearConversation/clearConversation';
 import { RootState } from '@/redux/configureStore';
 import { useDispatch, useSelector } from 'react-redux';
-import { getUserBotProfileAction, removeAdvanceFeature, removeFromReduxbot } from '@/redux/actions/BotProfileActions';
+import {
+  getUserBotProfileAction,
+  removeAdvanceFeature,
+  removeFromReduxbot,
+} from '@/redux/actions/BotProfileActions';
 import { logoutUser } from '@/redux/actions/authActions';
+import { botSessionId } from '@/redux/actions/userChatAction';
 
 interface SidebarItemProps {
   path?: string;
@@ -19,7 +24,12 @@ interface SidebarItemProps {
   onClick?: () => void;
   isActive?: boolean;
   hasDropdown?: boolean;
-  subMenuItems?: { path?: string; title: string }[];
+  subMenuItems?: {
+    path?: string;
+    title: string;
+    hasDropdown?: boolean | any;
+    subChildItems?: any[] | any;
+  }[];
 }
 
 const DashboardItem: SidebarItemProps = {
@@ -29,12 +39,19 @@ const DashboardItem: SidebarItemProps = {
   hasDropdown: false,
 };
 
-const SIDENAV_ITEMS: SidebarItemProps[] = [
+const initialSIDENAV_ITEMS: SidebarItemProps[] = [
   {
     icon: 'fa-comment',
     text: 'Chat',
     hasDropdown: true,
-    subMenuItems: [{ title: 'All Chats', path:"/botSession" }, { title: 'Customs' }],
+    subMenuItems: [
+      {
+        title: 'All Chats',
+        hasDropdown: true,
+        subChildItems: [{ title: 'hey', path: '/MyChatBots' }],
+      },
+      { title: 'Customs' },
+    ],
   },
   {
     icon: 'fa-robot',
@@ -55,30 +72,37 @@ const SIDENAV_ITEMS2: SidebarItemProps[] = [
   { icon: 'fa-sign-out-alt', text: 'Log Out', path: '/' },
 ];
 
-
 const SideBar: React.FC = () => {
   const dispatch = useDispatch();
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [SIDENAV_ITEMS, setSIDENAV_ITEMS] =
+    useState<SidebarItemProps[]>(initialSIDENAV_ITEMS);
   const userData = useSelector((state: RootState) => state?.root.userData);
+  const botProfiles = useSelector((state: RootState) => state.botProfile);
 
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
 
   const LogoutButton = () => {
-    console.log("app logout ... ")
+    console.log('app logout ... ');
     localStorage.removeItem('user_id');
     localStorage.removeItem('token');
     dispatch(logoutUser());
-    dispatch(removeFromReduxbot())
-    dispatch(removeAdvanceFeature())
+    dispatch(removeFromReduxbot());
+    dispatch(removeAdvanceFeature());
   };
 
   const getUserBotProfiles = () => {
-    // console.log('user_id', userData);
-    // console.log('userData.user_id', userData?.user_id);
     dispatch(getUserBotProfileAction(userData?.user_id));
   };
 
+  useEffect(() => {
+    getUserBotProfiles();
+  }, [userData?.user_id]);
+
+  useEffect(() => {
+    console.log('botProfile', botProfiles);
+  }, [botProfiles]);
   return (
     <div className="w-64 p-4 flex flex-col h-screen relative">
       <Link
@@ -110,7 +134,11 @@ const SideBar: React.FC = () => {
             key={idx}
             item={item}
             onClick={
-              item.text === 'Clear Conversations' ? openModal : item.text === 'Log Out' ? LogoutButton : undefined
+              item.text === 'Clear Conversations'
+                ? openModal
+                : item.text === 'Log Out'
+                ? LogoutButton
+                : undefined
             }
           />
         ))}
@@ -125,11 +153,36 @@ interface MenuItemProps {
   item: SidebarItemProps;
   onClick?: () => void;
 }
-
 const MenuItem: React.FC<MenuItemProps> = ({ item, onClick }) => {
+  const router = useRouter();
   const pathname = usePathname();
   const [subMenuOpen, setSubMenuOpen] = useState(false);
+  const [subMenuChildOpen, setSubMenuChildOpen] = useState<{
+    [key: number]: boolean;
+  }>({});
+  const botProfiles = useSelector((state: RootState) => state.botProfile);
+  const botSessionaa = useSelector((state: RootState) => state.userChat);
+  const dispatch = useDispatch();
   const toggleSubMenu = () => setSubMenuOpen(!subMenuOpen);
+  const toggleSubMenuChild = (idx: number) => {
+    setSubMenuChildOpen((prevState) => ({
+      ...prevState,
+      [idx]: !prevState[idx],
+    }));
+  };
+
+  const botSession = (botId: any, userId: any) => {
+    const data = {
+      botId,
+      userId,
+    };
+    dispatch(botSessionId(data));
+    router.push('/botSession');
+  };
+
+  useEffect(() => {
+    console.log('userChat', botSessionaa);
+  }, [botSessionaa]);
 
   return (
     <div>
@@ -152,19 +205,82 @@ const MenuItem: React.FC<MenuItemProps> = ({ item, onClick }) => {
           {subMenuOpen && (
             <div className="ml-4">
               {item.subMenuItems?.map((subItem, idx) => (
-                <Link
-                  key={idx}
-                  href={subItem.path ?? ''}
-                  className="text-gray-300 hover:bg-white hover:bg-opacity-10 rounded-full cursor-pointer"
-                >
-                  <div
-                    className={`flex items-center space-x-3 py-2 px-3 ${
-                      subItem.path === pathname ? 'font-bold' : ''
-                    }`}
-                  >
-                    <span>{subItem.title}</span>
-                  </div>
-                </Link>
+                <div key={idx}>
+                  {subItem.path ? (
+                    <Link
+                      href={subItem.path}
+                      className="text-gray-300 hover:bg-white hover:bg-opacity-10 rounded-full cursor-pointer"
+                      onClick={onClick}
+                    >
+                      <div
+                        className={`flex items-center space-x-3 py-2 px-3 ${
+                          subItem.path === pathname ? 'font-bold' : ''
+                        }`}
+                      >
+                        <div>{subItem.title}</div>
+                        {subItem.hasDropdown && (
+                          <div
+                            className={`${
+                              subMenuChildOpen[idx] ? 'rotate-180' : ''
+                            } ml-auto`}
+                          >
+                            <Icon
+                              icon="lucide:chevron-down"
+                              width="24"
+                              height="24"
+                            />
+                          </div>
+                        )}
+                      </div>
+                    </Link>
+                  ) : (
+                    <button
+                      onClick={() => toggleSubMenuChild(idx)}
+                      className="text-gray-300 hover:bg-white hover:bg-opacity-10 rounded-full cursor-pointer"
+                    >
+                      <div
+                        className={`flex items-center space-x-3 py-2 px-3 ${
+                          subItem.path === pathname ? 'font-bold' : ''
+                        }`}
+                      >
+                        <div>{subItem.title}</div>
+                        {subItem.hasDropdown && (
+                          <div
+                            className={`${
+                              subMenuChildOpen[idx] ? 'rotate-180' : ''
+                            } ml-auto`}
+                          >
+                            <Icon
+                              icon="lucide:chevron-down"
+                              width="24"
+                              height="24"
+                            />
+                          </div>
+                        )}
+                      </div>
+                    </button>
+                  )}
+                  {subItem.hasDropdown && subMenuChildOpen[idx] && (
+                    <div className="ml-4">
+                      {botProfiles?.botProfiles?.data?.map(
+                        (bot: any, childIdx: any) => (
+                          <div key={childIdx}>
+                            <div
+                              className={`text-gray-300 hover:bg-white hover:bg-opacity-10 rounded-full cursor-pointer`}
+                            >
+                              <button
+                                onClick={() => botSession(bot._id, bot.userId)}
+                                className="flex items-center space-x-3 py-2 px-3"
+                              >
+                                <span>{bot.botName}</span>
+                              </button>
+                            </div>
+                          </div>
+                        )
+                      )}
+                    </div>
+                  )}
+                </div>
               ))}
             </div>
           )}
@@ -184,5 +300,4 @@ const MenuItem: React.FC<MenuItemProps> = ({ item, onClick }) => {
     </div>
   );
 };
-
 export default SideBar;

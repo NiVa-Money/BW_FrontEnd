@@ -294,7 +294,11 @@ const NewChatComponent: React.FC = () => {
           ref={chatContainerRef}
           className="flex flex-col gap-5 max-md:gap-0 h-full overflow-y-auto pr-2 scrollbar-thin scrollbar-thumb-white scrollbar-track-transparent"
         >
-          {userChatMessagesRes?.data?.map((message: any, index: any) => (
+          {userChatMessagesRes?.data?.map((message: any, index: any) =>
+          
+          {
+            const formattedText = message?.text?.replace(/\n/g, '<br />');
+            return (
             <div className="flex w-full" key={index}>
               <div
                 className={`flex ${
@@ -321,14 +325,16 @@ const NewChatComponent: React.FC = () => {
                           ? 'p-2.5 bg-[#5D39AD] rounded-xl'
                           : 'p-2.5 bg-[#2D2640] rounded-xl chat-box-size'
                       }`}
+                      dangerouslySetInnerHTML={{ __html: formattedText }}
                     >
-                      {message?.text}
+                      {/* {message?.text}
+                      dangerouslySetInnerHTML={{ __html: formattedText }} */}
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-          ))}
+          )})}
         </div>
       </div>
 

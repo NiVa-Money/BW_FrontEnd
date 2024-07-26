@@ -3,7 +3,8 @@ import {
   USER_ALL_SESSION,
   USER_OUESTION_SESSION,
   USER_SESSION_HISTORY,
-  ADVANCE_FEATURE
+  ADVANCE_FEATURE,
+  BOTSESSION_ID
 } from '../actionTypes';
 
 export const sendUserQuestion = (userChatData: any) => ({
@@ -55,5 +56,11 @@ export const filteredSession = (payload: any) => {
 
 export const getAdvanceFeature = (payload :any) =>({
   type: ADVANCE_FEATURE,
+  payload
+})
+
+
+export const botSessionId = (payload :any) => ({
+  type: BOTSESSION_ID,
   payload
 })

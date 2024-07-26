@@ -338,15 +338,13 @@ export function* deleteUserKnowledgeBaseSaga({
 export function* getUserChatSaga({
   payload,
   type,
-  
 }: {
   type: string;
   payload: any;
-  
 }): Generator<any> {
   try {
     console.log('api userChat with bot payload  --->', payload);
-    const userChat:any = yield call(getUserChatService, payload);
+    const userChat: any = yield call(getUserChatService, payload);
     const answerOfQuestion = userChat.chats[userChat.chats.length - 1].answer;
     yield put({
       type: GET_USER_CHAT_SUCCESS,
@@ -372,11 +370,10 @@ export function* getUserAllSessionSaga({
 }): Generator<any> {
   try {
     // console.log("payload",payload)
-    const data = {
-      userId: payload,
-    };
+
     // console.log("getSession ",data)
-    const userChat = yield call(getUserAllSessionService, data);
+    console.log('p', payload);
+    const userChat = yield call(getUserAllSessionService, payload);
     // console.log("api userChat with bot res All session",userChat)
     yield put({
       type: GET_USER_All_SESSION_SUCCESS,
@@ -414,8 +411,6 @@ export function* getAdvanceFeatureSaga({
     });
   }
 }
-
-
 
 export default function* rootSaga() {
   yield takeLatest(VERIFY_USER_DATA, verifyUserSaga);
