@@ -61,7 +61,7 @@ const BotSessionComponent: React.FC = () => {
     (state: RootState) => state?.root?.userData?.user_id
   );
   const userChatMessagesRes = useSelector(
-    (state: RootState) => state?.userChat?.sessionChat
+    (state: RootState) => state?.userChat?.allSession
   );
   const allSession = useSelector(
     (state: RootState) => state?.userChat?.allSession
@@ -73,6 +73,7 @@ const BotSessionComponent: React.FC = () => {
   const advanceFeature = useSelector(
     (state: RootState) => state?.userChat?.advanceFeature
   );
+  const [chatsData, setchatsData] = React.useState<any>([]);
 
   React.useEffect(() => {
     if (chatContainerRef.current) {
@@ -194,7 +195,16 @@ const BotSessionComponent: React.FC = () => {
       getChatHistory();
     }
   }, []);
-
+  React.useEffect(() => {
+    if (sessionId !== undefined) {
+      const filteredList = userChatMessagesRes?.data?.sessions?.filter(
+        (session: any) => session._id === sessionId
+      );
+      console.log('filter', filteredList);
+      setchatsData(filteredList);
+    }
+  }, [userChatMessagesRes, sessionId]);
+  console.log('chat', chatsData, userChatMessagesRes);
   React.useEffect(() => {
     console.log('advanceFeature', advanceFeature?.data);
     setReasonDetails(advanceFeature?.data?.data?.cause);
@@ -203,32 +213,24 @@ const BotSessionComponent: React.FC = () => {
     setNextSteps(advanceFeature?.data?.data?.nextStep);
   }, [advanceFeature]);
 
-  React.useEffect(() => {
-    // console.log('userChatMessagesRes', userChatMessagesRes);
-    setSessionId(userChatMessagesRes?.sessionId);
-    // console.log('newMessage', newMessage);
-    // console.log('botProfiles', botProfiles);
-  }, [userChatMessagesRes]);
+  // React.useEffect(() => {
+  //   // console.log('userChatMessagesRes', userChatMessagesRes);
+  //   setSessionId(userChatMessagesRes?.sessionId);
+  //   // console.log('newMessage', newMessage);
+  //   // console.log('botProfiles', botProfiles);
+  // }, [userChatMessagesRes]);
   React.useEffect(() => {
     if (botIdLocal?.length || pathName === '/botSession') {
       getChatHistory();
     }
   }, [botIdLocal, pathName, dispatch]);
   React.useEffect(() => {
-    console.log('tempArray before if');
     if (userChatSessionsRedux?.length) {
-      console.log('tempArray after if');
-
       const tempArray = userChatSessionsRedux;
       setBotSessionsList(tempArray);
     }
   }, [userChatSessionsRedux]);
-  console.log(
-    'botSessionsList',
-    botSessionsList?.map((item: any) => {
-      return item;
-    })
-  );
+  console.log('botSessionsList', sessionId);
   return (
     <div className="flex">
       <div className="w-64 flex flex-col">
@@ -260,11 +262,19 @@ const BotSessionComponent: React.FC = () => {
         </div>
         <div className="text-white mt-[8px] px-3">
           {botSessionsList?.map((item: any, id: any) => (
-            <div key={id} className="flex flex-col mt-[22px]">
+            <div
+              key={id}
+              className="flex flex-col mt-[22px]"
+              onClick={() => {
+                setSessionId(item._id);
+              }}
+            >
               <span className="w-[Hug (307px)px] h-[Hug (34px)px] top-[268px]">
                 Session {id + 1}
               </span>
-              <span className="w-[247px] h-[25px] top-[302px] left-[43px] ">{item.sessions[item.sessions.length - 1]?.question}</span>
+              <span className="w-[247px] h-[25px] top-[302px] left-[43px] ">
+                {item.sessions[item.sessions.length - 1]?.question}
+              </span>
             </div>
           ))}
         </div>
@@ -470,43 +480,19 @@ const BotSessionComponent: React.FC = () => {
               ref={chatContainerRef}
               className="flex flex-col gap-5 max-md:gap-0 h-full overflow-y-auto pr-2 scrollbar-thin scrollbar-thumb-white scrollbar-track-transparent"
             >
-              {userChatMessagesRes?.data?.map((message: any, index: any) => (
-                <div className="flex w-full" key={index}>
-                  <div
-                    className={`flex ${
-                      message?.sender === 'user'
-                        ? 'justify-end'
-                        : 'justify-start'
-                    } w-full`}
-                  >
-                    <div
-                      className={`${
-                        message?.sender === 'user'
-                          ? 'text-right ml-auto'
-                          : 'text-left mr-auto'
-                      } max-md:w-full`}
-                    >
-                      <div
-                        className={`${
-                          message?.sender === 'user'
-                            ? 'text-xl font-medium text-white'
-                            : 'grow text-xl font-medium text-white max-md:mt-10'
-                        }`}
-                      >
-                        <div
-                          className={`${
-                            message?.sender === 'user'
-                              ? 'p-2.5 bg-[#5D39AD] rounded-xl'
-                              : 'p-2.5 bg-[#2D2640] rounded-xl chat-box-size'
-                          }`}
-                        >
-                          {message?.text}
-                        </div>
+              {chatsData &&
+                chatsData[0]?.sessions?.map((message: any, index: any) => (
+                  <div className="flex w-full mb-4" key={index}>
+                    <div className="w-full max-md:w-full flex flex-col">
+                      <div className=" max-w-[fit-content] w-[530px] py-[10px] gap-[10px] rounded-[12px] bg-[#3F2181] text-white text-left mb-2">
+                        <span className='p-[10px]'>{message?.question}</span>
+                      </div>
+                      <div className="max-w-[fit-content] w-[530px] py-[10px] gap-[10px] rounded-[12px] bg-[#2B243C] text-white text-right">
+                        <span className='p-[10px]'>{message?.answer}</span>
                       </div>
                     </div>
                   </div>
-                </div>
-              ))}
+                ))}
             </div>
           </div>
 
