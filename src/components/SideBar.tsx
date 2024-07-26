@@ -16,7 +16,6 @@ import {
 } from '@/redux/actions/BotProfileActions';
 import { logoutUser } from '@/redux/actions/authActions';
 import { botSessionId } from '@/redux/actions/userChatAction';
-import { useRouter } from 'next/router';
 
 interface SidebarItemProps {
   path?: string;
@@ -156,7 +155,6 @@ interface MenuItemProps {
 }
 const MenuItem: React.FC<MenuItemProps> = ({ item, onClick }) => {
   const pathname = usePathname();
-  const router = useRouter()
   const [subMenuOpen, setSubMenuOpen] = useState(false);
   const [subMenuChildOpen, setSubMenuChildOpen] = useState<{
     [key: number]: boolean;
@@ -178,7 +176,6 @@ const MenuItem: React.FC<MenuItemProps> = ({ item, onClick }) => {
       userId
     }
     dispatch(botSessionId(data))
-    router.push('/botSession')
   }
 
   useEffect(()=>{
@@ -267,11 +264,11 @@ const MenuItem: React.FC<MenuItemProps> = ({ item, onClick }) => {
                         (bot: any, childIdx: any) => (
                           <div key={childIdx}>
                             <div
-                              className={`flex items-center space-x-3 py-2 px-3 ${'font-bold'}`}
+                              className={`text-gray-300 hover:bg-white hover:bg-opacity-10 rounded-full cursor-pointer`}
                             >
                               <button
                                 onClick={() => botSession(bot._id,bot.userId)}
-                                className="text-gray-300 hover:bg-white hover:bg-opacity-10 rounded-full cursor-pointer"
+                                className="flex items-center space-x-3 py-2 px-3"
                               >
                                 <span>{bot.botName}</span>
                               </button>
