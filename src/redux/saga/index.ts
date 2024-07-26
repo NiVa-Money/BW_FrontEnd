@@ -372,6 +372,7 @@ export function* getUserAllSessionSaga({
     // console.log("payload",payload)
 
     // console.log("getSession ",data)
+    console.log('p', payload);
     const userChat = yield call(getUserAllSessionService, payload);
     // console.log("api userChat with bot res All session",userChat)
     yield put({

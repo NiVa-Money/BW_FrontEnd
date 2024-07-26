@@ -101,7 +101,7 @@ const SideBar: React.FC = () => {
   }, [userData?.user_id]);
 
   useEffect(() => {
-    console.log("botProfile",botProfiles)
+    console.log('botProfile', botProfiles);
   }, [botProfiles]);
   return (
     <div className="w-64 p-4 flex flex-col h-screen relative">
@@ -154,7 +154,7 @@ interface MenuItemProps {
   onClick?: () => void;
 }
 const MenuItem: React.FC<MenuItemProps> = ({ item, onClick }) => {
-  const router = useRouter()
+  const router = useRouter();
   const pathname = usePathname();
   const [subMenuOpen, setSubMenuOpen] = useState(false);
   const [subMenuChildOpen, setSubMenuChildOpen] = useState<{
@@ -162,7 +162,7 @@ const MenuItem: React.FC<MenuItemProps> = ({ item, onClick }) => {
   }>({});
   const botProfiles = useSelector((state: RootState) => state.botProfile);
   const botSessionaa = useSelector((state: RootState) => state.userChat);
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const toggleSubMenu = () => setSubMenuOpen(!subMenuOpen);
   const toggleSubMenuChild = (idx: number) => {
     setSubMenuChildOpen((prevState) => ({
@@ -171,18 +171,18 @@ const MenuItem: React.FC<MenuItemProps> = ({ item, onClick }) => {
     }));
   };
 
-  const botSession = (botId:any,userId:any) => {
+  const botSession = (botId: any, userId: any) => {
     const data = {
       botId,
-      userId
-    }
-    dispatch(botSessionId(data))
-    router.push("/botSession")
-  }
+      userId,
+    };
+    dispatch(botSessionId(data));
+    router.push('/botSession');
+  };
 
-  useEffect(()=>{
-    console.log("userChat",botSessionaa)
-  },[botSessionaa])
+  useEffect(() => {
+    console.log('userChat', botSessionaa);
+  }, [botSessionaa]);
 
   return (
     <div>
@@ -269,7 +269,7 @@ const MenuItem: React.FC<MenuItemProps> = ({ item, onClick }) => {
                               className={`text-gray-300 hover:bg-white hover:bg-opacity-10 rounded-full cursor-pointer`}
                             >
                               <button
-                                onClick={() => botSession(bot._id,bot.userId)}
+                                onClick={() => botSession(bot._id, bot.userId)}
                                 className="flex items-center space-x-3 py-2 px-3"
                               >
                                 <span>{bot.botName}</span>

@@ -8,6 +8,7 @@ import * as React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import icon from '../../public/assets/chatBotSymbol.svg';
 import mainLogo from '@/public/assets/mainLogo.svg';
+import { useRouter } from 'next/router';
 
 import '../NewChat/newchat.css';
 import {
@@ -28,6 +29,8 @@ const BotSessionComponent: React.FC = () => {
   const [showPopup, setShowPopup] = React.useState<any>(false);
   const [isPopupOpen, setIsPopupOpen] = React.useState<any>(false);
   const [activeBotIndex, setActiveBotIndex] = React.useState(null);
+  const [botSessionsList, setBotSessionsList] = React.useState<any>([]);
+
   // const [sessionId, setSessionId] = React.useState<any>('');
   const [botId, setBotId] = React.useState<any>(null);
   const chatContainerRef = React.useRef<any>(null);
@@ -42,8 +45,18 @@ const BotSessionComponent: React.FC = () => {
   });
   const [newMessage, setNewMessage] = React.useState<any>('');
   const [messages, setMessages] = React.useState<any>([]);
+  const pathName = useSelector((state: RootState) => state.root?.pathName);
 
   const botProfiles = useSelector((state: RootState) => state.botProfile);
+  const botIdRedux = useSelector(
+    (state: RootState) => state.userChat?.botProfileSelect?.data
+  );
+  const userChatSessionsRedux = useSelector(
+    (state: RootState) => state.userChat?.allSession?.data?.sessions
+  );
+
+  console.log('botIdRedux', botIdRedux);
+  const [botIdLocal, setBotIdLocal] = React.useState<any>('');
   const userId: any = useSelector(
     (state: RootState) => state?.root?.userData?.user_id
   );
@@ -82,12 +95,11 @@ const BotSessionComponent: React.FC = () => {
   };
 
   const getChatHistory = () => {
+    console.log('fun');
     const data = {
       userId: userId,
-      botId: '669ab96f83f712df352b0c42',
-      sessionId: '669ab96f83f712df352b0c42',
+      botId: botIdLocal,
     };
-    // console.log('userId', userId);
     dispatch(getAllSession(data));
   };
 
@@ -159,7 +171,12 @@ const BotSessionComponent: React.FC = () => {
       sendMessage(e);
     }
   };
-
+  React.useEffect(() => {
+    if (botIdRedux.botId?.length) {
+      setBotIdLocal(botIdRedux?.botId);
+    }
+    // console.log('allSession', allSession.data.sessions);
+  }, [botIdRedux?.botId]);
   React.useEffect(() => {
     // console.log('allSession', allSession.data.sessions);
   }, [allSession]);
@@ -173,6 +190,9 @@ const BotSessionComponent: React.FC = () => {
     };
     dispatch(removeAdvanceFeature());
     dispatch(filteredSession(data));
+    if (botIdLocal?.length) {
+      getChatHistory();
+    }
   }, []);
 
   React.useEffect(() => {
@@ -190,9 +210,16 @@ const BotSessionComponent: React.FC = () => {
     // console.log('botProfiles', botProfiles);
   }, [userChatMessagesRes]);
   React.useEffect(() => {
-    getChatHistory();
-  }, []);
-
+    if (botIdLocal?.length || pathName === '/botSession') {
+      getChatHistory();
+    }
+  }, [botIdLocal, pathName, dispatch]);
+  React.useEffect(() => {
+    if (userChatSessionsRedux?.length) {
+      setBotSessionsList(userChatSessionsRedux);
+    }
+  }, [userChatSessionsRedux]);
+  console.log('botSessionsList', botSessionsList);
   return (
     <div className="flex">
       <div className="w-64 flex flex-col">
@@ -222,6 +249,16 @@ const BotSessionComponent: React.FC = () => {
             Sessions
           </span>
         </div>
+        {botSessionsList &&
+          botSessionsList?.map((item: any, id: any) => {
+            <div className="text-white mt-[8px] px-3">
+              <div className="flex flex-col">
+                <span>Session{id + 1}</span>
+
+                <span>{item?.sessions[0]?.question}</span>
+              </div>
+            </div>;
+          })}
       </div>
       <div className="relative w-[100%] h-[100vh] flex justify-end items-center pl-10 py-10 bg-[#0B031E] min-h-screen max-md:px-5 overflow-hidden">
         <div className="absolute inset-0">
