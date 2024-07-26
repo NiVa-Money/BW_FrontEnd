@@ -1,5 +1,5 @@
 'use client';
-import { getUserBotProfileAction } from '@/redux/actions/BotProfileActions';
+import { getUserBotProfileAction, removeAdvanceFeature } from '@/redux/actions/BotProfileActions';
 import { RootState } from '@/redux/configureStore';
 import * as React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -160,6 +160,7 @@ const NewChatComponent: React.FC = () => {
       filteredSessions: [],
       sessionId: null,
     };
+    dispatch(removeAdvanceFeature())
     dispatch(filteredSession(data));
   }, []);
 
@@ -177,6 +178,8 @@ const NewChatComponent: React.FC = () => {
     // console.log('newMessage', newMessage);
     // console.log('botProfiles', botProfiles);
   }, [userChatMessagesRes]);
+
+  
 
   return (
     <div className="relative w-[100%] h-[100vh] flex justify-end items-center pl-10 py-10 bg-[#0B031E] min-h-screen max-md:px-5 overflow-hidden">
@@ -482,27 +485,25 @@ const NewChatComponent: React.FC = () => {
             >
               Reason & Details
             </button>
-            <div className="w-[80%] flex justify-center items-center">
-              {reasonDetails}
-            </div>
+            {reasonDetails ? <div className="w-[80%] flex justify-center items-center mt-2 border-4 border-[#DB88DB] py-4 px-10 text-base">{reasonDetails}</div>:''}
             <button className="custom-button bg-[#FFFFFF] bg-opacity-10">
               Summary
             </button>
-            <div className="w-[80%]">{summary}</div>
+            {summary ?<div className="w-[80%] flex justify-center items-center mt-2 border-4 border-[#DB88DB] py-4 px-10 text-base">{summary}</div> : ''}
             <button className="custom-button bg-[#FFFFFF] bg-opacity-10">
               Sentiment Analysis
             </button>
-            {sentimentAnalysis && (
-              <div className="w-[80%] flex flex-col justify-center items-center">
+            {sentimentAnalysis ? (
+              <div className="w-[80%] flex justify-center items-center mt-2 border-4 border-[#DB88DB] py-4 px-10 text-base">
                 <div>negative: {sentimentAnalysis?.negative} </div>
                 <div>neutral: {sentimentAnalysis?.neutral} </div>
                 <div>positive: {sentimentAnalysis?.positive} </div>
               </div>
-            )}
+            ) : ''}
             <button className="custom-button bg-[#FFFFFF] bg-opacity-10">
               Next Steps
             </button>
-            <div className="w-[80%]">{nextSteps}</div>
+            {nextSteps ? <div className="w-[80%] flex justify-center items-center mt-2 border-4 border-[#DB88DB] py-4 px-10 text-base">{nextSteps}</div>:''}
           </div>
           {/* image */}
           <div className="flex justify-center items-center mt-6 mb-3">

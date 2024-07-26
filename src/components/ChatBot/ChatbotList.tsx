@@ -31,6 +31,9 @@ const ChatBotList: React.FC = () => {
   const botDataRedux = useSelector(
     (state: RootState) => state.botProfile?.botProfiles?.data
   );
+  const botloader = useSelector(
+    (state: RootState) => state.botProfile?.botProfiles?.loader
+  );
   const [chatBotList, setChatBotList] = useState<ChatBot[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [botIdToDelete, setBotIdToDelete] = useState<string | null>(null);
@@ -45,7 +48,7 @@ const ChatBotList: React.FC = () => {
   // Function to handle edit action
   const handleEdit = (index: number) => {
     // Navigate to the edit page with the botId as a query parameter
-    router.push(`/editBot?botId=${chatBotList[index].botId}`);
+    router.push(`/editBot`);
   };
 
   // Function to handle delete action
@@ -85,10 +88,11 @@ const ChatBotList: React.FC = () => {
   }, [userId]);
 
   useEffect(() => {
+    console.log('botDataRedux:', botloader);
     if (botDataRedux && botDataRedux.length) {
       setChatBotList(botDataRedux);
     }
-  }, [botDataRedux]);
+  }, [botDataRedux,botloader]);
 
   useEffect(() => {
     if (userIdLocal || pathName === '/MyChatBots') {
