@@ -485,10 +485,10 @@ const BotSessionComponent: React.FC = () => {
                   <div className="flex w-full mb-4" key={index}>
                     <div className="w-full max-md:w-full flex flex-col">
                       <div className=" max-w-[fit-content] w-[530px] py-[10px] gap-[10px] rounded-[12px] bg-[#3F2181] text-white text-left mb-2">
-                        <span className='p-[10px]'>{message?.question}</span>
+                        <span className="p-[10px]">{message?.question}</span>
                       </div>
                       <div className="max-w-[fit-content] w-[530px] py-[10px] gap-[10px] rounded-[12px] bg-[#2B243C] text-white text-right">
-                        <span className='p-[10px]'>{message?.answer}</span>
+                        <span className="p-[10px]">{message?.answer}</span>
                       </div>
                     </div>
                   </div>
@@ -581,7 +581,7 @@ const BotSessionComponent: React.FC = () => {
                 <div className="w-[80%] flex justify-center items-center mt-2 border-4 border-[#DB88DB] py-4 px-10 text-base">
                   <div>negative: {sentimentAnalysis?.negative} </div>
                   <div>neutral: {sentimentAnalysis?.neutral} </div>
-                  <div>positive: {sentimentAnalysis?.negative} </div>
+                  <div>positive: {sentimentAnalysis?.positive} </div>
                 </div>
               ) : (
                 ''
