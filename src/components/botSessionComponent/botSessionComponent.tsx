@@ -500,7 +500,14 @@ const BotSessionComponent: React.FC = () => {
                               : 'p-2.5 bg-[#2D2640] rounded-xl chat-box-size'
                           }`}
                         >
-                          {message?.text}
+                         {message?.text
+                          .split('\n')
+                          .map((line: any, index: any) => (
+                            <React.Fragment key={index}>
+                              {line}
+                              <br />
+                            </React.Fragment>
+                          ))}
                         </div>
                       </div>
                     </div>
@@ -595,7 +602,7 @@ const BotSessionComponent: React.FC = () => {
                 <div className="w-[80%] flex justify-center items-center mt-2 border-4 border-[#DB88DB] py-4 px-10 text-base">
                   <div>negative: {sentimentAnalysis?.negative} </div>
                   <div>neutral: {sentimentAnalysis?.neutral} </div>
-                  <div>positive: {sentimentAnalysis?.negative} </div>
+                 <div>positive: {sentimentAnalysis?.positive} </div>
                 </div>
               ) : (
                 ''
