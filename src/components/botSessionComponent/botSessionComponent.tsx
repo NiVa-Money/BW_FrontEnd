@@ -478,10 +478,12 @@ const BotSessionComponent: React.FC = () => {
                 className="flex-1 bg-transparent outline-none"
                 onChange={(e) => setNewMessage(e.target.value)}
                 value={newMessage}
+                disabled
               />
               <button
                 className="shrink-0 w-8 h-8 flex items-center justify-center rounded-full hover:bg-[#4A2E8B] transition-colors duration-300"
                 aria-label="Send message"
+                disabled
               >
                 <svg
                   width="22"

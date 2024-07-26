@@ -1,7 +1,7 @@
 'use client';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useReducer, useState } from 'react';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import { Icon } from '@iconify/react';
 import Image from 'next/image';
@@ -154,6 +154,7 @@ interface MenuItemProps {
   onClick?: () => void;
 }
 const MenuItem: React.FC<MenuItemProps> = ({ item, onClick }) => {
+  const router = useRouter()
   const pathname = usePathname();
   const [subMenuOpen, setSubMenuOpen] = useState(false);
   const [subMenuChildOpen, setSubMenuChildOpen] = useState<{
@@ -176,6 +177,7 @@ const MenuItem: React.FC<MenuItemProps> = ({ item, onClick }) => {
       userId
     }
     dispatch(botSessionId(data))
+    router.push("/botSession")
   }
 
   useEffect(()=>{
