@@ -11,8 +11,8 @@ const inter = Inter({ subsets: ['latin'] });
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
-    <Provider store={store}>
-      <PersistGate loading={<div>Loading...</div>} persistor={persistor}>
+    // <Provider store={store}>
+    //   <PersistGate loading={<div>Loading...</div>} persistor={persistor}>
         <div className={`${inter.className} flex flex-col min-h-screen`}>
           <Header />
           <main className="flex-grow">
@@ -20,8 +20,8 @@ function MyApp({ Component, pageProps }: AppProps) {
           </main>
           <Footer />
         </div>
-      </PersistGate>
-    </Provider>
+    //   </PersistGate>
+    // </Provider>
   );
 }
 

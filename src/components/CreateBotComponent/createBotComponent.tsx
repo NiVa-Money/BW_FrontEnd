@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import Image from 'next/image';
 
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
@@ -18,6 +18,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { createBotProfileAction, getUserBotProfileAction } from '@/redux/actions/BotProfileActions';
 import Switch from '@mui/material/Switch';
 import { botImageBaseUrl } from '@/utils/constant';
+import { HexColorPicker } from 'react-colorful';
 const CreateBotComponent: React.FC = () => {
   const [step, setStep] = useState(1);
   const [botName, setBotName] = useState('BotWot Assistant');
@@ -35,6 +36,7 @@ const CreateBotComponent: React.FC = () => {
   const [botLimit, setBotLimit] = useState<any>(50);
   // const [botIdentity, setBotIdentity] = useState('sales');
   const [botSmartnessVal, setbotSmartnessVal] = useState<any>(false);
+  const [showColorPicker, setShowColorPicker] = useState<any>(false);
   const [supportEmail, setSupportEmail] = useState('');
   const [supportPhone, setSupportPhone] = useState('');
   const [greetingMessage, setGreetingMessage] = useState(
@@ -56,7 +58,6 @@ const CreateBotComponent: React.FC = () => {
 
   const [botIconType, setBotIconType] = useState('second');
   const router = useRouter();
-
   // Function to handle file upload
 
   const handleFileChange = async (
@@ -227,8 +228,23 @@ const CreateBotComponent: React.FC = () => {
     setBotIconType(item?.iconType);
   };
 
+  // const handleColorClick = (color:any) => {
+  //   console.log("color",color)
+  //   setChatColor(color);
+  //   console.log("chatcolor",chatColor)
+  // };
+
+  const handleColorClick = (color:any) => {
+    if (color === 'rainbow') {
+      setShowColorPicker(true);
+    } else {
+      setChatColor(color);
+      setShowColorPicker(false);
+    }
+  };
+
   const renderStep1 = () => (
-    <>
+    <div onClick={()=> showColorPicker ? setShowColorPicker(false) : ''}>
       <div className="mb-4">
         <label className="block text-gray-200 mb-2">Bot Name</label>
         {/* need to give name */}
@@ -243,27 +259,32 @@ const CreateBotComponent: React.FC = () => {
       <div className="mb-4">
         <label className="block text-gray-200 mb-2">Chat Color</label>
         <div className="flex space-x-2">
-          {[
-            '#3B82F6',
-            '#EC4899',
-            '#EAB308',
-            '#4B5563',
-            '#22C55E',
-            'rainbow',
-          ].map((color) => (
-            <button
-              key={color}
-              onClick={() => setChatColor(color)}
-              className={`w-8 h-8 rounded-full ${
-                color === 'rainbow'
-                  ? 'bg-gradient-to-r from-red-500 via-green-500 to-blue-500'
-                  : ''
-              }`}
-              style={{
-                backgroundColor: color !== 'rainbow' ? color : undefined,
-              }}
-            />
-          ))}
+        {[
+        '#3B82F6',
+        '#EC4899',
+        '#EAB308',
+        '#4B5563',
+        '#22C55E',
+        'rainbow',
+      ].map((color) => (
+        <button
+          key={color}
+          onClick={() => handleColorClick(color)}
+          className={`w-8 h-8 rounded-full ${
+            color === 'rainbow'
+              ? 'bg-gradient-to-r from-red-500 via-green-500 to-blue-500'
+              : ''
+          }`}
+          style={{
+            backgroundColor: color !== 'rainbow' ? color : undefined,
+          }}
+        />
+      ))}
+       {showColorPicker && (
+        <div className="absolute z-10 mt-2">
+          <HexColorPicker color={chatColor} onChange={setChatColor} />
+        </div>
+      )}
         </div>
       </div>
       <div className="mb-4">
@@ -305,7 +326,7 @@ const CreateBotComponent: React.FC = () => {
           className="w-full bg-[#171029] text-white p-2 rounded-[12px]"
         />
       </div>
-    </>
+    </div>
   );
 
   const renderStep2 = () => (
@@ -329,7 +350,7 @@ const CreateBotComponent: React.FC = () => {
         </div>
       </div>
       <div className="mb-4">
-        <label className="block text-gray-200 mb-2">Bot Identity</label>
+        <label className="block text-gray-200 mb-2">Bot Instruction</label>
         <textarea
           value={botIdentity}
           onChange={(e) => setBotIdentity(e.target.value)}
@@ -361,7 +382,7 @@ const CreateBotComponent: React.FC = () => {
               ref={viewerRef}
               accept="pdf/*"
               id="file-upload"
-              className="absolute top-[0] opacity-0 -[12px]"
+              className="absolute top-[0] opacity-0 -[12px] cursor-pointer"
             />
           </div>
         </div>
@@ -383,7 +404,13 @@ const CreateBotComponent: React.FC = () => {
         <label className="block text-gray-200 mb-2">
           Bot limit per Message
         </label>
-        <select
+        <input
+          type="number"
+          value={botLimit}
+          onChange={(e) => setBotLimit(Number(e.target.value))}
+          className="w-full bg-[#171029] text-white p-2 rounded-[12px]"
+        />
+        {/* <select
           value={botLimit}
           onChange={(e) => setBotLimit(Number(e.target.value))}
           className="w-full bg-[#171029] text-white p-2 rounded-[12px]"
@@ -391,7 +418,7 @@ const CreateBotComponent: React.FC = () => {
           <option value={50}>50-100</option>
           <option value={100}>100-200</option>
           <option value={200}>200-400</option>
-        </select>
+        </select> */}
       </div>
       {/* <div className="mb-4">
         <label className="block text-gray-200 mb-2">Bot Identity</label>
@@ -463,8 +490,8 @@ const CreateBotComponent: React.FC = () => {
             {step === 1 ? renderStep1() : renderStep2()}
           </div>
           <div className="w-2/5">
-            <aside className="flex w-full flex-col ml-5 max-md:ml-0 max-md:w-full">
-              <div className="flex flex-col grow items-center px-6 pt-3.5 pb-7 mt-4 w-full bg-[#171029] rounded-2xl shadow-sm text-zinc-400 max-md:pl-5 max-md:mt-10 max-md:max-w-full">
+            <aside className={`flex w-full flex-col ml-5 max-md:ml-0 max-md:w-full`}>
+              <div className={`flex flex-col grow items-center px-6 pt-3.5 pb-7 mt-4 w-full rounded-2xl shadow-sm text-zinc-400 max-md:pl-5 max-md:mt-10 max-md:max-w-full`}  style={{ backgroundColor: chatColor !== 'rainbow' ? chatColor : undefined }}>
                 <div className="flex gap-5 justify-between items-center w-full max-w-full text-xl font-bold leading-7 text-black whitespace-nowrap">
                   <h2 className="my-auto p-5 text-white">Preview</h2>
                   <ZoomOutMapIcon style={{ color: 'white' }} />
@@ -486,7 +513,7 @@ const CreateBotComponent: React.FC = () => {
                   alt="BotWot Assistant"
                   className="mt-5 max-w-full aspect-square w-[115px] max-md:mt-10"
                 /> */}
-                <h3 className="mt-4 text-2xl font-bold leading-9 text-center text-white">
+                <h3 className="mt-1 text-2xl font-bold leading-9 text-center text-white">
                   {botName}
                 </h3>
                 <p className="mt-6 text-sm leading-6 text-[#8D8997] mb-6 text-center w-[344px]">
@@ -494,8 +521,8 @@ const CreateBotComponent: React.FC = () => {
                   <br />
                   questions
                 </p>
-                <div className="flex flex-col w-full">
-                  {questionsSamples.map((value, index) => (
+                <div className="flex flex-col w-full h-[17vh]">
+                  {/* {questionsSamples.map((value, index) => (
                     <div
                       key={index}
                       className="clickable-div border-[1px] border-[solid] rounded-[12px] flex mt-2 mb-2 "
@@ -503,7 +530,7 @@ const CreateBotComponent: React.FC = () => {
                     >
                       <span className="p-[10px]"> {value}</span>
                     </div>
-                  ))}
+                  ))} */}
                 </div>
                 <div
                   className="flex items-center justify-start mt-[50px] mb-4 w-full h-[Hug (57px)px] bg-[#2B243C] rounded-[12px] p-[10px]"
@@ -518,7 +545,7 @@ const CreateBotComponent: React.FC = () => {
                 </div>
                 <input
                   type="text"
-                  value={textVal}
+                  value={greetingMessage}
                   onChange={(e) => setTextVal(e.target.value)}
                   className="w-full bg-[#171029] text-white p-2 rounded"
                 />
