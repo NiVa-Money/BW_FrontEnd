@@ -129,7 +129,7 @@ const SideBar: React.FC = () => {
           <MenuItem key={idx} item={item} />
         ))}
       </div>
-      <div className="flex flex-col space-y-2">
+      <div className="flex flex-col space-y-2 mt-2">
         {SIDENAV_ITEMS2.map((item, idx) => (
           <MenuItem
             key={idx}

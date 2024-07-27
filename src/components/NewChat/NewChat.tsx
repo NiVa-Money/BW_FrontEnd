@@ -149,7 +149,7 @@ const NewChatComponent: React.FC = () => {
   }, [userChatMessagesRes]);
 
   return (
-    <div className="relative flex flex-col justify-end items-center px-10 py-10 bg-[#0B031E] min-h-screen max-md:px-5 overflow-hidden">
+    <div className="relative flex flex-col justify-between items-center px-10 py-10 bg-[#0B031E] min-h-screen max-md:px-5 overflow-hidden">
        <div className="absolute inset-0">
         <svg className="moving-svg" viewBox="0 0 1480 1774" fill="none" xmlns="http://www.w3.org/2000/svg">
           <rect width="1440" height="1287" transform="translate(20 20)" fill="#0B031E" />
@@ -289,7 +289,7 @@ const NewChatComponent: React.FC = () => {
           </div>
         </div>
       </div> */}
-      <div className="mt-10 w-full max-w-[930px] max-md:mt-10 max-md:max-w-full h-[350px] rounded-lg relative">
+      <div className="mt-10 w-full max-w-[930px] max-md:mt-10 max-md:max-w-full h-[70vh] rounded-lg relative">
         <div
           ref={chatContainerRef}
           className="flex flex-col gap-5 max-md:gap-0 h-full overflow-y-auto pr-2 scrollbar-thin scrollbar-thumb-white scrollbar-track-transparent"
