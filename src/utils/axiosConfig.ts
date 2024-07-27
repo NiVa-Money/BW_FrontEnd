@@ -1,3 +1,5 @@
+import { logoutUser } from '@/redux/actions/authActions';
+import store from '@/redux/configureStore';
 import axios, { AxiosRequestConfig } from 'axios';
 
 const axiosInstance = axios.create({
@@ -23,6 +25,23 @@ axiosInstance.interceptors.request.use(
   (error) => {
     return Promise.reject(error);
   }
+);
+
+const responseErrorInterceptor = (error:any) => {
+  if (error.response && error.response.status === 401) {
+    store.dispatch(logoutUser());
+    window.location.href = '/home';
+  }
+  return Promise.reject(error);
+};
+
+const responseInterceptor = (response:any) => {
+  return response;
+};
+
+axiosInstance.interceptors.response.use(
+  responseInterceptor,
+  responseErrorInterceptor
 );
 
 export default axiosInstance;
