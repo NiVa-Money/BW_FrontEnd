@@ -42,7 +42,7 @@ export function SqureCardTwo() {
    
      <>
       <BarChart
-      className="h-52"
+      className="h-[90%]"
     data={chartdata}
     index="name"
     categories={['Uses per hours']}

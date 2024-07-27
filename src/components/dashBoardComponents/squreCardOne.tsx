@@ -71,7 +71,7 @@ export function SqureCardOne({ sessionTotal, sessionLeft }: SqureCardOneProps) {
   return (
     <>
       <DonutChart
-        className="h-52"
+        className="h-[82%]"
         data={data}
         category="value"
         index="name"

@@ -72,7 +72,7 @@ export function CardHeader1() {
     <>
     
       <AreaChart
-      className="h-36"
+      className="h-[70%]"
       data={chartdata}
       index="date"
       categories={['Use', 'Avilable']}

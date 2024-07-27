@@ -7,16 +7,20 @@
     display: flex;
     gap: 1rem;
     margin-bottom: 1rem;
-    
 }
+
 .wrapper {
     margin-top: 2rem;
     display: flex;
-    margin-right: 12rem; 
-    margin-left: 15rem;
+    height: 100%;
+    /* margin-right: 12rem; 
+    margin-left: 15rem; */
   }
 .card {
     flex: 1; 
     margin-right: 10px; 
 }
 
+.textSize{
+    font-size: 1vw;
+}

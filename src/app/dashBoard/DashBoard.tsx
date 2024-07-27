@@ -2,9 +2,10 @@ import * as React from 'react';
 import { SqureCardOne } from '@/components/dashBoardComponents/squreCardOne';
 import { SqureCardTwo } from '@/components/dashBoardComponents/squreCardTwo';
 import { CardHeader1 } from '@/components/dashBoardComponents/headerCard';
-import { useSelector,useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '@/redux/configureStore';
-import  { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
+import styles from "./dashboard.module.css";
 import Link from 'next/link';
 import { fetchMetricsAction } from '@/redux/actions/authActions';
 import { getUserProfileAction } from '@/redux/actions/authActions';
@@ -14,7 +15,9 @@ const DashBoard: React.FC = () => {
   const pathName = useSelector((state: RootState) => state.root?.pathName);
   const dispatch = useDispatch();
   const verifyVal = useSelector((state: RootState) => state.root.userVerify);
-  const userId = useSelector((state: RootState) => state.root?.userData?.user_id);
+  const userId = useSelector(
+    (state: RootState) => state.root?.userData?.user_id
+  );
 
   const userMetricData = useSelector(
     (state: RootState) => state?.root?.userMetric?.data
@@ -24,7 +27,6 @@ const DashBoard: React.FC = () => {
     (state: RootState) => state.root?.userProfile?.data
   );
   const [profileData, setProfileData] = React.useState<any>(userDataRedux);
-
 
   React.useEffect(() => {
     setProfileData(userDataRedux);
@@ -41,9 +43,8 @@ const DashBoard: React.FC = () => {
     }
   }, []);
 
-
   const [metricData, setMetricData] = useState(userMetricData);
-  
+
   useEffect(() => {
     const savedMetrics = localStorage.getItem('metricsData');
     if (savedMetrics) {
@@ -54,76 +55,80 @@ const DashBoard: React.FC = () => {
       }
     }
   }, []);
-  
+
   useEffect(() => {
-    if (verifyVal || pathName==="/dashBoard") {
+    if (verifyVal || pathName === '/dashBoard') {
       dispatch(fetchMetricsAction(userId));
     }
   }, [verifyVal]);
-    
 
-useEffect(() => {
-  if(userMetricData && Object?.keys(userMetricData).length>0  ){
-  setMetricData(userMetricData)
-  }
-}, [userMetricData])
-// console.log("dasfaesc",metricData)
+  useEffect(() => {
+    if (userMetricData && Object?.keys(userMetricData).length > 0) {
+      setMetricData(userMetricData);
+    }
+  }, [userMetricData]);
+  // console.log("dasfaesc",metricData)
   return (
-    <div className="flex flex-col p-8 bg-[#0B031E] text-white">
-      <div className="grid grid-cols-4 gap-4">
-        <div className="bg-[#8E2DA0] rounded-2xl p-4">
-          <div className="text-sm">Sessions Consumed</div>
-          <div className="text-3xl font-bold">{metricData?.sessionConsumed}</div>
+    <div className="w-[100%] h-[100%] flex flex-col p-8 bg-[#0B031E] text-white">
+      <div className="w-[100%] flex h-[15%] gap-4">
+        <div className="bg-[#8E2DA0] w-[23%] rounded-2xl p-4 m-1">
+          <div className={styles.textSize}>Sessions Consumed</div>
+          <div className='flex justify-center items-center h-[100%]'>
+            <div className="text-3xl font-bold">
+              {metricData?.sessionConsumed}
+            </div>
+          </div>
         </div>
-        <div className="bg-[#46217C] rounded-2xl p-4">
-          <div className="text-sm">Sessions Left</div>
+        <div className="bg-[#46217C] w-[23%] rounded-2xl p-4 m-1">
+          <div className={styles.textSize}>Sessions Left</div>
+          <div className='flex justify-center items-center h-[100%]'>
           <div className="text-3xl font-bold">{metricData?.sessionLeft}</div>
+          </div>
         </div>
-        <div className="bg-[#6E54EF] rounded-2xl p-4">
-          <div className="text-sm">Total Sessions</div>
+        <div className="bg-[#6E54EF] w-[23%] rounded-2xl p-4 m-1">
+          <div className={styles.textSize}>Total Sessions</div>
+          <div className='flex justify-center items-center h-[100%]'>
           <div className="text-3xl font-bold">{metricData?.sessionTotal}</div>
+          </div>
         </div>
-        <div className="bg-[#1E1935] rounded-2xl p-4 flex flex-col items-center">
-          <div className="text-lg">Active Bots</div>
-          <div className="text-3xl font-bold">{metricData?.activeBots}</div>
-
-          <button className="mt-4 bg-[#46217C] text-white px-6 py-2 rounded-full flex items-center">
+        <div className="bg-[#1E1935] w-[31%] rounded-2xl p-4 m-1 flex flex-col items-center">
+          <div className={styles.textSize}>Active Bots</div>
+          <div className={`${styles.textSize} font-bold mt-1`}>{metricData?.activeBots}</div>
+          <button className="mt-1 bg-[#46217C] w-[80%] h-[50%] text-white px-6 py-2 rounded-full flex justify-center items-center">
             <Link href={`/createBot`}>
-              <span>Create Bot</span>
+              <span className={styles.textSize} >Create Bot</span>
             </Link>
             <span className="ml-2 text-xl">+</span>
           </button>
         </div>
       </div>
-      <div className="grid grid-cols-3 gap-4 mt-4">
-        <div className="bg-[#1E1935] rounded-2xl p-4">
-          <div className="text-lg mb-4">Session Usage</div>
-          <div className="relative h-48 w-48 mx-auto">
+      <div className="w-[100%] flex h-[45%] gap-4 mt-4">
+        <div className="bg-[#1E1935] w-[40%] rounded-2xl p-4 m-1">
+          <div className={`${styles.textSize} mb-4`}>Session Usage</div>
+          <div className={`${styles.textSize} relative w-[100%] h-[100%] mx-auto`}>
             {/* Add your circular progress component here */}
-            <div>
-            <SqureCardOne sessionTotal={metricData?.sessionTotal} sessionLeft={metricData?.sessionLeft} />
-            </div>
+            <SqureCardOne
+              sessionTotal={metricData?.sessionTotal}
+              sessionLeft={metricData?.sessionLeft}
+            />
           </div>
         </div>
-        <div className="bg-[#1E1935] rounded-2xl p-4">
+        <div className="bg-[#1E1935] w-[40%] rounded-2xl p-4 m-1">
           {/* Add your bar chart component here */}
-          <div>
-            <SqureCardTwo />
-          </div>
+          <SqureCardTwo />
         </div>
-        <div className="flex flex-col gap-4">
-          <div className="bg-[#1E1935] rounded-2xl p-4 flex flex-col items-center">
-            <div className="h-48 w-6 bg-gradient-to-t from-red-500 via-yellow-500 to-green-500 rounded-full relative">
+        <div className="flex w-[20%] h-[100%] flex-col gap-4 m-1">
+          <div className="bg-[#1E1935] w-[100%] h-[100%] rounded-2xl p-4 flex flex-col items-center">
+            <div className="h-[89%] w-[10%] bg-gradient-to-t from-red-500 via-yellow-500 to-green-500 rounded-full relative">
               <div className="absolute -right-6 top-0">😄</div>
               <div className="absolute -right-6 bottom-0">😢</div>
             </div>
-            <div className="mt-2 text-sm">Satisfaction meter</div>
+            <div className={`${styles.textSize} mt-2`}>Satisfaction meter</div>
           </div>
         </div>
       </div>
-
-      <div className="grid grid-cols-3 gap-4 mt-4">
-        <div className="bg-[#1E1935] rounded-2xl p-4">
+      <div className="w-[100%] flex h-[40%] gap-4 mt-4">
+        <div className="bg-[#1E1935] w-[30%] rounded-2xl p-4 m-1">
           <div className="flex items-center mb-4">
             <div className="bg-[#46217C] rounded-full p-2 mr-2">
               <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
@@ -134,26 +139,26 @@ useEffect(() => {
                 />
               </svg>
             </div>
-            <div className="text-lg">User Profile</div>
+            <div className={styles.textSize}>User Profile</div>
           </div>
-          <div className="text-sm text-gray-400">Name {profileData?.firstName}</div>
-          {/* <div className="mb-2">Manushree Verma</div> */}
-          <div className="text-sm text-gray-400">User ID {profileData?.emailId}</div>
-          {/* <div>Manushree1234@gmail.com</div> */}
+          <div className={`${styles.textSize} text-gray-400`}>
+            Name {profileData?.firstName}
+          </div>
+          <div className={`${styles.textSize} text-gray-400`}>
+            User ID {profileData?.emailId}
+          </div>
         </div>
-        <div className="bg-[#1E1935] rounded-2xl p-4 col-span-2">
-          <div className="text-lg mb-4">Use/Available</div>
-          <div>
-            <CardHeader1 />
-          </div>
+        <div className="bg-[#1E1935] w-[70%] rounded-2xl p-4 m-1 md:col-span-2">
+          <div className={`${styles.textSize} mb-4`}>Use/Available</div>
+          <CardHeader1 />
           <div className="flex mt-2">
             <div className="flex items-center mr-4">
               <div className="w-3 h-3 bg-[#6E54EF] rounded-full mr-2"></div>
-              <span>Use</span>
+              <span className={styles.textSize}>Use</span>
             </div>
             <div className="flex items-center">
               <div className="w-3 h-3 bg-[#8E2DA0] rounded-full mr-2"></div>
-              <span>Available</span>
+              <span className={styles.textSize}>Available</span>
             </div>
           </div>
         </div>
