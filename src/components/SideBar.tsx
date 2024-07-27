@@ -123,12 +123,13 @@ const SideBar: React.FC = () => {
       </button>
 
       <MenuItem item={DashboardItem} key={DashboardItem?.text} />
+      <div className='flex flex-col h-[100%] justify-between'>
       <div className="flex flex-col space-y-2">
         {SIDENAV_ITEMS.map((item, idx) => (
           <MenuItem key={idx} item={item} />
         ))}
       </div>
-      <div className="flex flex-col space-y-2 absolute bottom-[10px]">
+      <div className="flex flex-col space-y-2">
         {SIDENAV_ITEMS2.map((item, idx) => (
           <MenuItem
             key={idx}
@@ -142,6 +143,7 @@ const SideBar: React.FC = () => {
             }
           />
         ))}
+      </div>
       </div>
 
       {isModalOpen && <ClearConversation closeModal={closeModal} />}
