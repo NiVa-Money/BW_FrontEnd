@@ -564,7 +564,10 @@ const BotSessionComponent: React.FC = () => {
               ) : (
                 ''
               )}
-              <button className="custom-button bg-[#FFFFFF] bg-opacity-10">
+              <button 
+              className="custom-button bg-[#FFFFFF] bg-opacity-10"
+              onClick={openPopup}
+              >
                 Summary
               </button>
               {summary ? (
@@ -574,7 +577,7 @@ const BotSessionComponent: React.FC = () => {
               ) : (
                 ''
               )}
-              <button className="custom-button bg-[#FFFFFF] bg-opacity-10">
+              <button className="custom-button bg-[#FFFFFF] bg-opacity-10"  onClick={openPopup}>
                 Sentiment Analysis
               </button>
               {sentimentAnalysis ? (
@@ -586,7 +589,7 @@ const BotSessionComponent: React.FC = () => {
               ) : (
                 ''
               )}
-              <button className="custom-button bg-[#FFFFFF] bg-opacity-10">
+              <button className="custom-button bg-[#FFFFFF] bg-opacity-10"  onClick={openPopup}>
                 Next Steps
               </button>
               {nextSteps ? (
