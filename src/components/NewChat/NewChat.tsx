@@ -174,7 +174,7 @@ const NewChatComponent: React.FC = () => {
         </svg>
       </div>
 
-      <div className="flex gap-1 max-md:flex-wrap max-md:max-w-full mb-12 z-10">
+      <div className="flex gap-1 max-md:flex-wrap max-md:max-w-full mb-5 z-10">
         <div className="flex flex-col self-stretch relative">
           <div
             className="flex gap-2.5 justify-center p-2.5 text-xl font-medium text-white rounded-t-lg cursor-pointer"
@@ -289,7 +289,7 @@ const NewChatComponent: React.FC = () => {
           </div>
         </div>
       </div> */}
-      <div className="mt-10 w-full max-w-[930px] max-md:mt-10 max-md:max-w-full h-[70vh] rounded-lg relative">
+      <div className="mt-5 w-full max-w-[930px] max-md:mt-10 max-md:max-w-full h-[60vh] rounded-lg relative">
         <div
           ref={chatContainerRef}
           className="flex flex-col gap-5 max-md:gap-0 h-full overflow-y-auto pr-2 scrollbar-thin scrollbar-thumb-white scrollbar-track-transparent"
