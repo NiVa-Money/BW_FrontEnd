@@ -37,6 +37,7 @@ const CreateBotComponent: React.FC = () => {
   // const [botIdentity, setBotIdentity] = useState('sales');
   const [botSmartnessVal, setbotSmartnessVal] = useState<any>(false);
   const [showColorPicker, setShowColorPicker] = useState<any>(false);
+  const [colorPicker, setColorPicker] = useState<any>(false);
   const [supportEmail, setSupportEmail] = useState('');
   const [supportPhone, setSupportPhone] = useState('');
   const [greetingMessage, setGreetingMessage] = useState(
@@ -236,8 +237,11 @@ const CreateBotComponent: React.FC = () => {
 
   const handleColorClick = (color:any) => {
     if (color === 'rainbow') {
+      setColorPicker(true)
+      // setChatColor(color);
       setShowColorPicker(true);
     } else {
+      setColorPicker(false)
       setChatColor(color);
       setShowColorPicker(false);
     }
@@ -274,7 +278,7 @@ const CreateBotComponent: React.FC = () => {
             color === 'rainbow'
               ? 'bg-gradient-to-r from-red-500 via-green-500 to-blue-500'
               : ''
-          }`}
+          }${chatColor === color ? 'border-4 border-gray-400' : ''}`}
           style={{
             backgroundColor: color !== 'rainbow' ? color : undefined,
           }}
