@@ -58,7 +58,7 @@ const ChatBotCard: React.FC<ChatBotCardProps> = ({ bot, actions }) => {
                 : 'https://botwot-user-knowledgebase.s3.ap-south-1.amazonaws.com/bot14.svg'
             }
             alt={`${bot.botName} icon`}
-            className="shrink-0 aspect-[1.04] w-[70px]"
+            className="shrink-0 w-[35%]"
           />
 
           <div className="flex flex-col">
