@@ -10,6 +10,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import {
   getUserBotProfileAction,
   deleteBotProfileServiceAction,
+  exportBotProfileServiceAction,
 } from '@/redux/actions/BotProfileActions';
 import ConfirmModal from './modalDelete';
 import { useRouter } from 'next/navigation';
@@ -46,30 +47,38 @@ const ChatBotList: React.FC = () => {
   const router = useRouter();
 
   // Function to handle edit action
-  const handleEdit = (index: number) => {
-    // Navigate to the edit page with the botId as a query parameter
-    router.push(`/editBot`);
+  const handleEdit = (botId: string) => {
+    router.push(`/editBot?id=${botId}`);
   };
-  const handleExport = (index: number) => {
-   alert('ss');
+
+  // Function to handle export action
+  const handleExport = (botId: string) => {
+    const botToExport = chatBotList.find(bot => bot._id === botId);
+    if (botToExport && userId) {
+      const payload = { botId: botToExport._id, userId };
+      dispatch(exportBotProfileServiceAction(payload) as any);
+      console.log(`Exporting bot: ${botToExport.botName}`);
+    } else {
+      console.error(`Bot with ID ${botId} not found or userId is undefined`);
+    }
   };
 
   // Function to handle delete action
-  const handleDelete: any = (index: string) => {
-    setBotIdToDelete(index);
+  const handleDelete = (botId: string) => {
+    setBotIdToDelete(botId);
     setIsModalOpen(true);
   };
 
   // Confirm deletion
   const confirmDelete = () => {
-    if (userId) {
+    if (userId && botIdToDelete) {
       dispatch(
         deleteBotProfileServiceAction({ botId: botIdToDelete, userId: userId })
       );
       setIsModalOpen(false);
     }
   };
-  2;
+
   // Close the modal
   const closeModal = () => {
     setIsModalOpen(false);
@@ -95,7 +104,7 @@ const ChatBotList: React.FC = () => {
     if (botDataRedux && botDataRedux.length) {
       setChatBotList(botDataRedux);
     }
-  }, [botDataRedux,botloader]);
+  }, [botDataRedux, botloader]);
 
   useEffect(() => {
     if (userIdLocal || pathName === '/MyChatBots') {
@@ -105,27 +114,26 @@ const ChatBotList: React.FC = () => {
 
   return (
     <main className="flex flex-col mt-5">
-      {/* <BackgroundCss/> */}
       <header className="flex gap-2.5 px-5 max-md:flex-wrap">
         <h1 className="flex-1 my-auto text-3xl font-bold px-10 leading-6 text-white">
           My ChatBots
         </h1>
         <button className="flex gap-2 justify-center px-14 py-3 text-xl font-medium text-gray-100 bg-[#3F2181] rounded-[60px]">
-          <Link href={`/createBot`}>
+          <Link href="/createBot">
             <span>Create Bot</span>
           </Link>
           <FontAwesomeIcon icon={faPlus} className="w-[25px] h-[25px]" />
         </button>
       </header>
       <section className="mt-6 px-10">
-        {chatBotList?.map((chatBot:any, index:any) => (
+        {chatBotList?.map((chatBot: ChatBot) => (
           <ChatBotCard
-            key={index}
+            key={chatBot._id}
             bot={chatBot}
             actions={{
-              onDelete: () => handleDelete(chatBot?._id),
-              onEdit: () => handleEdit(index),
-              onExport : () => handleExport(index), 
+              onDelete: () => handleDelete(chatBot._id),
+              onEdit: () => handleEdit(chatBot._id),
+              onExport: () => handleExport(chatBot._id),
             }}
           />
         ))}

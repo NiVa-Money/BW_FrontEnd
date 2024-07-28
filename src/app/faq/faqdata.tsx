@@ -6,8 +6,8 @@ const FAQ = () => {
   const [expandedPanel, setExpandedPanel] = useState<string | false>('panel1');
   return (
     <>
-      <FAQbody />
-      {/* <HelpCenter/> */}
+      {/* <FAQbody /> */}
+      <HelpCenter/>
     </>
   );
 };

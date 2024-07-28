@@ -18,6 +18,9 @@ import {
   CREATE_BOT_PROFILE_FAILURE,
   EDIT_BOT_PROFILE_SUCCESS,
   EDIT_BOT_PROFILE_FAILURE,
+  EXPORT_BOT_PROFILE,
+  EXPORT_BOT_PROFILE_SUCCESS,
+  EXPORT_BOT_PROFILE_FAILURE,
   GET_USER_BOT_PROFILE_SUCCESS,
   GET_USER_BOT_PROFILE_FAILURE,
   DELETE_BOT_PROFILE_SUCCESS,
@@ -53,6 +56,7 @@ import {
   deleteBotProfileService,
   deleteUserKnowledgeBaseService,
   editUserBotProfileService,
+  exportBotProfileService,
   fetchUserData,
   fetchUserMetrics,
   getAdvanceFeatureService,
@@ -283,6 +287,28 @@ export function* deleteBotProfilesSaga({
   }
 }
 
+
+export function* exportBotProfileSaga({
+  payload,
+}: {
+  type: string;
+  payload: any;
+}): Generator<any> {
+  try {
+    const exportedBotProfile = yield call(exportBotProfileService, payload);
+    notifySuccess('Bot profile exported successfully');
+    yield put({
+      type: EXPORT_BOT_PROFILE_SUCCESS,
+      payload: exportedBotProfile,
+    });
+  } catch (error: any) {
+    notifyError(`${error}`);
+    yield put({
+      type: EXPORT_BOT_PROFILE_FAILURE,
+    });
+  }
+}
+
 //knowledge base sagas
 
 export function* createKnowledgeBaseSaga({
@@ -459,6 +485,7 @@ export default function* rootSaga() {
   yield takeEvery(CREATE_BOT_PROFILE, createBotProfileSaga);
   yield takeEvery(EDIT_BOT_PROFILE, editBotProfileSaga);
   yield takeEvery(DELETE_BOT_PROFILE, deleteBotProfilesSaga);
+  yield takeEvery(EXPORT_BOT_PROFILE, exportBotProfileSaga);
   yield takeEvery(GET_USER_BOT_PROFILE, getBotProfilesSaga);
   yield takeEvery(GET_USER_KNOWLEDGE_BASE, getUserKnowledgeBaseSaga);
   yield takeEvery(CREATE_KNOWLEDGE_BASE, createKnowledgeBaseSaga);
