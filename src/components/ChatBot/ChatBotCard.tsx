@@ -105,7 +105,7 @@ const ChatBotCard: React.FC<ChatBotCardProps> = ({ bot, actions }) => {
                 alt=""
                 className="shrink-0 w-6 aspect-square"
               />
-              <span className="my-auto">{bot.file || 'knowledgebase.pdf'}</span>
+              <span className="my-auto">{bot.docName }</span>
             </div>
           </div>
           <div className="flex flex-col justify-between pt-3 whitespace-nowrap text-neutral-400">
