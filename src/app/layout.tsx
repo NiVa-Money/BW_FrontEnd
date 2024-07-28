@@ -9,6 +9,7 @@ import PathnameHandler from '@/components/PathNameHandler/pathNameHandler';
 import store, { RootState } from '@/redux/configureStore';
 import { PersistGate } from 'redux-persist/integration/react';
 import { persistStore } from 'redux-persist';
+import Toast from '@/components/Toaster/toast';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -68,6 +69,7 @@ export default function RootLayout({
             </div>
             <ConditionalFooter routeWithoutFooter={routeWithoutFooter} />
           </PersistGate>
+          <Toast />
         </Provider>
       </body>
     </html>
