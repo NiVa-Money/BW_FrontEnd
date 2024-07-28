@@ -1,6 +1,9 @@
-
 import React from 'react';
-import { faPencilAlt, faTrash, faDownload } from '@fortawesome/free-solid-svg-icons';
+import {
+  faPencilAlt,
+  faTrash,
+  faDownload,
+} from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Link from 'next/link';
 
@@ -42,23 +45,27 @@ const getBackgroundColor = (color: string): string => {
   }
 };
 const ChatBotCard: React.FC<ChatBotCardProps> = ({ bot, actions }) => {
-
   const botColor = bot.botColor?.toLowerCase() || 'default';
   return (
-
     <article className="flex gap-7 justify-between px-8 py-5 mb-6 w-full bg-gray-900 rounded-xl max-md:flex-wrap max-md:px-5 max-md:max-w-full">
       <div className="flex flex-col max-md:max-w-full">
         <div className="flex gap-2.5 self-start">
           <img
             loading="lazy"
-            src={bot.icon ? bot.icon : 'https://botwot-user-knowledgebase.s3.ap-south-1.amazonaws.com/bot14.svg'}
+            src={
+              bot.icon
+                ? bot.icon
+                : 'https://botwot-user-knowledgebase.s3.ap-south-1.amazonaws.com/bot14.svg'
+            }
             alt={`${bot.botName} icon`}
             className="shrink-0 aspect-[1.04] w-[70px]"
           />
 
           <div className="flex flex-col">
             <h2 className="text-xl font-medium text-gray-100">{bot.botName}</h2>
-            <p className="mt-1.5 text-base leading-3 text-zinc-400">{bot.description}</p>
+            <p className="mt-1.5 text-base leading-3 text-zinc-400">
+              {bot.description}
+            </p>
           </div>
         </div>
         <div className="flex gap-5 px-20 mt-6 max-md:flex-wrap max-md:px-5">
@@ -73,20 +80,31 @@ const ChatBotCard: React.FC<ChatBotCardProps> = ({ bot, actions }) => {
                 {/* <span className="my-auto">{bot.botName}</span> */}
               </div>
             </div>
-            <div className="flex flex-col self-start text-neutral-400">
-              <span className="self-start ml-3 text-base max-md:ml-2.5">Tone</span>
-              <span className="mt-8 text-sm leading-5 text-center">{bot.botTone}</span>
+            <div className="flex flex-col justify-between text-neutral-400">
+              <span className="self-start ml-3 text-base max-md:ml-2.5">
+                Tone
+              </span>
+              <span className="flex gap-2.5 p-2.5 mt-4 text-sm leading-5 text-center rounded-full">
+                {bot.botTone}
+              </span>
             </div>
           </div>
-          <div className="flex flex-col justify-end pt-3 whitespace-nowrap text-neutral-400">
-            <span className="self-start ml-2.5 text-base">File</span>
+          <div className="flex flex-col justify-between pt-3 whitespace-nowrap text-neutral-400">
+            <span className="self-start ml-3 text-base max-md:ml-2.5">
+            File
+            </span>
+            {/* <span className="self-start ml-2.5 text-base">File</span> */}
             <div className="flex gap-2.5 p-2.5 mt-4 text-sm leading-5 text-center rounded-xl">
-              <img loading="lazy" src="https://cdn.builder.io/api/v1/image/assets/TEMP/216ef81b1307e56bac33de96edb3047cf27218916242cd7c47a7551edb14a929?apiKey=555c811dd3f44fc79b6b2689129389e8&" alt="" className="shrink-0 w-6 aspect-square" />
+              <img
+                loading="lazy"
+                src="https://cdn.builder.io/api/v1/image/assets/TEMP/216ef81b1307e56bac33de96edb3047cf27218916242cd7c47a7551edb14a929?apiKey=555c811dd3f44fc79b6b2689129389e8&"
+                alt=""
+                className="shrink-0 w-6 aspect-square"
+              />
               <span className="my-auto">{bot.file || 'knowledgebase.pdf'}</span>
-
             </div>
           </div>
-          <div className="flex flex-col justify-end pt-3 whitespace-nowrap text-neutral-400">
+          <div className="flex flex-col justify-between pt-3 whitespace-nowrap text-neutral-400">
             <span className="self-start ml-2.5 text-base">Color</span>
             <div className="flex gap-2.5 p-2.5 mt-4 text-sm leading-5 text-center rounded-full">
               <div
@@ -96,21 +114,31 @@ const ChatBotCard: React.FC<ChatBotCardProps> = ({ bot, actions }) => {
               <span className="my-auto">{bot.botColor || ''}</span>
             </div>
           </div>
-          <div className="flex flex-col justify-end pt-4 pb-2.5 text-neutral-400">
+          <div className="flex flex-col justify-between pt-3 whitespace-nowrap text-neutral-400">
             <span className="text-base">Created at</span>
-            <span className="mt-7 text-sm leading-5 text-center">{bot.createdAt}</span>
+            <span className="flex gap-2.5 p-2.5 mt-4 text-sm leading-5 text-center rounded-full">
+              {bot.createdAt}
+            </span>
           </div>
         </div>
       </div>
       <div className="flex gap-6">
         {actions?.onDelete && (
-          <button aria-label="Delete bot" className="text-red-500" onClick={actions.onDelete}>
+          <button
+            aria-label="Delete bot"
+            className="text-red-500"
+            onClick={actions.onDelete}
+          >
             <FontAwesomeIcon icon={faTrash} />
             <span>Delete</span>
           </button>
         )}
         {actions?.onEdit && (
-          <button aria-label="Edit bot" className="text-blue-500" onClick={actions.onEdit}>
+          <button
+            aria-label="Edit bot"
+            className="text-blue-500"
+            onClick={actions.onEdit}
+          >
             <FontAwesomeIcon icon={faPencilAlt} />
             <Link href={`/editBot`}>
               <span>Edit</span>
@@ -118,7 +146,11 @@ const ChatBotCard: React.FC<ChatBotCardProps> = ({ bot, actions }) => {
           </button>
         )}
         {actions?.onDownload && (
-          <button aria-label="Download bot" className="text-green-500" onClick={actions.onDownload}>
+          <button
+            aria-label="Download bot"
+            className="text-green-500"
+            onClick={actions.onDownload}
+          >
             <FontAwesomeIcon icon={faDownload} />
             <span>Download</span>
           </button>
