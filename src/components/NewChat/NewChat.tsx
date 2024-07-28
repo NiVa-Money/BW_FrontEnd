@@ -368,7 +368,8 @@ const NewChatComponent: React.FC = () => {
           className="flex flex-col gap-5 max-md:gap-0 h-full overflow-y-auto pr-2 scrollbar-thin scrollbar-thumb-white scrollbar-track-transparent"
         >
           {userChatMessagesRes?.data?.map((message: any, index: any) => {
-            const formattedText = message?.text?.replace(/\n/g, '<br />');
+            const formattedText = message?.text?.replace(/\n/g, '<br />').replace(/\*(.*?)\*/g, '<b>$1</b>');
+            
             return (
               <div className="flex w-full" key={index}>
                 <div

@@ -547,13 +547,13 @@ const BotSessionComponent: React.FC = () => {
                     <div className="w-full max-md:w-full flex flex-col">
                       <div className="w-full flex justify-end py-2 gap-2 rounded text-white mb-2 text-right">
                         <span className="block w-fit p-2 bg-[#3F2181] rounded-3xl"
-                            dangerouslySetInnerHTML={{ __html: message?.question?.replace(/\n/g, '<br />') }}>
+                            dangerouslySetInnerHTML={{ __html: message?.question?.replace(/\n/g, '<br />').replace(/\*(.*?)\*/g, '<b>$1</b>') }}>
                           {/* {message?.question}message?.question?.replace(/\n/g, '<br />'); */}
                         </span>
                       </div>
                       <div className="w-full py-2 gap-2 rounded text-white text-left">
                         <span className="block w-fit p-2 bg-[#2B243C] rounded-3xl"
-                            dangerouslySetInnerHTML={{ __html: message?.answer?.replace(/\n/g, '<br />') }}>
+                            dangerouslySetInnerHTML={{ __html: message?.answer?.replace(/\n/g, '<br />').replace(/\*(.*?)\*/g, '<b>$1</b>') }}>
                           {/* {message?.answer} */}
                         </span>
                       </div>
