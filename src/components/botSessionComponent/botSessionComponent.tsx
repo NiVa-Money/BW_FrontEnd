@@ -172,6 +172,30 @@ const BotSessionComponent: React.FC = () => {
       sendMessage(e);
     }
   };
+
+  const [leftWidth, setLeftWidth] = React.useState(71); // Initial width of left div in percentage
+  const [rightWidth, setRightWidth] = React.useState(29); // Initial width of right div in percentage
+  const [isDragging, setIsDragging] = React.useState(false);
+
+  const handleMouseDown = () => {
+    setIsDragging(true);
+  };
+
+  const handleMouseUp = () => {
+    setIsDragging(false);
+  };
+
+  const handleMouseMove = (e:any) => {
+    if (!isDragging) return;
+    const newLeftWidth = (e.clientX / window.innerWidth) * 100;
+    const newRightWidth = 100 - newLeftWidth;
+
+    if (newLeftWidth > 0 && newRightWidth > 0) {
+      setLeftWidth(newLeftWidth);
+      setRightWidth(newRightWidth);
+    }
+  };
+
   React.useEffect(() => {
     if (botIdRedux.botId?.length) {
       setBotIdLocal(botIdRedux?.botId);
@@ -231,6 +255,7 @@ const BotSessionComponent: React.FC = () => {
     }
   }, [userChatSessionsRedux]);
   console.log('botSessionsList', sessionId);
+  
   return (
     <div className="flex">
       <div className="w-64 flex flex-col">
@@ -279,7 +304,10 @@ const BotSessionComponent: React.FC = () => {
           ))}
         </div>
       </div>
-      <div className="relative w-[100%] h-[100vh] flex justify-end items-center pl-10 py-10 bg-[#0B031E] min-h-screen max-md:px-5 overflow-hidden">
+      <div className="relative w-[100%] h-[100vh] flex justify-end items-center pl-10 py-10 bg-[#0B031E] min-h-screen max-md:px-5 overflow-hidden"
+         onMouseMove={handleMouseMove}
+         onMouseUp={handleMouseUp}
+      >
         <div className="absolute inset-0">
           <svg
             className="moving-svg"
@@ -357,7 +385,9 @@ const BotSessionComponent: React.FC = () => {
             </defs>
           </svg>
         </div>
-        <div className="w-[77%] h-[100%] flex flex-col justify-between z-10">
+        <div className="flex flex-col justify-between z-10"
+         style={{ width: `${leftWidth}%`, height: '100%' }}
+        >
           <div className="flex gap-1 max-md:flex-wrap max-md:max-w-full mb-5">
             <div className="flex flex-col self-stretch relative">
               <div
@@ -535,8 +565,13 @@ const BotSessionComponent: React.FC = () => {
             </form>
           </div>
         </div>
-        <div className="w-[0.1%] h-[100vh] z-10 bg-[#CECCD3] bg-opacity-40"></div>
-        <div className="w-[29%] flex justify-center items-center z-10 h-[100vh]">
+        <div className="z-10 bg-[#CECCD3] bg-opacity-40"
+         style={{ width: '0.3%', height: '100vh' }}
+         onMouseDown={handleMouseDown}
+         ></div>
+        <div className="flex justify-center items-center z-10 h-[100vh]"
+        style={{ width: `${rightWidth}%`, height: '100%' }}
+        >
           <div className="w-[65%] h-[87%] adv-border-radius bg-[#FFFFFF] bg-opacity-10">
             {/* title */}
             <div className="mt-4">
