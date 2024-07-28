@@ -32,7 +32,7 @@ const CreateBotComponent: React.FC = () => {
   const [step, setStep] = useState(1);
   const [botName, setBotName] = useState('BotWot Assistant');
   const [botTone, setBotTone] = useState('Formal Tone');
-  const [chatColor, setChatColor] = useState('#3B82F6'); // Default blue color
+  const [chatColor, setChatColor] = useState('#5D39AD'); // Default blue color
   const [botProfile, setBotProfile] = useState(
     '/path/to/default/bot/image.png'
   );
@@ -561,7 +561,7 @@ const CreateBotComponent: React.FC = () => {
                 >
                   <h2 className="my-auto p-5 text-white">Preview</h2>
                   <div className="my-auto p-5 text-white">
-                    <ZoomOutMapIcon style={{ color: 'white' }} />
+                    {/* <ZoomOutMapIcon style={{ color: 'white' }} /> */}
                   </div>
                 </div>
                 {imageSrc ? (
