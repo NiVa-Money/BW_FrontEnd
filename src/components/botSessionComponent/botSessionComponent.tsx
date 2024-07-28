@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import icon from '../../public/assets/chatBotSymbol.svg';
 import mainLogo from '@/public/assets/mainLogo.svg';
 import { useRouter } from 'next/router';
+import './botSession.css';
 
 import '../NewChat/newchat.css';
 import {
@@ -533,11 +534,11 @@ const BotSessionComponent: React.FC = () => {
                 chatsData[0]?.sessions?.map((message: any, index: any) => (
                   <div className="flex w-full mb-4" key={index}>
                     <div className="w-full max-md:w-full flex flex-col">
-                      <div className=" max-w-[fit-content] w-[530px] py-[10px] gap-[10px] rounded-[12px] bg-[#3F2181] text-white text-left mb-2">
-                        <span className="p-[10px]">{message?.question}</span>
+                      <div className="w-[100%] py-[10px] gap-[10px] rounded-[12px] text-white text-right mb-2">
+                        <span className="p-[10px] bg-[#3F2181]">{message?.question}</span>
                       </div>
-                      <div className="max-w-[fit-content] w-[530px] py-[10px] gap-[10px] rounded-[12px] bg-[#2B243C] text-white text-right">
-                        <span className="p-[10px]">{message?.answer}</span>
+                      <div className="w-[100%] py-[10px] gap-[10px] rounded-[12px] text-white text-left">
+                        <span className="p-[10px] bg-[#2B243C]">{message?.answer}</span>
                       </div>
                     </div>
                   </div>
