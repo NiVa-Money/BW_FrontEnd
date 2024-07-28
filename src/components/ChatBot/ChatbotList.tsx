@@ -115,7 +115,7 @@ const ChatBotList: React.FC = () => {
           <FontAwesomeIcon icon={faPlus} className="w-[25px] h-[25px]" />
         </button>
       </header>
-      <section className="mt-12 px-10">
+      <section className="mt-6 px-10">
         {chatBotList?.map((chatBot:any, index:any) => (
           <ChatBotCard
             key={index}
