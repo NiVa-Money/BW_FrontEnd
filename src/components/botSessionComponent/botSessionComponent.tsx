@@ -176,8 +176,10 @@ const BotSessionComponent: React.FC = () => {
   const [leftWidth, setLeftWidth] = React.useState(71); // Initial width of left div in percentage
   const [rightWidth, setRightWidth] = React.useState(29); // Initial width of right div in percentage
   const [isDragging, setIsDragging] = React.useState(false);
+  const containerRef = React.useRef(null);
 
-  const handleMouseDown = () => {
+  const handleMouseDown = (e: any) => {
+    e.preventDefault();
     setIsDragging(true);
   };
 
@@ -187,12 +189,13 @@ const BotSessionComponent: React.FC = () => {
 
   const handleMouseMove = (e:any) => {
     if (!isDragging) return;
-    const newLeftWidth = (e.clientX / window.innerWidth) * 100;
-    const newRightWidth = 100 - newLeftWidth;
 
-    if (newLeftWidth > 0 && newRightWidth > 0) {
+    const container:any = containerRef.current;
+    const containerRect = container.getBoundingClientRect();
+    const newLeftWidth = ((e.clientX - containerRect.left) / containerRect.width) * 100;
+
+    if (newLeftWidth >= 50 && newLeftWidth <= 70) { // Ensure minimum (10%) and maximum (90%) width limits
       setLeftWidth(newLeftWidth);
-      setRightWidth(newRightWidth);
     }
   };
 
@@ -255,7 +258,22 @@ const BotSessionComponent: React.FC = () => {
     }
   }, [userChatSessionsRedux]);
   console.log('botSessionsList', sessionId);
-  
+
+  React.useEffect(() => {
+    if (isDragging) {
+      window.addEventListener('mousemove', handleMouseMove);
+      window.addEventListener('mouseup', handleMouseUp);
+    } else {
+      window.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener('mouseup', handleMouseUp);
+    }
+
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener('mouseup', handleMouseUp);
+    };
+  }, [isDragging]);
+
   return (
     <div className="flex h-screen">
       <div className="w-64 h-[100%] flex flex-col">
@@ -294,19 +312,19 @@ const BotSessionComponent: React.FC = () => {
                 setSessionId(item._id);
               }}
             >
-              <span className="">
-                Session {id + 1}
-              </span>
+              <span className="">Session {id + 1}</span>
               <span className="w-[100%] left-[43px] ">
                 {item.sessions[item.sessions.length - 1]?.question}
               </span>
             </div>
           ))}
-        </div>  
+        </div>
       </div>
-      <div className="relative w-[100%] h-[100vh] flex justify-end items-center pl-10 py-10 bg-[#0B031E] min-h-screen max-md:px-5 overflow-hidden"
-         onMouseMove={handleMouseMove}
-         onMouseUp={handleMouseUp}
+      <div
+        ref={containerRef}
+        className="relative w-[100%] h-[100vh] flex justify-end items-center pl-10 py-10 bg-[#0B031E] min-h-screen max-md:px-5 overflow-hidden"
+        onMouseMove={handleMouseMove}
+        onMouseUp={handleMouseUp}
       >
         <div className="absolute inset-0">
           <svg
@@ -385,8 +403,9 @@ const BotSessionComponent: React.FC = () => {
             </defs>
           </svg>
         </div>
-        <div className="flex flex-col justify-between z-10"
-         style={{ width: `${leftWidth}%`, height: '100%' }}
+        <div
+          className="flex flex-col justify-between z-10"
+          style={{ width: `${leftWidth}%` , height: '100%' }}
         >
           <div className="flex gap-1 max-md:flex-wrap max-md:max-w-full mb-5">
             <div className="flex flex-col self-stretch relative">
@@ -505,7 +524,7 @@ const BotSessionComponent: React.FC = () => {
           </div>
         </div>
       </div> */}
-          <div className="mt-5 w-full max-w-[930px] max-md:mt-10 max-md:max-w-full h-[65vh] rounded-lg relative">
+          <div className="mt-5 w-full max-w-[930px] max-md:mt-10 max-md:max-w-full h-[61vh] rounded-lg relative">
             <div
               ref={chatContainerRef}
               className="flex flex-col gap-5 max-md:gap-0 h-full overflow-y-auto pr-2 scrollbar-thin scrollbar-thumb-white scrollbar-track-transparent"
@@ -565,12 +584,14 @@ const BotSessionComponent: React.FC = () => {
             </form>
           </div>
         </div>
-        <div className="z-10 bg-[#CECCD3] bg-opacity-40"
-         style={{ width: '0.3%', height: '100vh' }}
-         onMouseDown={handleMouseDown}
-         ></div>
-        <div className="flex justify-center items-center z-10 h-[100vh]"
-        style={{ width: `${rightWidth}%`, height: '100%' }}
+        <div
+          className="z-10 bg-[#CECCD3] bg-opacity-40 cursor-ew-resize"
+          style={{ width: '0.3%', height: '100vh' }}
+          onMouseDown={handleMouseDown}
+        ></div>
+        <div
+          className="flex justify-center items-center z-10"
+         style={{ width: `${100 - leftWidth}%` , height: '100%' }}
         >
           <div className="w-[65%] h-[87%] adv-border-radius bg-[#FFFFFF] bg-opacity-10">
             {/* title */}
@@ -599,9 +620,9 @@ const BotSessionComponent: React.FC = () => {
               ) : (
                 ''
               )}
-              <button 
-              className="custom-button bg-[#FFFFFF] bg-opacity-10"
-              onClick={openPopup}
+              <button
+                className="custom-button bg-[#FFFFFF] bg-opacity-10"
+                onClick={openPopup}
               >
                 Summary
               </button>
@@ -612,7 +633,10 @@ const BotSessionComponent: React.FC = () => {
               ) : (
                 ''
               )}
-              <button className="custom-button bg-[#FFFFFF] bg-opacity-10"  onClick={openPopup}>
+              <button
+                className="custom-button bg-[#FFFFFF] bg-opacity-10"
+                onClick={openPopup}
+              >
                 Sentiment Analysis
               </button>
               {sentimentAnalysis ? (
@@ -624,7 +648,10 @@ const BotSessionComponent: React.FC = () => {
               ) : (
                 ''
               )}
-              <button className="custom-button bg-[#FFFFFF] bg-opacity-10"  onClick={openPopup}>
+              <button
+                className="custom-button bg-[#FFFFFF] bg-opacity-10"
+                onClick={openPopup}
+              >
                 Next Steps
               </button>
               {nextSteps ? (
