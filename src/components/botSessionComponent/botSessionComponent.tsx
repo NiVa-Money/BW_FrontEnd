@@ -92,7 +92,7 @@ const BotSessionComponent: React.FC = () => {
     dispatch(filteredSession(data));
     // console.log('Selected Bot ID:', botId);
     setBotId(botId);
-    // setIsBotProfileOpen(!isBotProfileOpen);
+    setIsBotProfileOpen(!isBotProfileOpen);
   };
 
   const getChatHistory = () => {
@@ -257,8 +257,8 @@ const BotSessionComponent: React.FC = () => {
   console.log('botSessionsList', sessionId);
   
   return (
-    <div className="flex">
-      <div className="w-64 flex flex-col">
+    <div className="flex h-screen">
+      <div className="w-64 h-[100%] flex flex-col">
         <div className="w-full mt-8 flex justify-center items-center">
           {' '}
           <Image src={mainLogo.src} alt="logo" width={90} height={80} />
@@ -285,7 +285,7 @@ const BotSessionComponent: React.FC = () => {
             Sessions
           </span>
         </div>
-        <div className="text-white mt-[8px] px-3">
+        <div className="text-white mt-[8px] w-full h-full px-3 overflow-scroll">
           {botSessionsList?.map((item: any, id: any) => (
             <div
               key={id}
@@ -294,15 +294,15 @@ const BotSessionComponent: React.FC = () => {
                 setSessionId(item._id);
               }}
             >
-              <span className="w-[Hug (307px)px] h-[Hug (34px)px] top-[268px]">
+              <span className="">
                 Session {id + 1}
               </span>
-              <span className="w-[247px] h-[25px] top-[302px] left-[43px] ">
+              <span className="w-[100%] left-[43px] ">
                 {item.sessions[item.sessions.length - 1]?.question}
               </span>
             </div>
           ))}
-        </div>
+        </div>  
       </div>
       <div className="relative w-[100%] h-[100vh] flex justify-end items-center pl-10 py-10 bg-[#0B031E] min-h-screen max-md:px-5 overflow-hidden"
          onMouseMove={handleMouseMove}
