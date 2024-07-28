@@ -28,10 +28,10 @@ axiosInstance.interceptors.request.use(
 );
 
 const responseErrorInterceptor = (error:any) => {
-  if (error.response && error.response.status === 401) {
-    store.dispatch(logoutUser());
-    window.location.href = '/home';
-  }
+  // if (error.response && error.response.status === 401) {
+  //   store.dispatch(logoutUser());
+  //   window.location.href = '/home';
+  // }
   return Promise.reject(error);
 };
 

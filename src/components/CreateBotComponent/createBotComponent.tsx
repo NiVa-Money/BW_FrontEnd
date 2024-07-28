@@ -56,6 +56,7 @@ const CreateBotComponent: React.FC = () => {
   const dispatch = useDispatch();
   const [textVal, setTextVal] = useState('');
   const [error, setError] = useState('');
+  const [base64Image, setBase64Image] = useState('');
 
   const [botIconType, setBotIconType] = useState('second');
   const router = useRouter();
@@ -78,18 +79,20 @@ const CreateBotComponent: React.FC = () => {
     }
   };
 
-  const handleFileUpload = (event: any) => {
+
+  const handleFileUpload = (event:any) => {
     const file = event.target.files[0];
     console.log('img', file);
     setImageName(file.name);
-
-    // Read file as binary string
-    const reader = new FileReader();
-    reader.onload = (e) => {
-      const binaryString = reader.result as string;
-    };
-
-    reader.readAsBinaryString(file);
+    if (file) {
+      const reader:any = new FileReader();
+      reader.onloadend = () => {
+        const base64String = reader?.result?.split(',')[1]; // Remove the "data:image/png;base64," part
+        setBase64Image(base64String);
+        console.log("base64String",base64String);
+      };
+      reader.readAsDataURL(file);
+    }
   };
 
   const handleDocumentUpload = (event: any) => {
@@ -111,9 +114,16 @@ const CreateBotComponent: React.FC = () => {
     (state: RootState) => state.root?.userData?.user_id
   );
 
+  
+
   const validateEmail = (email: string) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
+  };
+
+  const validatePDFFile = (file:any) => {
+    const allowedExtensions = /(\.pdf)$/i;
+    return allowedExtensions.exec(file.name);
   };
 
   const validatePhoneNumber = (phoneNumber: string) => {
@@ -123,6 +133,29 @@ const CreateBotComponent: React.FC = () => {
   };
 
   const handleSave = async () => {
+    if (!botName){
+      setError('Please enter a bot name.');
+      return;
+    }
+
+    if (!imageSrc){
+      setError('Please select a icon.');
+      return;
+    }
+
+    if (!selectedFile) {
+      setError('please select pdf file');
+      return;
+    }
+
+    if (!validateEmail(supportEmail)) {
+      setError('Please enter a valid email address.');
+      return;
+    }
+    if (!validatePhoneNumber(supportPhone)) {
+      setError('Please enter a valid phone number with 10 digits.');
+      return;
+    }
     
     const docId = uuidv4();
     const formData = new FormData();
@@ -142,17 +175,6 @@ const CreateBotComponent: React.FC = () => {
     formData.append('userId', userId);
     if (selectedFile) {
       formData.append('file', selectedFile);
-    }else {
-      console.error('No file selected');
-    }
-
-    if (!validateEmail(supportEmail)) {
-      setError('Please enter a valid email address.');
-      return;
-    }
-    if (!validatePhoneNumber(supportPhone)) {
-      setError('Please enter a valid phone number with 10 digits.');
-      return;
     }
 
     dispatch(createBotProfileAction(formData))
@@ -259,6 +281,7 @@ const CreateBotComponent: React.FC = () => {
           onChange={(e) => setBotName(e.target.value)}
           className="w-full bg-[#171029] text-white p-2 rounded-[12px]"
         />
+        {error.includes('name') && <div className="text-red-500 mb-4">{error}</div>}
       </div>
       <div className="mb-4">
         <label className="block text-gray-200 mb-2">Chat Color</label>
@@ -306,19 +329,28 @@ const CreateBotComponent: React.FC = () => {
             />
           ))}
         </div>
+        {error.includes('icon') && <div className="text-red-500 mb-4">{error}</div>}
       </div>
       <div className="mb-4">
         <label className="block text-gray-200 mb-2">Custom photo</label>
         <div className="relative mb-4"></div>
         <div className="flex items-start">
-          <button
+        <input
+              type="file"
+              onChange={handleFileUpload}
+              ref={viewerRef}
+              accept="image/*"
+              id="file-upload"
+              className="rounded-[70px] bg-[#3F2181] mt-0  text-white px-4 py-2 flex justify-center cursor-pointer"
+            />
+          {/* <button
             disabled
             className="rounded-[70px] bg-[#3F2181] mt-0  text-white px-4 py-2 flex justify-center"
           >
             <span>Upload</span>
             <FileUploadIcon />
-          </button>
-          <span className="text-white mb-2 ml-6">Coming Soon..</span>
+          </button> */}
+          {/* <span className="text-white mb-2 ml-6">Coming Soon..</span> */}
         </div>
       </div>
       <div className="mb-4">
@@ -362,7 +394,7 @@ const CreateBotComponent: React.FC = () => {
           rows={4}
         />
       </div>
-      <div className="mb-4">
+      <div className="flex flex-col mb-4">
         <label className="block text-gray-200 mb-2">Knowledge base</label>
         <div className="mb-4">
           <div className="relative mb-4">
@@ -390,7 +422,8 @@ const CreateBotComponent: React.FC = () => {
             />
           </div>
         </div>
-        <div className="flex items-center space-x-4 mt-[66px]">
+        {error.includes('pdf') && <div className="relative mt-5 z-10 text-red-500">{error}</div>}
+        <div className="flex items-center space-x-4 mt-5">
           {/* <button className="rounded-[70px] bg-[#3F2181] text-white px-4 py-2 flex items-center justify-center">
             <span>Upload</span>
             <FileUploadIcon />
@@ -445,6 +478,7 @@ const CreateBotComponent: React.FC = () => {
           placeholder="Enter Your Email"
           className="w-full bg-[#171029] text-white p-2 rounded-[12px]"
         />
+        {error.includes('email') && <div className="text-red-500 mb-4">{error}</div>}
       </div>
       <div className="mb-4">
         <label className="block text-gray-200 mb-2">Support Phone Number</label>
@@ -455,6 +489,7 @@ const CreateBotComponent: React.FC = () => {
           placeholder="Enter Your Phone Number"
           className="w-full bg-[#171029] text-white p-2 rounded-[12px]"
         />
+        {error.includes('phone') && <div className="text-red-500 mb-4">{error}</div>}
       </div>
     </>
   );
