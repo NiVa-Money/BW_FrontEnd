@@ -23,6 +23,7 @@ interface ChatBotCardProps {
     onDownload?: () => void;
   };
 }
+
 const getBackgroundColor = (color: string): string => {
   switch (color.toLowerCase()) {
     case '#3b82f6':
@@ -44,6 +45,7 @@ const getBackgroundColor = (color: string): string => {
 const ChatBotCard: React.FC<ChatBotCardProps> = ({ bot, actions }) => {
 
   const botColor = bot.botColor?.toLowerCase() || 'default';
+  console.log(bot.file)
   return (
 
     <article className="flex gap-7 justify-between px-8 py-5 mb-6 w-full bg-gray-900 rounded-xl max-md:flex-wrap max-md:px-5 max-md:max-w-full">
