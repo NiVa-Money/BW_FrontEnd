@@ -1,16 +1,16 @@
 /* In your CSS file or a <style> tag */
-::-webkit-scrollbar {
-    width: 3px; /* Adjust width */
+/* ::-webkit-scrollbar {
+    width: 3px; 
   }
   
   ::-webkit-scrollbar-thumb {
-    background-color: white; /* Scrollbar thumb color */
-    border-radius: 8px; /* Rounded corners */
+    background-color: white; 
+    border-radius: 8px; 
   }
   
   ::-webkit-scrollbar-track {
-    background: transparent; /* Scrollbar track color */
-  }
+    background: transparent; 
+  } */
 
   .Input-container{
     display: flex;
