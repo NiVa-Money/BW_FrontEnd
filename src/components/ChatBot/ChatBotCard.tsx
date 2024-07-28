@@ -57,8 +57,8 @@ const ChatBotCard: React.FC<ChatBotCardProps> = ({ bot, actions }) => {
           <img
             loading="lazy"
             src={
-              bot.botURL
-                ? bot.botURL
+              bot.icon
+                ? bot.icon
                 : 'https://botwot-user-knowledgebase.s3.ap-south-1.amazonaws.com/bot14.svg'
             }
             alt={`${bot.botName} icon`}
@@ -105,7 +105,7 @@ const ChatBotCard: React.FC<ChatBotCardProps> = ({ bot, actions }) => {
                 alt=""
                 className="shrink-0 w-6 aspect-square"
               />
-              <span className="my-auto">{bot.docName }</span>
+              <span className="my-auto">{bot.file || 'knowledgebase.pdf'}</span>
             </div>
           </div>
           <div className="flex flex-col justify-between pt-3 whitespace-nowrap text-neutral-400">
