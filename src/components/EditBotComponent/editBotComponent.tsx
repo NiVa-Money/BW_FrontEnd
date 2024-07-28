@@ -11,6 +11,7 @@ import { RootState } from '@/redux/configureStore';
 import { useDispatch, useSelector } from 'react-redux';
 import Switch from '@mui/material/Switch';
 import { useRouter } from 'next/navigation';
+import { botImageBaseUrl } from '@/utils/constant';
 
 interface BotData {
   botId?: string;
@@ -57,8 +58,81 @@ const EditBotComponent: React.FC = () => {
   const [imagename, setImageName] = useState('');
   const [textVal, setTextVal] = useState('');
   const [filename, setFileName] = useState('');
+  const [botIconType, setBotIconType] = useState('second');
+  const [error, setError] = useState('');
   const [botIdToEdit, setBotIdToEdit] = useState<string | null>(null);
   const router = useRouter();
+
+  const botSamples = [
+    {
+      imageUrl: `${botImageBaseUrl}bot1.svg`,
+      iconType: 'bot1',
+    },
+    {
+      imageUrl: `${botImageBaseUrl}bot2.svg`,
+      iconType: 'bot2',
+    },
+    {
+      imageUrl: `${botImageBaseUrl}bot3.svg`,
+      iconType: 'bot3',
+    },
+    {
+      imageUrl: `${botImageBaseUrl}bot4.svg`,
+      iconType: 'bot4',
+    },
+    {
+      imageUrl: `${botImageBaseUrl}bot5.svg`,
+      iconType: 'bot5',
+    },
+    {
+      imageUrl: `${botImageBaseUrl}bot6.svg`,
+      iconType: 'bot6',
+    },
+    {
+      imageUrl: `${botImageBaseUrl}bot7.svg`,
+      iconType: 'bot7',
+    },
+    {
+      imageUrl: `${botImageBaseUrl}bot8.svg`,
+      iconType: 'bot8',
+    },
+    {
+      imageUrl: `${botImageBaseUrl}bot9.svg`,
+      iconType: 'bot9',
+    },
+    {
+      imageUrl: `${botImageBaseUrl}bot10.svg`,
+      iconType: 'bot10',
+    },
+    {
+      imageUrl: `${botImageBaseUrl}bot11.svg`,
+      iconType: 'bot11',
+    },
+    {
+      imageUrl: `${botImageBaseUrl}bot12.svg`,
+      iconType: 'bot12',
+    },
+    {
+      imageUrl: `${botImageBaseUrl}bot13.svg`,
+      iconType: 'bot13',
+    },
+    {
+      imageUrl: `${botImageBaseUrl}bot14.svg`,
+      iconType: 'bot14',
+    },
+    {
+      imageUrl: `${botImageBaseUrl}bot15.svg`,
+      iconType: 'bot15',
+    },
+  ];
+
+  
+  const handleBotSampleClick = (item: any) => {
+    setImageSrc(item?.imageUrl);
+
+    setBotIconType(item?.iconType);
+  };
+
 
   // Function to handle file upload
   const handleFileUpload = (event: any) => {
@@ -142,6 +216,25 @@ const EditBotComponent: React.FC = () => {
             </button>
           ))}
         </div>
+      </div>
+      <div className="mb-4">
+        <label className="block text-gray-200 mb-2">Bot profile</label>
+        <div className="grid grid-cols-5 gap-2">
+          {/* Add bot profile images here */}
+          {botSamples.map((item, idx) => (
+            <img
+              key={idx}
+              src={item.imageUrl}
+              alt="logo"
+              width={90}
+              height={80}
+              onClick={() => handleBotSampleClick(item)}
+            />
+          ))}
+        </div>
+        {error.includes('icon') && (
+          <div className="text-red-500 mb-4">{error}</div>
+        )}
       </div>
       <div className="mb-4">
         <label className="block text-gray-200 mb-2">Bot Greeting Message</label>
@@ -286,8 +379,8 @@ const EditBotComponent: React.FC = () => {
                   <br />
                   questions
                 </p>
-                <div className="flex flex-col w-full">
-                  {questionsSamples.map((value, index) => (
+                <div className="flex flex-col w-full h-[17vh]">
+                  {/* {questionsSamples.map((value, index) => (
                     <div
                       key={index}
                       className="clickable-div border-[1px] border-[solid] rounded-[12px] flex mt-2 mb-2 "
@@ -295,12 +388,12 @@ const EditBotComponent: React.FC = () => {
                     >
                       <span className="p-[10px]"> {value}</span>
                     </div>
-                  ))}
+                  ))} */}
                 </div>
                 <input
                   type="text"
-                  value={textVal}
-                  onChange={(e) => setTextVal(e.target.value)}
+                  value={greetingMessage}
+                  onChange={(e) => setGreetingMessage(e.target.value)}
                   className="w-full bg-[#171029] text-white p-2 rounded"
                 />
               </div>
