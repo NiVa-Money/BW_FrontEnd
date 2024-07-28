@@ -129,8 +129,8 @@ export const deleteBotProfileService = async (payload: any) => {
 export const exportBotProfileService = async (payload: any) => {
   try {
     const response = await axiosInstance.post(
-      `/user/widget/export/?botId=${payload.botId}&userId=${payload?.userId}`,
-      {}
+      "/user/widget/export/",
+      {botId:payload.botId,userId:payload?.userId}
     );
     return response.data;
   } catch (error: any) {

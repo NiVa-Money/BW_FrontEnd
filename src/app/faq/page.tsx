@@ -134,14 +134,12 @@ const videoData = Array.from({ length: 11 }, (_, index) => ({
 
 const HelpCenter: React.FC = () => {
   return (
-    <div className="max-w-3xl mx-auto rounded-2xl p-6 shadow-xl mb-6">
-       <h1 className="flex-1 my-auto text-3xl font-bold px-10 leading-6 text-white">
-          Help Center
-        </h1>
+    <div className="max-w-3xl mx-auto bg-[#17112A] rounded-2xl p-6 shadow-xl mb-6">
+      <h1 className="text-3xl font-bold text-white text-center mb-6">Help Center</h1>
       <div className="grid grid-cols-1 gap-10">
         {videoData.map((video, index) => (
           <div key={index} className="flex flex-col items-center">
-            <video controls className="w-full rounded-lg">
+            <video controls className="w-full rounded-lg mb-4">
               <source src={video.src} type="video/mp4" />
               Your browser does not support the video tag.
             </video>
@@ -153,6 +151,3 @@ const HelpCenter: React.FC = () => {
 };
 
 export default HelpCenter;
-
-
-
