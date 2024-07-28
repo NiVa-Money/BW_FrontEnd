@@ -188,14 +188,16 @@ const BotSessionComponent: React.FC = () => {
     setIsDragging(false);
   };
 
-  const handleMouseMove = (e:any) => {
+  const handleMouseMove = (e: any) => {
     if (!isDragging) return;
 
-    const container:any = containerRef.current;
+    const container: any = containerRef.current;
     const containerRect = container.getBoundingClientRect();
-    const newLeftWidth = ((e.clientX - containerRect.left) / containerRect.width) * 100;
+    const newLeftWidth =
+      ((e.clientX - containerRect.left) / containerRect.width) * 100;
 
-    if (newLeftWidth >= 50 && newLeftWidth <= 70) { // Ensure minimum (10%) and maximum (90%) width limits
+    if (newLeftWidth >= 50 && newLeftWidth <= 70) {
+      // Ensure minimum (10%) and maximum (90%) width limits
       setLeftWidth(newLeftWidth);
     }
   };
@@ -406,7 +408,7 @@ const BotSessionComponent: React.FC = () => {
         </div>
         <div
           className="flex flex-col justify-between z-10"
-          style={{ width: `${leftWidth}%` , height: '100%' }}
+          style={{ width: `${leftWidth}%`, height: '100%' }}
         >
           <div className="flex gap-1 max-md:flex-wrap max-md:max-w-full mb-5">
             <div className="flex flex-col self-stretch relative">
@@ -534,11 +536,15 @@ const BotSessionComponent: React.FC = () => {
                 chatsData[0]?.sessions?.map((message: any, index: any) => (
                   <div className="flex w-full mb-4" key={index}>
                     <div className="w-full max-md:w-full flex flex-col">
-                      <div className="w-[100%] py-[10px] gap-[10px] rounded-[12px] text-white text-right mb-2">
-                        <span className="p-[10px] bg-[#3F2181]">{message?.question}</span>
+                      <div className="w-full flex justify-end py-2 gap-2 rounded text-white mb-2 text-right">
+                        <span className="block w-fit p-2 bg-[#3F2181] rounded-3xl">
+                          {message?.question}
+                        </span>
                       </div>
-                      <div className="w-[100%] py-[10px] gap-[10px] rounded-[12px] text-white text-left">
-                        <span className="p-[10px] bg-[#2B243C]">{message?.answer}</span>
+                      <div className="w-full py-2 gap-2 rounded text-white text-left">
+                        <span className="block w-fit p-2 bg-[#2B243C] rounded-3xl">
+                          {message?.answer}
+                        </span>
                       </div>
                     </div>
                   </div>
@@ -592,7 +598,7 @@ const BotSessionComponent: React.FC = () => {
         ></div>
         <div
           className="flex justify-center items-center z-10"
-         style={{ width: `${100 - leftWidth}%` , height: '100%' }}
+          style={{ width: `${100 - leftWidth}%`, height: '100%' }}
         >
           <div className="w-[65%] h-[87%] adv-border-radius bg-[#FFFFFF] bg-opacity-10">
             {/* title */}
