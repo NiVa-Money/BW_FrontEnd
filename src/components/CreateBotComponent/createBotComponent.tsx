@@ -13,13 +13,21 @@ import { useRouter } from 'next/navigation';
 //redux post
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '@/redux/configureStore';
-import { createUserBotProfileService, getUserBotProfileService } from '@/redux/services';
+import {
+  createUserBotProfileService,
+  getUserBotProfileService,
+} from '@/redux/services';
 import { v4 as uuidv4 } from 'uuid';
-import { createBotProfileAction, getUserBotProfileAction } from '@/redux/actions/BotProfileActions';
+import {
+  createBotProfileAction,
+  getUserBotProfileAction,
+} from '@/redux/actions/BotProfileActions';
 import Switch from '@mui/material/Switch';
 import { botImageBaseUrl } from '@/utils/constant';
 import { HexColorPicker } from 'react-colorful';
 import { BackgroundCss } from '../BackgroundAnimation/backgroundCss';
+
+
 const CreateBotComponent: React.FC = () => {
   const [step, setStep] = useState(1);
   const [botName, setBotName] = useState('BotWot Assistant');
@@ -80,17 +88,16 @@ const CreateBotComponent: React.FC = () => {
     }
   };
 
-
-  const handleFileUpload = (event:any) => {
+  const handleFileUpload = (event: any) => {
     const file = event.target.files[0];
     console.log('img', file);
     setImageName(file.name);
     if (file) {
-      const reader:any = new FileReader();
+      const reader: any = new FileReader();
       reader.onloadend = () => {
         const base64String = reader?.result?.split(',')[1]; // Remove the "data:image/png;base64," part
         setBase64Image(base64String);
-        console.log("base64String",base64String);
+        console.log('base64String', base64String);
       };
       reader.readAsDataURL(file);
     }
@@ -115,14 +122,12 @@ const CreateBotComponent: React.FC = () => {
     (state: RootState) => state.root?.userData?.user_id
   );
 
-  
-
   const validateEmail = (email: string) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
   };
 
-  const validatePDFFile = (file:any) => {
+  const validatePDFFile = (file: any) => {
     const allowedExtensions = /(\.pdf)$/i;
     return allowedExtensions.exec(file.name);
   };
@@ -134,12 +139,12 @@ const CreateBotComponent: React.FC = () => {
   };
 
   const handleSave = async () => {
-    if (!botName){
+    if (!botName) {
       setError('Please enter a bot name.');
       return;
     }
 
-    if (!imageSrc){
+    if (!imageSrc) {
       setError('Please select a icon.');
       return;
     }
@@ -157,7 +162,7 @@ const CreateBotComponent: React.FC = () => {
       setError('Please enter a valid phone number with 10 digits.');
       return;
     }
-    
+
     const docId = uuidv4();
     const formData = new FormData();
     formData.append('botName', botName);
@@ -178,9 +183,9 @@ const CreateBotComponent: React.FC = () => {
       formData.append('file', selectedFile);
     }
 
-    dispatch(createBotProfileAction(formData))
+    dispatch(createBotProfileAction(formData));
     // dispatch(getUserBotProfileAction(userId));
-    router.push('/MyChatBots')
+    router.push('/MyChatBots');
   };
 
   const botSamples = [
@@ -258,20 +263,20 @@ const CreateBotComponent: React.FC = () => {
   //   console.log("chatcolor",chatColor)
   // };
 
-  const handleColorClick = (color:any) => {
+  const handleColorClick = (color: any) => {
     if (color === 'rainbow') {
-      setColorPicker(true)
+      setColorPicker(true);
       // setChatColor(color);
       setShowColorPicker(true);
     } else {
-      setColorPicker(false)
+      setColorPicker(false);
       setChatColor(color);
       setShowColorPicker(false);
     }
   };
 
   const renderStep1 = () => (
-    <div onClick={()=> showColorPicker ? setShowColorPicker(false) : ''}>
+    <div onClick={() => (showColorPicker ? setShowColorPicker(false) : '')}>
       <div className="mb-4">
         <label className="block text-gray-200 mb-2">Bot Name</label>
         {/* need to give name */}
@@ -282,37 +287,39 @@ const CreateBotComponent: React.FC = () => {
           onChange={(e) => setBotName(e.target.value)}
           className="w-full bg-[#171029] text-white p-2 rounded-[12px]"
         />
-        {error.includes('name') && <div className="text-red-500 mb-4">{error}</div>}
+        {error.includes('name') && (
+          <div className="text-red-500 mb-4">{error}</div>
+        )}
       </div>
       <div className="mb-4">
         <label className="block text-gray-200 mb-2">Chat Color</label>
         <div className="flex space-x-2">
-        {[
-        '#3B82F6',
-        '#EC4899',
-        '#EAB308',
-        '#4B5563',
-        '#22C55E',
-        'rainbow',
-      ].map((color) => (
-        <button
-          key={color}
-          onClick={() => handleColorClick(color)}
-          className={`w-8 h-8 rounded-full ${
-            color === 'rainbow'
-              ? 'bg-gradient-to-r from-red-500 via-green-500 to-blue-500'
-              : ''
-          }${chatColor === color ? 'border-4 border-gray-400' : ''}`}
-          style={{
-            backgroundColor: color !== 'rainbow' ? color : undefined,
-          }}
-        />
-      ))}
-       {showColorPicker && (
-        <div className="absolute z-10 mt-2">
-          <HexColorPicker color={chatColor} onChange={setChatColor} />
-        </div>
-      )}
+          {[
+            '#3B82F6',
+            '#EC4899',
+            '#EAB308',
+            '#4B5563',
+            '#22C55E',
+            'rainbow',
+          ].map((color) => (
+            <button
+              key={color}
+              onClick={() => handleColorClick(color)}
+              className={`w-8 h-8 rounded-full ${
+                color === 'rainbow'
+                  ? 'bg-gradient-to-r from-red-500 via-green-500 to-blue-500'
+                  : ''
+              }${chatColor === color ? 'border-4 border-gray-400' : ''}`}
+              style={{
+                backgroundColor: color !== 'rainbow' ? color : undefined,
+              }}
+            />
+          ))}
+          {showColorPicker && (
+            <div className="absolute z-10 mt-2">
+              <HexColorPicker color={chatColor} onChange={setChatColor} />
+            </div>
+          )}
         </div>
       </div>
       <div className="mb-4">
@@ -330,20 +337,22 @@ const CreateBotComponent: React.FC = () => {
             />
           ))}
         </div>
-        {error.includes('icon') && <div className="text-red-500 mb-4">{error}</div>}
+        {error.includes('icon') && (
+          <div className="text-red-500 mb-4">{error}</div>
+        )}
       </div>
       <div className="mb-4">
         <label className="block text-gray-200 mb-2">Custom photo</label>
         <div className="relative mb-4"></div>
         <div className="flex items-start">
-        <input
-              type="file"
-              onChange={handleFileUpload}
-              ref={viewerRef}
-              accept="image/*"
-              id="file-upload"
-              className="rounded-[70px] bg-[#3F2181] mt-0  text-white px-4 py-2 flex justify-center cursor-pointer"
-            />
+          <input
+            type="file"
+            onChange={handleFileUpload}
+            ref={viewerRef}
+            accept="image/*"
+            id="file-upload"
+            className="rounded-[70px] bg-[#3F2181] mt-0  text-white px-4 py-2 flex justify-center cursor-pointer"
+          />
           {/* <button
             disabled
             className="rounded-[70px] bg-[#3F2181] mt-0  text-white px-4 py-2 flex justify-center"
@@ -423,7 +432,9 @@ const CreateBotComponent: React.FC = () => {
             />
           </div>
         </div>
-        {error.includes('pdf') && <div className="relative mt-5 z-10 text-red-500">{error}</div>}
+        {error.includes('pdf') && (
+          <div className="relative mt-5 z-10 text-red-500">{error}</div>
+        )}
         <div className="flex items-center space-x-4 mt-5">
           {/* <button className="rounded-[70px] bg-[#3F2181] text-white px-4 py-2 flex items-center justify-center">
             <span>Upload</span>
@@ -479,7 +490,9 @@ const CreateBotComponent: React.FC = () => {
           placeholder="Enter Your Email"
           className="w-full bg-[#171029] text-white p-2 rounded-[12px]"
         />
-        {error.includes('email') && <div className="text-red-500 mb-4">{error}</div>}
+        {error.includes('email') && (
+          <div className="text-red-500 mb-4">{error}</div>
+        )}
       </div>
       <div className="mb-4">
         <label className="block text-gray-200 mb-2">Support Phone Number</label>
@@ -490,14 +503,16 @@ const CreateBotComponent: React.FC = () => {
           placeholder="Enter Your Phone Number"
           className="w-full bg-[#171029] text-white p-2 rounded-[12px]"
         />
-        {error.includes('phone') && <div className="text-red-500 mb-4">{error}</div>}
+        {error.includes('phone') && (
+          <div className="text-red-500 mb-4">{error}</div>
+        )}
       </div>
     </>
   );
 
   return (
     <div className="relative text-white h-[100%] overflow-hidden p-8">
-      <BackgroundCss/>
+      <BackgroundCss />
       <div className="max-w-[80%] mx-auto">
         <div className="flex justify-between items-center mb-8">
           <div className="flex gap-[8px]">
@@ -531,12 +546,22 @@ const CreateBotComponent: React.FC = () => {
             {step === 1 ? renderStep1() : renderStep2()}
           </div>
           <div className="w-2/5">
-            <aside className={`flex w-full flex-col ml-5 max-md:ml-0 max-md:w-full`}>
-              <div className={`flex flex-col grow items-center px-3 rounded pt-3.5 pb-7 mt-4 w-full bg-[#171029] rounded-2xl shadow-sm text-zinc-400 max-md:pl-5 max-md:mt-10 max-md:max-w-full`} >
-                <div className="flex gap-5 justify-between rounded items-center w-full max-w-full text-xl font-bold leading-7 text-black whitespace-nowrap" style={{ backgroundColor: chatColor !== 'rainbow' ? chatColor : undefined }}>
+            <aside
+              className={`flex w-full flex-col ml-5 max-md:ml-0 max-md:w-full`}
+            >
+              <div
+                className={`flex flex-col grow items-center px-3 rounded pt-3.5 pb-7 mt-4 w-full bg-[#171029] rounded-2xl shadow-sm text-zinc-400 max-md:pl-5 max-md:mt-10 max-md:max-w-full`}
+              >
+                <div
+                  className="flex gap-5 justify-between rounded items-center w-full max-w-full text-xl font-bold leading-7 text-black whitespace-nowrap"
+                  style={{
+                    backgroundColor:
+                      chatColor !== 'rainbow' ? chatColor : undefined,
+                  }}
+                >
                   <h2 className="my-auto p-5 text-white">Preview</h2>
-                  <div className='my-auto p-5 text-white'>
-                  <ZoomOutMapIcon style={{ color: 'white' }} />
+                  <div className="my-auto p-5 text-white">
+                    <ZoomOutMapIcon style={{ color: 'white' }} />
                   </div>
                 </div>
                 {imageSrc ? (

@@ -405,12 +405,12 @@ const BotSessionComponent: React.FC = () => {
                 />
               </div>
               {isBotProfileOpen && (
-                <div className="flex flex-col py-2 text-base tracking-wide leading-6 bg-[#1E1533] rounded-b-lg shadow max-w-[280px] absolute top-full left-0 right-0 z-10">
+                <div className="flex flex-col text-base justify-center items-center bg-[#1E1533] rounded-b-lg shadow max-w-[280px] overflow-scroll">
                   {botProfiles?.botProfiles?.data?.map(
                     (bot: any, index: any) => (
                       <div
                         key={index}
-                        className={`mb-2  cursor-pointer ${
+                        className={`mb-2 mt-2  cursor-pointer ${
                           activeBotIndex === index ? 'bg-[#3E3556]' : ''
                         }`}
                         onClick={() => handleBotClick(index, bot._id)}

@@ -125,12 +125,12 @@ export function* fetchuserMetricSaga({
       type: FETCH_USER_METRICTS_SUCCESS,
       payload: fetchuserMetricData,
     });
-    notifySuccess('api successful for getting UserMetrics');
+    // notifySuccess('api successful for getting UserMetrics');
   } catch (error: any) {
     yield put({
       type: FETCH_USER_METRICTS_FAILURE,
     });
-    notifyError(`${error}`);
+    // notifyError(`${error}`);
   }
 }
 function* loginSaga({ payload }: any) {
@@ -204,7 +204,7 @@ export function* createBotProfileSaga({
     }
     
     const botProfiles = yield call(getUserBotProfileService, userId);
-    notifySuccess('api successful for getting botProfiles');
+    // notifySuccess('api successful for getting botProfiles');
     yield put({
       type: GET_USER_BOT_PROFILE_SUCCESS,
       payload: botProfiles,
@@ -213,7 +213,7 @@ export function* createBotProfileSaga({
     yield put({
       type: CREATE_BOT_PROFILE_FAILURE,
     });
-    notifyError(`${error}`);
+    // notifyError(`${error}`);
   }
 }
 
@@ -248,7 +248,7 @@ export function* getBotProfilesSaga({
 }): Generator<any> {
   try {
     const botProfiles = yield call(getUserBotProfileService, payload);
-    notifySuccess('botProfiles fetched successfully');
+    // notifySuccess('botProfiles fetched successfully');
     yield put({
       type: GET_USER_BOT_PROFILE_SUCCESS,
       payload: botProfiles,
