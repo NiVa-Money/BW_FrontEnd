@@ -244,24 +244,24 @@ const NewChatComponent: React.FC = () => {
           )} */}
         </div>
         <div className="flex gap-3 flex-1 justify-between">
-          <div className="flex w-[8vw] flex-col bg-[#B21888] py-2.5 px-1 rounded-xl border border-gray-700 border-solid">
-            <div className="text-base text-gray-300">Number of bots:</div>
-            <div className="flex items-center justify-center mt-2.5 text-3xl font-semibold text-white">
-              {botProfiles?.botProfiles?.data?.length}
-            </div>
+        <div className="flex w-[10vw] text-center flex-col bg-transparent py-2.5 px-1 rounded-xl border border-white border-solid">
+          <div className="text-base text-gray-300">Number of bots:</div>
+          <div className="flex items-center justify-center mt-2.5 text-3xl font-semibold text-white">
+            {botProfiles?.botProfiles?.data?.length}
           </div>
-          <div className="flex w-[8vw] flex-col py-2.5 bg-[#2BCD94] px-1 rounded-xl border border-gray-700 border-solid">
-            <div className="text-base text-gray-300">Messages left:</div>
-            <div className="flex items-center justify-center mt-2.5 text-3xl font-semibold text-white">
-              {messagesLeft}
-            </div>
+        </div>
+        <div className="flex w-[10vw] text-center flex-col py-2.5 bg-transparent px-1 rounded-xl border border-white border-solid">
+          <div className="text-base text-gray-300">Messages left:</div>
+          <div className="flex items-center justify-center mt-2.5 text-3xl font-semibold text-white">
+            {messagesLeft}
           </div>
-          <div className="flex w-[8vw] flex-col py-2.5 bg-[#3F2181] px-1 whitespace-nowrap rounded-xl border border-gray-700 border-solid">
-            <div className="text-base text-gray-300">Membership:</div>
-            <div className="flex items-center justify-center mt-2.5 text-3xl font-semibold text-white">
-              Basic
-            </div>
+        </div>
+        <div className="flex w-[10vw] text-center flex-col py-2.5 bg-transparent px-1 whitespace-nowrap rounded-xl border border-white border-solid">
+          <div className="text-base text-gray-300">Membership:</div>
+          <div className="flex items-center justify-center mt-2.5 text-3xl font-semibold text-white">
+            Basic
           </div>
+        </div>
         </div>
       </div>
       {/* <div className="mt-80 w-full max-w-[930px] max-md:mt-10 max-md:max-w-full">

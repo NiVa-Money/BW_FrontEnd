@@ -122,3 +122,5 @@ const FAQbody: React.FC = () => {
 };
 
 export default FAQbody;
+
+

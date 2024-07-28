@@ -14,7 +14,6 @@ import {
 import ConfirmModal from './modalDelete';
 import { useRouter } from 'next/navigation';
 import withAuth from '../withAuth';
-import { BackgroundCss } from '../BackgroundAnimation/backgroundCss';
 
 interface ChatBot {
   botId?: any;
@@ -50,6 +49,9 @@ const ChatBotList: React.FC = () => {
   const handleEdit = (index: number) => {
     // Navigate to the edit page with the botId as a query parameter
     router.push(`/editBot`);
+  };
+  const handleExport = (index: number) => {
+   alert('ss');
   };
 
   // Function to handle delete action
@@ -123,6 +125,7 @@ const ChatBotList: React.FC = () => {
             actions={{
               onDelete: () => handleDelete(chatBot?._id),
               onEdit: () => handleEdit(index),
+              onExport : () => handleExport(index), 
             }}
           />
         ))}

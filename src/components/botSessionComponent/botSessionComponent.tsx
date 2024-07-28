@@ -597,7 +597,7 @@ const BotSessionComponent: React.FC = () => {
           <div className="w-[65%] h-[87%] adv-border-radius bg-[#FFFFFF] bg-opacity-10">
             {/* title */}
             <div className="mt-4">
-              <h4 className="text-center custom-purple">Advanced Features</h4>
+              <h4 className="text-center custom-purple">Chat Analysis</h4>
             </div>
             {/* description */}
             <div className="p-5">
@@ -638,7 +638,7 @@ const BotSessionComponent: React.FC = () => {
                 className="custom-button bg-[#FFFFFF] bg-opacity-10"
                 onClick={openPopup}
               >
-                Sentiment Analysis
+                Customer Sentiments
               </button>
               {sentimentAnalysis ? (
                 <div className="w-[80%] flex justify-center items-center mt-2 border-4 border-[#DB88DB] py-4 px-10 text-base">
@@ -653,7 +653,7 @@ const BotSessionComponent: React.FC = () => {
                 className="custom-button bg-[#FFFFFF] bg-opacity-10"
                 onClick={openPopup}
               >
-                Next Steps
+                Feedback / AI Recommendations
               </button>
               {nextSteps ? (
                 <div className="w-[80%] flex justify-center items-center mt-2 border-4 border-[#DB88DB] py-4 px-10 text-base">
