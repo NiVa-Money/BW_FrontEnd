@@ -125,7 +125,7 @@ const SideBar: React.FC = () => {
       </button>
 
       <MenuItem item={DashboardItem} key={DashboardItem?.text} />
-      <div className='flex flex-col h-[100%] justify-between'>
+      <div className='flex flex-col h-[100%] justify-between overflow-y-scroll'>
       <div className="flex flex-col space-y-2">
         {SIDENAV_ITEMS.map((item, idx) => (
           <MenuItem key={idx} item={item} />

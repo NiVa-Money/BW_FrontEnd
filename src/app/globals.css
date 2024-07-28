@@ -23,3 +23,17 @@ body {
     text-wrap: balance;
   }
 }
+
+/* In your CSS file or a <style> tag */
+::-webkit-scrollbar {
+  width: 3px; /* Adjust width */
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: white; /* Scrollbar thumb color */
+  border-radius: 8px; /* Rounded corners */
+}
+
+::-webkit-scrollbar-track {
+  background: transparent; /* Scrollbar track color */
+}
