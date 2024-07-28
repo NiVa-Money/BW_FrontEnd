@@ -293,7 +293,7 @@ const BotSessionComponent: React.FC = () => {
             {/* <i className={`fas ${item.icon}`}></i> */}
             <span>
               {' '}
-              <i className="fas fa-gauge-high" />
+              <i className="fas fa-gauge-high mr-3" />
               Dashboard
             </span>
           </Link>
@@ -302,7 +302,7 @@ const BotSessionComponent: React.FC = () => {
           {/* <i className={`fas ${item.icon}`}></i> */}
           <span>
             {' '}
-            <i className="fas fa-comment" />
+            <i className="fas fa-comment  mr-3" />
             Sessions
           </span>
         </div>
@@ -410,7 +410,7 @@ const BotSessionComponent: React.FC = () => {
           className="flex flex-col justify-between z-10"
           style={{ width: `${leftWidth}%`, height: '100%' }}
         >
-          <div className="flex gap-1 max-md:flex-wrap max-md:max-w-full mb-5">
+          <div className="flex gap-1 h-[125px] max-md:flex-wrap max-md:max-w-full mb-5">
             <div className="flex flex-col self-stretch relative">
               <div
                 className="flex gap-2.5 justify-center p-2.5 text-xl font-medium text-white rounded-t-lg cursor-pointer"
@@ -432,12 +432,12 @@ const BotSessionComponent: React.FC = () => {
                     (bot: any, index: any) => (
                       <div
                         key={index}
-                        className={`mb-2 mt-2  cursor-pointer ${
+                        className={`mt-2  cursor-pointer ${
                           activeBotIndex === index ? 'bg-[#3E3556]' : ''
                         }`}
                         onClick={() => handleBotClick(index, bot._id)}
                       >
-                        <div className="justify-center px-3 py-2 text-white">
+                        <div className="justify-center mt-2 px-1 py-1 text-white">
                           {bot.botName}
                         </div>
                         {/* <div className="mt-2 px-3 text-gray-400">MarketBot</div> */}
