@@ -75,6 +75,7 @@ const BotSessionComponent: React.FC = () => {
     (state: RootState) => state?.userChat?.advanceFeature
   );
   const [chatsData, setchatsData] = React.useState<any>([]);
+  const [selectedBotName, setSelectedBotName] = React.useState<any>('');
 
   React.useEffect(() => {
     if (chatContainerRef.current) {
@@ -83,8 +84,9 @@ const BotSessionComponent: React.FC = () => {
     }
   }, [messages]);
 
-  const handleBotClick = (index: any, botId: any) => {
+  const handleBotClick = (index: any, botId: any, botName: any) => {
     setActiveBotIndex(index);
+    setSelectedBotName(botName);
     // console.log('allSession', allSession.data.sessions);
     const data = {
       filteredSessions: [],
@@ -410,43 +412,7 @@ const BotSessionComponent: React.FC = () => {
           className="flex flex-col justify-between z-10"
           style={{ width: `${leftWidth}%`, height: '100%' }}
         >
-          <div className="flex gap-1 h-[125px] max-md:flex-wrap max-md:max-w-full mb-5">
-            <div className="flex flex-col self-stretch relative">
-              <div
-                className="flex gap-2.5 justify-center p-2.5 text-xl font-medium text-white rounded-t-lg cursor-pointer"
-                onClick={toggleBotProfile}
-              >
-                <div>Bot Profile</div>
-                <img
-                  loading="lazy"
-                  src="https://cdn.builder.io/api/v1/image/assets/TEMP/ecfab022e56ef6ff0a58045a291327eda3e871d2c6c2576eee117363bc12ecf0?apiKey=555c811dd3f44fc79b6b2689129389e8&"
-                  className={`shrink-0 aspect-square w-[30px] transition-transform duration-300 ${
-                    isBotProfileOpen ? 'rotate-180' : ''
-                  }`}
-                  alt="Bot Profile"
-                />
-              </div>
-              {isBotProfileOpen && (
-                <div className="flex flex-col text-base justify-center items-center bg-[#1E1533] rounded-b-lg shadow max-w-[280px] overflow-scroll">
-                  {botProfiles?.botProfiles?.data?.map(
-                    (bot: any, index: any) => (
-                      <div
-                        key={index}
-                        className={`mt-2  cursor-pointer ${
-                          activeBotIndex === index ? 'bg-[#3E3556]' : ''
-                        }`}
-                        onClick={() => handleBotClick(index, bot._id)}
-                      >
-                        <div className="justify-center mt-2 px-1 py-1 text-white">
-                          {bot.botName}
-                        </div>
-                        {/* <div className="mt-2 px-3 text-gray-400">MarketBot</div> */}
-                      </div>
-                    )
-                  )}
-                </div>
-              )}
-            </div>
+          <div className="flex  justify-center items-center gap-1 h-[125px] max-md:flex-wrap max-md:max-w-full mb-5">
             <div className="flex flex-col self-stretch relative">
               {/* <div
             className="flex gap-2.5 justify-center p-2.5 text-xl font-medium bg-[#2D2640] text-white rounded-t-lg cursor-pointer"
@@ -481,7 +447,51 @@ const BotSessionComponent: React.FC = () => {
             </div>
           )} */}
             </div>
-            <div className="flex gap-3 flex-1">
+            <div className="flex gap-3 flex-1 justify-center items-center">
+              <div className="flex flex-col self-stretch relative">
+                <div
+                  className="flex gap-2.5 justify-center p-2.5 text-xl font-medium text-white rounded-t-lg cursor-pointer"
+                  onClick={toggleBotProfile}
+                >
+                  <div>Bot Profile</div>
+                  <img
+                    loading="lazy"
+                    src="https://cdn.builder.io/api/v1/image/assets/TEMP/ecfab022e56ef6ff0a58045a291327eda3e871d2c6c2576eee117363bc12ecf0?apiKey=555c811dd3f44fc79b6b2689129389e8&"
+                    className={`shrink-0 aspect-square w-[30px] transition-transform duration-300 ${
+                      isBotProfileOpen ? 'rotate-180' : ''
+                    }`}
+                    alt="Bot Profile"
+                  />
+                </div>
+                <div
+                  className="flex w-[8.5vw] h-[60px] flex justify-center items-center py-2.5 bg-[#1E1533] overflow-y-scroll  rounded p-1 border-gray-500 border-solid"
+                  // onClick={toggleBotProfile}
+                >
+                  <div>{selectedBotName}</div>
+                </div>
+                {isBotProfileOpen && (
+                  <div className="flex mt-2 w-[8.5vw] flex-col py-2 text-base tracking-wide leading-6 bg-[#1E1533] rounded-b-lg shadow max-w-[280px] absolute top-full left-0 right-0 z-10">
+                    {botProfiles?.botProfiles?.data?.map(
+                      (bot: any, index: any) => (
+                        <div
+                          key={index}
+                          className={`mb-2 flex justify-center items-center cursor-pointer ${
+                            activeBotIndex === index ? 'bg-[#3E3556]' : ''
+                          }`}
+                          onClick={() =>
+                            handleBotClick(index, bot._id, bot.botName)
+                          }
+                        >
+                          <div className="flex justify-center items-center px-2 py-2 text-white">
+                            {bot.botName}
+                          </div>
+                          {/* <div className="mt-2 px-3 text-gray-400">MarketBot</div> */}
+                        </div>
+                      )
+                    )}
+                  </div>
+                )}
+              </div>
               <div className="flex w-[8vw] flex-col bg-[#B21888] py-2.5 px-1 rounded-xl border border-gray-700 border-solid">
                 <div className="text-base text-gray-300">Number of bots:</div>
                 <div className="flex items-center justify-center mt-2.5 text-3xl font-semibold text-white">
