@@ -19,6 +19,7 @@ import { createBotProfileAction, getUserBotProfileAction } from '@/redux/actions
 import Switch from '@mui/material/Switch';
 import { botImageBaseUrl } from '@/utils/constant';
 import { HexColorPicker } from 'react-colorful';
+import { BackgroundCss } from '../BackgroundAnimation/backgroundCss';
 const CreateBotComponent: React.FC = () => {
   const [step, setStep] = useState(1);
   const [botName, setBotName] = useState('BotWot Assistant');
@@ -495,7 +496,8 @@ const CreateBotComponent: React.FC = () => {
   );
 
   return (
-    <div className="text-white min-h-screen p-8">
+    <div className="relative text-white h-[100%] overflow-hidden p-8">
+      <BackgroundCss/>
       <div className="max-w-[80%] mx-auto">
         <div className="flex justify-between items-center mb-8">
           <div className="flex gap-[8px]">

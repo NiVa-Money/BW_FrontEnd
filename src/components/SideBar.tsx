@@ -16,6 +16,7 @@ import {
 } from '@/redux/actions/BotProfileActions';
 import { logoutUser } from '@/redux/actions/authActions';
 import { botSessionId } from '@/redux/actions/userChatAction';
+import { BackgroundCss } from './BackgroundAnimation/backgroundCss';
 
 interface SidebarItemProps {
   path?: string;
@@ -104,7 +105,8 @@ const SideBar: React.FC = () => {
     console.log('botProfile', botProfiles);
   }, [botProfiles]);
   return (
-    <div className="w-64 p-4 flex flex-col h-screen relative">
+    <div className="w-64 h-[100%] p-4 bg-[#0B031E] flex flex-col h-screen relative">
+      {/* <BackgroundCss/> */}
       <Link
         href={'/dashBoard'}
         className="flex justify-center w-full mt-[10px] mb-[20px]"
