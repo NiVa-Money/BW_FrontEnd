@@ -532,10 +532,12 @@ const CreateBotComponent: React.FC = () => {
           </div>
           <div className="w-2/5">
             <aside className={`flex w-full flex-col ml-5 max-md:ml-0 max-md:w-full`}>
-              <div className={`flex flex-col grow items-center px-6 pt-3.5 pb-7 mt-4 w-full rounded-2xl shadow-sm text-zinc-400 max-md:pl-5 max-md:mt-10 max-md:max-w-full`}  style={{ backgroundColor: chatColor !== 'rainbow' ? chatColor : undefined }}>
-                <div className="flex gap-5 justify-between items-center w-full max-w-full text-xl font-bold leading-7 text-black whitespace-nowrap">
+              <div className={`flex flex-col grow items-center px-3 rounded pt-3.5 pb-7 mt-4 w-full bg-[#171029] rounded-2xl shadow-sm text-zinc-400 max-md:pl-5 max-md:mt-10 max-md:max-w-full`} >
+                <div className="flex gap-5 justify-between rounded items-center w-full max-w-full text-xl font-bold leading-7 text-black whitespace-nowrap" style={{ backgroundColor: chatColor !== 'rainbow' ? chatColor : undefined }}>
                   <h2 className="my-auto p-5 text-white">Preview</h2>
+                  <div className='my-auto p-5 text-white'>
                   <ZoomOutMapIcon style={{ color: 'white' }} />
+                  </div>
                 </div>
                 {imageSrc ? (
                   <Image
@@ -546,7 +548,7 @@ const CreateBotComponent: React.FC = () => {
                     className="mr-2 h-200 w-200 rounded-full"
                   />
                 ) : (
-                  <span className="mr-2">Choose Profile</span>
+                  <span className="mr-2 mt-4">Choose Profile</span>
                 )}{' '}
                 {/* <img
                   loading="lazy"
@@ -573,7 +575,7 @@ const CreateBotComponent: React.FC = () => {
                     </div>
                   ))} */}
                 </div>
-                <div
+                {/* <div
                   className="flex items-center justify-start mt-[50px] mb-4 w-full h-[Hug (57px)px] bg-[#2B243C] rounded-[12px] p-[10px]"
                   onClick={() => {
                     setTextVal(initiateConversation);
@@ -583,7 +585,7 @@ const CreateBotComponent: React.FC = () => {
                     <Image src={imageSrc} height={50} width={50} alt="logo" />
                   ) : null}
                   <span>{initiateConversation}</span>
-                </div>
+                </div> */}
                 <input
                   type="text"
                   value={greetingMessage}
