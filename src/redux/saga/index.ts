@@ -190,7 +190,11 @@ export function* createBotProfileSaga({
 }): Generator<any> {
   try {
     const createBot = yield call(createUserBotProfileService, payload);
-    notifySuccess('Bot created successfully');
+    if(createBot.success){
+       notifySuccess('Bot created successfully');
+    }else{
+      notifyError(`${createBot.error}`);
+    }
     yield put({
       type: CREATE_BOT_PROFILE_SUCCESS,
       payload: createBot,
