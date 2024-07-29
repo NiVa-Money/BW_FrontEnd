@@ -4,6 +4,7 @@ import { RootState } from '@/redux/configureStore';
 import * as React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import './newchat.css';
+
 import {
   filteredSession,
   getAllSession,
@@ -21,12 +22,14 @@ const NewChatComponent: React.FC = () => {
   // const [sessionId, setSessionId] = React.useState<any>('');
   const [botId, setBotId] = React.useState<any>(null);
   const chatContainerRef = React.useRef<any>(null);
+  const bottomRef = React.useRef<any>(null);
   const [sessionId, setSessionId] = React.useState<string>('');
   const [question, setQuestion] = React.useState<any>({
     text: 'tell me about this pdf',
   });
   const [newMessage, setNewMessage] = React.useState<any>('');
   const [messages, setMessages] = React.useState<any>([]);
+  const [selectedBotName, setSelectedBotName] = React.useState<any>('');
 
   const botProfiles = useSelector((state: RootState) => state.botProfile);
   const userId = useSelector(
@@ -49,7 +52,8 @@ const NewChatComponent: React.FC = () => {
     }
   }, [messages]);
 
-  const handleBotClick = (index: any, botId: any) => {
+  const handleBotClick = (index: any, botId: any, botName: any) => {
+    setSelectedBotName(botName);
     setActiveBotIndex(index);
     // console.log('allSession', allSession.data.sessions);
     const data = {
@@ -59,7 +63,7 @@ const NewChatComponent: React.FC = () => {
     dispatch(filteredSession(data));
     // console.log('Selected Bot ID:', botId);
     setBotId(botId);
-    // setIsBotProfileOpen(!isBotProfileOpen);
+    setIsBotProfileOpen(!isBotProfileOpen);
   };
 
   const getChatHistory = () => {
@@ -114,6 +118,12 @@ const NewChatComponent: React.FC = () => {
     dispatch(filteredSession(data));
   };
 
+  const messageVariants = {
+    hidden: { opacity: 0, x: 50 },
+    visible: { opacity: 1, x: 0 },
+    exit: { opacity: 0, x: -50 },
+  };
+
   const handleSubmit = (e: any) => {
     e.preventDefault();
     if (!botId) {
@@ -126,6 +136,19 @@ const NewChatComponent: React.FC = () => {
   React.useEffect(() => {
     // console.log('allSession', allSession.data.sessions);
   }, [allSession]);
+
+  React.useEffect(() => {
+    // Dynamically create a script tag
+    const script = document.createElement('script');
+    script.src = '/chatgpt-typewriter-js.js'; // Path to the script in the public directory
+    script.async = true;
+    document.body.appendChild(script);
+
+    // Cleanup the script tag on component unmount
+    return () => {
+      document.body.removeChild(script);
+    };
+  }, []);
 
   React.useEffect(() => {
     // console.log('messagesLeft', messagesLeft);
@@ -144,31 +167,89 @@ const NewChatComponent: React.FC = () => {
   React.useEffect(() => {
     // console.log('userChatMessagesRes', userChatMessagesRes);
     setSessionId(userChatMessagesRes?.sessionId);
+    if (chatContainerRef.current) {
+      chatContainerRef.current.scrollTop =
+        chatContainerRef.current.scrollHeight;
+    }
     // console.log('newMessage', newMessage);
     // console.log('botProfiles', botProfiles);
   }, [userChatMessagesRes]);
 
   return (
     <div className="relative flex flex-col justify-between items-center px-10 py-10 bg-[#0B031E] min-h-screen max-md:px-5 overflow-hidden">
-       <div className="absolute inset-0">
-        <svg className="moving-svg" viewBox="0 0 1480 1774" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <rect width="1440" height="1287" transform="translate(20 20)" fill="#0B031E" />
-          <g filter="url(#filter0_f_180_721)" className=''>
-            <circle className="moving-circle" cx="300" cy="1022" r="252" fill="#C00DC8" />
+      <div className="absolute inset-0">
+        <svg
+          className="moving-svg"
+          viewBox="0 0 1480 1774"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <rect
+            width="1440"
+            height="1287"
+            transform="translate(20 20)"
+            fill="#0B031E"
+          />
+          <g filter="url(#filter0_f_180_721)" className="">
+            <circle
+              className="moving-circle"
+              cx="300"
+              cy="1022"
+              r="252"
+              fill="#C00DC8"
+            />
           </g>
-          <g filter="url(#filter1_f_180_721)" className=''>
-            <circle className="moving-circle" cx="1285" cy="150" r="252" fill="#C00DC8" />
+          <g filter="url(#filter1_f_180_721)" className="">
+            <circle
+              className="moving-circle"
+              cx="1285"
+              cy="150"
+              r="252"
+              fill="#C00DC8"
+            />
           </g>
           <defs>
-            <filter id="filter0_f_180_721" x="-66" y="270" width="1504" height="1504" filterUnits="userSpaceOnUse" colorInterpolationFilters="sRGB">
+            <filter
+              id="filter0_f_180_721"
+              x="-66"
+              y="270"
+              width="1504"
+              height="1504"
+              filterUnits="userSpaceOnUse"
+              colorInterpolationFilters="sRGB"
+            >
               <feFlood floodOpacity="0" result="BackgroundImageFix" />
-              <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape" />
-              <feGaussianBlur stdDeviation="250" result="effect1_foregroundBlur_180_721" />
+              <feBlend
+                mode="normal"
+                in="SourceGraphic"
+                in2="BackgroundImageFix"
+                result="shape"
+              />
+              <feGaussianBlur
+                stdDeviation="250"
+                result="effect1_foregroundBlur_180_721"
+              />
             </filter>
-            <filter id="filter1_f_180_721" x="533" y="-480" width="1504" height="1504" filterUnits="userSpaceOnUse" colorInterpolationFilters="sRGB">
+            <filter
+              id="filter1_f_180_721"
+              x="533"
+              y="-480"
+              width="1504"
+              height="1504"
+              filterUnits="userSpaceOnUse"
+              colorInterpolationFilters="sRGB"
+            >
               <feFlood floodOpacity="0" result="BackgroundImageFix" />
-              <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape" />
-              <feGaussianBlur stdDeviation="250" result="effect1_foregroundBlur_180_721" />
+              <feBlend
+                mode="normal"
+                in="SourceGraphic"
+                in2="BackgroundImageFix"
+                result="shape"
+              />
+              <feGaussianBlur
+                stdDeviation="250"
+                result="effect1_foregroundBlur_180_721"
+              />
             </filter>
           </defs>
         </svg>
@@ -190,17 +271,23 @@ const NewChatComponent: React.FC = () => {
               alt="Bot Profile"
             />
           </div>
+          <div
+            className="flex w-[8.5vw] h-[60px] flex justify-center items-center py-2.5 bg-[#1E1533] overflow-y-scroll  rounded p-1 border-gray-500 border-solid"
+            // onClick={toggleBotProfile}
+          >
+            <div>{selectedBotName}</div>
+          </div>
           {isBotProfileOpen && (
-            <div className="flex flex-col text-base justify-center items-center bg-[#1E1533] rounded-b-lg shadow max-w-[280px] overflow-scroll">
+            <div className="flex mt-2  w-[8.5vw] h-[25vh] overflow-y-auto flex-col py-2 text-base tracking-wide leading-6 bg-[#1E1533] rounded-b-lg shadow max-w-[280px] absolute top-full left-0 right-0 z-10">
               {botProfiles?.botProfiles?.data?.map((bot: any, index: any) => (
                 <div
                   key={index}
-                  className={`mt-2 cursor-pointer ${
+                  className={`mb-2 flex justify-center items-center cursor-pointer ${
                     activeBotIndex === index ? 'bg-[#3E3556]' : ''
                   }`}
-                  onClick={() => handleBotClick(index, bot._id)}
+                  onClick={() => handleBotClick(index, bot._id, bot.botName)}
                 >
-                  <div className="justify-center px-3 py-2 text-white">
+                  <div className="flex justify-center items-center px-2 py-2 text-white">
                     {bot.botName}
                   </div>
                   {/* <div className="mt-2 px-3 text-gray-400">MarketBot</div> */}
@@ -294,47 +381,55 @@ const NewChatComponent: React.FC = () => {
           ref={chatContainerRef}
           className="flex flex-col gap-5 max-md:gap-0 h-full overflow-y-auto pr-2 scrollbar-thin scrollbar-thumb-white scrollbar-track-transparent"
         >
-          {userChatMessagesRes?.data?.map((message: any, index: any) =>
-          
-          {
-            const formattedText = message?.text?.replace(/\n/g, '<br />');
+          {userChatMessagesRes?.data?.map((message: any, index: any) => {
+            const formattedText = message?.text?.replace(/\n/g, '<br />').replace(/\*(.*?)\*/g, '<b>$1</b>');
+            
             return (
-            <div className="flex w-full" key={index}>
-              <div
-                className={`flex ${
-                  message?.sender === 'user' ? 'justify-end' : 'justify-start'
-                } w-full`}
-              >
+              <div className="flex w-full" key={index}>
                 <div
-                  className={`${
-                    message?.sender === 'user'
-                      ? 'text-right ml-auto'
-                      : 'text-left mr-auto'
-                  } max-md:w-full`}
+                  className={`flex ${
+                    message?.sender === 'user' ? 'justify-end' : 'justify-start'
+                  } w-full`}
                 >
                   <div
                     className={`${
                       message?.sender === 'user'
-                        ? 'text-xl font-medium text-white'
-                        : 'grow text-xl font-medium text-white max-md:mt-10'
-                    }`}
+                        ? 'text-right ml-auto'
+                        : 'text-left mr-auto'
+                    } max-md:w-full`}
                   >
                     <div
                       className={`${
                         message?.sender === 'user'
-                          ? 'p-2.5 bg-[#5D39AD] rounded-xl'
-                          : 'p-2.5 bg-[#2D2640] rounded-xl chat-box-size'
+                          ? 'text-xl font-medium text-white'
+                          : 'grow text-xl font-medium text-white max-md:mt-10'
                       }`}
-                      dangerouslySetInnerHTML={{ __html: formattedText }}
                     >
-                      {/* {message?.text}
-                      dangerouslySetInnerHTML={{ __html: formattedText }} */}
+                      {/* <motion.div
+                      className={`w-full py-2 gap-2 rounded-3xl text-white mb-2`}
+                      initial="hidden"
+                      animate="visible"
+                      exit="exit"
+                      variants={messageVariants}
+                      transition={{ duration: 0.5 }}
+                    > */}
+                      <div
+                        id="typewriter-gpt-2"
+                        className={`${
+                          message?.sender === 'user'
+                            ? 'p-2.5 bg-[#5D39AD] rounded-xl'
+                            : 'p-2.5 bg-[#2D2640] rounded-xl chat-box-size'
+                        }`}
+                        dangerouslySetInnerHTML={{ __html: formattedText }}
+                      />
+                      {/* </motion.div> */}
                     </div>
                   </div>
                 </div>
               </div>
-            </div>
-          )})}
+            );
+          })}
+          <div ref={bottomRef} />
         </div>
       </div>
 

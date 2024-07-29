@@ -1,16 +1,16 @@
 /* In your CSS file or a <style> tag */
-::-webkit-scrollbar {
-    width: 3px; /* Adjust width */
+/* ::-webkit-scrollbar {
+    width: 3px; 
   }
   
   ::-webkit-scrollbar-thumb {
-    background-color: white; /* Scrollbar thumb color */
-    border-radius: 8px; /* Rounded corners */
+    background-color: white; 
+    border-radius: 8px; 
   }
   
   ::-webkit-scrollbar-track {
-    background: transparent; /* Scrollbar track color */
-  }
+    background: transparent; 
+  } */
 
   .Input-container{
     display: flex;
@@ -136,4 +136,45 @@
   /* line-height: 4.5vh; */
   padding: 1vw;
   background: rgba(0, 0, 0, 0.2);
+}
+
+
+@keyframes typing {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
+}
+
+.message {
+  /* overflow: hidden; Ensures the animation effect is visible */
+  /* white-space: nowrap; Prevents text from wrapping */
+  animation: typing 1s steps(30, end), step-end infinite;
+  /* border-right: 2px solid; Optional: adds a blinking cursor effect */
+}
+
+/* @keyframes blink-caret {
+  from, to {
+    border-color: transparent;
+  }
+  50% {
+    border-color: black;
+  }
+} */
+
+.typing-animation {
+  display: inline-block;
+  white-space: nowrap;
+  overflow: hidden;
+  border-right: 2px solid #000;
+  animation: typing 4s steps(30, end), blink-caret .75s step-end infinite;
+  /* Ensure that the container fits the text */
+  width: max-content;
+}
+
+@keyframes blink-caret {
+  from, to { border-color: transparent; }
+  50% { border-color: black; }
 }

@@ -214,10 +214,10 @@ export const getUserChatService = async (payload: any) => {
   try {
     const response = await axiosInstance.post('user/sessionChat', payload);
     return response.data;
-  } catch (error) {
-    console.error('Error signing up user:', error);
-    2;
-    throw new Error('Error signing up user');
+  } catch (error:any) {
+    console.error('Error signing up user:', error.response.data.error);
+    // 2;
+    throw new Error(`${error?.response?.data?.error}`);
   }
 };
 
