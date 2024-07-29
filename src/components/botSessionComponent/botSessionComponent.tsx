@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import icon from '../../public/assets/chatBotSymbol.svg';
 import mainLogo from '@/public/assets/mainLogo.svg';
 import { useRouter } from 'next/router';
+import './botSession.css'
 
 import '../NewChat/newchat.css';
 import {
@@ -79,15 +80,15 @@ const BotSessionComponent: React.FC = () => {
   const [chartData, setChartData] = React.useState([
     {
       name: 'Negative',
-      'Customer Sentiments': 0,
+      'Customer Sentiment': 0,
     },
     {
       name: 'Positive',
-      'Customer Sentiments': 0,
+      'Customer Sentiment': 0,
     },
     {
       name: 'Neutral',
-      'Customer Sentiments': 0,
+      'Customer Sentiment': 0,
     },
   ]);
 
@@ -242,15 +243,15 @@ const BotSessionComponent: React.FC = () => {
       setChartData([
         {
           name: 'Negative',
-          'Customer Sentiments': Number(parseValue(sentimentAnalysis?.negative)),
+          'Customer Sentiment': Number(parseValue(sentimentAnalysis?.negative)),
         },
         {
           name: 'Positive',
-          'Customer Sentiments': Number(parseValue(sentimentAnalysis?.positive)),
+          'Customer Sentiment': Number(parseValue(sentimentAnalysis?.positive)),
         },
         {
           name: 'Neutral',
-          'Customer Sentiments': Number(parseValue(sentimentAnalysis?.neutral)),
+          'Customer Sentiment': Number(parseValue(sentimentAnalysis?.neutral)),
         },
       ]);
     }
@@ -720,10 +721,10 @@ const BotSessionComponent: React.FC = () => {
                 ''
               )}
               <button
-                className="custom-button bg-[#FFFFFF] bg-opacity-10"
+                className="custom-button bg-[#FFFFFF] bg-opacity-10 mt-5"
                 onClick={openPopup}
               >
-                Customer Sentiments
+                Customer Sentiment
               </button>
               {sentimentAnalysis ? (
                 <div className="w-[80%] flex justify-center items-center mt-2 border-4 border-[#DB88DB] text-base">
@@ -731,10 +732,10 @@ const BotSessionComponent: React.FC = () => {
                   <div>neutral: {sentimentAnalysis?.neutral} </div>
                   <div>positive: {sentimentAnalysis?.positive} </div> */}
                   <BarChart
-                    className="h-[150px]"
+                    className="h-[150px] custom-bar-chart"
                     data={chartData}
                     index="name"
-                    categories={['Customer Sentiments']}
+                    categories={['Customer Sentiment']}
                     colors={['blue']}
                     valueFormatter={dataFormatter}
                     yAxisWidth={48}
@@ -745,7 +746,7 @@ const BotSessionComponent: React.FC = () => {
                 ''
               )}
               <button
-                className="custom-button bg-[#FFFFFF] bg-opacity-10"
+                className="custom-button bg-[#FFFFFF] bg-opacity-10 mt-5"
                 onClick={openPopup}
               >
                 Feedback / AI Recommendations
