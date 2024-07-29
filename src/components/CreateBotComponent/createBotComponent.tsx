@@ -77,8 +77,8 @@ const CreateBotComponent: React.FC = () => {
     const file = event.target.files?.[0];
     if (
       file &&
-      file.size <= 2 * 1024 * 1024 &&
-      file.type === 'application/pdf'
+      file.size <= 2 * 1024 * 1024 
+      // file.type === 'application/pdf'
     ) {
       setSelectedFile(file);
       setFileName(file.name);
@@ -426,7 +426,7 @@ const CreateBotComponent: React.FC = () => {
               type="file"
               onChange={handleFileChange}
               ref={viewerRef}
-              accept="pdf/*"
+              // accept="pdf/*"
               id="file-upload"
               className="absolute top-[0] opacity-0 -[12px] cursor-pointer"
             />

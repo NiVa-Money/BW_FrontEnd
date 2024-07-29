@@ -4,6 +4,7 @@ import { RootState } from '@/redux/configureStore';
 import * as React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import './newchat.css';
+
 import {
   filteredSession,
   getAllSession,
@@ -137,6 +138,19 @@ const NewChatComponent: React.FC = () => {
   }, [allSession]);
 
   React.useEffect(() => {
+    // Dynamically create a script tag
+    const script = document.createElement('script');
+    script.src = '/chatgpt-typewriter-js.js'; // Path to the script in the public directory
+    script.async = true;
+    document.body.appendChild(script);
+
+    // Cleanup the script tag on component unmount
+    return () => {
+      document.body.removeChild(script);
+    };
+  }, []);
+
+  React.useEffect(() => {
     // console.log('messagesLeft', messagesLeft);
     // console.log('allSession', allSession.data.sessions);
     const data = {
@@ -264,7 +278,7 @@ const NewChatComponent: React.FC = () => {
             <div>{selectedBotName}</div>
           </div>
           {isBotProfileOpen && (
-            <div className="flex mt-2 w-[8.5vw] flex-col py-2 text-base tracking-wide leading-6 bg-[#1E1533] rounded-b-lg shadow max-w-[280px] absolute top-full left-0 right-0 z-10">
+            <div className="flex mt-2  w-[8.5vw] h-[25vh] overflow-y-auto flex-col py-2 text-base tracking-wide leading-6 bg-[#1E1533] rounded-b-lg shadow max-w-[280px] absolute top-full left-0 right-0 z-10">
               {botProfiles?.botProfiles?.data?.map((bot: any, index: any) => (
                 <div
                   key={index}
@@ -400,6 +414,7 @@ const NewChatComponent: React.FC = () => {
                       transition={{ duration: 0.5 }}
                     > */}
                       <div
+                        id="typewriter-gpt-2"
                         className={`${
                           message?.sender === 'user'
                             ? 'p-2.5 bg-[#5D39AD] rounded-xl'

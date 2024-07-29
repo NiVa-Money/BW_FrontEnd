@@ -469,7 +469,7 @@ const BotSessionComponent: React.FC = () => {
                   <div>{selectedBotName}</div>
                 </div>
                 {isBotProfileOpen && (
-                  <div className="flex mt-2 w-[8.5vw] flex-col py-2 text-base tracking-wide leading-6 bg-[#1E1533] rounded-b-lg shadow max-w-[280px] absolute top-full left-0 right-0 z-10">
+                  <div className="flex mt-2 w-[8.5vw] h-[25vh] overflow-y-auto flex-col py-2 text-base tracking-wide leading-6 bg-[#1E1533] rounded-b-lg shadow max-w-[280px] absolute top-full left-0 right-0 z-10">
                     {botProfiles?.botProfiles?.data?.map(
                       (bot: any, index: any) => (
                         <div
