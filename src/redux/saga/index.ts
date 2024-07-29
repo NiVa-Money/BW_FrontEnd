@@ -391,7 +391,7 @@ export function* getUserChatSaga({
       },
     });
   } catch (error: any) {
-    // notifyError(`${error}`)
+    notifyError(`${error}`)
     yield put({
       type: GET_USER_CHAT_FAILURE,
     });
