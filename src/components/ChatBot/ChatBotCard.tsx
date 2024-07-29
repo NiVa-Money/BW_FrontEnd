@@ -16,6 +16,8 @@ interface ChatBot {
   file: string;
   botColor?: string;
   createdAt: string;
+  docName:string;
+  botURL:string
 }
 
 interface ChatBotCardProps {
@@ -47,7 +49,7 @@ const getBackgroundColor = (color: string): string => {
 };
 const ChatBotCard: React.FC<ChatBotCardProps> = ({ bot, actions }) => {
   const botColor = bot.botColor?.toLowerCase() || 'default';
-  console.log(bot.file)
+  console.log("File name",bot.botURL)
   return (
     <article className="flex gap-7 justify-between px-8 py-5 mb-6 w-full bg-gray-900 rounded-xl max-md:flex-wrap max-md:px-5 max-md:max-w-full">
       <div className="flex flex-col max-md:max-w-full">
@@ -55,8 +57,8 @@ const ChatBotCard: React.FC<ChatBotCardProps> = ({ bot, actions }) => {
           <img
             loading="lazy"
             src={
-              bot.icon
-                ? bot.icon
+              bot.botURL
+                ? bot.botURL
                 : 'https://botwot-user-knowledgebase.s3.ap-south-1.amazonaws.com/bot14.svg'
             }
             alt={`${bot.botName} icon`}
@@ -103,7 +105,7 @@ const ChatBotCard: React.FC<ChatBotCardProps> = ({ bot, actions }) => {
                 alt=""
                 className="shrink-0 w-6 aspect-square"
               />
-              <span className="my-auto">{bot.file || 'knowledgebase.pdf'}</span>
+              <span className="my-auto">{bot.docName }</span>
             </div>
           </div>
           <div className="flex flex-col justify-between pt-3 whitespace-nowrap text-neutral-400">
