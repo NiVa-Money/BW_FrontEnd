@@ -170,6 +170,7 @@ const CreateBotComponent: React.FC = () => {
     formData.append('docType', knowledgeBase.length > 0 ? 'pdf' : '');
     formData.append('docId', docId);
     formData.append('userId', userId);
+    formData.append('botURL', imageSrc)
     if (selectedFile) {
       formData.append('file', selectedFile);
     }
@@ -181,67 +182,26 @@ const CreateBotComponent: React.FC = () => {
 
   const botSamples = [
     {
-      imageUrl: `${botImageBaseUrl}bot1.svg`,
+      imageUrl: `https://messages-dump.s3.ap-south-1.amazonaws.com/botwot_assets/bot_logo15.png`,
       iconType: 'bot1',
     },
     {
-      imageUrl: `${botImageBaseUrl}bot2.svg`,
+      imageUrl: `https://messages-dump.s3.ap-south-1.amazonaws.com/botwot_assets/bot_logo1.png`,
       iconType: 'bot2',
     },
     {
-      imageUrl: `${botImageBaseUrl}bot3.svg`,
+      imageUrl: `https://messages-dump.s3.ap-south-1.amazonaws.com/botwot_assets/bot_logo2.png`,
       iconType: 'bot3',
     },
     {
-      imageUrl: `${botImageBaseUrl}bot4.svg`,
+      imageUrl: `https://messages-dump.s3.ap-south-1.amazonaws.com/botwot_assets/bot_logo3.png`,
       iconType: 'bot4',
     },
     {
-      imageUrl: `${botImageBaseUrl}bot5.svg`,
+      imageUrl: `https://messages-dump.s3.ap-south-1.amazonaws.com/botwot_assets/bot_logo4.png`,
       iconType: 'bot5',
-    },
-    {
-      imageUrl: `${botImageBaseUrl}bot6.svg`,
-      iconType: 'bot6',
-    },
-    {
-      imageUrl: `${botImageBaseUrl}bot7.svg`,
-      iconType: 'bot7',
-    },
-    {
-      imageUrl: `${botImageBaseUrl}bot8.svg`,
-      iconType: 'bot8',
-    },
-    {
-      imageUrl: `${botImageBaseUrl}bot9.svg`,
-      iconType: 'bot9',
-    },
-    {
-      imageUrl: `${botImageBaseUrl}bot10.svg`,
-      iconType: 'bot10',
-    },
-    {
-      imageUrl: `${botImageBaseUrl}bot11.svg`,
-      iconType: 'bot11',
-    },
-    {
-      imageUrl: `${botImageBaseUrl}bot12.svg`,
-      iconType: 'bot12',
-    },
-    {
-      imageUrl: `${botImageBaseUrl}bot13.svg`,
-      iconType: 'bot13',
-    },
-    {
-      imageUrl: `${botImageBaseUrl}bot14.svg`,
-      iconType: 'bot14',
-    },
-    {
-      imageUrl: `${botImageBaseUrl}bot15.svg`,
-      iconType: 'bot15',
-    },
-  ];
-
+    }
+  ]
   const handleBotSampleClick = (item: any) => {
     setImageSrc(item?.imageUrl);
 
