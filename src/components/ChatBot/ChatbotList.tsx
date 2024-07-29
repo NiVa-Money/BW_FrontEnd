@@ -48,7 +48,7 @@ const ChatBotList: React.FC = () => {
   const router = useRouter();
   const [isExportModalOpen, setIsExportModalOpen] = useState(false);
   const [exportResponse, setExportResponse] = useState<{ success: boolean; url: string } | null>(null);
-
+  const exportS = useSelector((state: RootState) => state?.botProfile?.export?.data);
   // Function to handle edit action
   const handleEdit = (botId: string) => {
     router.push(`/editBot?id=${botId}`);
@@ -71,16 +71,7 @@ const ChatBotList: React.FC = () => {
     const botToExport = chatBotList.find(bot => bot._id === botId);
     if (botToExport && userId) {
       const payload = { botId: botToExport._id, userId };
-      dispatch(exportBotProfileServiceAction(payload) as any)
-        .then((response: any) => {
-          setExportResponse({ success: true, url: response.url });
-          setIsExportModalOpen(true);
-        })
-        .catch((error: any) => {
-          console.error('Error exporting bot:', error);
-          setExportResponse({ success: false, url: '' });
-          setIsExportModalOpen(true);
-        });
+      dispatch(exportBotProfileServiceAction(payload))
     } else {
       console.error(`Bot with ID ${botId} not found or userId is undefined`);
     }
@@ -141,6 +132,18 @@ const ChatBotList: React.FC = () => {
       dispatch(getUserBotProfileAction(userIdLocal));
     }
   }, [userIdLocal, pathName, dispatch]);
+
+    React.useEffect(() => {
+      console.log("hiiiii",exportS)
+    if (exportS) {
+      setExportResponse({ success: true, url: exportS?.url });
+      setIsExportModalOpen(true);
+    }
+    // } else if (exportError) {
+    //   console.error('Export failed:', exportError);
+    //   // setExportResponse({ success: false, error: exportError });
+    // }
+  }, [exportS]);
 
   return (
     <main className="flex flex-col mt-5">
