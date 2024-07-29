@@ -1,10 +1,8 @@
 'use client';
 
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef } from 'react';
 import Image from 'next/image';
-
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
-import FileUploadIcon from '@mui/icons-material/FileUpload';
 import ZoomOutMapIcon from '@mui/icons-material/ZoomOutMap';
 import Link from 'next/link';
 
@@ -13,10 +11,6 @@ import { useRouter } from 'next/navigation';
 //redux post
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '@/redux/configureStore';
-import {
-  createUserBotProfileService,
-  getUserBotProfileService,
-} from '@/redux/services';
 import { v4 as uuidv4 } from 'uuid';
 import {
   createBotProfileAction,
@@ -30,7 +24,7 @@ import { BackgroundCss } from '../BackgroundAnimation/backgroundCss';
 
 const CreateBotComponent: React.FC = () => {
   const [step, setStep] = useState(1);
-  const [botName, setBotName] = useState('BotWot Assistant');
+  const [botName, setBotName] = useState('');
   const [botTone, setBotTone] = useState('Formal Tone');
   const [chatColor, setChatColor] = useState('#5D39AD'); // Default blue color
   const [botProfile, setBotProfile] = useState(
@@ -38,9 +32,7 @@ const CreateBotComponent: React.FC = () => {
   );
   //
   const viewerRef = useRef(null);
-  const [botIdentity, setBotIdentity] = useState(
-    "You're a helpful customer support chatbot with excellent product knowledge. You assist customers with inquiries about our products, including offers app functionality troubleshooting account management and more."
-  );
+  const [botIdentity, setBotIdentity] = useState("");
   const [knowledgeBase, setKnowledgeBase] = useState(['Assistant.pdf']);
   const [botLimit, setBotLimit] = useState<any>(50);
   // const [botIdentity, setBotIdentity] = useState('sales');
@@ -52,7 +44,6 @@ const CreateBotComponent: React.FC = () => {
   const [greetingMessage, setGreetingMessage] = useState(
     'Hi, How can I assist you today?'
   );
-  const [initiateConversation] = useState('Hi, How can I assist you today?');
   const questionsSamples = [
     'What subscription plans do you offer?',
     'How do I upgrade or downgrade my subscription?',
@@ -179,6 +170,7 @@ const CreateBotComponent: React.FC = () => {
     formData.append('docType', knowledgeBase.length > 0 ? 'pdf' : '');
     formData.append('docId', docId);
     formData.append('userId', userId);
+    formData.append('botURL', imageSrc)
     if (selectedFile) {
       formData.append('file', selectedFile);
     }
@@ -190,67 +182,26 @@ const CreateBotComponent: React.FC = () => {
 
   const botSamples = [
     {
-      imageUrl: `${botImageBaseUrl}bot1.svg`,
+      imageUrl: `https://messages-dump.s3.ap-south-1.amazonaws.com/botwot_assets/bot_logo15.png`,
       iconType: 'bot1',
     },
     {
-      imageUrl: `${botImageBaseUrl}bot2.svg`,
+      imageUrl: `https://messages-dump.s3.ap-south-1.amazonaws.com/botwot_assets/bot_logo1.png`,
       iconType: 'bot2',
     },
     {
-      imageUrl: `${botImageBaseUrl}bot3.svg`,
+      imageUrl: `https://messages-dump.s3.ap-south-1.amazonaws.com/botwot_assets/bot_logo2.png`,
       iconType: 'bot3',
     },
     {
-      imageUrl: `${botImageBaseUrl}bot4.svg`,
+      imageUrl: `https://messages-dump.s3.ap-south-1.amazonaws.com/botwot_assets/bot_logo3.png`,
       iconType: 'bot4',
     },
     {
-      imageUrl: `${botImageBaseUrl}bot5.svg`,
+      imageUrl: `https://messages-dump.s3.ap-south-1.amazonaws.com/botwot_assets/bot_logo4.png`,
       iconType: 'bot5',
-    },
-    {
-      imageUrl: `${botImageBaseUrl}bot6.svg`,
-      iconType: 'bot6',
-    },
-    {
-      imageUrl: `${botImageBaseUrl}bot7.svg`,
-      iconType: 'bot7',
-    },
-    {
-      imageUrl: `${botImageBaseUrl}bot8.svg`,
-      iconType: 'bot8',
-    },
-    {
-      imageUrl: `${botImageBaseUrl}bot9.svg`,
-      iconType: 'bot9',
-    },
-    {
-      imageUrl: `${botImageBaseUrl}bot10.svg`,
-      iconType: 'bot10',
-    },
-    {
-      imageUrl: `${botImageBaseUrl}bot11.svg`,
-      iconType: 'bot11',
-    },
-    {
-      imageUrl: `${botImageBaseUrl}bot12.svg`,
-      iconType: 'bot12',
-    },
-    {
-      imageUrl: `${botImageBaseUrl}bot13.svg`,
-      iconType: 'bot13',
-    },
-    {
-      imageUrl: `${botImageBaseUrl}bot14.svg`,
-      iconType: 'bot14',
-    },
-    {
-      imageUrl: `${botImageBaseUrl}bot15.svg`,
-      iconType: 'bot15',
-    },
-  ];
-
+    }
+  ]
   const handleBotSampleClick = (item: any) => {
     setImageSrc(item?.imageUrl);
 
@@ -284,6 +235,7 @@ const CreateBotComponent: React.FC = () => {
           name="botName"
           type="text"
           value={botName}
+          placeholder="Please enter bot name"
           onChange={(e) => setBotName(e.target.value)}
           className="w-full bg-[#171029] text-white p-2 rounded-[12px]"
         />
@@ -342,7 +294,7 @@ const CreateBotComponent: React.FC = () => {
         )}
       </div>
       <div className="mb-4">
-        <label className="block text-gray-200 mb-2">Custom photo</label>
+        <label className="block text-gray-200 mb-2">Custom Bot Profile</label>
         <div className="relative mb-4"></div>
         <div className="flex items-start">
           <input
@@ -400,6 +352,7 @@ const CreateBotComponent: React.FC = () => {
         <textarea
           value={botIdentity}
           onChange={(e) => setBotIdentity(e.target.value)}
+          placeholder="Type your instructions or questions here (e.g., 'Help me with my order' or 'What are the product features?')"
           className="w-full bg-[#171029] text-white p-2 rounded-[12px]"
           rows={4}
         />
@@ -482,7 +435,7 @@ const CreateBotComponent: React.FC = () => {
         </select>
       </div> */}
       <div className="mb-4">
-        <label className="block text-gray-200 mb-2">Support email</label>
+        <label className="block text-gray-200 mb-2">Support Email</label>
         <input
           type="email"
           value={supportEmail}
@@ -534,7 +487,7 @@ const CreateBotComponent: React.FC = () => {
             {/* onclick => on save button need to give a object that take all the value of all fields object into a single object */}
             <button
               onClick={step === 2 ? () => handleSave() : handleContinue}
-              className="bg-[#3F2181] text-white px-4 py-2 rounded"
+              className="flex gap-2 justify-center px-14 py-3 text-xl font-medium text-gray-100 bg-[#3F2181] rounded-[60px]"
             >
               {step === 2 ? 'Save' : 'Continue'}
             </button>
@@ -560,9 +513,11 @@ const CreateBotComponent: React.FC = () => {
                   }}
                 >
                   <h2 className="my-auto p-5 text-white">Preview</h2>
-                  <div className="my-auto p-5 text-white">
-                    {/* <ZoomOutMapIcon style={{ color: 'white' }} /> */}
-                  </div>
+
+                  {/* <div className="my-auto p-5 text-white">
+                    <ZoomOutMapIcon style={{ color: 'white' }} />
+                  </div> */}
+
                 </div>
                 {imageSrc ? (
                   <Image

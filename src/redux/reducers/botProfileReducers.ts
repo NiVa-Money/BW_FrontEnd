@@ -5,6 +5,9 @@ import {
   DELETE_BOT_PROFILE,
   DELETE_BOT_PROFILE_FAILURE,
   DELETE_BOT_PROFILE_SUCCESS,
+  EXPORT_BOT_PROFILE,
+  EXPORT_BOT_PROFILE_SUCCESS,
+  EXPORT_BOT_PROFILE_FAILURE,
   EDIT_BOT_PROFILE,
   EDIT_BOT_PROFILE_FAILURE,
   EDIT_BOT_PROFILE_SUCCESS,
@@ -72,6 +75,25 @@ export default function botProfileReducers(
       return {
         ...state,
         delete: { data: action.payload, loader: false },
+      };
+
+    case EXPORT_BOT_PROFILE:
+      return {
+        ...state,
+        export: {
+          ...state.export,
+          loader: true,
+        },
+      };
+    case EXPORT_BOT_PROFILE_SUCCESS:
+      return {
+        ...state,
+        export: { data: action.payload, loader: false },
+      };
+    case EXPORT_BOT_PROFILE_FAILURE:
+      return {
+        ...state,
+        export: { data: action.payload, loader: false },
       };
     case GET_USER_BOT_PROFILE:
       return {

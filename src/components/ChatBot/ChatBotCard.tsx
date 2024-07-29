@@ -3,6 +3,7 @@ import {
   faPencilAlt,
   faTrash,
   faDownload,
+  faArrowRightFromBracket,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Link from 'next/link';
@@ -26,6 +27,7 @@ interface ChatBotCardProps {
     onDelete?: () => void;
     onEdit?: () => void;
     onDownload?: () => void;
+    onExport?: () => void;
   };
 }
 
@@ -57,9 +59,8 @@ const ChatBotCard: React.FC<ChatBotCardProps> = ({ bot, actions }) => {
           <img
             loading="lazy"
             src={
-              bot.icon
-                ? bot.icon
-                : 'https://botwot-user-knowledgebase.s3.ap-south-1.amazonaws.com/bot14.svg'
+              bot.botURL
+                
             }
             alt={`${bot.botName} icon`}
             className="shrink-0 w-[35%]"
@@ -167,6 +168,16 @@ const ChatBotCard: React.FC<ChatBotCardProps> = ({ bot, actions }) => {
           >
             <FontAwesomeIcon icon={faDownload} />
             <span>Download</span>
+          </button>
+        )}
+        {actions?.onExport && (
+          <button
+            aria-label="Export bot"
+            className="text-green-500"
+            onClick={actions.onExport}
+          >
+           <FontAwesomeIcon icon={faArrowRightFromBracket} />
+            <span>Export</span>
           </button>
         )}
       </div>

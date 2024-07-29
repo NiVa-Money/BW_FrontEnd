@@ -126,6 +126,23 @@ export const deleteBotProfileService = async (payload: any) => {
   }
 };
 
+export const exportBotProfileService = async (payload: any) => {
+  try {
+    const response = await axiosInstance.post(
+      "/user/widget/export/",
+      {botId:payload.botId,userId:payload?.userId}
+    );
+    return response.data;
+  } catch (error: any) {
+    console.error(
+      'Error exporting bot:',
+      error.response ? error.response.data : error.message
+    );
+    throw new Error('Error exporting bot');
+  }
+};
+
+
 //create Knowledge base
 
 export const createKnowledgeBaseService = async (payload: any) => {

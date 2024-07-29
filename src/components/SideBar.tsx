@@ -67,9 +67,9 @@ const initialSIDENAV_ITEMS: SidebarItemProps[] = [
 
 const SIDENAV_ITEMS2: SidebarItemProps[] = [
   { icon: 'fa-user', text: 'Profile', path: '/profile' },
-  { icon: 'fa-trash', text: 'Clear Conversations', onClick: undefined },
+  // { icon: 'fa-trash', text: 'Clear Conversations', onClick: undefined },
   { icon: 'fa-crown', text: 'Membership', path: '/memberShip' },
-  { icon: 'fa-question-circle', text: 'Updates & FAQ', path: '/faq' },
+  { icon: 'fa-question-circle', text: 'Help Center', path: '/faq' },
   { icon: 'fa-sign-out-alt', text: 'Log Out', path: '/' },
 ];
 
@@ -120,7 +120,7 @@ const SideBar: React.FC = () => {
       >
         <i className="fas fa-plus"></i>
         <Link href={`/newchat`}>
-          <span>New Chat</span>
+          <span>Test your Bot</span>
         </Link>
       </button>
 

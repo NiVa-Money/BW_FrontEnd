@@ -3,6 +3,7 @@ import {
   EDIT_BOT_PROFILE,
   GET_USER_BOT_PROFILE,
   DELETE_BOT_PROFILE,
+  EXPORT_BOT_PROFILE,
   REMOVE_BOT_PROFILES,
   REMOVE_ADVANCE_FEATURE
 } from '../actionTypes';
@@ -24,6 +25,11 @@ export const getUserBotProfileAction = (data: any) => ({
 
 export const deleteBotProfileServiceAction = (data: any) => ({
   type: DELETE_BOT_PROFILE,
+  payload: data,
+});
+
+export const exportBotProfileServiceAction = (data: any) => ({
+  type: EXPORT_BOT_PROFILE,
   payload: data,
 });
 
