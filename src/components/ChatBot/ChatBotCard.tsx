@@ -59,9 +59,8 @@ const ChatBotCard: React.FC<ChatBotCardProps> = ({ bot, actions }) => {
           <img
             loading="lazy"
             src={
-              bot.icon
-                ? bot.icon
-                : 'https://botwot-user-knowledgebase.s3.ap-south-1.amazonaws.com/bot14.svg'
+              bot.botURL
+                
             }
             alt={`${bot.botName} icon`}
             className="shrink-0 w-[35%]"
