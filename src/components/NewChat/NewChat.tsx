@@ -138,19 +138,6 @@ const NewChatComponent: React.FC = () => {
   }, [allSession]);
 
   React.useEffect(() => {
-    // Dynamically create a script tag
-    const script = document.createElement('script');
-    script.src = '/chatgpt-typewriter-js.js'; // Path to the script in the public directory
-    script.async = true;
-    document.body.appendChild(script);
-
-    // Cleanup the script tag on component unmount
-    return () => {
-      document.body.removeChild(script);
-    };
-  }, []);
-
-  React.useEffect(() => {
     // console.log('messagesLeft', messagesLeft);
     // console.log('allSession', allSession.data.sessions);
     const data = {
