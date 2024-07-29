@@ -88,7 +88,9 @@ const ChatBotCard: React.FC<ChatBotCardProps> = ({ bot, actions }) => {
               <span className="self-start ml-3 text-base max-md:ml-2.5">
                 Tone
               </span>
+
               <span className="flex gap-2.5 p-2.5 mt-4 text-sm leading-5 text-center rounded-full">
+
                 {bot.botTone}
               </span>
             </div>
@@ -98,14 +100,18 @@ const ChatBotCard: React.FC<ChatBotCardProps> = ({ bot, actions }) => {
             File
             </span>
             {/* <span className="self-start ml-2.5 text-base">File</span> */}
+
             <div className="flex gap-2.5 p-2.5 mt-4 text-sm leading-5 text-center rounded-xl">
+
               <img
                 loading="lazy"
                 src="https://cdn.builder.io/api/v1/image/assets/TEMP/216ef81b1307e56bac33de96edb3047cf27218916242cd7c47a7551edb14a929?apiKey=555c811dd3f44fc79b6b2689129389e8&"
                 alt=""
                 className="shrink-0 w-6 aspect-square"
               />
+
               <span className="my-auto">{bot.docName}</span>
+
             </div>
           </div>
           <div className="flex flex-col justify-between pt-3 whitespace-nowrap text-neutral-400">
@@ -120,7 +126,11 @@ const ChatBotCard: React.FC<ChatBotCardProps> = ({ bot, actions }) => {
           </div>
           <div className="flex flex-col justify-between pt-3 whitespace-nowrap text-neutral-400">
             <span className="text-base">Created at</span>
+
             <span className="flex gap-2.5 p-2.5 mt-4 text-sm leading-5 text-center rounded-full">
+
+        
+
               {bot.createdAt}
             </span>
           </div>
