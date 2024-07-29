@@ -9,7 +9,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import icon from '../../public/assets/chatBotSymbol.svg';
 import mainLogo from '@/public/assets/mainLogo.svg';
 import { useRouter } from 'next/router';
-import './botSession.css';
 
 import '../NewChat/newchat.css';
 import {
@@ -75,6 +74,7 @@ const BotSessionComponent: React.FC = () => {
     (state: RootState) => state?.userChat?.advanceFeature
   );
   const [chatsData, setchatsData] = React.useState<any>([]);
+  const [selectedBotName, setSelectedBotName] = React.useState<any>('');
 
   React.useEffect(() => {
     if (chatContainerRef.current) {
@@ -83,8 +83,9 @@ const BotSessionComponent: React.FC = () => {
     }
   }, [messages]);
 
-  const handleBotClick = (index: any, botId: any) => {
+  const handleBotClick = (index: any, botId: any, botName: any) => {
     setActiveBotIndex(index);
+    setSelectedBotName(botName);
     // console.log('allSession', allSession.data.sessions);
     const data = {
       filteredSessions: [],
@@ -188,14 +189,16 @@ const BotSessionComponent: React.FC = () => {
     setIsDragging(false);
   };
 
-  const handleMouseMove = (e:any) => {
+  const handleMouseMove = (e: any) => {
     if (!isDragging) return;
 
-    const container:any = containerRef.current;
+    const container: any = containerRef.current;
     const containerRect = container.getBoundingClientRect();
-    const newLeftWidth = ((e.clientX - containerRect.left) / containerRect.width) * 100;
+    const newLeftWidth =
+      ((e.clientX - containerRect.left) / containerRect.width) * 100;
 
-    if (newLeftWidth >= 50 && newLeftWidth <= 70) { // Ensure minimum (10%) and maximum (90%) width limits
+    if (newLeftWidth >= 50 && newLeftWidth <= 70) {
+      // Ensure minimum (10%) and maximum (90%) width limits
       setLeftWidth(newLeftWidth);
     }
   };
@@ -291,7 +294,7 @@ const BotSessionComponent: React.FC = () => {
             {/* <i className={`fas ${item.icon}`}></i> */}
             <span>
               {' '}
-              <i className="fas fa-gauge-high" />
+              <i className="fas fa-gauge-high mr-3" />
               Dashboard
             </span>
           </Link>
@@ -300,7 +303,7 @@ const BotSessionComponent: React.FC = () => {
           {/* <i className={`fas ${item.icon}`}></i> */}
           <span>
             {' '}
-            <i className="fas fa-comment" />
+            <i className="fas fa-comment  mr-3" />
             Sessions
           </span>
         </div>
@@ -406,45 +409,9 @@ const BotSessionComponent: React.FC = () => {
         </div>
         <div
           className="flex flex-col justify-between z-10"
-          style={{ width: `${leftWidth}%` , height: '100%' }}
+          style={{ width: `${leftWidth}%`, height: '100%' }}
         >
-          <div className="flex gap-1 max-md:flex-wrap max-md:max-w-full mb-5">
-            <div className="flex flex-col self-stretch relative">
-              <div
-                className="flex gap-2.5 justify-center p-2.5 text-xl font-medium text-white rounded-t-lg cursor-pointer"
-                onClick={toggleBotProfile}
-              >
-                <div>Bot Profile</div>
-                <img
-                  loading="lazy"
-                  src="https://cdn.builder.io/api/v1/image/assets/TEMP/ecfab022e56ef6ff0a58045a291327eda3e871d2c6c2576eee117363bc12ecf0?apiKey=555c811dd3f44fc79b6b2689129389e8&"
-                  className={`shrink-0 aspect-square w-[30px] transition-transform duration-300 ${
-                    isBotProfileOpen ? 'rotate-180' : ''
-                  }`}
-                  alt="Bot Profile"
-                />
-              </div>
-              {isBotProfileOpen && (
-                <div className="flex flex-col text-base justify-center items-center bg-[#1E1533] rounded-b-lg shadow max-w-[280px] overflow-scroll">
-                  {botProfiles?.botProfiles?.data?.map(
-                    (bot: any, index: any) => (
-                      <div
-                        key={index}
-                        className={`mb-2 mt-2  cursor-pointer ${
-                          activeBotIndex === index ? 'bg-[#3E3556]' : ''
-                        }`}
-                        onClick={() => handleBotClick(index, bot._id)}
-                      >
-                        <div className="justify-center px-3 py-2 text-white">
-                          {bot.botName}
-                        </div>
-                        {/* <div className="mt-2 px-3 text-gray-400">MarketBot</div> */}
-                      </div>
-                    )
-                  )}
-                </div>
-              )}
-            </div>
+          <div className="flex  justify-center items-center gap-1 h-[125px] max-md:flex-wrap max-md:max-w-full mb-5">
             <div className="flex flex-col self-stretch relative">
               {/* <div
             className="flex gap-2.5 justify-center p-2.5 text-xl font-medium bg-[#2D2640] text-white rounded-t-lg cursor-pointer"
@@ -479,7 +446,51 @@ const BotSessionComponent: React.FC = () => {
             </div>
           )} */}
             </div>
-            <div className="flex gap-3 flex-1">
+            <div className="flex gap-3 flex-1 justify-center items-center">
+              <div className="flex flex-col self-stretch relative">
+                <div
+                  className="flex gap-2.5 justify-center p-2.5 text-xl font-medium text-white rounded-t-lg cursor-pointer"
+                  onClick={toggleBotProfile}
+                >
+                  <div>Bot Profile</div>
+                  <img
+                    loading="lazy"
+                    src="https://cdn.builder.io/api/v1/image/assets/TEMP/ecfab022e56ef6ff0a58045a291327eda3e871d2c6c2576eee117363bc12ecf0?apiKey=555c811dd3f44fc79b6b2689129389e8&"
+                    className={`shrink-0 aspect-square w-[30px] transition-transform duration-300 ${
+                      isBotProfileOpen ? 'rotate-180' : ''
+                    }`}
+                    alt="Bot Profile"
+                  />
+                </div>
+                <div
+                  className="flex w-[8.5vw] h-[60px] flex justify-center items-center py-2.5 bg-[#1E1533] overflow-y-scroll  rounded p-1 border-gray-500 border-solid"
+                  // onClick={toggleBotProfile}
+                >
+                  <div>{selectedBotName}</div>
+                </div>
+                {isBotProfileOpen && (
+                  <div className="flex mt-2 w-[8.5vw] h-[25vh] overflow-y-auto flex-col py-2 text-base tracking-wide leading-6 bg-[#1E1533] rounded-b-lg shadow max-w-[280px] absolute top-full left-0 right-0 z-10">
+                    {botProfiles?.botProfiles?.data?.map(
+                      (bot: any, index: any) => (
+                        <div
+                          key={index}
+                          className={`mb-2 flex justify-center items-center cursor-pointer ${
+                            activeBotIndex === index ? 'bg-[#3E3556]' : ''
+                          }`}
+                          onClick={() =>
+                            handleBotClick(index, bot._id, bot.botName)
+                          }
+                        >
+                          <div className="flex justify-center items-center px-2 py-2 text-white">
+                            {bot.botName}
+                          </div>
+                          {/* <div className="mt-2 px-3 text-gray-400">MarketBot</div> */}
+                        </div>
+                      )
+                    )}
+                  </div>
+                )}
+              </div>
               <div className="flex w-[8vw] flex-col bg-[#B21888] py-2.5 px-1 rounded-xl border border-gray-700 border-solid">
                 <div className="text-base text-gray-300">Number of bots:</div>
                 <div className="flex items-center justify-center mt-2.5 text-3xl font-semibold text-white">
@@ -534,11 +545,17 @@ const BotSessionComponent: React.FC = () => {
                 chatsData[0]?.sessions?.map((message: any, index: any) => (
                   <div className="flex w-full mb-4" key={index}>
                     <div className="w-full max-md:w-full flex flex-col">
-                      <div className="w-[100%] py-[10px] gap-[10px] rounded text-white text-right mb-2">
-                        <span className="p-[10px] bg-[#3F2181]">{message?.question}</span>
+                      <div className="w-full flex justify-end py-2 gap-2 rounded text-white mb-2 text-right">
+                        <span className="block w-fit p-2 bg-[#3F2181] rounded-xl"
+                            dangerouslySetInnerHTML={{ __html: message?.question?.replace(/\n/g, '<br />').replace(/\*(.*?)\*/g, '<b>$1</b>') }}>
+                          {/* {message?.question}message?.question?.replace(/\n/g, '<br />'); */}
+                        </span>
                       </div>
-                      <div className="w-[100%] py-[10px] gap-[10px] rounded text-white text-left">
-                        <span className="p-[10px] bg-[#2B243C]">{message?.answer}</span>
+                      <div className="w-full py-2 gap-2 rounded text-white text-left">
+                        <span className="block w-fit p-2 bg-[#2B243C] rounded-xl"
+                            dangerouslySetInnerHTML={{ __html: message?.answer?.replace(/\n/g, '<br />').replace(/\*(.*?)\*/g, '<b>$1</b>') }}>
+                          {/* {message?.answer} */}
+                        </span>
                       </div>
                     </div>
                   </div>
@@ -592,7 +609,7 @@ const BotSessionComponent: React.FC = () => {
         ></div>
         <div
           className="flex justify-center items-center z-10"
-         style={{ width: `${100 - leftWidth}%` , height: '100%' }}
+          style={{ width: `${100 - leftWidth}%`, height: '100%' }}
         >
           <div className="w-[65%] h-[87%] adv-border-radius bg-[#FFFFFF] bg-opacity-10">
             {/* title */}
