@@ -6,31 +6,31 @@ import { BarChart } from '@tremor/react';
 const chartdata = [
   {
     name: 'User 1',
-    'Uses per hours': 0,
+    'Chats per day': 0,
   },
   {
     name: 'User 2',
-    'Uses per hours': 0,
+    'Chats per day': 0,
   },
   {
     name: 'User 3',
-    'Uses per hours': 0,
+    'Chats per day': 0,
   },
   {
     name: 'User 4',
-    'Uses per hours': 281,
+    'Chats per day': 281,
   },
   {
     name: 'User 5',
-    'Uses per hours': 251,
+    'Chats per day': 251,
   },
   {
     name: 'User 6',
-    'Uses per hours': 232,
+    'Chats per day': 232,
   },
   {
     name: 'User 7',
-    'Uses per hours': 98,
+    'Chats per day': 98,
   },
 ];
 
@@ -45,7 +45,7 @@ export function SqureCardTwo() {
       className="h-[90%]"
     data={chartdata}
     index="name"
-    categories={['Uses per hours']}
+    categories={['Chats per day']}
     colors={['blue']}
     valueFormatter={dataFormatter}
     yAxisWidth={48}
