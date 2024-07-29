@@ -27,6 +27,8 @@ interface ChatBot {
   botColor: string;
   createdAt: string;
   _id: string;
+  docName: string;
+  botURL:string;
 }
 
 const ChatBotList: React.FC = () => {
