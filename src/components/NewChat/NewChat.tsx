@@ -3,6 +3,7 @@ import { getUserBotProfileAction } from '@/redux/actions/BotProfileActions';
 import { RootState } from '@/redux/configureStore';
 import * as React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { ReactTyped } from 'react-typed';
 import './newchat.css';
 
 import {
@@ -318,24 +319,24 @@ const NewChatComponent: React.FC = () => {
           )} */}
         </div>
         <div className="flex gap-3 flex-1 justify-between">
-        <div className="flex w-[10vw] text-center flex-col bg-transparent py-2.5 px-1 rounded-xl border border-white border-solid">
-          <div className="text-base text-gray-300">Number of bots:</div>
-          <div className="flex items-center justify-center mt-2.5 text-3xl font-semibold text-white">
-            {botProfiles?.botProfiles?.data?.length}
+          <div className="flex w-[10vw] text-center flex-col bg-transparent py-2.5 px-1 rounded-xl border border-white border-solid">
+            <div className="text-base text-gray-300">Number of bots:</div>
+            <div className="flex items-center justify-center mt-2.5 text-3xl font-semibold text-white">
+              {botProfiles?.botProfiles?.data?.length}
+            </div>
           </div>
-        </div>
-        <div className="flex w-[10vw] text-center flex-col py-2.5 bg-transparent px-1 rounded-xl border border-white border-solid">
-          <div className="text-base text-gray-300">Messages left:</div>
-          <div className="flex items-center justify-center mt-2.5 text-3xl font-semibold text-white">
-            {messagesLeft}
+          <div className="flex w-[10vw] text-center flex-col py-2.5 bg-transparent px-1 rounded-xl border border-white border-solid">
+            <div className="text-base text-gray-300">Messages left:</div>
+            <div className="flex items-center justify-center mt-2.5 text-3xl font-semibold text-white">
+              {messagesLeft}
+            </div>
           </div>
-        </div>
-        <div className="flex w-[10vw] text-center flex-col py-2.5 bg-transparent px-1 whitespace-nowrap rounded-xl border border-white border-solid">
-          <div className="text-base text-gray-300">Membership:</div>
-          <div className="flex items-center justify-center mt-2.5 text-3xl font-semibold text-white">
-            Basic
+          <div className="flex w-[10vw] text-center flex-col py-2.5 bg-transparent px-1 whitespace-nowrap rounded-xl border border-white border-solid">
+            <div className="text-base text-gray-300">Membership:</div>
+            <div className="flex items-center justify-center mt-2.5 text-3xl font-semibold text-white">
+              Basic
+            </div>
           </div>
-        </div>
         </div>
       </div>
       {/* <div className="mt-80 w-full max-w-[930px] max-md:mt-10 max-md:max-w-full">
@@ -369,8 +370,10 @@ const NewChatComponent: React.FC = () => {
           className="flex flex-col gap-5 max-md:gap-0 h-full overflow-y-auto pr-2 scrollbar-thin scrollbar-thumb-white scrollbar-track-transparent"
         >
           {userChatMessagesRes?.data?.map((message: any, index: any) => {
-            const formattedText = message?.text?.replace(/\n/g, '<br />').replace(/\*(.*?)\*/g, '<b>$1</b>');
-            
+            const formattedText = message?.text
+              ?.replace(/\n/g, '<br />')
+              .replace(/\*(.*?)\*/g, '<b>$1</b>');
+
             return (
               <div className="flex w-full" key={index}>
                 <div
@@ -400,7 +403,18 @@ const NewChatComponent: React.FC = () => {
                       variants={messageVariants}
                       transition={{ duration: 0.5 }}
                     > */}
-                      <div
+                      {/* <div
+                        id="typewriter-gpt-2"
+                        className={`${
+                          message?.sender === 'user'
+                            ? 'p-2.5 bg-[#5D39AD] rounded-xl'
+                            : 'p-2.5 bg-[#2D2640] rounded-xl chat-box-size'
+                        }`} */}
+                        {/* // dangerouslySetInnerHTML={{ __html: formattedText }}
+                      /> */}
+                      {/* <ReactTyped strings={[formattedText]} typeSpeed={1000} /> */}
+                      {/* </motion.div> */}
+                      {/* <div
                         id="typewriter-gpt-2"
                         className={`${
                           message?.sender === 'user'
@@ -408,8 +422,34 @@ const NewChatComponent: React.FC = () => {
                             : 'p-2.5 bg-[#2D2640] rounded-xl chat-box-size'
                         }`}
                         dangerouslySetInnerHTML={{ __html: formattedText }}
-                      />
-                      {/* </motion.div> */}
+                      > */}
+                      {message?.sender !== 'user' ? (
+                        <div
+                          id="typewriter-gpt-2"
+                          className={`${
+                            message?.sender === 'user'
+                              ? 'p-2.5 bg-[#5D39AD] rounded-xl'
+                              : 'p-2.5 bg-[#2D2640] rounded-xl chat-box-size'
+                          }`}
+                          // dangerouslySetInnerHTML={{ __html: formattedText }}
+                        >
+                          <ReactTyped
+                            strings={[formattedText]}
+                            typeSpeed={10}
+                            showCursor={false} 
+                          />
+                        </div>
+                      ) : (
+                        <div
+                          className={`${
+                            message?.sender === 'user'
+                              ? 'p-2.5 bg-[#5D39AD] rounded-xl'
+                              : 'p-2.5 bg-[#2D2640] rounded-xl chat-box-size'
+                          }`}
+                          dangerouslySetInnerHTML={{ __html: formattedText }}
+                        />
+                      )}
+                      {/* </div> */}
                     </div>
                   </div>
                 </div>
