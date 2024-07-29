@@ -32,6 +32,10 @@ const initialState: any = {
       data: {},
       loader: false,
     },
+    export:{
+      data:{},
+      loader:false,
+    }
   },
   KnowledgeBase: {
     create: {

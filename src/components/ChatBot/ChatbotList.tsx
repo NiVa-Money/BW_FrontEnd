@@ -10,11 +10,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import {
   getUserBotProfileAction,
   deleteBotProfileServiceAction,
+  exportBotProfileServiceAction,
 } from '@/redux/actions/BotProfileActions';
 import ConfirmModal from './modalDelete';
 import { useRouter } from 'next/navigation';
 import withAuth from '../withAuth';
-import { BackgroundCss } from '../BackgroundAnimation/backgroundCss';
+import ExportModal from './exportModal';
 
 interface ChatBot {
   botId?: any;
@@ -45,34 +46,65 @@ const ChatBotList: React.FC = () => {
   const dispatch = useDispatch();
   const pathName = useSelector((state: RootState) => state.root?.pathName);
   const router = useRouter();
-
+  const [isExportModalOpen, setIsExportModalOpen] = useState(false);
+  const [exportResponse, setExportResponse] = useState<{ success: boolean; url: string } | null>(null);
+  const exportS = useSelector((state: RootState) => state?.botProfile?.export?.data);
   // Function to handle edit action
-  const handleEdit = (index: number) => {
-    // Navigate to the edit page with the botId as a query parameter
-    router.push(`/editBot`);
+  const handleEdit = (botId: string) => {
+    router.push(`/editBot?id=${botId}`);
+  };
+
+  // Function to handle export action
+  // const handleExport = (botId: string) => {
+  //   const botToExport = chatBotList.find(bot => bot._id === botId);
+  //   if (botToExport && userId) {
+  //     const payload = { botId: botToExport._id, userId };
+  //     dispatch(exportBotProfileServiceAction(payload) as any);
+  //     console.log(`Exporting bot: ${botToExport.botName}`);
+  //   } else {
+  //     console.error(`Bot with ID ${botId} not found or userId is undefined`);
+  //   }
+  // };
+
+     // Function to handle export action
+  const handleExport = (botId: string) => {
+    const botToExport = chatBotList.find(bot => bot._id === botId);
+    if (botToExport && userId) {
+      const payload = { botId: botToExport._id, userId };
+      dispatch(exportBotProfileServiceAction(payload))
+    } else {
+      console.error(`Bot with ID ${botId} not found or userId is undefined`);
+    }
   };
 
   // Function to handle delete action
-  const handleDelete: any = (index: string) => {
-    setBotIdToDelete(index);
+  const handleDelete = (botId: string) => {
+    setBotIdToDelete(botId);
     setIsModalOpen(true);
   };
 
   // Confirm deletion
   const confirmDelete = () => {
-    if (userId) {
+    if (userId && botIdToDelete) {
       dispatch(
         deleteBotProfileServiceAction({ botId: botIdToDelete, userId: userId })
       );
       setIsModalOpen(false);
     }
   };
-  2;
+
   // Close the modal
   const closeModal = () => {
     setIsModalOpen(false);
     setBotIdToDelete(null);
   };
+
+   // Close the export modal
+   const closeExportModal = () => {
+    setIsExportModalOpen(false);
+    setExportResponse(null);
+  };
+
 
   useEffect(() => {
     if (userId !== undefined) {
@@ -93,7 +125,7 @@ const ChatBotList: React.FC = () => {
     if (botDataRedux && botDataRedux.length) {
       setChatBotList(botDataRedux);
     }
-  }, [botDataRedux,botloader]);
+  }, [botDataRedux, botloader]);
 
   useEffect(() => {
     if (userIdLocal || pathName === '/MyChatBots') {
@@ -101,28 +133,42 @@ const ChatBotList: React.FC = () => {
     }
   }, [userIdLocal, pathName, dispatch]);
 
+    React.useEffect(() => {
+      console.log("hiiiii",exportS)
+    if (exportS) {
+      setExportResponse({ success: true, url: exportS?.url });
+      setIsExportModalOpen(true);
+    }
+    // } else if (exportError) {
+    //   console.error('Export failed:', exportError);
+    //   // setExportResponse({ success: false, error: exportError });
+    // }
+  }, [exportS]);
+
   return (
-    <main className="flex flex-col mt-5 w-[100%] h-[100%] overflow-scroll">
-      {/* <BackgroundCss/> */}
+
+    <main className="flex flex-col mt-5">
+
       <header className="flex gap-2.5 px-5 max-md:flex-wrap">
         <h1 className="flex-1 my-auto text-3xl font-bold px-10 leading-6 text-white">
           My ChatBots
         </h1>
         <button className="flex gap-2 justify-center px-14 py-3 text-xl font-medium text-gray-100 bg-[#3F2181] rounded-[60px]">
-          <Link href={`/createBot`}>
+          <Link href="/createBot">
             <span>Create Bot</span>
           </Link>
           <FontAwesomeIcon icon={faPlus} className="w-[25px] h-[25px]" />
         </button>
       </header>
       <section className="mt-6 px-10">
-        {chatBotList?.map((chatBot:any, index:any) => (
+        {chatBotList?.map((chatBot: ChatBot) => (
           <ChatBotCard
-            key={index}
+            key={chatBot._id}
             bot={chatBot}
             actions={{
-              onDelete: () => handleDelete(chatBot?._id),
-              onEdit: () => handleEdit(index),
+              onDelete: () => handleDelete(chatBot._id),
+              onEdit: () => handleEdit(chatBot._id),
+              onExport: () => handleExport(chatBot._id),
             }}
           />
         ))}
@@ -134,6 +180,12 @@ const ChatBotList: React.FC = () => {
         onConfirm={confirmDelete}
         message="Are you sure you want to delete this chatbot?"
       />
+
+    <ExportModal
+      isOpen={isExportModalOpen}
+      onClose={closeExportModal}
+      exportResponse={exportResponse}
+    />
     </main>
   );
 };
