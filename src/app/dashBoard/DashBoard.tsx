@@ -82,13 +82,13 @@ const DashBoard: React.FC = () => {
         <div className="bg-[#46217C] w-[23%] rounded-2xl p-4 m-1">
           <div className={styles.textSize}>Sessions Left</div>
           <div className='flex justify-center items-center h-[100%]'>
-          <div className="text-3xl font-bold">{metricData?.sessionLeft}</div>
+            <div className="text-3xl font-bold">{metricData?.sessionLeft}</div>
           </div>
         </div>
         <div className="bg-[#6E54EF] w-[23%] rounded-2xl p-4 m-1">
           <div className={styles.textSize}>Total Sessions</div>
           <div className='flex justify-center items-center h-[100%]'>
-          <div className="text-3xl font-bold">{metricData?.sessionTotal}</div>
+            <div className="text-3xl font-bold">{metricData?.sessionTotal}</div>
           </div>
         </div>
         <div className="bg-[#1E1935] w-[31%] rounded-2xl p-4 m-1 flex flex-col items-center">
@@ -104,26 +104,32 @@ const DashBoard: React.FC = () => {
       </div>
       <div className="w-[100%] flex h-[45%] gap-4 mt-4">
         <div className="bg-[#1E1935] w-[40%] rounded-2xl p-4 m-1">
-          <div className={`${styles.textSize} mb-4`}>Session Usage</div>
+          <div className={`${styles.textSize} mb-4`}>Total no of customer</div>
           <div className={`${styles.textSize} relative w-[100%] h-[100%] mx-auto`}>
-            {/* Add your circular progress component here */}
+
             <SqureCardOne
               sessionTotal={metricData?.sessionTotal}
               sessionLeft={metricData?.sessionLeft}
             />
           </div>
         </div>
-        <div className="bg-[#1E1935] w-[40%] rounded-2xl p-4 m-1">
-          {/* Add your bar chart component here */}
+        <div className="relative bg-[#1E1935] w-[40%] rounded-2xl p-4 m-1 opacity-50">
           <SqureCardTwo />
+          <div className="absolute inset-0 flex items-center justify-center bg-gray-900 bg-opacity-75 rounded-2xl">
+            <span className="text-white text-lg">Coming Soon</span>
+          </div>
         </div>
+
         <div className="flex w-[20%] h-[100%] flex-col gap-4 m-1">
-          <div className="bg-[#1E1935] w-[100%] h-[100%] rounded-2xl p-4 flex flex-col items-center">
+          <div className="relative bg-[#1E1935] w-[100%] h-[100%] rounded-2xl p-4 flex flex-col items-center opacity-50">
             <div className="h-[89%] w-[10%] bg-gradient-to-t from-red-500 via-yellow-500 to-green-500 rounded-full relative">
               <div className="absolute -right-6 top-0">😄</div>
               <div className="absolute -right-6 bottom-0">😢</div>
             </div>
             <div className={`${styles.textSize} mt-2`}>Satisfaction meter</div>
+            <div className="absolute inset-0 flex items-center justify-center bg-gray-900 bg-opacity-75 rounded-2xl">
+              <span className="text-white text-lg">Coming Soon</span>
+            </div>
           </div>
         </div>
       </div>
@@ -148,20 +154,24 @@ const DashBoard: React.FC = () => {
             User ID {profileData?.emailId}
           </div>
         </div>
-        <div className="bg-[#1E1935] w-[70%] rounded-2xl p-4 m-1 md:col-span-2">
-          <div className={`${styles.textSize} mb-4`}>Use/Available</div>
+        <div className="relative bg-[#1E1935] w-[70%] rounded-2xl p-4 m-1 md:col-span-2 opacity-50">
+          <div className={`${styles.textSize} mb-4`}>Resolved/UnResolved</div>
           <CardHeader1 />
           <div className="flex mt-2">
             <div className="flex items-center mr-4">
               <div className="w-3 h-3 bg-[#6E54EF] rounded-full mr-2"></div>
-              <span className={styles.textSize}>Use</span>
+              <span className={styles.textSize}>Resolved</span>
             </div>
             <div className="flex items-center">
               <div className="w-3 h-3 bg-[#8E2DA0] rounded-full mr-2"></div>
-              <span className={styles.textSize}>Available</span>
+              <span className={styles.textSize}>UnResolved</span>
             </div>
           </div>
+          <div className="absolute inset-0 flex items-center justify-center bg-gray-900 bg-opacity-75 rounded-2xl">
+            <span className="text-white text-lg">Coming Soon</span>
+          </div>
         </div>
+
       </div>
     </div>
   );
