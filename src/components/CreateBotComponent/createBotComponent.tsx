@@ -304,7 +304,9 @@ const CreateBotComponent: React.FC = () => {
             accept="image/*"
             id="file-upload"
             className="rounded-[70px] bg-[#3F2181] mt-0  text-white px-4 py-2 flex justify-center cursor-pointer"
+            disabled
           />
+          <div className='mt-3 ml-3'>Comming soon ...</div>
           {/* <button
             disabled
             className="rounded-[70px] bg-[#3F2181] mt-0  text-white px-4 py-2 flex justify-center"
