@@ -174,6 +174,7 @@ function* loginSaga({ payload }: any) {
     console.log("payload of google saga ",payload, provider,auth )
     const result: UserCredential = yield call(signInWithPopup, auth, provider);
     // console.log('re', result);
+    console.log("responce Google login verify",result)
     const resObject: any = {
       displayName: result?.user?.displayName,
       email: result?.user?.email,

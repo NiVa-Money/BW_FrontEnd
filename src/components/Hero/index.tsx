@@ -18,6 +18,7 @@ import { RootState } from '@/redux/configureStore';
 const Hero = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
+  const userData = useSelector((state: RootState) => state.root?.userData);
   const googleVerifyRedux = useSelector(
     (state: RootState) => state.root.googleLogin
   );
@@ -60,10 +61,27 @@ const Hero = () => {
         emailId: email,
         mobileNo: '917779797977',
       };
-      // dispatch(googleLogin(payload))
       dispatch(verifyUserDataAction(email));
     }
   }, [googleVerifyRedux]);
+
+  useEffect(()=>{
+    if (googleVerifyRedux) {
+      console.log("userRedux",userRedux)
+      const [firstName, lastName] = userRedux?.displayName.split(' ');
+      const email = userRedux?.email;
+      const payload = {
+        firstName: firstName,
+        lastName: lastName,
+        emailId: email,
+        mobileNo: '917779797977',
+      };
+      // dispatch(verifyUserDataAction(email));
+      if(!userData?.success){
+        dispatch(googleLogin(payload))
+      }
+    }
+  },[userData])
 
   return (
     <section>

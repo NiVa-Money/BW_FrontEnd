@@ -15,6 +15,7 @@ import { useRouter } from 'next/navigation';
 const LandingPage: React.FC = () => {
   const userEmail = useSelector((state: RootState) => state.root?.user?.email);
   const userVerify = useSelector((state: RootState) => state.root?.userVerify);
+  const userData = useSelector((state: RootState) => state.root?.userData);
   const resOtp = useSelector((state: RootState) => state.root?.otp);
   const userRedux = useSelector((state: RootState) => state?.root?.user);
 
@@ -34,7 +35,8 @@ const LandingPage: React.FC = () => {
     if (userEmail?.length && !googleVerifyRedux) {
       dispatch(verifyUserDataAction(userEmail));
     }
-    if (resOtp.data.success) {
+    if (resOtp.data.success || userData?.token) {
+      console.log("first")
      router.replace('/dashBoard');
     } else {
       if (googleVerifyRedux) {
