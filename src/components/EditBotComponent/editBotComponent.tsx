@@ -398,13 +398,13 @@ const EditBotComponent: React.FC = () => {
         <label className="block text-gray-200 mb-2">
           Bot limit per Message
         </label>
-        <input
+        {/* <input
           type="number"
           value={botLimit}
           onChange={(e) => setBotLimit(Number(e.target.value))}
           className="w-full bg-[#171029] text-white p-2 rounded-[12px]"
-        />
-        {/* <select
+        /> */}
+        <select
           value={botLimit}
           onChange={(e) => setBotLimit(Number(e.target.value))}
           className="w-full bg-[#171029] text-white p-2 rounded-[12px]"
@@ -412,7 +412,7 @@ const EditBotComponent: React.FC = () => {
           <option value={50}>50-100</option>
           <option value={100}>100-200</option>
           <option value={200}>200-400</option>
-        </select> */}
+        </select>
       </div>
       {/* <div className="mb-4">
         <label className="block text-gray-200 mb-2">Bot Identity</label>
