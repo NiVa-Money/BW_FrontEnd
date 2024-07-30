@@ -18,6 +18,10 @@ const initialState: any = {
     otp:{
       data:{},
       loader:false
+    },
+    GLoginData:{
+      data:{},
+      loader:false
     }
   },
   botProfile: {

@@ -52,7 +52,9 @@ import {
   VERIFY_USER_OTP_SUCCESS,
   VERIFY_USER_OTP_FAILURE,
   GOOGLE_LOGIN,
-  PASSWORD_LOGIN
+  PASSWORD_LOGIN,
+  GOOGLE_LOGIN_SUCCESS,
+  GOOGLE_LOGIN_FAILURE
 } from '../actions/actionTypes';
 
 import {
@@ -128,6 +130,32 @@ export function* verifyOtpUserSaga({
     // notifyError(`${error}`);
   }
 }
+
+export function* signUpGoogleUserSagaData({
+  type,
+  payload,
+}: {
+  type: string;
+  payload: any;
+}): Generator<any> {
+  try {
+    // Api call
+    const verifyUser = yield call(signUpGoogleUserData, payload);
+    notifySuccess("login Successful")
+    yield put({
+      type: GOOGLE_LOGIN_SUCCESS,
+      payload: verifyUser,
+    });
+    // notifySuccess('API call successful fetchUserData');
+  } catch (error: any) {
+    yield put({
+      type: GOOGLE_LOGIN_FAILURE,
+      payload: false,
+    });
+    // notifyError(`${error}`);
+  }
+}
+
 export function* signUpUserSaga({
   type,
   payload,
@@ -553,6 +581,6 @@ export default function* rootSaga() {
   yield takeEvery(USER_ALL_SESSION, getUserAllSessionSaga);
   yield takeEvery(ADVANCE_FEATURE, getAdvanceFeatureSaga);
   yield takeEvery(VERIFY_USER_OTP,verifyOtpUserSaga);
-  yield takeEvery(GOOGLE_LOGIN,signUpGoogleUserData);
+  yield takeEvery(GOOGLE_LOGIN,signUpGoogleUserSagaData);
   yield takeEvery(PASSWORD_LOGIN,passwordLoginSaga);
 }
