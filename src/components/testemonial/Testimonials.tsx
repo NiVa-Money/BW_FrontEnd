@@ -43,12 +43,12 @@ const Testimonials: React.FC = () => {
   };
 
   useEffect(() => {
-    const interval = setInterval(nextTestimonial, 5000); // Auto-advance every 5 seconds
+    const interval = setInterval(nextTestimonial, 5000); 
     return () => clearInterval(interval);
   }, []);
 
   return (
-    <div className="flex flex-col items-start self-stretch p-16 bg-black max-md:px-5">
+    <div className="flex flex-col items-start self-stretch p-16 max-md:px-5">
       <h2 className="text-2xl font-semibold tracking-tight leading-7 text-gray-100">
         Testimonials
       </h2>
