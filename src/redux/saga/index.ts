@@ -191,17 +191,23 @@ function* loginSaga({ payload }: any) {
 function* passwordLoginSaga({ payload }: any) {
   try {
     const result: UserCredential = yield call(LoginUserData,payload);
+    console.log("Login Response (SJ)", result);
+    const logObj = {
+      ...result
+    }
+    console.log("logOBj" , logObj)
     const resObject: any = {
       displayName: result?.user?.displayName,
       email: result?.user?.email,
     };
     // notifySuccess('login successful');
-    yield put({ type: 'PASSWORD_LOGIN_SUCESS', payload: resObject });
+    yield put({ type: 'PASSWORD_LOGIN_SUCESS', payload: logObj });
   } catch (error) {
     yield put({ type: 'PASSWORD_LOGIN_FAILURE', payload });
     notifyError(`${error}`)
   }
 }
+
 function* logoutSaga({ payload }: any) {
   const signOut: any = () => auth.signOut();
   try {

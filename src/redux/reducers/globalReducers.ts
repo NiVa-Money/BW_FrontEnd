@@ -75,19 +75,23 @@ export default function globalReducers(state = initialState.root, action: any) {
       };
       case PASSWORD_LOGIN:
         return {
-          ...state,      
-          userData: action.payload,
+          ...state,
+          userData: action.payload.body,
+          error: null,
         };
         case PASSWORD_LOGIN_SUCESS:
+          localStorage.setItem('token', action.payload.body.token);
+          console.log('Login Payload body' , action.payload.body)
+      
           return {
             ...state,
-            user: null,
-            error: action.payload,
+            userData: action.payload.body,
+            error: null,
           };
           case PASSWORD_LOGIN_FAILURE:
             return {
               ...state,
-              user: null,
+              userData: null,
               error: action.payload,
             };
     case VERIFY_USER_OTP:
