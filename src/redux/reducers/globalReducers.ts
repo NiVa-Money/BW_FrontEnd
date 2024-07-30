@@ -14,6 +14,7 @@ import {
   GET_USER_PROFILE,
   GET_USER_PROFILE_SUCCESS,
   GET_USER_PROFILE_FAILURE,
+  REMOVE_OTP_MODAL
 } from '@/redux/actions/actionTypes';
 import initialState from './initialState';
 export default function globalReducers(state = initialState.root, action: any) {
@@ -76,6 +77,13 @@ export default function globalReducers(state = initialState.root, action: any) {
         ...state,
         userData: { ...action.payload, ...state.userData },
         userVerify: true,
+      };
+      case REMOVE_OTP_MODAL:
+      
+      return {
+        ...state,
+      
+        userVerify: false,
       };
     case SIGN_UP_DATA_FAILURE:
       return {

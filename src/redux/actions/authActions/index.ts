@@ -5,6 +5,7 @@ import {
   GET_USER_PROFILE,
   LOGOUT_USER,
   SIGN_UP_DATA,
+  REMOVE_OTP_MODAL
 } from '../actionTypes';
 
 export const logoutUser = () => ({
@@ -24,6 +25,14 @@ export const fetchUserDataSuccess = (userData: any) => ({
 export const signUpDataAction = (userData: any) => ({
   type: SIGN_UP_DATA,
   payload: userData,
+});
+export const removeModalOtp = () => ({
+  type: REMOVE_OTP_MODAL,
+ 
+});
+export const resetUserDataAction = () => ({
+  type: SIGN_UP_DATA,
+ 
 });
 
 export const fetchMetricsAction = (user_id: any) => ({

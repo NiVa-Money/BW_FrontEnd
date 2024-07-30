@@ -34,7 +34,7 @@ const LandingPage: React.FC = () => {
       dispatch(verifyUserDataAction(userEmail));
     }
     if (userVerify) {
-     router.replace('/dashBoard');
+    //  router.replace('/dashBoard');
     } else {
       if (googleVerifyRedux) {
         const [firstName, lastName] = userRedux?.displayName.split(' ');

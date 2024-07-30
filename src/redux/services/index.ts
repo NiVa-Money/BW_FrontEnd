@@ -2,14 +2,15 @@ import axiosInstance from '@/utils/axiosConfig';
 //for sign up
 export const signUpUserData = async (payload: any) => {
   try {
-    const response = await axiosInstance.post('user/signup', payload);
+    const response = await axiosInstance.post('/user/signup/otherEmail', payload);
     return response.data;
   } catch (error) {
     console.error('Error signing up user:', error);
-    2;
+    
     throw new Error('Error signing up user');
   }
 };
+
 //for verify
 export const fetchUserData = async (userEmail: string) => {
   try {

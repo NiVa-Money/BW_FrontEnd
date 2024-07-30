@@ -1,177 +1,25 @@
-// 'use client';
-// import React, { useState } from 'react';
-// import { useRouter } from 'next/navigation';
-// import { useAuthContext } from '@/context/AuthContext';
-// import { BackgroundAnimation } from '../BackgroundAnimation/backgroundAnimation';
-// import { fetchUserData } from '@/redux/services';
-// import { signUpDataAction } from '@/redux/actions/authActions';
-// import { useDispatch } from 'react-redux';
-
-// interface ModalProps {
-//   closeModal: () => void;
-//   handleSignUp: (userData: any, router: any) => void;
-// }
-
-// const Modal: React.FC<ModalProps> = ({ closeModal, handleSignUp }) => {
-//   const [formData, setFormData] = useState({
-//     firstName: '',
-//     lastName: '',
-//     emailId: '',
-//     mobileNo: '',
-//     password: '',
-//   });
-//   const dispatch = useDispatch();
-//   const [error, setError] = useState('');
-//   const { signUpWithEmail } = useAuthContext();
-//   const router = useRouter();
-
-//   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-//     const { name, value } = e.target;
-//     setFormData((prevData) => ({
-//       ...prevData,
-//       [name]: value,
-//     }));
-//   };
-
-//   const handleSubmit = (e: React.FormEvent) => {
-//     e.preventDefault();
-//     try {
-//       console.log('form', formData);
-//       // First, sign up the user
-//       localStorage.setItem('emailId', formData.emailId);
-
-//       dispatch(signUpDataAction(formData));
-
-//       // Then, verify the email
-//       // await fetchUserData(formData.emailId);
-
-//       // If both succeed, proceed with handleSignUp
-//       handleSignUp(formData, router);
-//     } catch (error) {
-//       // Handle errors from either signUpUserData or fetchUserData
-//       setError('Error processing your request');
-//       console.error('Error:', error);
-//     }
-//   };
-
-//   return (
-//     <>
-//       <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 ">
-//         <BackgroundAnimation />
-//         <div className="p-6 rounded-lg max-w-lg mx-auto relative">
-//           <div className="flex justify-end">
-//             <button
-//               onClick={closeModal}
-//               className="text-black-500 hover:text-black-800"
-//             >
-//               &times;
-//             </button>
-//           </div>
-//           <h2 className="text-2xl mb-4">Sign Up</h2>
-//           {error && <div className="text-red-500 mb-4">{error}</div>}
-//           <form onSubmit={handleSubmit}>
-//             <div className="flex mb-2">
-//               <div className="w-1/2 pr-1">
-//                 <label className="block text-white">
-//                   First Name:
-//                   <input
-//                     type="text"
-//                     name="firstName"
-//                     value={formData.firstName}
-//                     onChange={handleChange}
-//                     className="w-full p-2 border rounded-xl text-white bg-black"
-//                     placeholder="First Name"
-//                     required
-//                   />
-//                 </label>
-//               </div>
-
-//               <div className="w-1/2 pl-1">
-//                 <label className="block text-white">
-//                   Last Name:
-//                   <input
-//                     type="text"
-//                     name="lastName"
-//                     value={formData.lastName}
-//                     onChange={handleChange}
-//                     className="w-full p-2 border rounded-xl text-white bg-black"
-//                     placeholder="Last Name"
-//                     required
-//                   />
-//                 </label>
-//               </div>
-//             </div>
-//             <label className="block mb-2 text-white">
-//               Email:
-//               <input
-//                 type="email"
-//                 name="emailId"
-//                 value={formData.emailId}
-//                 onChange={handleChange}
-//                 className="w-full p-2 border rounded-xl text-white bg-black"
-//                 placeholder="Email"
-//                 required
-//               />
-//             </label>
-//             <label className="block mb-2 text-white">
-//               Password:
-//               <input
-//                 type="password"
-//                 name="password"
-//                 value={formData.password}
-//                 onChange={handleChange}
-//                 className="w-full p-2 border rounded-xl text-white bg-black"
-//                 placeholder="Password"
-//                 required
-//               />
-//             </label>
-//             <label className="block mb-2 text-white">
-//               Mobile No:
-//               <input
-//                 type="text"
-//                 name="mobileNo"
-//                 value={formData.mobileNo}
-//                 onChange={handleChange}
-//                 className="w-full p-2 border rounded-xl text-white bg-black"
-//                 placeholder="Mobile No"
-//                 required
-//               />
-//             </label>
-//             <button
-//               type="submit"
-//               className="w-full text-white p-2 rounded mt-8"
-//               style={{
-//                 background:
-//                   'conic-gradient(from 180deg at 50% 50%, #C729B9 -28.32deg, #B52BBA 4.67deg, #A12CBC 23.65deg, #8C2EBE 44.86deg, #792FBF 72.46deg, #6C30C0 82.5deg, #4B32C3 127.99deg, #5831C2 160.97deg, #6330C1 178.46deg, #742FC0 189.48deg, #8D2DBE 202.95deg, #A62CBC 230.66deg, #B92ABA 251.35deg, #D029B8 276.44deg, #EC27B6 306.45deg, #C729B9 331.68deg, #B52BBA 364.67deg)',
-//               }}
-//             >
-//               Sign Up
-//             </button>
-//           </form>
-//         </div>
-//       </div>
-//     </>
-//   );
-// };
-
-// export default Modal;
-
-
 'use client';
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuthContext } from '@/context/AuthContext';
 import { BackgroundAnimation } from '../BackgroundAnimation/backgroundAnimation';
 import { fetchUserData } from '@/redux/services';
-import { signUpDataAction } from '@/redux/actions/authActions';
+import { signUpDataAction,resetUserDataAction } from '@/redux/actions/authActions';
 import { useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
+import { RootState } from '@/redux/configureStore';
+import SignUpModalOtp from '../signupModal/signUpOtpModal';
 
 interface ModalProps {
   closeModal: () => void;
   handleSignUp: (userData: any, router: any) => void;
 }
 
+
 const Modal: React.FC<ModalProps> = ({ closeModal, handleSignUp }) => {
+  const userSucess = useSelector((state: RootState) => state?.root?.userVerify);
+  const [viewOtp, setViewOtp] = useState(false);
+
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
@@ -192,48 +40,23 @@ const Modal: React.FC<ModalProps> = ({ closeModal, handleSignUp }) => {
     }));
   };
 
-  const validateEmail = (email: string) => {
-    const emailRegex = /^[^\s@]+@gmail\.com$/;
-    return emailRegex.test(email);
-  };
+   useEffect(() => {
+   if(userSucess === true ){
+    setViewOtp(userSucess)
+   }
 
-  const validatePassword = (password: string) => {
-    // Example: Password must be at least 8 characters long and include at least one number
-    const passwordRegex = /^(?=.*[0-9]).{8,}$/;
-    return passwordRegex.test(password);
-  };
-
-  const validatePhoneNumber = (phoneNumber: string) => {
-    // Example: Phone number must be 10 digits
-    const phoneNumberRegex = /^\d{10}$/;
-    return phoneNumberRegex.test(phoneNumber);
-  };
+  }, [userSucess])
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    const { emailId, password, mobileNo } = formData;
-
-    if (!validateEmail(emailId)) {
-      setError('Please enter a valid email address.');
-      return;
-    }
-
-    if (!validatePassword(password)) {
-      setError('Password must be at least 8 characters long and include at least one number.');
-      return;
-    }
-
-    if (!validatePhoneNumber(mobileNo)) {
-      setError('Please enter a valid phone number with 10 digits.');
-      return;
-    }
-
     try {
       console.log('form', formData);
       localStorage.setItem('emailId', formData.emailId);
       dispatch(signUpDataAction(formData));
       handleSignUp(formData, router);
+
     } catch (error) {
+    
       setError('Error processing your request');
       console.error('Error:', error);
     }
@@ -241,7 +64,7 @@ const Modal: React.FC<ModalProps> = ({ closeModal, handleSignUp }) => {
 
   return (
     <>
-      <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+      <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 ">
         <BackgroundAnimation />
         <div className="p-6 rounded-lg max-w-lg mx-auto relative">
           <div className="flex justify-end">
@@ -322,6 +145,9 @@ const Modal: React.FC<ModalProps> = ({ closeModal, handleSignUp }) => {
                 required
               />
             </label>
+            {userSucess && 
+          <SignUpModalOtp viewOtp={userSucess} setViewOtp={setViewOtp} />
+          } 
             <button
               type="submit"
               className="w-full text-white p-2 rounded mt-8"
@@ -333,6 +159,7 @@ const Modal: React.FC<ModalProps> = ({ closeModal, handleSignUp }) => {
               Sign Up
             </button>
           </form>
+         
         </div>
       </div>
     </>
@@ -340,4 +167,3 @@ const Modal: React.FC<ModalProps> = ({ closeModal, handleSignUp }) => {
 };
 
 export default Modal;
-

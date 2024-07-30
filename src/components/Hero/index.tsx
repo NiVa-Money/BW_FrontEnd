@@ -12,6 +12,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import './hero.css';
 import { useRouter } from 'next/navigation';
 import { RootState } from '@/redux/configureStore';
+
 const Hero = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
@@ -31,8 +32,8 @@ const Hero = () => {
   };
 
   const handleSignUp = (userData: any, router: any) => {
-    closeModal();
-    router.push('/dashBoard');
+    // closeModal();
+    // router.push('/dashBoard');
   };
 
   const handleSignIn = () => {
@@ -88,9 +89,12 @@ const Hero = () => {
         >
           <span>Sign Up With Your Email</span>
         </button>
+       
+        
         {isModalOpen && (
           <Modal closeModal={closeModal} handleSignUp={handleSignUp} />
         )}
+        
         <button
           className="flex gap-4 justify-center px-3 py-2  text-2xl text-pink-200 rounded-[99px] max-md:px-5"
           onClick={handleLoginButtonClick}

@@ -114,7 +114,8 @@ export function* signUpUserSaga({
       type: SIGN_UP_DATA_FAILURE,
     });
     notifyError(`${error}`);
-  }
+  } 
+
 }
 export function* fetchuserMetricSaga({
   payload,

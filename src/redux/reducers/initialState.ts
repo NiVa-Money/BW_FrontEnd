@@ -5,6 +5,7 @@ const initialState: any = {
     error: null,
     googleLogin: false,
     userData: null,
+    
     userVerify: false,
     userMetric: {
       data: {},
