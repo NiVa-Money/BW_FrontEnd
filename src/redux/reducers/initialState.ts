@@ -15,6 +15,10 @@ const initialState: any = {
       data: {},
       loader: false,
     },
+    otp:{
+      data:{},
+      loader:false
+    }
   },
   botProfile: {
     create: {

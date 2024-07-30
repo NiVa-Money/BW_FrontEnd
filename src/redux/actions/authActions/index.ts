@@ -5,12 +5,18 @@ import {
   GET_USER_PROFILE,
   LOGOUT_USER,
   SIGN_UP_DATA,
-  REMOVE_OTP_MODAL
+  REMOVE_OTP_MODAL,
+  VERIFY_USER_OTP
 } from '../actionTypes';
 
 export const logoutUser = () => ({
   type: LOGOUT_USER,
 });
+
+export const verifyOtp = (userData:any) =>({
+  type: VERIFY_USER_OTP,
+  payload: userData
+})
 
 export const verifyUserDataAction = (userData: any) => ({
   type: VERIFY_USER_DATA,

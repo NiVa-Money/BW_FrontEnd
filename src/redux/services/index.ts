@@ -11,6 +11,18 @@ export const signUpUserData = async (payload: any) => {
   }
 };
 
+export const verifyOtpUserData = async (payload: any) => {
+  try {
+    console.log("verifyOtpUserData",payload)
+    const response = await axiosInstance.post('/user/signup/verify/otherEmail', payload);
+    return response.data;
+  } catch (error) {
+    console.error('Error signing up user:', error);
+    
+    throw new Error('Error in verifying otp');
+  }
+};
+
 //for verify
 export const fetchUserData = async (userEmail: string) => {
   try {

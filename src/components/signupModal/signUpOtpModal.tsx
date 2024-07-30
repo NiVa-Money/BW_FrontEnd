@@ -1,8 +1,10 @@
 'use client';
 import { Modal } from '@mui/material';
-import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { removeModalOtp } from '@/redux/actions/authActions';
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { removeModalOtp, verifyOtp } from '@/redux/actions/authActions';
+import { RootState } from '@/redux/configureStore';
+import { useRouter } from 'next/navigation';
 
 interface OtpModalProps {
   viewOtp: boolean;
@@ -12,6 +14,26 @@ interface OtpModalProps {
 const SignUpModalOtp: React.FC<OtpModalProps> = ({ viewOtp, setViewOtp }) => {
   const [otp, setOtp] = useState(['', '', '', '']);
   const dispatch = useDispatch();
+  const router = useRouter();
+  const emailId = useSelector(
+    (state: RootState) => state.root?.userData.emailId
+  );
+  const resOtp = useSelector(
+    (state: RootState) => state.root?.otp
+  );
+
+  useEffect(()=>{
+    console.log("resOtp",resOtp)
+    localStorage.setItem('user_id', resOtp.data.user_id);
+    localStorage.setItem('token', resOtp.data.token);
+    if(resOtp.data.success){
+      router.push('/dashBoard')
+    }
+  },[resOtp])
+
+  useEffect(()=>{
+    console.log("emailId",emailId)
+  },[emailId])
 
   const handleChange = (index: number, value: string) => {
     const newOtp = [...otp];
@@ -23,7 +45,14 @@ const SignUpModalOtp: React.FC<OtpModalProps> = ({ viewOtp, setViewOtp }) => {
     e.preventDefault();
     const otpValue = otp.join('');
     if (otpValue.length === 3 || otpValue.length === 4) {
+      console.log("submit otp",otpValue,emailId)
+      const data = {
+        "emailId":emailId,
+        otp:otpValue
+      }
       // Handle OTP verification logic
+      dispatch(verifyOtp(data))
+      
       console.log('OTP submitted:', otpValue);
     } else {
       console.error('OTP must be 3 or 4 digits');

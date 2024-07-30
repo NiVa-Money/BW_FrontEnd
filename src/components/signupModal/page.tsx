@@ -53,7 +53,7 @@ const Modal: React.FC<ModalProps> = ({ closeModal, handleSignUp }) => {
       console.log('form', formData);
       localStorage.setItem('emailId', formData.emailId);
       dispatch(signUpDataAction(formData));
-      handleSignUp(formData, router);
+      // handleSignUp(formData, router);
 
     } catch (error) {
     
@@ -145,9 +145,6 @@ const Modal: React.FC<ModalProps> = ({ closeModal, handleSignUp }) => {
                 required
               />
             </label>
-            {userSucess && 
-          <SignUpModalOtp viewOtp={userSucess} setViewOtp={setViewOtp} />
-          } 
             <button
               type="submit"
               className="w-full text-white p-2 rounded mt-8"
@@ -159,7 +156,9 @@ const Modal: React.FC<ModalProps> = ({ closeModal, handleSignUp }) => {
               Sign Up
             </button>
           </form>
-         
+          {userSucess && 
+          <SignUpModalOtp viewOtp={userSucess} setViewOtp={setViewOtp} />
+          } 
         </div>
       </div>
     </>

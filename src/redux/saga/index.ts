@@ -48,6 +48,9 @@ import {
   ADVANCE_FEATURE,
   ADVANCE_FEATURE_SUCCESS,
   ADVANCE_FEATURE_FAILURE,
+  VERIFY_USER_OTP,
+  VERIFY_USER_OTP_SUCCESS,
+  VERIFY_USER_OTP_FAILURE,
 } from '../actions/actionTypes';
 
 import {
@@ -66,6 +69,7 @@ import {
   getUserKnowledgeBaseService,
   getUserProfileService,
   signUpUserData,
+  verifyOtpUserData,
 } from '../services';
 import { useRouter } from 'next/navigation';
 import { notifyError, notifySuccess } from '@/components/Toaster/toast';
@@ -95,6 +99,31 @@ export function* verifyUserSaga({
     // notifyError(`${error}`);
   }
 }
+
+export function* verifyOtpUserSaga({
+  type,
+  payload,
+}: {
+  type: string;
+  payload: any;
+}): Generator<any> {
+  try {
+    // Api call
+    const verifyUser = yield call(verifyOtpUserData, payload);
+    notifySuccess("login Successful")
+    yield put({
+      type: VERIFY_USER_OTP_SUCCESS,
+      payload: verifyUser,
+    });
+    // notifySuccess('API call successful fetchUserData');
+  } catch (error: any) {
+    yield put({
+      type: VERIFY_USER_OTP_FAILURE,
+      payload: false,
+    });
+    // notifyError(`${error}`);
+  }
+}
 export function* signUpUserSaga({
   type,
   payload,
@@ -108,7 +137,7 @@ export function* signUpUserSaga({
       type: SIGN_UP_DATA_SUCCESS,
       payload: signUpUser,
     });
-    notifySuccess('signUp successful');
+    // notifySuccess('signUp successful');
   } catch (error: any) {
     yield put({
       type: SIGN_UP_DATA_FAILURE,
@@ -146,7 +175,7 @@ function* loginSaga({ payload }: any) {
       displayName: result?.user?.displayName,
       email: result?.user?.email,
     };
-    notifySuccess('login successful');
+    // notifySuccess('login successful');
     yield put({ type: 'LOGIN_SUCCESS', payload: resObject });
   } catch (error) {
     yield put({ type: 'LOGIN_FAILURE', payload });
@@ -498,4 +527,5 @@ export default function* rootSaga() {
   yield takeEvery(USER_CHAT_DATA, getUserChatSaga);
   yield takeEvery(USER_ALL_SESSION, getUserAllSessionSaga);
   yield takeEvery(ADVANCE_FEATURE, getAdvanceFeatureSaga);
+  yield takeEvery(VERIFY_USER_OTP,verifyOtpUserSaga);
 }
