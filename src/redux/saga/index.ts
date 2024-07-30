@@ -264,7 +264,7 @@ export function* editBotProfileSaga({
 }): Generator<any> {
   try {
     const editBot = yield call(editUserBotProfileService, payload);
-    notifySuccess('botProfile edited successfully');
+    // notifySuccess('botProfile edited successfully');
     yield put({
       type: EDIT_BOT_PROFILE_SUCCESS,
       payload: editBot,
@@ -308,7 +308,7 @@ export function* deleteBotProfilesSaga({
 }): Generator<any> {
   try {
     const botProfiles = yield call(deleteBotProfileService, payload)
-    notifySuccess('botProfile deleted successfully');
+    // notifySuccess('botProfile deleted successfully');
     yield put({
       type: DELETE_BOT_PROFILE_SUCCESS,
       payload: botProfiles,
@@ -330,7 +330,7 @@ export function* exportBotProfileSaga({
 }): Generator<any> {
   try {
     const exportedBotProfile = yield call(exportBotProfileService, payload);
-    notifySuccess('Bot profile exported successfully');
+    // notifySuccess('Bot profile exported successfully');
     yield put({
       type: EXPORT_BOT_PROFILE_SUCCESS,
       payload: exportedBotProfile,
@@ -354,7 +354,7 @@ export function* createKnowledgeBaseSaga({
 }): Generator<any> {
   try {
     const knowledgebase = yield call(createKnowledgeBaseService, payload);
-    notifySuccess('knowledge base created successfully');
+    // notifySuccess('knowledge base created successfully');
     yield put({
       type: CREATE_KNOWLEDGE_BASE_SUCCESS,
       payload: knowledgebase,
@@ -398,7 +398,7 @@ export function* deleteUserKnowledgeBaseSaga({
 }): Generator<any> {
   try {
     const botProfiles = yield call(deleteUserKnowledgeBaseService, payload);
-    notifySuccess('knowledge base deleted successfully');
+    // notifySuccess('knowledge base deleted successfully');
     yield put({
       type: DELETE_USER_KNOWLEDGE_BASE_SUCCESS,
       payload: botProfiles,
@@ -406,7 +406,7 @@ export function* deleteUserKnowledgeBaseSaga({
 
     try {
       const botProfiles = yield call(getUserKnowledgeBaseService, payload);
-      notifySuccess('knowledge base fetched successfully');
+      // notifySuccess('knowledge base fetched successfully');
       yield put({
         type: GET_USER_KNOWLEDGE_BASE_SUCCESS,
         payload: botProfiles,
@@ -434,7 +434,7 @@ export function* getUserChatSaga({
   payload: any;
 }): Generator<any> {
   try {
-    console.log('api userChat with bot payload  --->', payload);
+    // console.log('api userChat with bot payload  --->', payload);
     const userChat: any = yield call(getUserChatService, payload);
     const answerOfQuestion = userChat.chats[userChat.chats.length - 1].answer;
     // notifySuccess('knowledge base fetched successfully');
@@ -465,7 +465,7 @@ export function* getUserAllSessionSaga({
     // console.log("payload",payload)
 
     // console.log("getSession ",data)
-    console.log('p', payload);
+    // console.log('p', payload);
     const userChat = yield call(getUserAllSessionService, payload);
     // notifySuccess('UserAllSession fetched successfully');
     // console.log("api userChat with bot res All session",userChat)
@@ -495,7 +495,7 @@ export function* getAdvanceFeatureSaga({
     };
     // console.log("getSession ",data)
     const userChat = yield call(getAdvanceFeatureService, data);
-    notifySuccess('Successfully fetched advance feature')
+    // notifySuccess('Successfully fetched advance feature')
     // console.log("api userChat with bot res All session",userChat)
     yield put({
       type: ADVANCE_FEATURE_SUCCESS,

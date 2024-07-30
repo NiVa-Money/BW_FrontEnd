@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import icon from '../../public/assets/chatBotSymbol.svg';
 import mainLogo from '@/public/assets/mainLogo.svg';
 import { useRouter } from 'next/router';
+import './botSession.css'
 
 import '../NewChat/newchat.css';
 import {
@@ -21,6 +22,7 @@ import {
 import withAuth from '../withAuth';
 import Image from 'next/image';
 import Link from 'next/link';
+import { BarChart } from '@tremor/react';
 
 const BotSessionComponent: React.FC = () => {
   const dispatch = useDispatch();
@@ -75,6 +77,20 @@ const BotSessionComponent: React.FC = () => {
   );
   const [chatsData, setchatsData] = React.useState<any>([]);
   const [selectedBotName, setSelectedBotName] = React.useState<any>('');
+  const [chartData, setChartData] = React.useState([
+    {
+      name: 'Negative',
+      'Customer Sentiment': 0,
+    },
+    {
+      name: 'Positive',
+      'Customer Sentiment': 0,
+    },
+    {
+      name: 'Neutral',
+      'Customer Sentiment': 0,
+    },
+  ]);
 
   React.useEffect(() => {
     if (chatContainerRef.current) {
@@ -203,6 +219,46 @@ const BotSessionComponent: React.FC = () => {
     }
   };
 
+  // const chartdata = [
+  //   {
+  //     name: 'Negative',
+  //     'Chats per day': 0,
+  //   },
+  //   {
+  //     name: 'Positive',
+  //     'Chats per day': 100,
+  //   },
+  //   {
+  //     name: 'Neutral',
+  //     'Chats per day': 0,
+  //   },
+  // ];
+
+  React.useEffect(() => {
+    if (sentimentAnalysis) {
+      console.log('sentimentAnalysis', sentimentAnalysis);
+      const parseValue = (value: any) => {
+        return value ? parseFloat(value.replace('%', '')) : 0;
+      };
+      setChartData([
+        {
+          name: 'Negative',
+          'Customer Sentiment': Number(parseValue(sentimentAnalysis?.negative)),
+        },
+        {
+          name: 'Positive',
+          'Customer Sentiment': Number(parseValue(sentimentAnalysis?.positive)),
+        },
+        {
+          name: 'Neutral',
+          'Customer Sentiment': Number(parseValue(sentimentAnalysis?.neutral)),
+        },
+      ]);
+    }
+  }, [sentimentAnalysis]);
+
+  const dataFormatter = (value: any) => `${value}%`;
+
   React.useEffect(() => {
     if (botIdRedux.botId?.length) {
       setBotIdLocal(botIdRedux?.botId);
@@ -235,13 +291,14 @@ const BotSessionComponent: React.FC = () => {
       setchatsData(filteredList);
     }
   }, [userChatMessagesRes, sessionId]);
-  console.log('chat', chatsData, userChatMessagesRes);
+  // console.log('chat', chatsData, userChatMessagesRes);
   React.useEffect(() => {
     console.log('advanceFeature', advanceFeature?.data);
     setReasonDetails(advanceFeature?.data?.data?.cause);
     setSummary(advanceFeature?.data?.data?.summary);
     setSentimentAnalysis(advanceFeature?.data?.data?.sentiments);
-    setNextSteps(advanceFeature?.data?.data?.nextStep);
+    const formattedNextSteps = advanceFeature?.data?.data?.nextStep.replace(/(\d+\.\s)/g, '\n$1');
+    setNextSteps(formattedNextSteps);
   }, [advanceFeature]);
 
   // React.useEffect(() => {
@@ -316,8 +373,8 @@ const BotSessionComponent: React.FC = () => {
                 setSessionId(item._id);
               }}
             >
-              <span className="">Session {id + 1}</span>
-              <span className="w-[100%] left-[43px] ">
+              <span className="cursor-pointer">Session {id + 1}</span>
+              <span className="w-[100%] left-[43px] cursor-pointer ">
                 {item.sessions[item.sessions.length - 1]?.question}
               </span>
             </div>
@@ -546,14 +603,26 @@ const BotSessionComponent: React.FC = () => {
                   <div className="flex w-full mb-4" key={index}>
                     <div className="w-full max-md:w-full flex flex-col">
                       <div className="w-full flex justify-end py-2 gap-2 rounded text-white mb-2 text-right">
-                        <span className="block w-fit p-2 bg-[#3F2181] rounded-3xl"
-                            dangerouslySetInnerHTML={{ __html: message?.question?.replace(/\n/g, '<br />').replace(/\*(.*?)\*/g, '<b>$1</b>') }}>
+                        <span
+                          className="block w-fit p-2 bg-[#3F2181] rounded-xl"
+                          dangerouslySetInnerHTML={{
+                            __html: message?.question
+                              ?.replace(/\n/g, '<br />')
+                              .replace(/\*(.*?)\*/g, '<b>$1</b>'),
+                          }}
+                        >
                           {/* {message?.question}message?.question?.replace(/\n/g, '<br />'); */}
                         </span>
                       </div>
                       <div className="w-full py-2 gap-2 rounded text-white text-left">
-                        <span className="block w-fit p-2 bg-[#2B243C] rounded-3xl"
-                            dangerouslySetInnerHTML={{ __html: message?.answer?.replace(/\n/g, '<br />').replace(/\*(.*?)\*/g, '<b>$1</b>') }}>
+                        <span
+                          className="block w-fit p-2 bg-[#2B243C] rounded-xl"
+                          dangerouslySetInnerHTML={{
+                            __html: message?.answer
+                              ?.replace(/\n/g, '<br />')
+                              .replace(/\*(.*?)\*/g, '<b>$1</b>'),
+                          }}
+                        >
                           {/* {message?.answer} */}
                         </span>
                       </div>
@@ -652,22 +721,32 @@ const BotSessionComponent: React.FC = () => {
                 ''
               )}
               <button
-                className="custom-button bg-[#FFFFFF] bg-opacity-10"
+                className="custom-button bg-[#FFFFFF] bg-opacity-10 mt-5"
                 onClick={openPopup}
               >
-                Customer Sentiments
+                Customer Sentiment
               </button>
               {sentimentAnalysis ? (
-                <div className="w-[80%] flex justify-center items-center mt-2 border-4 border-[#DB88DB] py-4 px-10 text-base">
-                  <div>negative: {sentimentAnalysis?.negative} </div>
+                <div className="w-[80%] flex justify-center items-center mt-2 border-4 border-[#DB88DB] text-base">
+                  {/* <div>negative: {sentimentAnalysis?.negative} </div>
                   <div>neutral: {sentimentAnalysis?.neutral} </div>
-                  <div>positive: {sentimentAnalysis?.positive} </div>
+                  <div>positive: {sentimentAnalysis?.positive} </div> */}
+                  <BarChart
+                    className="h-[150px] custom-bar-chart"
+                    data={chartData}
+                    index="name"
+                    categories={['Customer Sentiment']}
+                    colors={['blue']}
+                    valueFormatter={dataFormatter}
+                    yAxisWidth={48}
+                    onValueChange={(v) => console.log(v)}
+                  />
                 </div>
               ) : (
                 ''
               )}
               <button
-                className="custom-button bg-[#FFFFFF] bg-opacity-10"
+                className="custom-button bg-[#FFFFFF] bg-opacity-10 mt-5"
                 onClick={openPopup}
               >
                 Feedback / AI Recommendations
