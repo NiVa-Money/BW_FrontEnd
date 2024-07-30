@@ -28,7 +28,7 @@ interface ChatBot {
   createdAt: string;
   _id: string;
   docName: string;
-  botURL:string;
+  botURL: string;
 }
 
 const ChatBotList: React.FC = () => {
@@ -51,29 +51,19 @@ const ChatBotList: React.FC = () => {
   const [isExportModalOpen, setIsExportModalOpen] = useState(false);
   const [exportResponse, setExportResponse] = useState<{ success: boolean; url: string } | null>(null);
   const exportS = useSelector((state: RootState) => state?.botProfile?.export?.data);
+
   // Function to handle edit action
   const handleEdit = (botId: string) => {
     router.push(`/editBot?id=${botId}`);
   };
 
   // Function to handle export action
-  // const handleExport = (botId: string) => {
-  //   const botToExport = chatBotList.find(bot => bot._id === botId);
-  //   if (botToExport && userId) {
-  //     const payload = { botId: botToExport._id, userId };
-  //     dispatch(exportBotProfileServiceAction(payload) as any);
-  //     console.log(`Exporting bot: ${botToExport.botName}`);
-  //   } else {
-  //     console.error(`Bot with ID ${botId} not found or userId is undefined`);
-  //   }
-  // };
-
-     // Function to handle export action
   const handleExport = (botId: string) => {
     const botToExport = chatBotList.find(bot => bot._id === botId);
     if (botToExport && userId) {
+      setIsExportModalOpen(true); // Open the export modal
       const payload = { botId: botToExport._id, userId };
-      dispatch(exportBotProfileServiceAction(payload))
+      dispatch(exportBotProfileServiceAction(payload));
     } else {
       console.error(`Bot with ID ${botId} not found or userId is undefined`);
     }
@@ -101,12 +91,11 @@ const ChatBotList: React.FC = () => {
     setBotIdToDelete(null);
   };
 
-   // Close the export modal
-   const closeExportModal = () => {
+  // Close the export modal
+  const closeExportModal = () => {
     setIsExportModalOpen(false);
     setExportResponse(null);
   };
-
 
   useEffect(() => {
     if (userId !== undefined) {
@@ -123,7 +112,6 @@ const ChatBotList: React.FC = () => {
   }, [userId]);
 
   useEffect(() => {
-    console.log('botDataRedux:', botloader);
     if (botDataRedux && botDataRedux.length) {
       setChatBotList(botDataRedux);
     }
@@ -135,22 +123,14 @@ const ChatBotList: React.FC = () => {
     }
   }, [userIdLocal, pathName, dispatch]);
 
-    React.useEffect(() => {
-      console.log("hiiiii",exportS)
+  useEffect(() => {
     if (exportS) {
       setExportResponse({ success: true, url: exportS?.url });
-      setIsExportModalOpen(true);
     }
-    // } else if (exportError) {
-    //   console.error('Export failed:', exportError);
-    //   // setExportResponse({ success: false, error: exportError });
-    // }
   }, [exportS]);
 
   return (
-
     <main className="flex flex-col mt-5">
-
       <header className="flex gap-2.5 px-5 max-md:flex-wrap">
         <h1 className="flex-1 my-auto text-3xl font-bold px-10 leading-6 text-white">
           My ChatBots
@@ -183,11 +163,11 @@ const ChatBotList: React.FC = () => {
         message="Are you sure you want to delete this chatbot?"
       />
 
-    <ExportModal
-      isOpen={isExportModalOpen}
-      onClose={closeExportModal}
-      exportResponse={exportResponse}
-    />
+      <ExportModal
+        isOpen={isExportModalOpen}
+        onClose={closeExportModal}
+        exportResponse={exportResponse}
+      />
     </main>
   );
 };
