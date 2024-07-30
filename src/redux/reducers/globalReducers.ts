@@ -17,7 +17,10 @@ import {
   REMOVE_OTP_MODAL,
   VERIFY_USER_OTP,
   VERIFY_USER_OTP_SUCCESS,
-  VERIFY_USER_OTP_FAILURE
+  VERIFY_USER_OTP_FAILURE,
+  GOOGLE_LOGIN,
+  GOOGLE_LOGIN_SUCCESS,
+  GOOGLE_LOGIN_FAILURE
 } from '@/redux/actions/actionTypes';
 import initialState from './initialState';
 export default function globalReducers(state = initialState.root, action: any) {
@@ -52,8 +55,34 @@ export default function globalReducers(state = initialState.root, action: any) {
         otp:{
           data: {},
           loader: false,
+        },
+        GLoginData:{
+          data:{},
+          loader:false
         }
       };
+
+    case GOOGLE_LOGIN:
+        return {
+          ...state,
+          GLoginData: action.payload,
+          loader:true
+        };
+  
+
+    case GOOGLE_LOGIN_SUCCESS:
+      return {
+        ...state,
+        GLoginData: action.payload,
+        loader:false
+      };
+
+      case GOOGLE_LOGIN_FAILURE:
+        return {
+          ...state,
+          GLoginData: action.payload,
+          loader:false
+        };
 
     case LOGIN_SUCCESS:
       return {
