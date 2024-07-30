@@ -74,8 +74,8 @@ export const fetchUserData = async (userEmail: string) => {
 export const fetchUserMetrics = async (payload: any) => {
   try {
     const user_id = localStorage.getItem('user_id');
-
-    const response = await axiosInstance.get(`user/metrics/${user_id}`, {});
+    console.log('user_id' , payload)
+    const response = await axiosInstance.get(`user/metrics/${payload}`, {});
     console.log('User metrics:', response.data);
     return response.data;
   } catch (error: any) {

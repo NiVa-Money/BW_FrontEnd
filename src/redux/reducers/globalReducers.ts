@@ -110,8 +110,8 @@ export default function globalReducers(state = initialState.root, action: any) {
         };
         case PASSWORD_LOGIN_SUCESS:
           localStorage.setItem('token', action.payload.body.token);
+          localStorage.setItem('userId', action.payload.body.user_id);
           console.log('Login Payload body' , action.payload.body)
-      
           return {
             ...state,
             userData: action.payload.body,
