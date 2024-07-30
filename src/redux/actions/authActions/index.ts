@@ -7,7 +7,8 @@ import {
   SIGN_UP_DATA,
   REMOVE_OTP_MODAL,
   VERIFY_USER_OTP,
-  GOOGLE_LOGIN
+  GOOGLE_LOGIN,
+  PASSWORD_LOGIN
 } from '../actionTypes';
 
 export const logoutUser = () => ({
@@ -18,7 +19,10 @@ export const googleLogin = (payload:any) => ({
   type: GOOGLE_LOGIN,
   payload
 })
-
+export const passwordLoginAction = (payload:any) => ({
+  type: PASSWORD_LOGIN,
+  payload
+})
 export const verifyOtp = (userData:any) =>({
   type: VERIFY_USER_OTP,
   payload: userData

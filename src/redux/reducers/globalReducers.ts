@@ -17,7 +17,10 @@ import {
   REMOVE_OTP_MODAL,
   VERIFY_USER_OTP,
   VERIFY_USER_OTP_SUCCESS,
-  VERIFY_USER_OTP_FAILURE
+  VERIFY_USER_OTP_FAILURE,
+  PASSWORD_LOGIN,
+  PASSWORD_LOGIN_SUCESS,
+  PASSWORD_LOGIN_FAILURE
 } from '@/redux/actions/actionTypes';
 import initialState from './initialState';
 export default function globalReducers(state = initialState.root, action: any) {
@@ -70,6 +73,23 @@ export default function globalReducers(state = initialState.root, action: any) {
         googleLogin: false,
         error: action.payload,
       };
+      case PASSWORD_LOGIN:
+        return {
+          ...state,      
+          userData: action.payload,
+        };
+        case PASSWORD_LOGIN_SUCESS:
+          return {
+            ...state,
+            user: null,
+            error: action.payload,
+          };
+          case PASSWORD_LOGIN_FAILURE:
+            return {
+              ...state,
+              user: null,
+              error: action.payload,
+            };
     case VERIFY_USER_OTP:
       return{
        ...state,
@@ -86,6 +106,9 @@ export default function globalReducers(state = initialState.root, action: any) {
           data: action.payload,
           loader: false,
         },
+        userData: {
+          success:false
+        }
     }
     case VERIFY_USER_OTP_FAILURE:
       return{
@@ -95,6 +118,7 @@ export default function globalReducers(state = initialState.root, action: any) {
           data: action.payload,
           loader: false,
         },
+
     }
     case SIGN_UP_DATA:
       return {

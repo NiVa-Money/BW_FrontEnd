@@ -51,7 +51,8 @@ import {
   VERIFY_USER_OTP,
   VERIFY_USER_OTP_SUCCESS,
   VERIFY_USER_OTP_FAILURE,
-  GOOGLE_LOGIN
+  GOOGLE_LOGIN,
+  PASSWORD_LOGIN
 } from '../actions/actionTypes';
 
 import {
@@ -69,6 +70,7 @@ import {
   getUserChatService,
   getUserKnowledgeBaseService,
   getUserProfileService,
+  LoginUserData,
   signUpGoogleUserData,
   signUpUserData,
   verifyOtpUserData,
@@ -186,7 +188,20 @@ function* loginSaga({ payload }: any) {
     notifyError(`${error}`)
   }
 }
-
+function* passwordLoginSaga({ payload }: any) {
+  try {
+    const result: UserCredential = yield call(LoginUserData,payload);
+    const resObject: any = {
+      displayName: result?.user?.displayName,
+      email: result?.user?.email,
+    };
+    // notifySuccess('login successful');
+    yield put({ type: 'PASSWORD_LOGIN_SUCESS', payload: resObject });
+  } catch (error) {
+    yield put({ type: 'PASSWORD_LOGIN_FAILURE', payload });
+    notifyError(`${error}`)
+  }
+}
 function* logoutSaga({ payload }: any) {
   const signOut: any = () => auth.signOut();
   try {
@@ -533,4 +548,5 @@ export default function* rootSaga() {
   yield takeEvery(ADVANCE_FEATURE, getAdvanceFeatureSaga);
   yield takeEvery(VERIFY_USER_OTP,verifyOtpUserSaga);
   yield takeEvery(GOOGLE_LOGIN,signUpGoogleUserData);
+  yield takeEvery(PASSWORD_LOGIN,passwordLoginSaga);
 }
