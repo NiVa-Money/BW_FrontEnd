@@ -61,7 +61,7 @@ export const getUserProfileService = async (payload: any) => {
       'Error fetching user profile:',
       error.response ? error.response.data : error.message
     );
-    throw new Error('Error fetching user metrics');
+    throw new Error('Error fetching user profile');
   }
 };
 // create user bot profile
@@ -74,7 +74,7 @@ export const createUserBotProfileService = async (payload: any) => {
       'Error response:',
       error.response ? error.response.data : error.message
     );
-    throw new Error('Error fetching user data');
+    throw new Error('Error fetching user bot profile data');
   }
 };
 // edit user bot profile
@@ -87,7 +87,7 @@ export const editUserBotProfileService = async (payload: any) => {
       'Error response:',
       error.response ? error.response.data : error.message
     );
-    throw new Error('Error fetching user data');
+    throw new Error('Error occurred in updating bot profile');
   }
 };
 
@@ -105,7 +105,7 @@ export const getUserBotProfileService = async (payload: any) => {
       'Error fetching user Bot profile:',
       error.response ? error.response.data : error.message
     );
-    throw new Error('Error fetching user metrics');
+    throw new Error('Error fetching user Bot profile');
   }
 };
 
@@ -122,7 +122,7 @@ export const deleteBotProfileService = async (payload: any) => {
       'Error fetching user Bot profile:',
       error.response ? error.response.data : error.message
     );
-    throw new Error('Error fetching user metrics');
+    throw new Error('Error occurred in deleting bot profile data');
   }
 };
 
@@ -171,7 +171,7 @@ export const getUserKnowledgeBaseService = async (payload: any) => {
       'Error fetching user Bot profile:',
       error.response ? error.response.data : error.message
     );
-    throw new Error('Error fetching user metrics');
+    throw new Error('Error: get User Knowledge Base');
   }
 };
 
@@ -188,7 +188,7 @@ export const deleteUserKnowledgeBaseService = async (payload: any) => {
       'Error fetching user Bot profile:',
       error.response ? error.response.data : error.message
     );
-    throw new Error('Error fetching user metrics');
+    throw new Error('Error: delete User Knowledge Base');
   }
 };
 //for logout
@@ -230,7 +230,7 @@ export const getUserAllSessionService = async (payload: any) => {
   } catch (error) {
     console.error('Error signing up user:', error);
     2;
-    throw new Error('Error signing up user');
+    throw new Error('Error: Getting user all session');
   }
 };
 
@@ -243,6 +243,6 @@ export const getAdvanceFeatureService = async (payload: any) => {
   } catch (error) {
     console.error('Error signing up user:', error);
     2;
-    throw new Error('Error signing up user');
+    throw new Error('Error: Getting Advance Feature');
   }
 };
