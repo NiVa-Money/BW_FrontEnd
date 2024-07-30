@@ -23,7 +23,7 @@ import {
   PASSWORD_LOGIN_FAILURE,
   GOOGLE_LOGIN,
   GOOGLE_LOGIN_SUCCESS,
-  GOOGLE_LOGIN_FAILURE
+  GOOGLE_LOGIN_FAILURE,
 } from '@/redux/actions/actionTypes';
 import initialState from './initialState';
 export default function globalReducers(state = initialState.root, action: any) {
