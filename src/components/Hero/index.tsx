@@ -7,6 +7,8 @@ import LoginModal from '../loginModal/loginModal';
 import {
   verifyUserDataAction,
   loginRequest,
+  signUpDataAction,
+  googleLogin,
 } from '@/redux/actions/authActions';
 import { useDispatch, useSelector } from 'react-redux';
 import './hero.css';
@@ -37,6 +39,7 @@ const Hero = () => {
   };
 
   const handleSignIn = () => {
+    console.log("hiiiiiiiiiiiiiiiiiiii")
     dispatch(loginRequest());
   };
   const handleLoginButtonClick = () => {
@@ -48,14 +51,16 @@ const Hero = () => {
   };
   useEffect(() => {
     if (googleVerifyRedux) {
+      console.log("userRedux",userRedux)
       const [firstName, lastName] = userRedux?.displayName.split(' ');
       const email = userRedux?.email;
       const payload = {
         firstName: firstName,
         lastName: lastName,
         emailId: email,
-        mobileNo: '77797979779',
+        mobileNo: '917779797977',
       };
+      // dispatch(googleLogin(payload))
       dispatch(verifyUserDataAction(email));
     }
   }, [googleVerifyRedux]);

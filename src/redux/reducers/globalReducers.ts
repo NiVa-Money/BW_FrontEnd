@@ -134,7 +134,7 @@ export default function globalReducers(state = initialState.root, action: any) {
       return {
         ...state,
         userData: action.payload,
-        userVerify: action.payload,
+        userVerify: false,
       };
 
     case FETCH_USER_METRICTS_SUCCESS:

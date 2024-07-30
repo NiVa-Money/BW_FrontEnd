@@ -4,6 +4,7 @@ export const SET_USER: any = 'SET_USER';
 export const LOGOUT_USER: any = 'LOGOUT_USER';
 
 // actions.js or actions.ts
+export const GOOGLE_LOGIN = "GOOGLE_LOGIN"
 export const VERIFY_USER_OTP = "VERIFY_USER_OTP"
 export const VERIFY_USER_OTP_SUCCESS = "VERIFY_USER_OTP_SUCCESS"
 export const VERIFY_USER_OTP_FAILURE = "VERIFY_USER_OTP_FAILURE"

@@ -51,6 +51,7 @@ import {
   VERIFY_USER_OTP,
   VERIFY_USER_OTP_SUCCESS,
   VERIFY_USER_OTP_FAILURE,
+  GOOGLE_LOGIN
 } from '../actions/actionTypes';
 
 import {
@@ -68,6 +69,7 @@ import {
   getUserChatService,
   getUserKnowledgeBaseService,
   getUserProfileService,
+  signUpGoogleUserData,
   signUpUserData,
   verifyOtpUserData,
 } from '../services';
@@ -169,6 +171,7 @@ export function* fetchuserMetricSaga({
 }
 function* loginSaga({ payload }: any) {
   try {
+    console.log("payload of google saga ",payload, provider,auth )
     const result: UserCredential = yield call(signInWithPopup, auth, provider);
     // console.log('re', result);
     const resObject: any = {
@@ -528,4 +531,5 @@ export default function* rootSaga() {
   yield takeEvery(USER_ALL_SESSION, getUserAllSessionSaga);
   yield takeEvery(ADVANCE_FEATURE, getAdvanceFeatureSaga);
   yield takeEvery(VERIFY_USER_OTP,verifyOtpUserSaga);
+  yield takeEvery(GOOGLE_LOGIN,signUpGoogleUserData);
 }
