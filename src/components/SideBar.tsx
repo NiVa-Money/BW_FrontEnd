@@ -75,6 +75,7 @@ const SIDENAV_ITEMS2: SidebarItemProps[] = [
 const SideBar: React.FC = () => {
   const dispatch = useDispatch();
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isSidebarMinimized, setIsSidebarMinimized] = useState(false);
   const [SIDENAV_ITEMS, setSIDENAV_ITEMS] =
     useState<SidebarItemProps[]>(initialSIDENAV_ITEMS);
   const userData = useSelector((state: RootState) => state?.root.userData);
@@ -82,6 +83,10 @@ const SideBar: React.FC = () => {
 
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
+
+  const toggleSidebar = () => {
+    setIsSidebarMinimized(!isSidebarMinimized);
+  };
 
   const LogoutButton = () => {
     console.log('app logout ... ');
@@ -103,8 +108,21 @@ const SideBar: React.FC = () => {
   useEffect(() => {
     console.log('botProfile', botProfiles);
   }, [botProfiles]);
+
   return (
-    <div className="w-64 p-4 flex flex-col h-screen relative">
+    <div
+      className={`flex flex-col h-screen relative ${
+        isSidebarMinimized ? 'w-20' : 'w-64'
+      } p-4`}
+    >
+      <button onClick={toggleSidebar} className="mb-4">
+        <i
+          className={`fas ${
+            isSidebarMinimized ? 'fa-chevron-right' : 'fa-chevron-left'
+          }`}
+        ></i>
+      </button>
+
       <Link
         href={'/dashBoard'}
         className="flex justify-center w-full mt-[10px] mb-[20px]"
@@ -123,27 +141,28 @@ const SideBar: React.FC = () => {
       </button>
 
       <MenuItem item={DashboardItem} key={DashboardItem?.text} />
-      <div className='flex flex-col h-[100%] justify-between'>
-      <div className="flex flex-col space-y-2">
-        {SIDENAV_ITEMS.map((item, idx) => (
-          <MenuItem key={idx} item={item} />
-        ))}
-      </div>
-      <div className="flex flex-col space-y-2 mt-2">
-        {SIDENAV_ITEMS2.map((item, idx) => (
-          <MenuItem
-            key={idx}
-            item={item}
-            onClick={
-              item.text === 'Clear Conversations'
-                ? openModal
-                : item.text === 'Log Out'
-                ? LogoutButton
-                : undefined
-            }
-          />
-        ))}
-      </div>
+      <div className="flex flex-col h-[100%] justify-between">
+        <div className="flex flex-col space-y-2">
+          {SIDENAV_ITEMS.map((item, idx) => (
+            <MenuItem key={idx} item={item} minimized={isSidebarMinimized} />
+          ))}
+        </div>
+        <div className="flex flex-col space-y-2 mt-2">
+          {SIDENAV_ITEMS2.map((item, idx) => (
+            <MenuItem
+              key={idx}
+              item={item}
+              minimized={isSidebarMinimized}
+              onClick={
+                item.text === 'Clear Conversations'
+                  ? openModal
+                  : item.text === 'Log Out'
+                  ? LogoutButton
+                  : undefined
+              }
+            />
+          ))}
+        </div>
       </div>
 
       {isModalOpen && <ClearConversation closeModal={closeModal} />}
@@ -154,8 +173,10 @@ const SideBar: React.FC = () => {
 interface MenuItemProps {
   item: SidebarItemProps;
   onClick?: () => void;
+  minimized?: boolean;
 }
-const MenuItem: React.FC<MenuItemProps> = ({ item, onClick }) => {
+
+const MenuItem: React.FC<MenuItemProps> = ({ item, onClick, minimized }) => {
   const router = useRouter();
   const pathname = usePathname();
   const [subMenuOpen, setSubMenuOpen] = useState(false);
@@ -199,7 +220,7 @@ const MenuItem: React.FC<MenuItemProps> = ({ item, onClick }) => {
             }`}
           >
             <i className={`fas ${item.icon}`}></i>
-            <span>{item.text}</span>
+            {!minimized && <span>{item.text}</span>}
             <div className={`${subMenuOpen ? 'rotate-180' : ''} ml-auto`}>
               <Icon icon="lucide:chevron-down" width="24" height="24" />
             </div>
@@ -296,10 +317,11 @@ const MenuItem: React.FC<MenuItemProps> = ({ item, onClick }) => {
           onClick={onClick}
         >
           <i className={`fas ${item.icon}`}></i>
-          <span>{item.text}</span>
+          {!minimized && <span>{item.text}</span>}
         </Link>
       )}
     </div>
   );
 };
+
 export default SideBar;

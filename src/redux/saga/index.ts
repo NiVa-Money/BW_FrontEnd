@@ -1,6 +1,13 @@
 import { auth, provider } from '@/auth/firebase';
 import { UserCredential, signInWithPopup } from 'firebase/auth';
-import { call, put, takeEvery, takeLatest } from 'redux-saga/effects';
+import {
+  call,
+  delay,
+  put,
+  select,
+  takeEvery,
+  takeLatest,
+} from 'redux-saga/effects';
 import {
   VERIFY_USER_DATA,
   VERIFY_USER_DATA_FAILURE,
@@ -67,6 +74,7 @@ import { useRouter } from 'next/navigation';
 interface BotData {
   userChat: any;
 }
+const getPathName = (state: any) => state.root.pathName;
 export function* verifyUserSaga({
   type,
   payload,
@@ -114,16 +122,36 @@ export function* fetchuserMetricSaga({
   type: string;
   payload: any;
 }): Generator<any> {
-  try {
-    const fetchuserMetricData = yield call(fetchUserMetrics, payload);
-    yield put({
-      type: FETCH_USER_METRICTS_SUCCESS,
-      payload: fetchuserMetricData,
-    });
-  } catch (error: any) {
-    yield put({
-      type: FETCH_USER_METRICTS_FAILURE,
-    });
+  const pathName = yield select(getPathName);
+  if (pathName === '/dashBoard') {
+    console.log('dashboard');
+    while (true) {
+      try {
+        const fetchUserMetricData = yield call(fetchUserMetrics, payload);
+        yield put({
+          type: FETCH_USER_METRICTS_SUCCESS,
+          payload: fetchUserMetricData,
+        });
+        yield delay(5000);
+      } catch (error: any) {
+        yield put({
+          type: FETCH_USER_METRICTS_FAILURE,
+        });
+      } // Delay for 5 seconds
+    }
+  } else {
+    console.log('not dashboard');
+    try {
+      const fetchUserMetricData = yield call(fetchUserMetrics, payload);
+      yield put({
+        type: FETCH_USER_METRICTS_SUCCESS,
+        payload: fetchUserMetricData,
+      });
+    } catch (error: any) {
+      yield put({
+        type: FETCH_USER_METRICTS_FAILURE,
+      });
+    }
   }
 }
 function* loginSaga({ payload }: any) {
