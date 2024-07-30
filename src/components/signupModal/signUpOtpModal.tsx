@@ -16,17 +16,17 @@ const SignUpModalOtp: React.FC<OtpModalProps> = ({ viewOtp, setViewOtp }) => {
   const dispatch = useDispatch();
   const router = useRouter();
   const emailId = useSelector(
-    (state: RootState) => state.root?.userData.emailId
+    (state: RootState) => state?.root?.userData.emailId
   );
   const resOtp = useSelector(
-    (state: RootState) => state.root?.otp
+    (state: RootState) => state?.root?.otp
   );
 
   useEffect(()=>{
     console.log("resOtp",resOtp)
-    localStorage.setItem('user_id', resOtp.data.user_id);
-    localStorage.setItem('token', resOtp.data.token);
-    if(resOtp.data.success){
+    localStorage.setItem('user_id', resOtp?.data?.user_id);
+    localStorage.setItem('token', resOtp?.data?.token);
+    if(resOtp?.data?.success){
       router.push('/dashBoard')
     }
   },[resOtp])
