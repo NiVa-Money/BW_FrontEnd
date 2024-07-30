@@ -35,7 +35,7 @@ const LandingPage: React.FC = () => {
     if (userEmail?.length && !googleVerifyRedux) {
       dispatch(verifyUserDataAction(userEmail));
     }
-    if (resOtp.data.success || userData?.token) {
+    if (resOtp?.data?.success || userData?.token) {
       console.log("first")
      router.replace('/dashBoard');
     } else {
