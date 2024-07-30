@@ -57,7 +57,7 @@ const Hero = () => {
       const email = userRedux?.email;
       const payload = {
         firstName: firstName,
-        lastName: lastName,
+        lastName: lastName ? lastName :'',
         emailId: email,
         mobileNo: '917779797977',
       };
@@ -72,7 +72,7 @@ const Hero = () => {
       const email = userRedux?.email;
       const payload = {
         firstName: firstName,
-        lastName: lastName,
+        lastName: lastName ? lastName :'',
         emailId: email,
         mobileNo: '917779797977',
       };
