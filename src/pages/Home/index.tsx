@@ -34,16 +34,18 @@ const LandingPage: React.FC = () => {
       dispatch(verifyUserDataAction(userEmail));
     }
     if (userVerify) {
-    //  router.replace('/dashBoard');
+     router.replace('/dashBoard');
     } else {
       if (googleVerifyRedux) {
         const [firstName, lastName] = userRedux?.displayName.split(' ');
         const email = userRedux?.email;
+        console.log("email google login",email)
         const payload = {
           firstName: firstName,
           lastName: lastName,
           emailId: email,
-          mobileNo: '77797979779',
+          mobileNo: '7779797977',
+          "password": "password"
         };
         dispatch(signUpDataAction(payload));
       }
