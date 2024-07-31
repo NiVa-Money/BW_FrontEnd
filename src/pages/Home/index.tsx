@@ -18,12 +18,23 @@ const LandingPage: React.FC = () => {
   const userData = useSelector((state: RootState) => state.root?.userData);
   const resOtp = useSelector((state: RootState) => state.root?.otp);
   const userRedux = useSelector((state: RootState) => state?.root?.user);
-
+  const GLoginData = useSelector((state: RootState) => state?.root?.GLoginData);
   const googleVerifyRedux = useSelector(
     (state: RootState) => state.root.googleLogin
   );
   const dispatch = useDispatch();
   const router = useRouter();
+
+  useEffect(()=>{
+    if(GLoginData?.data?.success){
+      console.log("Glogin....")
+      localStorage.setItem('user_id', GLoginData?.data?.user_id);
+      localStorage.setItem('token', GLoginData?.data?.token);
+      if(GLoginData?.data?.success){
+        router.push('/dashBoard')
+      }
+    }
+  },[GLoginData])
 
   useEffect(() => {
     if (userEmail?.length && !googleVerifyRedux) {

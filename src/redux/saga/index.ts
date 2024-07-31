@@ -51,7 +51,11 @@ import {
   VERIFY_USER_OTP,
   VERIFY_USER_OTP_SUCCESS,
   VERIFY_USER_OTP_FAILURE,
-  GOOGLE_LOGIN
+  GOOGLE_LOGIN,
+  GOOGLE_LOGIN_SUCCESS,
+  GOOGLE_LOGIN_FAILURE,
+  PASSWORD_LOGIN,
+
 } from '../actions/actionTypes';
 
 import {
@@ -69,6 +73,7 @@ import {
   getUserChatService,
   getUserKnowledgeBaseService,
   getUserProfileService,
+  LoginUserData,
   signUpGoogleUserData,
   signUpUserData,
   verifyOtpUserData,
@@ -126,6 +131,32 @@ export function* verifyOtpUserSaga({
     // notifyError(`${error}`);
   }
 }
+
+export function* signUpGoogleUserSagaData({
+  type,
+  payload,
+}: {
+  type: string;
+  payload: any;
+}): Generator<any> {
+  try {
+    // Api call
+    const verifyUser = yield call(signUpGoogleUserData, payload);
+    notifySuccess("login Successful")
+    yield put({
+      type: GOOGLE_LOGIN_SUCCESS,
+      payload: verifyUser,
+    });
+    // notifySuccess('API call successful fetchUserData');
+  } catch (error: any) {
+    yield put({
+      type: GOOGLE_LOGIN_FAILURE,
+      payload: false,
+    });
+    // notifyError(`${error}`);
+  }
+}
+
 export function* signUpUserSaga({
   type,
   payload,
@@ -183,6 +214,25 @@ function* loginSaga({ payload }: any) {
     yield put({ type: 'LOGIN_SUCCESS', payload: resObject });
   } catch (error) {
     yield put({ type: 'LOGIN_FAILURE', payload });
+    notifyError(`${error}`)
+  }
+}
+function* passwordLoginSaga({ payload }: any) {
+  try {
+    const result: UserCredential = yield call(LoginUserData,payload);
+    console.log("Login Response (SJ)", result);
+    const logObj = {
+      ...result
+    }
+    console.log("logOBj" , logObj)
+    const resObject: any = {
+      displayName: result?.user?.displayName,
+      email: result?.user?.email,
+    };
+    // notifySuccess('login successful');
+    yield put({ type: 'PASSWORD_LOGIN_SUCESS', payload: logObj });
+  } catch (error) {
+    yield put({ type: 'PASSWORD_LOGIN_FAILURE', payload });
     notifyError(`${error}`)
   }
 }
@@ -532,5 +582,6 @@ export default function* rootSaga() {
   yield takeEvery(USER_ALL_SESSION, getUserAllSessionSaga);
   yield takeEvery(ADVANCE_FEATURE, getAdvanceFeatureSaga);
   yield takeEvery(VERIFY_USER_OTP,verifyOtpUserSaga);
-  yield takeEvery(GOOGLE_LOGIN,signUpGoogleUserData);
+  yield takeEvery(GOOGLE_LOGIN,signUpGoogleUserSagaData);
+  yield takeEvery(PASSWORD_LOGIN,passwordLoginSaga);
 }

@@ -19,6 +19,10 @@ const DashBoard: React.FC = () => {
     (state: RootState) => state.root?.userData?.user_id
   );
 
+  React.useEffect(() => {
+   console.log('userid' , userId)
+  }, [userId]);
+
   const userMetricData = useSelector(
     (state: RootState) => state?.root?.userMetric?.data
   );
@@ -92,7 +96,7 @@ const DashBoard: React.FC = () => {
           </div>
         </div>
         <div className="bg-[#1E1935] w-[31%] rounded-2xl p-4 m-1 flex flex-col items-center">
-          <div className={styles.textSize}>Active Bots</div>
+          <div className={styles.textSize}>Total Bots Created</div>
           <div className={`${styles.textSize} font-bold mt-1`}>{metricData?.activeBots}</div>
           <button className="mt-1 bg-[#46217C] w-[80%] h-[50%] text-white px-6 py-2 rounded-full flex justify-center items-center">
             <Link href={`/createBot`}>
