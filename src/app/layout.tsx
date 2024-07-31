@@ -29,7 +29,7 @@ export default function RootLayout({
     '/dashBoard',
     '/createKnowledgeBase',
     '/newchat',
-    '/botSession'
+    '/botSession',
   ];
   const routeWithoutFooter: string[] = [
     '/MyChatBots',
@@ -42,7 +42,7 @@ export default function RootLayout({
     '/dashBoard',
     '/createKnowledgeBase',
     '/newchat',
-    '/botSession'
+    '/botSession',
   ];
   const routeWithoutSidebar: string[] = [
     '/createBot',
@@ -52,27 +52,23 @@ export default function RootLayout({
     '/blog',
     '/contactUs',
     '/home',
-    '/botSession'
+    '/botSession',
   ];
-  
+
   let persistor = persistStore(store);
   return (
-    <html lang="en">
-      <body className="flex flex-col min-h-screen">
-        <Provider store={store}>
-          <PersistGate loading={<div>Loading...</div>} persistor={persistor}>
-            <PathnameHandler />
-            <ConditionalHeader routeWithoutHeader={routeWithoutHeader} />
-            <div className="flex flex-grow">
-              <ConditionalSideBar routeWithoutSidebar={routeWithoutSidebar} />
-              <main className="flex-grow">{children}</main>
-            </div>
-            <ConditionalFooter routeWithoutFooter={routeWithoutFooter} />
-          </PersistGate>
-          <Toast />
-        </Provider>
-      </body>
-    </html>
+    <Provider store={store}>
+      <PersistGate loading={<div>Loading...</div>} persistor={persistor}>
+        <PathnameHandler />
+        <ConditionalHeader routeWithoutHeader={routeWithoutHeader} />
+        <div className="flex flex-grow">
+          <ConditionalSideBar routeWithoutSidebar={routeWithoutSidebar} />
+          <main className="flex-grow">{children}</main>
+        </div>
+        <ConditionalFooter routeWithoutFooter={routeWithoutFooter} />
+      </PersistGate>
+      <Toast />
+    </Provider>
   );
 }
 

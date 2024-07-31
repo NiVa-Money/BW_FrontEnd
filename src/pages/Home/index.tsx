@@ -30,25 +30,25 @@ const LandingPage: React.FC = () => {
       dispatch(verifyUserDataAction(userEmail));
     }
   }, [userEmail]);
-  
+
   useEffect(() => {
     if (userEmail?.length && !googleVerifyRedux) {
       dispatch(verifyUserDataAction(userEmail));
     }
     if (resOtp?.data?.success || userData?.token) {
-      console.log("first")
-     router.replace('/dashBoard');
+      console.log('first');
+      //  router.replace('/dashBoard');
     } else {
       if (googleVerifyRedux) {
         const [firstName, lastName] = userRedux?.displayName.split(' ');
         const email = userRedux?.email;
-        console.log("email google login",email)
+        console.log('email google login', email);
         const payload = {
           firstName: firstName,
           lastName: lastName,
           emailId: email,
           mobileNo: '7779797977',
-          "password": "password"
+          password: 'password',
         };
         dispatch(signUpDataAction(payload));
       }

@@ -1,15 +1,26 @@
-'use Client';
+// src/pages/index.tsx
+import React, { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { RootState } from '@/redux/configureStore';
+import { usePathname } from 'next/navigation';
+import { setPathNameAction } from '@/redux/actions/globalActions';
+import Home from '@/app/home/page';
 
-import { useRouter } from 'next/router';
-import { useEffect } from 'react';
+const IndexPage: React.FC = () => {
+  const dispatch = useDispatch();
+  const pathname = usePathname();
+  const pathName = useSelector((state: RootState) => state.root.pathName);
 
-function EntryPoint() {
-  const router = useRouter();
   useEffect(() => {
-    router.push('/home');
-  }, []);
+    dispatch(setPathNameAction(pathname));
+  }, [pathname, dispatch]);
 
-  return <></>;
-}
+  return (
+    <div>
+      <h1>Current Path: {pathName}</h1>
+      <Home />
+    </div>
+  );
+};
 
-export default EntryPoint;
+export default IndexPage;
