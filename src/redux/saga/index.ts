@@ -55,7 +55,9 @@ import {
   GOOGLE_LOGIN_SUCCESS,
   GOOGLE_LOGIN_FAILURE,
   PASSWORD_LOGIN,
-
+  CREATE_PAYMENT_REQUEST,
+  CREATE_PAYMENT_SUCCESS,
+  CREATE_PAYMENT_FAILURE,
 } from '../actions/actionTypes';
 
 import {
@@ -76,6 +78,7 @@ import {
   LoginUserData,
   signUpGoogleUserData,
   signUpUserData,
+  processPayPalPaymentService,
   verifyOtpUserData,
 } from '../services';
 import { useRouter } from 'next/navigation';
@@ -562,6 +565,32 @@ export function* getAdvanceFeatureSaga({
     });
   }
 }
+
+
+export function* payPalPaymentSaga({
+  payload,
+}: {
+  type: string;
+  payload: any;
+}): Generator<any> {
+  try {
+    const response = yield call(processPayPalPaymentService, payload);
+    yield put({
+      type: CREATE_PAYMENT_SUCCESS,
+      payload: response,
+    });
+    notifySuccess('Payment processed successfully');
+  } catch (error: any) {
+    yield put({
+      type: CREATE_PAYMENT_FAILURE,
+      payload: error,
+    });
+    notifyError('Payment processing failed');
+  }
+}
+
+
+
 
 export default function* rootSaga() {
   yield takeLatest(VERIFY_USER_DATA, verifyUserSaga);

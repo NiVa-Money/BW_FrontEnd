@@ -284,3 +284,13 @@ export const getAdvanceFeatureService = async (payload: any) => {
     throw new Error('Error: Getting Advance Feature');
   }
 };
+
+
+export const processPayPalPaymentService = async (payload : any) => {
+  try {
+    const response = await axiosInstance.post(`/payment/create`, payload);
+    return response.data;
+  } catch (error) {
+    throw new Error('Payment processing failed');
+  }
+};

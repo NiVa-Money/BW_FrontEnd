@@ -30,7 +30,7 @@ const LoginModal: React.FC<ModalProps> = ({ closeModal }) => {
       console.log('Successfully logged in'); // Log if login is successful  
       // Dispatch the passwordLoginAction
       dispatch(passwordLoginAction({ email, password }));
-      closeModal();
+      // closeModal();
       router.push('/dashBoard');
     } catch (err) {
       console.error('Login failed', err);

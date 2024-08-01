@@ -37,11 +37,16 @@ const DashBoard: React.FC = () => {
   }, [userDataRedux]);
 
   React.useEffect(() => {
+    console.log('emaillll' , userEmail)
     if (userEmail?.length || pathName === '/profile') {
+      console.log('userrrr' , userEmail)
       dispatch(getUserProfileAction(userEmail));
+
     }
   }, [userEmail, pathName]);
+
   React.useEffect(() => {
+    console.log('SJSJSJSJS' , userEmail)
     if (userEmail?.length) {
       dispatch(getUserProfileAction(userEmail));
     }
