@@ -77,6 +77,7 @@ export default function globalReducers(state = initialState.root, action: any) {
       return {
         ...state,
         GLoginData: action.payload,
+        googleLogin: true,
         loader:false
       };
 
@@ -84,6 +85,7 @@ export default function globalReducers(state = initialState.root, action: any) {
         return {
           ...state,
           GLoginData: action.payload,
+          googleLogin: false,
           loader:false
         };
 
