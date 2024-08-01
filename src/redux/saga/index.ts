@@ -280,7 +280,7 @@ export function* createBotProfileSaga({
   payload: any;
 }): Generator<any> {
   try {
-    const createBot = yield call(createUserBotProfileService, payload);
+    const createBot : any = yield call(createUserBotProfileService, payload);
     if(createBot.success){
        notifySuccess('Bot created successfully');
     }else{

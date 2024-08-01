@@ -14,6 +14,7 @@ import {
 import ConfirmModal from './modalDelete';
 
 interface KnowledgeBaseCardProps {
+  bots: string;
   docId: any;
   name: string;
   botName: string;
@@ -23,6 +24,8 @@ interface KnowledgeBaseCardProps {
   file: string;
   color?: string;
   createdAt: string;
+  docName: string; // Add docName here
+  botURL: string;  
 }
 
 const KnowledgeBase: React.FC = () => {
@@ -106,7 +109,11 @@ const KnowledgeBase: React.FC = () => {
         {knowledgebase?.map((bot, index) => (
           <ChatBotCard
             key={index}
-            bot={bot}
+            bot={{
+              ...bot,
+              docName: bot.docName || 'Default Doc Name', // Ensure these fields exist
+              botURL: bot.botURL || 'Default URL', // Ensure these fields exist
+            }}
             actions={{
               onDelete: () => handleDelete(index),
               onDownload: () => handleDownload(index),

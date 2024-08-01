@@ -25,6 +25,8 @@
 // export type RootState = ReturnType<typeof store.getState>;
 
 // export default store;
+
+
 "use client"
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import createSagaMiddleware from 'redux-saga';
