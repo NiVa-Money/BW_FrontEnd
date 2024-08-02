@@ -271,9 +271,10 @@ const MenuItem: React.FC<MenuItemProps> = ({ item, onClick }) => {
                           <div key={childIdx}>
                             <div
                               className={`text-gray-300 hover:bg-white hover:bg-opacity-10 rounded-full cursor-pointer`}
+                              onClick={()=>botSession(bot._id, bot.userId)}
                             >
                               <button
-                                onClick={() => botSession(bot._id, bot.userId)}
+                                // onClick={() => botSession(bot._id, bot.userId)}
                                 className="flex items-center space-x-3 py-2 px-3"
                               >
                                 <span>{bot.botName}</span>
