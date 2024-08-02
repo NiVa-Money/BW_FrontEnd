@@ -7,7 +7,7 @@ type PricingTierProps = {
   features: string[];
   backgroundColor: string;
   paypalButton?: React.ReactNode;
-  userId : string;
+  userId? : string;
 };
 
 const PricingTier: React.FC<PricingTierProps> = ({

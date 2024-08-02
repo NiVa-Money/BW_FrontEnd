@@ -7,7 +7,7 @@ export const createPaymentRequest = (paymentData: any) => ({
 
 export const createPaymentSuccess = (response: any) => ({
     type: CREATE_PAYMENT_SUCCESS,
-    payload: response,
+    payload: response.data,
 });
 
 export const createPaymentFailure = (error: any) => ({

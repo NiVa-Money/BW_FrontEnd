@@ -1,9 +1,14 @@
 "use client";
-import React from 'react';
+import React, { useState } from 'react';
 import PricingTier from './Tier';
 import PayPalButton from './PayPalButton';
 
 const PricingCard: React.FC = () => {
+  const [isPaymentSuccessful, setIsPaymentSuccessful] = useState(false);
+
+  const handlePaymentSuccess = () => {
+    setIsPaymentSuccessful(true);
+  };
 
   const pricingTiers = [
     {
@@ -70,7 +75,10 @@ const PricingCard: React.FC = () => {
             userId={''} key={index}
             {...tier}
             paypalButton={tier.title !== 'Basic' ? (
-              <PayPalButton planId={tier.title} price={tier.price} userId={"userId"} />
+              <PayPalButton planId={tier.title} price={tier.price} 
+              userId={"userId"}
+              isPaymentSuccessful={isPaymentSuccessful}
+              onPaymentSuccess={handlePaymentSuccess} />
             ) : undefined}
             />
         ))}
