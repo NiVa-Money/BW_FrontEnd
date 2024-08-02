@@ -26,6 +26,7 @@ const LandingPage: React.FC = () => {
   const router = useRouter();
 
   useEffect(()=>{
+    // console.log("hiiii mahesh",GLoginData)
     if(GLoginData?.data?.success){
       console.log("Glogin....")
       localStorage.setItem('user_id', GLoginData?.data?.user_id);

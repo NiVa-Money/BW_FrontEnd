@@ -13,8 +13,7 @@ export const signUpUserData = async (payload: any) => {
 
 export const signUpGoogleUserData = async (payload: any) => {
   try {
-    console.log("google login",payload)
-    const response = await axiosInstance.post('/user/signup', payload?.payload);
+    const response = await axiosInstance.post('/user/signup', payload);
     return response.data;
   } catch (error) {
     console.error('Error signing up user:', error);

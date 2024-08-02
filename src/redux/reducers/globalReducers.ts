@@ -65,7 +65,7 @@ export default function globalReducers(state = initialState.root, action: any) {
     case GOOGLE_LOGIN:
         return {
           ...state,
-          GLoginData: action.payload,
+          GLoginData: {data:action.payload,loader:false},
           loader:true
         };
   
@@ -73,18 +73,19 @@ export default function globalReducers(state = initialState.root, action: any) {
     case GOOGLE_LOGIN_SUCCESS:
       return {
         ...state,
-        GLoginData: action.payload,
+        GLoginData: {data:action.payload,loader:false},
         loader:false
       };
 
       case GOOGLE_LOGIN_FAILURE:
         return {
           ...state,
-          GLoginData: action.payload,
+          GLoginData:{data:action.payload,loader:false},
           loader:false
         };
 
     case LOGIN_SUCCESS:
+      console.log("LOGIN_SUCCESS",LOGIN_SUCCESS)
       return {
         ...state,
         user: action.payload,

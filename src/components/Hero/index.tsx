@@ -23,6 +23,7 @@ const Hero = () => {
     (state: RootState) => state.root.googleLogin
   );
   const userRedux = useSelector((state: RootState) => state?.root?.user);
+  const googleLoginUser = useSelector((state: RootState) => state?.root?.googleLogin);
 
   const router = useRouter();
   const dispatch = useDispatch();
@@ -40,7 +41,6 @@ const Hero = () => {
   };
 
   const handleSignIn = () => {
-    console.log("hiiiiiiiiiiiiiiiiiiii")
     dispatch(loginRequest());
   };
   const handleLoginButtonClick = () => {
@@ -77,11 +77,12 @@ const Hero = () => {
         mobileNo: '917779797977',
       };
       // dispatch(verifyUserDataAction(email));
-      if(!userData?.success){
+      console.log("payload ssss",payload)
+      if(googleLoginUser){
         dispatch(googleLogin(payload))
       }
     }
-  },[userData])
+  },[userRedux,googleLoginUser])
 
   return (
     <section>

@@ -138,6 +138,7 @@ export function* signUpGoogleUserSagaData({
 }): Generator<any> {
   try {
     // Api call
+    // console.log("api calling google login gggg")
     const verifyUser = yield call(signUpGoogleUserData, payload);
     notifySuccess("login Successful")
     yield put({
@@ -207,6 +208,8 @@ function* loginSaga({ payload }: any) {
       displayName: result?.user?.displayName,
       email: result?.user?.email,
     };
+
+    console.log("resObject",resObject)
     // notifySuccess('login successful');
     yield put({ type: 'LOGIN_SUCCESS', payload: resObject });
   } catch (error) {
