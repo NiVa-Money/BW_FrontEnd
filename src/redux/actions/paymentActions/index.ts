@@ -1,8 +1,8 @@
 import { CREATE_PAYMENT_FAILURE, CREATE_PAYMENT_REQUEST, CREATE_PAYMENT_SUCCESS } from "../actionTypes";
 
-export const createPayment = (planId: string) => ({
+export const createPayment = (userId: string) => ({
   type: CREATE_PAYMENT_REQUEST,
-  payload: { planId },
+  payload: { userId },
 });
 
 export const createPaymentSuccess = (orderId: string) => ({
