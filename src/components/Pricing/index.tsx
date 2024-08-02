@@ -73,7 +73,7 @@ const PricingCard: React.FC = () => {
             {...tier}
             paypalButton={
               tier.title !== 'Basic' ? (
-                <PayPalButton planId={tier.title} price={tier.price} />
+                <PayPalButton planId={tier.title} price={tier.price} userId='' />
               ) : undefined
             }
           />

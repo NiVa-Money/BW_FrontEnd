@@ -10,6 +10,8 @@ import Link from 'next/link';
 import { fetchMetricsAction } from '@/redux/actions/authActions';
 import { getUserProfileAction } from '@/redux/actions/authActions';
 import withAuth from '@/components/withAuth';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
 
 const DashBoard: React.FC = () => {
   const pathName = useSelector((state: RootState) => state.root?.pathName);
@@ -20,7 +22,7 @@ const DashBoard: React.FC = () => {
   );
 
   React.useEffect(() => {
-   console.log('userid' , userId)
+    console.log('userid', userId)
   }, [userId]);
 
   const userMetricData = useSelector(
@@ -37,16 +39,16 @@ const DashBoard: React.FC = () => {
   }, [userDataRedux]);
 
   React.useEffect(() => {
-    console.log('emaillll' , userEmail)
+    console.log('emaillll', userEmail)
     if (userEmail?.length || pathName === '/profile') {
-      console.log('userrrr' , userEmail)
+      console.log('userrrr', userEmail)
       dispatch(getUserProfileAction(userEmail));
 
     }
   }, [userEmail, pathName]);
 
   React.useEffect(() => {
-    console.log('SJSJSJSJS' , userEmail)
+    console.log('SJSJSJSJS', userEmail)
     if (userEmail?.length) {
       dispatch(getUserProfileAction(userEmail));
     }
@@ -103,12 +105,12 @@ const DashBoard: React.FC = () => {
         <div className="bg-[#1E1935] w-[31%] rounded-2xl p-4 m-1 flex flex-col items-center">
           <div className={styles.textSize}>Total Bots Created</div>
           <div className={`${styles.textSize} font-bold mt-1`}>{metricData?.activeBots}</div>
-          <button className="mt-1 bg-[#46217C] w-[80%] h-[50%] text-white px-6 py-2 rounded-full flex justify-center items-center">
-            <Link href={`/createBot`}>
-              <span className={styles.textSize} >Create Bot</span>
-            </Link>
-            <span className="ml-2 text-xl">+</span>
-          </button>
+          <button className="flex  justify-center  text-xl font-medium text-gray-100 bg-[#3F2181] rounded-[60px]">
+          <Link href="/createBot" className="flex px-14 py-3 gap-2">
+            <span>Create Bot</span>
+            <FontAwesomeIcon icon={faPlus} className="w-[25px] h-[25px]" />
+          </Link>
+        </button>
         </div>
       </div>
       <div className="w-[100%] flex h-[45%] gap-4 mt-4">
