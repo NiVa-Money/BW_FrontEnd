@@ -27,6 +27,7 @@ export default function RootLayout({
     '/memberShip',
     '/faq',
     '/dashBoard',
+    '/login',
     '/createKnowledgeBase',
     '/newchat',
     '/botSession'
@@ -40,6 +41,7 @@ export default function RootLayout({
     '/memberShip',
     '/faq',
     '/dashBoard',
+    '/login',
     '/createKnowledgeBase',
     '/newchat',
     '/botSession'
@@ -51,6 +53,7 @@ export default function RootLayout({
     '/pricing',
     '/blog',
     '/contactUs',
+    '/login',
     '/home',
     '/botSession'
   ];

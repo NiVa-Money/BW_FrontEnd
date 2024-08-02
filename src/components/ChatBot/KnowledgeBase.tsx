@@ -14,6 +14,7 @@ import {
 import ConfirmModal from './modalDelete';
 
 interface KnowledgeBaseCardProps {
+  bots: string;
   docId: any;
   name: string;
   botName: string;
@@ -23,6 +24,8 @@ interface KnowledgeBaseCardProps {
   file: string;
   color?: string;
   createdAt: string;
+  docName: string; // Add docName here
+  botURL: string;  
 }
 
 const KnowledgeBase: React.FC = () => {
@@ -96,7 +99,7 @@ const KnowledgeBase: React.FC = () => {
           My Knowledge Base
         </h1>
         <button className="flex gap-2 justify-center px-14 py-3 text-xl font-medium text-gray-100 bg-[#3F2181] rounded-[60px]">
-          <Link href={`/createKnowledgeBase`}>
+          <Link href="/createKnowledgeBase" className="flex px-8 py-1 gap-2" >
             <span>Create Knowledge Base</span>
           </Link>
           <FontAwesomeIcon icon={faPlus} className="w-[25px] h-[25px]" />
@@ -106,7 +109,11 @@ const KnowledgeBase: React.FC = () => {
         {knowledgebase?.map((bot, index) => (
           <ChatBotCard
             key={index}
-            bot={bot}
+            bot={{
+              ...bot,
+              docName: bot.docName || 'Default Doc Name', // Ensure these fields exist
+              botURL: bot.botURL || 'Default URL', // Ensure these fields exist
+            }}
             actions={{
               onDelete: () => handleDelete(index),
               onDownload: () => handleDownload(index),

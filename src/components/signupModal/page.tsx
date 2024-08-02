@@ -15,7 +15,6 @@ interface ModalProps {
   handleSignUp: (userData: any, router: any) => void;
 }
 
-
 const Modal: React.FC<ModalProps> = ({ closeModal, handleSignUp }) => {
   const userSucess = useSelector((state: RootState) => state?.root?.userVerify);
   const [viewOtp, setViewOtp] = useState(false);

@@ -27,7 +27,7 @@ const SignUpModalOtp: React.FC<OtpModalProps> = ({ viewOtp, setViewOtp }) => {
     localStorage.setItem('user_id', resOtp?.data?.user_id);
     localStorage.setItem('token', resOtp?.data?.token);
     if(resOtp?.data?.success){
-      router.push('/dashBoard')
+      router.push('/login')
     }
   },[resOtp])
 
@@ -52,6 +52,7 @@ const SignUpModalOtp: React.FC<OtpModalProps> = ({ viewOtp, setViewOtp }) => {
       }
       // Handle OTP verification logic
       dispatch(verifyOtp(data))
+      router.push('/login')
       
       console.log('OTP submitted:', otpValue);
     } else {

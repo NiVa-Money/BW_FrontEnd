@@ -5,7 +5,7 @@ import * as React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 const ProfileComponent: React.FC = () => {
-  const userEmail = useSelector((state: RootState) => state.root?.user?.email);
+  const userEmail = useSelector((state: RootState) => state.root?.userData?.email);
   const userDataRedux = useSelector(
     (state: RootState) => state.root?.userProfile?.data
   );

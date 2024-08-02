@@ -5,7 +5,7 @@ const initialState: any = {
     error: null,
     googleLogin: false,
     userData: null,
-    
+
     userVerify: false,
     userMetric: {
       data: {},
@@ -15,14 +15,14 @@ const initialState: any = {
       data: {},
       loader: false,
     },
-    otp:{
-      data:{},
-      loader:false
+    otp: {
+      data: {},
+      loader: false,
     },
-    GLoginData:{
-      data:{},
-      loader:false
-    }
+    GLoginData: {
+      data: {},
+      loader: false,
+    },
   },
   botProfile: {
     create: {
@@ -41,10 +41,10 @@ const initialState: any = {
       data: {},
       loader: false,
     },
-    export:{
-      data:{},
-      loader:false,
-    }
+    export: {
+      data: {},
+      loader: false,
+    },
   },
   KnowledgeBase: {
     create: {
@@ -60,29 +60,34 @@ const initialState: any = {
       loader: false,
     },
   },
-  userChat:{
-    session:{
-      data:[],
-      loader:false,
+  userChat: {
+    session: {
+      data: [],
+      loader: false,
     },
-    allSession:{
-      data:[],
-      loader:false,
+    allSession: {
+      data: [],
+      loader: false,
     },
-    sessionChat:{
-      data:[],
-      sessionId:null,
-      loader:false,
+    sessionChat: {
+      data: [],
+      sessionId: null,
+      loader: false,
     },
-    advanceFeature:{
-      data:{},
-      loader:false,
+    advanceFeature: {
+      data: {},
+      loader: false,
     },
-    botProfileSelect:{
-      data:{},
-      loader:false
-    }
-  }
+    botProfileSelect: {
+      data: {},
+      loader: false,
+    },
+  },
+  payment: {
+    loading: false,
+    paymentData: null,
+    error: null,
+  },
 };
 
 export default initialState;

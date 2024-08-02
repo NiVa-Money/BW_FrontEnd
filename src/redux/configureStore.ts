@@ -25,6 +25,8 @@
 // export type RootState = ReturnType<typeof store.getState>;
 
 // export default store;
+
+
 "use client"
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import createSagaMiddleware from 'redux-saga';
@@ -35,6 +37,7 @@ import botProfileReducers from './reducers/botProfileReducers';
 import userChatReducers from './reducers/userChatReducers';
 import { persistStore, persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage'; // default localStorage
+import paymentReducer from './reducers/paymentReducers';
 
 const sagaMiddleware = createSagaMiddleware();
 
@@ -45,6 +48,7 @@ const persistConfig = {
 
 const rootReducer = {
   root: globalReducers,
+  payment: paymentReducer,
   botProfile: botProfileReducers,
   KnowledgeBase: knowledgeBaseReducers,
   userChat: userChatReducers,

@@ -18,9 +18,12 @@ import {
   VERIFY_USER_OTP,
   VERIFY_USER_OTP_SUCCESS,
   VERIFY_USER_OTP_FAILURE,
+  PASSWORD_LOGIN,
+  PASSWORD_LOGIN_SUCESS,
+  PASSWORD_LOGIN_FAILURE,
   GOOGLE_LOGIN,
   GOOGLE_LOGIN_SUCCESS,
-  GOOGLE_LOGIN_FAILURE
+  GOOGLE_LOGIN_FAILURE,
 } from '@/redux/actions/actionTypes';
 import initialState from './initialState';
 export default function globalReducers(state = initialState.root, action: any) {
@@ -100,6 +103,27 @@ export default function globalReducers(state = initialState.root, action: any) {
         googleLogin: false,
         error: action.payload,
       };
+      case PASSWORD_LOGIN:
+        return {
+          ...state,
+          userData: action.payload.body,
+          error: null,
+        };
+        case PASSWORD_LOGIN_SUCESS:
+          localStorage.setItem('token', action.payload.body.token);
+          localStorage.setItem('userId', action.payload.body.user_id);
+          console.log('Login Payload body' , action.payload.body)
+          return {
+            ...state,
+            userData: action.payload.body,
+            error: null,
+          };
+          case PASSWORD_LOGIN_FAILURE:
+            return {
+              ...state,
+              userData: null,
+              error: action.payload,
+            };
     case VERIFY_USER_OTP:
       return{
        ...state,
@@ -116,6 +140,9 @@ export default function globalReducers(state = initialState.root, action: any) {
           data: action.payload,
           loader: false,
         },
+        userData: {
+          success:false
+        }
     }
     case VERIFY_USER_OTP_FAILURE:
       return{
@@ -125,6 +152,7 @@ export default function globalReducers(state = initialState.root, action: any) {
           data: action.payload,
           loader: false,
         },
+
     }
     case SIGN_UP_DATA:
       return {

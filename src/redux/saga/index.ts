@@ -53,7 +53,12 @@ import {
   VERIFY_USER_OTP_FAILURE,
   GOOGLE_LOGIN,
   GOOGLE_LOGIN_SUCCESS,
-  GOOGLE_LOGIN_FAILURE
+  GOOGLE_LOGIN_FAILURE,
+  PASSWORD_LOGIN,
+  CREATE_PAYMENT_REQUEST,
+  CREATE_PAYMENT_SUCCESS,
+  CREATE_PAYMENT_FAILURE,
+  CAPTURE_PAYMENT_REQUEST,
 } from '../actions/actionTypes';
 
 import {
@@ -71,12 +76,16 @@ import {
   getUserChatService,
   getUserKnowledgeBaseService,
   getUserProfileService,
+  LoginUserData,
   signUpGoogleUserData,
   signUpUserData,
+  processPayPalPaymentService,
   verifyOtpUserData,
+  capturePaymentService,
 } from '../services';
 import { useRouter } from 'next/navigation';
 import { notifyError, notifySuccess } from '@/components/Toaster/toast';
+import { capturePaymentFailure, capturePaymentRequest, capturePaymentSuccess } from '../actions/paymentActions';
 interface BotData {
   userChat: any;
 }
@@ -217,6 +226,25 @@ function* loginSaga({ payload }: any) {
     notifyError(`${error}`)
   }
 }
+function* passwordLoginSaga({ payload }: any) {
+  try {
+    const result: UserCredential = yield call(LoginUserData,payload);
+    console.log("Login Response (SJ)", result);
+    const logObj = {
+      ...result
+    }
+    console.log("logOBj" , logObj)
+    const resObject: any = {
+      displayName: result?.user?.displayName,
+      email: result?.user?.email,
+    };
+    // notifySuccess('login successful');
+    yield put({ type: 'PASSWORD_LOGIN_SUCESS', payload: logObj });
+  } catch (error) {
+    yield put({ type: 'PASSWORD_LOGIN_FAILURE', payload });
+    notifyError(`${error}`)
+  }
+}
 
 function* logoutSaga({ payload }: any) {
   const signOut: any = () => auth.signOut();
@@ -258,7 +286,7 @@ export function* createBotProfileSaga({
   payload: any;
 }): Generator<any> {
   try {
-    const createBot = yield call(createUserBotProfileService, payload);
+    const createBot : any = yield call(createUserBotProfileService, payload);
     if(createBot.success){
        notifySuccess('Bot created successfully');
     }else{
@@ -544,6 +572,42 @@ export function* getAdvanceFeatureSaga({
   }
 }
 
+
+export function* payPalPaymentSaga({
+  payload,
+}: {
+  type: string;
+  payload: any;
+}): Generator<any> {
+  try {
+    const response = yield call(processPayPalPaymentService, payload);
+    yield put({
+      type: CREATE_PAYMENT_SUCCESS,
+      payload: response,
+    });
+    notifySuccess('Payment processed successfully');
+    const _id = response.orderId; 
+    yield put(capturePaymentRequest(_id)); 
+  } catch (error: any) {
+    yield put({
+      type: CREATE_PAYMENT_FAILURE,
+      payload: error,
+    });
+    notifyError('Payment processing failed');
+  }
+}
+
+function* capturePaymentSaga({ payload }: { type: string; payload: string; }): Generator<any> {
+  try {
+    const response = yield call(capturePaymentService, payload); // Call the capture payment service
+    yield put(capturePaymentSuccess(response)); // Dispatch success action
+    notifySuccess('Payment captured successfully');
+  } catch (error: any) {
+    yield put(capturePaymentFailure(error)); // Dispatch failure action
+    notifyError('Payment capture failed');
+  }
+}
+
 export default function* rootSaga() {
   yield takeLatest(VERIFY_USER_DATA, verifyUserSaga);
   yield takeLatest(SIGN_UP_DATA, signUpUserSaga);
@@ -564,4 +628,7 @@ export default function* rootSaga() {
   yield takeEvery(ADVANCE_FEATURE, getAdvanceFeatureSaga);
   yield takeEvery(VERIFY_USER_OTP,verifyOtpUserSaga);
   yield takeEvery(GOOGLE_LOGIN,signUpGoogleUserSagaData);
+  yield takeEvery(PASSWORD_LOGIN,passwordLoginSaga);
+  yield takeEvery(CREATE_PAYMENT_REQUEST , payPalPaymentSaga);
+  yield takeLatest(CAPTURE_PAYMENT_REQUEST, capturePaymentSaga);
 }
