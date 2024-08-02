@@ -230,7 +230,7 @@ function* passwordLoginSaga({ payload }: any) {
   try {
     const result: UserCredential = yield call(LoginUserData,payload);
     console.log("Login Response (SJ)", result);
-    const logObj = {
+    const logObj:any = {
       ...result
     }
     console.log("logOBj" , logObj)
@@ -238,8 +238,15 @@ function* passwordLoginSaga({ payload }: any) {
       displayName: result?.user?.displayName,
       email: result?.user?.email,
     };
+    if(logObj?.success){
+      console.log("first",logObj?.success)
+      yield put({ type: 'PASSWORD_LOGIN_SUCESS', payload: logObj });
+    }else{
+      console.log("first",logObj?.success)
+      notifyError(`${logObj?.error}`)
+      yield put({ type: 'PASSWORD_LOGIN_FAILURE', payload: logObj });
+    }
     // notifySuccess('login successful');
-    yield put({ type: 'PASSWORD_LOGIN_SUCESS', payload: logObj });
   } catch (error) {
     yield put({ type: 'PASSWORD_LOGIN_FAILURE', payload });
     notifyError(`${error}`)

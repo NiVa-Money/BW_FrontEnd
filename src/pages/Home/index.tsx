@@ -65,7 +65,7 @@ const LandingPage: React.FC = () => {
         dispatch(signUpDataAction(payload));
       }
     }
-  }, [userVerify]);
+  }, [userVerify,userData]);
 
   return (
     <>

@@ -119,9 +119,10 @@ export default function globalReducers(state = initialState.root, action: any) {
             error: null,
           };
           case PASSWORD_LOGIN_FAILURE:
+            console.log('PASSWORD_LOGIN_FAILURE' , action.payload)
             return {
               ...state,
-              userData: null,
+              userData: action.payload,
               error: action.payload,
             };
     case VERIFY_USER_OTP:
