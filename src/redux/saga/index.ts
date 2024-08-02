@@ -610,5 +610,5 @@ export default function* rootSaga() {
   yield takeEvery(VERIFY_USER_OTP,verifyOtpUserSaga);
   yield takeEvery(GOOGLE_LOGIN,signUpGoogleUserSagaData);
   yield takeEvery(PASSWORD_LOGIN,passwordLoginSaga);
-  yield takeEvery(CREATE_PAYMENT_SUCCESS , payPalPaymentSaga);
+  yield takeEvery(CREATE_PAYMENT_REQUEST , payPalPaymentSaga);
 }
