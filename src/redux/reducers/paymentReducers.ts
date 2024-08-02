@@ -58,10 +58,12 @@ const paymentReducer = (state = initialState.payment, action: { type: any; paylo
       };
     case CREATE_PAYMENT_SUCCESS:
     case CAPTURE_PAYMENT_SUCCESS:
+      console.log('Payment Success Payload:', action.payload);
       return {
         ...state,
         loading: false,
         paymentData: action.payload,
+        _id: action.payload._id,
         error: null,
       };
     case CREATE_PAYMENT_FAILURE:

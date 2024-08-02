@@ -13,6 +13,8 @@ import {
   sendUserQuestionOnly,
 } from '@/redux/actions/userChatAction';
 import withAuth from '../withAuth';
+import { createPaymentRequest } from '@/redux/actions/paymentActions';
+import { useEffect } from 'react';
 
 const NewChatComponent: React.FC = () => {
   const dispatch = useDispatch();
@@ -66,6 +68,10 @@ const NewChatComponent: React.FC = () => {
     setBotId(botId);
     setIsBotProfileOpen(!isBotProfileOpen);
   };
+  
+  useEffect(() => {
+    dispatch(createPaymentRequest({ userId, currency: 'USD', paymentGateway: 'paypal' }));
+  }, []);
 
   const getChatHistory = () => {
     // console.log('userId', userId);
@@ -260,7 +266,7 @@ const NewChatComponent: React.FC = () => {
             />
           </div>
           <div
-            className="flex w-[8.5vw] h-[60px] flex justify-center items-center py-2.5 bg-[#1E1533] overflow-y-scroll  rounded p-1 border-gray-500 border-solid"
+            className="flex w-[8.5vw] h-[60px] justify-center items-center py-2.5 bg-[#1E1533] overflow-y-scroll  rounded p-1 border-gray-500 border-solid"
             // onClick={toggleBotProfile}
           >
             <div>{selectedBotName}</div>
