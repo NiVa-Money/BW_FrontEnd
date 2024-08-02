@@ -297,7 +297,7 @@ const BotSessionComponent: React.FC = () => {
     setReasonDetails(advanceFeature?.data?.data?.cause);
     setSummary(advanceFeature?.data?.data?.summary);
     setSentimentAnalysis(advanceFeature?.data?.data?.sentiments);
-    const formattedNextSteps = advanceFeature?.data?.data?.nextStep.replace(/(\d+\.\s)/g, '\n$1');
+    const formattedNextSteps = advanceFeature?.data?.data?.nextStep.replace(/\n/g, '<br />')
     setNextSteps(formattedNextSteps);
   }, [advanceFeature]);
 
@@ -752,9 +752,11 @@ const BotSessionComponent: React.FC = () => {
                 Feedback / AI Recommendations
               </button>
               {nextSteps ? (
-                <div className="w-[80%] flex justify-center items-center mt-2 border-4 border-[#DB88DB] py-4 px-10 text-base">
-                  {nextSteps}
-                </div>
+                <div className="w-[80%] flex justify-center items-center mt-2 border-4 border-[#DB88DB] py-4 px-10 text-base"
+                dangerouslySetInnerHTML={{
+                  __html: nextSteps
+                }}
+                />
               ) : (
                 ''
               )}
