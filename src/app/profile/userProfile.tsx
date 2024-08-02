@@ -17,16 +17,18 @@ const ProfileComponent: React.FC = () => {
     setProfileData(userDataRedux);
   }, [userDataRedux]);
 
-  React.useEffect(() => {
-    if (userEmail?.length || pathName === '/profile') {
-      dispatch(getUserProfileAction(userEmail));
-    }
-  }, [userEmail, pathName]);
-  React.useEffect(() => {
-    if (userEmail?.length) {
-      dispatch(getUserProfileAction(userEmail));
-    }
-  }, []);
+  // React.useEffect(() => {
+  //   if (userEmail?.length || pathName === '/profile') {
+  //     console.log("hii ganesh")
+  //     dispatch(getUserProfileAction(userEmail));
+  //   }
+  // }, [userEmail, pathName]);
+  // React.useEffect(() => {
+  //   if (userEmail?.length) {
+  //     console.log("hii ganesh2")
+  //     dispatch(getUserProfileAction(userEmail));
+  //   }
+  // }, []);
 
   return (
     <div className="flex flex-col p-6 bg-[#0B031E] text-white">
