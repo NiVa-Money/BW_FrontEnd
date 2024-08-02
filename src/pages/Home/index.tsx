@@ -65,7 +65,14 @@ const LandingPage: React.FC = () => {
         dispatch(signUpDataAction(payload));
       }
     }
-  }, [userVerify,userData]);
+  }, [userVerify]);
+
+  useEffect(()=>{
+    if (userData?.token) {
+        console.log("first")
+        router.replace('/dashBoard');
+    } 
+  },[userData])
 
   return (
     <>
