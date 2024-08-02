@@ -297,3 +297,8 @@ export const processPayPalPaymentService = async (payload : any) => {
   }
 };
 
+
+export const capturePaymentService = async (_id: string) => {
+  const response = await axiosInstance.post(`/payment/capture/${_id}`);
+  return response.data;
+};

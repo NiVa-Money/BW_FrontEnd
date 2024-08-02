@@ -1,4 +1,3 @@
-// Modal.tsx
 import React from 'react';
 
 type ModalProps = {
@@ -19,7 +18,7 @@ const PaymentModal: React.FC<ModalProps> = ({ isOpen, onClose, message, isError 
         </h2>
         <p>{message}</p>
         <button
-          className="mt-4 px-4 py-2 bg-[#0B031E] text-white rounded"
+          className="mt-4 px-4 py-2 bg-[#0B031E] text-white rounded hover:bg-opacity-75 transition duration-200"
           onClick={onClose}
         >
           Close

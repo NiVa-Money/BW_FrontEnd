@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
-import { createPaymentRequest } from '@/redux/actions/paymentActions';
+import { capturePaymentRequest, createPaymentRequest } from '@/redux/actions/paymentActions';
 
 type PayPalButtonProps = {
   planId: string;
@@ -17,12 +17,15 @@ const PayPalButton: React.FC<PayPalButtonProps> = ({ planId, price, userId }) =>
   const [isError, setIsError] = useState(false); 
 
   useEffect(() => {
-    dispatch(createPaymentRequest({ userId, amount: Number(price), currency: 'USD', paymentGateway: 'paypal' }));
-  }, [dispatch, orderId, price, userId]);
+    if (orderId) {
+      // Dispatch capture payment request once orderId is available
+      dispatch(capturePaymentRequest(orderId)); // Capture payment using orderId
+    }
+  }, [dispatch, orderId]);
 
   const createOrder = async (data: any, actions: any) => {
-    // Dispatch the createPaymentRequest action when creating the order
-    // dispatch(createPaymentRequest({ userId, amount: Number(price), currency: 'USD', paymentGateway: 'paypal' }));
+    // Call create payment request when the button is clicked
+    dispatch(createPaymentRequest({ userId, amount: Number(price), currency: 'USD', paymentGateway: 'paypal' }));
     return actions.order.create({
       purchase_units: [
         {

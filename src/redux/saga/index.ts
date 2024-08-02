@@ -58,6 +58,7 @@ import {
   CREATE_PAYMENT_REQUEST,
   CREATE_PAYMENT_SUCCESS,
   CREATE_PAYMENT_FAILURE,
+  CAPTURE_PAYMENT_REQUEST,
 } from '../actions/actionTypes';
 
 import {
@@ -80,9 +81,11 @@ import {
   signUpUserData,
   processPayPalPaymentService,
   verifyOtpUserData,
+  capturePaymentService,
 } from '../services';
 import { useRouter } from 'next/navigation';
 import { notifyError, notifySuccess } from '@/components/Toaster/toast';
+import { capturePaymentFailure, capturePaymentRequest, capturePaymentSuccess } from '../actions/paymentActions';
 interface BotData {
   userChat: any;
 }
@@ -580,12 +583,25 @@ export function* payPalPaymentSaga({
       payload: response,
     });
     notifySuccess('Payment processed successfully');
+    const _id = response.orderId; 
+    yield put(capturePaymentRequest(_id)); 
   } catch (error: any) {
     yield put({
       type: CREATE_PAYMENT_FAILURE,
       payload: error,
     });
     notifyError('Payment processing failed');
+  }
+}
+
+function* capturePaymentSaga({ payload }: { type: string; payload: string; }): Generator<any> {
+  try {
+    const response = yield call(capturePaymentService, payload); // Call the capture payment service
+    yield put(capturePaymentSuccess(response)); // Dispatch success action
+    notifySuccess('Payment captured successfully');
+  } catch (error: any) {
+    yield put(capturePaymentFailure(error)); // Dispatch failure action
+    notifyError('Payment capture failed');
   }
 }
 
@@ -611,4 +627,5 @@ export default function* rootSaga() {
   yield takeEvery(GOOGLE_LOGIN,signUpGoogleUserSagaData);
   yield takeEvery(PASSWORD_LOGIN,passwordLoginSaga);
   yield takeEvery(CREATE_PAYMENT_REQUEST , payPalPaymentSaga);
+  yield takeLatest(CAPTURE_PAYMENT_REQUEST, capturePaymentSaga);
 }
