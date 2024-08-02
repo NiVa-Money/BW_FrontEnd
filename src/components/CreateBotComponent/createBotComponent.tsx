@@ -98,10 +98,36 @@ const CreateBotComponent: React.FC = () => {
     const file = event.target.files[0];
     setFileName(file.name);
   };
+  const validateStep1 = () => {
+    if (!botName) {
+      setError('Please enter a bot name.');
+      return false;
+    }
+
+    if (!imageSrc) {
+      setError('Please select a bot icon.');
+      return false;
+    }
+
+    if (!validateGreetingMessage(greetingMessage)) {
+      setError('Please enter a valid greeting message.');
+      return false;
+    }
+
+    setError('');
+    return true;
+  };
+
+  const validateGreetingMessage = (message: string) => {
+    return message.trim().length > 0;
+  };
 
   const handleContinue = () => {
-    if (step < 2) setStep(step + 1);
+    if (validateStep1()) {
+      setStep(step + 1);
+    }
   };
+
   const handleDivClick = (text: any) => {
     setTextVal(text);
   };
