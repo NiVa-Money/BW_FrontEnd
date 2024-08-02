@@ -27,19 +27,19 @@ const resources = [
 // Getting Started Tutorials data
 const gettingStartedTutorials = [
   {
-    imageSrc: 'https://cdn.builder.io/api/v1/image/assets/TEMP/fa726bae0ba6aac4a3ebc67bbc42a5e6ef4f78feff1de4e79e4632b26e4d12e0?apiKey=555c811dd3f44fc79b6b2689129389e8',
+    imageSrc: '/images/1.mp4',
     iconSrc: 'https://cdn.builder.io/api/v1/image/assets/TEMP/9b9d365dd1cfe0493e38ca494929a2040135a9497260b3aaf8e3314f904296e3?apiKey=555c811dd3f44fc79b6b2689129389e8',
     tag: 'Introduction',
     title: 'UI kit for chat overview',
   },
   {
-    imageSrc: 'https://cdn.builder.io/api/v1/image/assets/TEMP/6e42916ba4ed3d33067a7571a128e0ef3a5d8692894dbfeab01fc19982e54dfd?apiKey=555c811dd3f44fc79b6b2689129389e8',
+    imageSrc: '/images/3.mp4',
     iconSrc: 'https://cdn.builder.io/api/v1/image/assets/TEMP/9ea5dbefe7f613ca4dbb4e632d72cc2fd6da4725a3ca179aa87aed359b5d70d6?apiKey=555c811dd3f44fc79b6b2689129389e8',
     tag: 'Tutorial',
     title: 'Build your bot in 2 steps',
   },
   {
-    imageSrc: 'https://cdn.builder.io/api/v1/image/assets/TEMP/3e556f7e8d9e8d589d458137e0d416489ff3a5a7552db8f70e54ea9a5c15296e?apiKey=555c811dd3f44fc79b6b2689129389e8',
+    imageSrc: '/images/v5.mp4',
     iconSrc: 'https://cdn.builder.io/api/v1/image/assets/TEMP/9ea5dbefe7f613ca4dbb4e632d72cc2fd6da4725a3ca179aa87aed359b5d70d6?apiKey=555c811dd3f44fc79b6b2689129389e8',
     tag: 'Tutorial',
     title: 'Increase customer engagement',
@@ -49,13 +49,13 @@ const gettingStartedTutorials = [
 // Basic Tutorials data
 const basicTutorials = [
   {
-    imageSrc: 'https://cdn.builder.io/api/v1/image/assets/TEMP/60e8397bcbf49e37dd5472a1acca78669ed4e9767e713e652b0a45ae978215aa?apiKey=555c811dd3f44fc79b6b2689129389e8',
+    imageSrc: '/images/v1.mp4',
   },
   {
-    imageSrc: 'https://cdn.builder.io/api/v1/image/assets/TEMP/60e8397bcbf49e37dd5472a1acca78669ed4e9767e713e652b0a45ae978215aa?apiKey=555c811dd3f44fc79b6b2689129389e8',
+    imageSrc: '/images/v3.mp4',
   },
   {
-    imageSrc: 'https://cdn.builder.io/api/v1/image/assets/TEMP/308fdc467c61aa870dec0b2b7ad89a8e805136a50b3c6361943514ae6c3fa78e?apiKey=555c811dd3f44fc79b6b2689129389e8',
+    imageSrc: '/images/v4.mp4',
   },
 ];
 
