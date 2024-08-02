@@ -11,8 +11,8 @@ const PaymentModal: React.FC<ModalProps> = ({ isOpen, onClose, message, isError 
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center bg-[#0B031E] bg-opacity-50 z-50">
-      <div className={`bg-white p-5 rounded shadow-lg ${isError ? 'border border-red-500' : ''}`}>
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-[#0B031E] bg-opacity-50">
+      <div className={`bg-[#0B031E] p-5 rounded shadow-lg`}>
         <h2 className={`text-lg font-bold ${isError ? 'text-red-500' : 'text-green-500'}`}>
           {isError ? 'Transaction Failed' : 'Transaction Completed'}
         </h2>

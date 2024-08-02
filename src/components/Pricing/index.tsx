@@ -2,10 +2,8 @@
 import React from 'react';
 import PricingTier from './Tier';
 import PayPalButton from './PayPalButton';
-import { useAuthContext } from '@/context/AuthContext';
 
 const PricingCard: React.FC = () => {
-  // const { handleSignIn } = useAuthContext();
 
   const pricingTiers = [
     {
@@ -69,14 +67,12 @@ const PricingCard: React.FC = () => {
       <div className="flex gap-5 justify-center py-6 mt-8 max-w-[1200px] mx-auto">
         {pricingTiers.map((tier, index) => (
           <PricingTier
-            key={index}
+            userId={''} key={index}
             {...tier}
-            paypalButton={
-              tier.title !== 'Basic' ? (
-                <PayPalButton planId={tier.title} price={tier.price} />
-              ) : undefined
-            }
-          />
+            paypalButton={tier.title !== 'Basic' ? (
+              <PayPalButton planId={tier.title} price={tier.price} userId={"userId"} />
+            ) : undefined}
+            />
         ))}
       </div>
     </div>
