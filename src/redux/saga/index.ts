@@ -128,6 +128,13 @@ export function* verifyOtpUserSaga({
       type: VERIFY_USER_OTP_SUCCESS,
       payload: verifyUser,
     });
+
+    const userProfileData = yield call(getUserProfileService, payload?.emailId);
+    // notifySuccess('successfully getting userProfileData');
+    yield put({
+      type: GET_USER_PROFILE_SUCCESS,
+      payload: userProfileData,
+    });
     // notifySuccess('API call successful fetchUserData');
   } catch (error: any) {
     yield put({
@@ -209,10 +216,8 @@ export function* fetchuserMetricSaga({
 }
 function* loginSaga({ payload }: any) {
   try {
-    console.log("payload of google saga ",payload, provider,auth )
     const result: UserCredential = yield call(signInWithPopup, auth, provider);
     // console.log('re', result);
-    console.log("responce Google login verify",result)
     const resObject: any = {
       displayName: result?.user?.displayName,
       email: result?.user?.email,
@@ -226,8 +231,15 @@ function* loginSaga({ payload }: any) {
     notifyError(`${error}`)
   }
 }
-function* passwordLoginSaga({ payload }: any) {
+function* passwordLoginSaga({
+  type,
+  payload,
+}: {
+  type: string;
+  payload: any;
+}): Generator<any> {
   try {
+    console.log("passwordLoginSaga (SJ)", payload);
     const result: UserCredential = yield call(LoginUserData,payload);
     console.log("Login Response (SJ)", result);
     const logObj:any = {
@@ -238,9 +250,17 @@ function* passwordLoginSaga({ payload }: any) {
       displayName: result?.user?.displayName,
       email: result?.user?.email,
     };
+
     if(logObj?.success){
       console.log("first",logObj?.success)
       yield put({ type: 'PASSWORD_LOGIN_SUCESS', payload: logObj });
+
+      const userProfileData = yield call(getUserProfileService, payload?.email);
+    // notifySuccess('successfully getting userProfileData');
+      yield put({
+        type: GET_USER_PROFILE_SUCCESS,
+        payload: userProfileData,
+      });
     }else{
       console.log("first",logObj?.success)
       notifyError(`${logObj?.error}`)

@@ -77,6 +77,7 @@ export default function globalReducers(state = initialState.root, action: any) {
       return {
         ...state,
         GLoginData: {data:action.payload,loader:false},
+        userData: action.payload,
         loader:false
       };
 
@@ -141,9 +142,7 @@ export default function globalReducers(state = initialState.root, action: any) {
           data: action.payload,
           loader: false,
         },
-        userData: {
-          success:false
-        }
+        userData: action.payload,
     }
     case VERIFY_USER_OTP_FAILURE:
       return{
