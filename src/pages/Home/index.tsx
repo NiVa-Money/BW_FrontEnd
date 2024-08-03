@@ -26,9 +26,7 @@ const LandingPage: React.FC = () => {
   const router = useRouter();
 
   useEffect(()=>{
-    // console.log("hiiii mahesh",GLoginData)
     if(GLoginData?.data?.success){
-      console.log("Glogin....")
       localStorage.setItem('user_id', GLoginData?.data?.user_id);
       localStorage.setItem('token', GLoginData?.data?.token);
       if(GLoginData?.data?.success){
@@ -48,13 +46,11 @@ const LandingPage: React.FC = () => {
       dispatch(verifyUserDataAction(userEmail));
     }
     if (resOtp?.data?.success || userData?.token) {
-      console.log("first")
      router.replace('/dashBoard');
     } else {
       if (googleVerifyRedux) {
         const [firstName, lastName] = userRedux?.displayName.split(' ');
         const email = userRedux?.email;
-        console.log("email google login",email)
         const payload = {
           firstName: firstName,
           lastName: lastName,
@@ -69,7 +65,6 @@ const LandingPage: React.FC = () => {
 
   useEffect(()=>{
     if (userData?.token) {
-        console.log("first")
         router.replace('/dashBoard');
     } 
   },[userData])

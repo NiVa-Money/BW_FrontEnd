@@ -37,7 +37,6 @@ export const signUpGoogleUserData = async (payload: any) => {
 
 export const verifyOtpUserData = async (payload: any) => {
   try {
-    console.log("verifyOtpUserData",payload)
     const response = await axiosInstance.post('/user/signup/verify/otherEmail', payload);
     return response.data;
   } catch (error) {
