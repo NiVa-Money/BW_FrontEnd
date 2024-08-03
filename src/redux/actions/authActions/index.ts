@@ -33,10 +33,10 @@ export const verifyUserDataAction = (userData: any) => ({
   payload: userData,
 });
 
-// export const fetchUserDataSuccess = (userData: any) => ({
-//   type: VERIFY_USER_DATA_SUCCESS,
-//   payload: userData,
-// });
+export const fetchUserDataSuccess = (userData: any) => ({
+  type: VERIFY_USER_DATA_SUCCESS,
+  payload: userData,
+});
 
 export const signUpDataAction = (userData: any) => ({
   type: SIGN_UP_DATA,

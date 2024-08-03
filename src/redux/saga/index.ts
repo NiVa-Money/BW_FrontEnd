@@ -624,7 +624,7 @@ export default function* rootSaga() {
   yield takeEvery(USER_ALL_SESSION, getUserAllSessionSaga);
   yield takeEvery(ADVANCE_FEATURE, getAdvanceFeatureSaga);
   yield takeEvery(VERIFY_USER_OTP,verifyOtpUserSaga);
-  yield takeLatest(GOOGLE_LOGIN,signUpGoogleUserSagaData);
+  yield takeEvery(GOOGLE_LOGIN,signUpGoogleUserSagaData);
   yield takeEvery(PASSWORD_LOGIN,passwordLoginSaga);
   yield takeEvery(CREATE_PAYMENT_REQUEST , payPalPaymentSaga);
   yield takeLatest(CAPTURE_PAYMENT_REQUEST, capturePaymentSaga);
