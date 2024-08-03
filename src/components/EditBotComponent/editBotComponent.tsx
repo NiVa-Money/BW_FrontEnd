@@ -221,7 +221,6 @@ const EditBotComponent: React.FC = () => {
   useEffect(() => {
     if (botDataRedux) {
       const botToEdit = botDataRedux[0];
-      console.log('edt', botToEdit);
       if (botToEdit) {
         setBotName(botToEdit.botName);
         setChatColor(botToEdit.botColor)
@@ -241,7 +240,6 @@ const EditBotComponent: React.FC = () => {
         if (botSample) {
           setImageSrc(botSample.imageUrl);
         } else {
-          console.log('Icon type not found');
         }
       }
     }
