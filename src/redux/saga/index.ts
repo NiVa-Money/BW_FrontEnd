@@ -613,7 +613,7 @@ export function* payPalPaymentSaga({
       payload: response,
     });
     notifySuccess('Payment processed successfully');
-    const _id = response.orderId; 
+    const _id = response._id; 
     yield put(capturePaymentRequest(_id)); 
   } catch (error: any) {
     yield put({

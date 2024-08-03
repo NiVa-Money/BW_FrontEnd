@@ -16,7 +16,9 @@ type PayPalButtonProps = {
 const PayPalButton: React.FC<PayPalButtonProps> = ({ planId, price , 
   onPaymentSuccess  }) => {
   const dispatch = useDispatch();
-  const { _id: paymentId } = useSelector((state: RootState) => state.payment); 
+  // const { _id: paymentId } = useSelector((state: RootState) => state.payment.paymentData); 
+  const paymentData = useSelector((state: RootState) => state.payment.paymentData);
+  const paymentId = paymentData ? paymentData._id : '';
   const { orderId } = useSelector((state: RootState) => state.payment);
   const [modalOpen, setModalOpen] = useState(false); 
   const [modalMessage, setModalMessage] = useState(''); 
@@ -25,6 +27,7 @@ const PayPalButton: React.FC<PayPalButtonProps> = ({ planId, price ,
   );
   const [isError, setIsError] = useState(false); 
   const [isPaymentSuccessful, setIsPaymentSuccessful] = useState(false); // New state for payment status
+
 
   const createOrder = async (data: any, actions: any) => {
     dispatch(createPaymentRequest({ userId, amount: Number(price), currency: 'USD', paymentGateway: 'paypal' }));
