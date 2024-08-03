@@ -85,7 +85,7 @@ const SideBar: React.FC = () => {
   const closeModal = () => setIsModalOpen(false);
 
   const LogoutButton = () => {
-    console.log('app logout ... ');
+
     localStorage.removeItem('user_id');
     localStorage.removeItem('token');
     dispatch(logoutUser());
@@ -102,7 +102,6 @@ const SideBar: React.FC = () => {
   }, [userData?.user_id]);
 
   useEffect(() => {
-    console.log('botProfile', botProfiles);
   }, [botProfiles]);
   return (
     <div className="w-64 h-[100%] p-4 bg-[#0B031E] flex flex-col h-screen relative">
@@ -185,7 +184,6 @@ const MenuItem: React.FC<MenuItemProps> = ({ item, onClick }) => {
   };
 
   useEffect(() => {
-    console.log('userChat', botSessionaa);
   }, [botSessionaa]);
 
   return (

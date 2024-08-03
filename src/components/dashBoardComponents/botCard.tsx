@@ -7,7 +7,6 @@ interface BotCardProps {
 }
 
 export function BotCard({ activeBots }: BotCardProps) {
-  console.log("bot",activeBots)
   return (
     
     <Card className="mx-auto max-w-xs w-80 h-72 rounded-3xl">

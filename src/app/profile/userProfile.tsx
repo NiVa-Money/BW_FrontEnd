@@ -22,6 +22,7 @@ const ProfileComponent: React.FC = () => {
       dispatch(getUserProfileAction(userEmail));
     }
   }, [userEmail, pathName]);
+  
   React.useEffect(() => {
     if (userEmail?.length && !profileData) {
 

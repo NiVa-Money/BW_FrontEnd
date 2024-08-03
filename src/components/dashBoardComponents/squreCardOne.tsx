@@ -29,7 +29,6 @@ export function SqureCardOne({ sessionTotal, sessionLeft }: SqureCardOneProps) {
     sessionTotal: 0,
     sessionLeft: 0,
   });
-  console.log(metricData);
   useEffect(() => {
     const savedMetrics = localStorage.getItem('metricsData');
     if (savedMetrics) {
@@ -41,7 +40,6 @@ export function SqureCardOne({ sessionTotal, sessionLeft }: SqureCardOneProps) {
     }
   }, []);
 
-  console.log('verifyVal', verifyVal);
   useEffect(() => {
     if (verifyVal || pathName === '/dashBoard') {
       dispatch(fetchMetricsAction(userId));

@@ -1,14 +1,15 @@
 'use client';
-import React, { useState,useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuthContext } from '@/context/AuthContext';
 import { BackgroundAnimation } from '../BackgroundAnimation/backgroundAnimation';
 import { fetchUserData } from '@/redux/services';
-import { signUpDataAction,resetUserDataAction } from '@/redux/actions/authActions';
+import { signUpDataAction, resetUserDataAction } from '@/redux/actions/authActions';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/redux/configureStore';
 import SignUpModalOtp from '../signupModal/signUpOtpModal';
+import { FaEye, FaEyeSlash } from 'react-icons/fa';
 
 interface ModalProps {
   closeModal: () => void;
@@ -16,7 +17,7 @@ interface ModalProps {
 }
 
 const Modal: React.FC<ModalProps> = ({ closeModal, handleSignUp }) => {
-  const userSucess = useSelector((state: RootState) => state?.root?.userVerify);
+  const userSuccess = useSelector((state: RootState) => state?.root?.userVerify);
   const [viewOtp, setViewOtp] = useState(false);
 
   const [formData, setFormData] = useState({
@@ -26,8 +27,15 @@ const Modal: React.FC<ModalProps> = ({ closeModal, handleSignUp }) => {
     mobileNo: '',
     password: '',
   });
+  const [passwordVisible, setPasswordVisible] = useState(false);
   const dispatch = useDispatch();
-  const [error, setError] = useState('');
+  const [errors, setErrors] = useState({
+    firstName: '',
+    lastName: '',
+    emailId: '',
+    mobileNo: '',
+    password: '',
+  });
   const { signUpWithEmail } = useAuthContext();
   const router = useRouter();
 
@@ -39,26 +47,72 @@ const Modal: React.FC<ModalProps> = ({ closeModal, handleSignUp }) => {
     }));
   };
 
-   useEffect(() => {
-   if(userSucess === true ){
-    setViewOtp(userSucess)
-   }
+  useEffect(() => {
+    if (userSuccess === true) {
+      setViewOtp(userSuccess);
+    }
+  }, [userSuccess]);
 
-  }, [userSucess])
+  const validateForm = () => {
+    const { firstName, lastName, emailId, mobileNo, password } = formData;
+    const namePattern = /^[A-Za-z]{2,}$/;
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const passwordPattern = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/;
+    const mobilePattern = /^\d{10}$/;
+    const newErrors = {
+      firstName: '',
+      lastName: '',
+      emailId: '',
+      mobileNo: '',
+      password: '',
+    };
+  
+    if (!namePattern.test(firstName)) {
+      newErrors.firstName = 'First name should be more than 1 letter and contain no special characters or numbers.';
+    }
+    if (!namePattern.test(lastName)) {
+      newErrors.lastName = 'Last name should be more than 1 letter and contain no special characters or numbers.';
+    }
+    if (!emailPattern.test(emailId)) {
+      newErrors.emailId = 'Please enter a valid email address.';
+    }
+    if (!passwordPattern.test(password)) {
+      newErrors.password = 'Password should be at least 8 characters long and include one uppercase letter, one lowercase letter, one number, and one special character.';
+    }
+    if (!mobilePattern.test(mobileNo)) {
+      newErrors.mobileNo = 'Mobile number should be exactly 10 digits.';
+    }
+  
+    return newErrors;
+  };
+  
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    const validationErrors = validateForm();
+    setErrors(validationErrors);
+
+    const hasErrors = Object.values(validationErrors).some(error => error !== '');
+    if (hasErrors) {
+      return;
+    }
+
     try {
       console.log('form', formData);
       localStorage.setItem('emailId', formData.emailId);
       dispatch(signUpDataAction(formData));
       // handleSignUp(formData, router);
-
     } catch (error) {
-    
-      setError('Error processing your request');
+      setErrors(prevErrors => ({
+        ...prevErrors,
+        global: 'Error processing your request',
+      }));
       console.error('Error:', error);
     }
+  };
+
+  const togglePasswordVisibility = () => {
+    setPasswordVisible(!passwordVisible);
   };
 
   return (
@@ -75,7 +129,6 @@ const Modal: React.FC<ModalProps> = ({ closeModal, handleSignUp }) => {
             </button>
           </div>
           <h2 className="text-2xl mb-4">Sign Up</h2>
-          {error && <div className="text-red-500 mb-4">{error}</div>}
           <form onSubmit={handleSubmit}>
             <div className="flex mb-2">
               <div className="w-1/2 pr-1">
@@ -91,6 +144,7 @@ const Modal: React.FC<ModalProps> = ({ closeModal, handleSignUp }) => {
                     required
                   />
                 </label>
+                {errors.firstName && <div className="text-red-500">{errors.firstName}</div>}
               </div>
 
               <div className="w-1/2 pl-1">
@@ -106,6 +160,7 @@ const Modal: React.FC<ModalProps> = ({ closeModal, handleSignUp }) => {
                     required
                   />
                 </label>
+                {errors.lastName && <div className="text-red-500">{errors.lastName}</div>}
               </div>
             </div>
             <label className="block mb-2 text-white">
@@ -120,18 +175,27 @@ const Modal: React.FC<ModalProps> = ({ closeModal, handleSignUp }) => {
                 required
               />
             </label>
+            {errors.emailId && <div className="text-red-500">{errors.emailId}</div>}
             <label className="block mb-2 text-white">
               Password:
-              <input
-                type="password"
-                name="password"
-                value={formData.password}
-                onChange={handleChange}
-                className="w-full p-2 border rounded-xl text-white bg-black"
-                placeholder="Password"
-                required
-              />
+              <div className="relative">
+                <input
+                  type={passwordVisible ? "text" : "password"}
+                  name="password"
+                  value={formData.password}
+                  onChange={handleChange}
+                  className="w-full p-2 border rounded-xl text-white bg-black"
+                  placeholder="Password"
+                  required
+                />
+                <div className="absolute inset-y-0 right-0 flex items-center pr-3">
+                  <button type="button" onClick={togglePasswordVisibility} className="text-white focus:outline-none">
+                    {passwordVisible ? <FaEyeSlash /> : <FaEye />}
+                  </button>
+                </div>
+              </div>
             </label>
+            {errors.password && <div className="text-red-500">{errors.password}</div>}
             <label className="block mb-2 text-white">
               Mobile No:
               <input
@@ -144,6 +208,7 @@ const Modal: React.FC<ModalProps> = ({ closeModal, handleSignUp }) => {
                 required
               />
             </label>
+            {errors.mobileNo && <div className="text-red-500">{errors.mobileNo}</div>}
             <button
               type="submit"
               className="w-full text-white p-2 rounded mt-8"
@@ -155,8 +220,8 @@ const Modal: React.FC<ModalProps> = ({ closeModal, handleSignUp }) => {
               Sign Up
             </button>
           </form>
-          {userSucess && 
-          <SignUpModalOtp viewOtp={userSucess} setViewOtp={setViewOtp} />
+          {userSuccess && 
+          <SignUpModalOtp viewOtp={userSuccess} setViewOtp={setViewOtp} />
           } 
         </div>
       </div>
