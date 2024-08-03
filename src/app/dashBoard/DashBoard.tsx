@@ -23,6 +23,15 @@ const DashBoard: React.FC = () => {
   const userId = useSelector(
     (state: RootState) => state.root?.userData?.user_id
   );
+
+
+
+  React.useEffect(() => {
+    console.log('userid', userId)
+  }, [userId]);
+
+
+
   const userMetricData = useSelector(
     (state: RootState) => state?.root?.userMetric?.data
   );
@@ -39,14 +48,23 @@ const DashBoard: React.FC = () => {
   }, [userDataRedux]);
 
   React.useEffect(() => {
-    console.log('emaillll' , userEmail)
-    if (userEmail?.length || pathName === '/dashBoard') {
+
+
+    console.log('emaillll', userEmail)
+    if (userEmail?.length || pathName === '/profile') {
+      console.log('userrrr', userEmail)
+
+
       dispatch(getUserProfileAction(userEmail));
 
     }
   }, [userEmail, pathName]);
 
   React.useEffect(() => {
+
+    console.log('SJSJSJSJS', userEmail)
+
+
     if (userEmail?.length) {
       dispatch(getUserProfileAction(userEmail));
     }
