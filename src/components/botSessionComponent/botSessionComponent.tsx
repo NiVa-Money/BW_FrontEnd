@@ -57,7 +57,6 @@ const BotSessionComponent: React.FC = () => {
     (state: RootState) => state.userChat?.allSession?.data?.sessions
   );
 
-  console.log('botIdRedux', botIdRedux);
   const [botIdLocal, setBotIdLocal] = React.useState<any>('');
   const userId: any = useSelector(
     (state: RootState) => state?.root?.userData?.user_id
@@ -287,13 +286,11 @@ const BotSessionComponent: React.FC = () => {
       const filteredList = userChatMessagesRes?.data?.sessions?.filter(
         (session: any) => session._id === sessionId
       );
-      console.log('filter', filteredList);
       setchatsData(filteredList);
     }
   }, [userChatMessagesRes, sessionId]);
   // console.log('chat', chatsData, userChatMessagesRes);
   React.useEffect(() => {
-    console.log('advanceFeature', advanceFeature?.data);
     setReasonDetails(advanceFeature?.data?.data?.cause);
     setSummary(advanceFeature?.data?.data?.summary);
     setSentimentAnalysis(advanceFeature?.data?.data?.sentiments);

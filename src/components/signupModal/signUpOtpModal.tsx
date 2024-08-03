@@ -80,7 +80,7 @@ const SignUpModalOtp: React.FC<OtpModalProps> = ({ viewOtp, setViewOtp }) => {
             </button>
           </div>
           <h2 className="text-2xl mb-4">Enter OTP</h2>
-          <p className="mb-4">We have sent an OTP to </p>
+          <p className="mb-4">We have sent an OTP to the email address </p>
           <form onSubmit={handleSubmit}>
             <div className="flex space-x-2 mb-4">
               {otp.map((digit, index) => (
