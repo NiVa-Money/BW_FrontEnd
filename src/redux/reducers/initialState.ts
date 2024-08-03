@@ -84,8 +84,8 @@ const initialState: any = {
     },
   },
   payment: {
-    orderId: null,
     loading: false,
+    paymentData: null,
     error: null,
   },
 };
