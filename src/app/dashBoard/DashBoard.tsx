@@ -25,9 +25,11 @@ const DashBoard: React.FC = () => {
   );
 
 
+
   React.useEffect(() => {
     console.log('userid', userId)
   }, [userId]);
+
 
 
   const userMetricData = useSelector(
@@ -47,9 +49,11 @@ const DashBoard: React.FC = () => {
 
   React.useEffect(() => {
 
+
     console.log('emaillll', userEmail)
     if (userEmail?.length || pathName === '/profile') {
       console.log('userrrr', userEmail)
+
 
       dispatch(getUserProfileAction(userEmail));
 
@@ -59,6 +63,7 @@ const DashBoard: React.FC = () => {
   React.useEffect(() => {
 
     console.log('SJSJSJSJS', userEmail)
+
 
     if (userEmail?.length) {
       dispatch(getUserProfileAction(userEmail));

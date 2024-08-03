@@ -22,38 +22,39 @@ const SignUpModalOtp: React.FC<OtpModalProps> = ({ viewOtp, setViewOtp }) => {
     (state: RootState) => state?.root?.otp
   );
 
-  useEffect(()=>{
-    console.log("resOtp",resOtp)
+  useEffect(() => {
+    console.log("resOtp", resOtp);
     localStorage.setItem('user_id', resOtp?.data?.user_id);
     localStorage.setItem('token', resOtp?.data?.token);
-    if(resOtp?.data?.success){
-      router.push('/login')
+    if (resOtp?.data?.success) {
+      router.push('/login');
     }
-  },[resOtp])
+  }, [resOtp]);
 
-  useEffect(()=>{
-    console.log("emailId",emailId)
-  },[emailId])
+  useEffect(() => {
+    console.log("emailId", emailId);
+  }, [emailId]);
 
   const handleChange = (index: number, value: string) => {
-    const newOtp = [...otp];
-    newOtp[index] = value;
-    setOtp(newOtp);
+    if (/^\d$/.test(value) || value === '') { // Allow only single digit or empty string
+      const newOtp = [...otp];
+      newOtp[index] = value;
+      setOtp(newOtp);
+    }
   };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     const otpValue = otp.join('');
     if (otpValue.length === 3 || otpValue.length === 4) {
-      console.log("submit otp",otpValue,emailId)
+      console.log("submit otp", otpValue, emailId);
       const data = {
-        "emailId":emailId,
-        otp:otpValue
-      }
+        "emailId": emailId,
+        otp: otpValue
+      };
       // Handle OTP verification logic
-      dispatch(verifyOtp(data))
-      router.push('/login')
-      
+      dispatch(verifyOtp(data));
+      router.push('/login');
       console.log('OTP submitted:', otpValue);
     } else {
       console.error('OTP must be 3 or 4 digits');
@@ -90,6 +91,7 @@ const SignUpModalOtp: React.FC<OtpModalProps> = ({ viewOtp, setViewOtp }) => {
                   onChange={(e) => handleChange(index, e.target.value)}
                   className="w-12 p-2 border rounded text-center"
                   maxLength={1}
+                  pattern="\d*" // Allows only digits
                   style={{ color: 'black' }}
                   required
                 />
