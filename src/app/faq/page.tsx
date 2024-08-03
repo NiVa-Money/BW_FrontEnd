@@ -3,24 +3,28 @@ import ResourceCard from './ResourceCard';
 import TutorialCard from './TutorialCard';
 import SectionHeader from './SectionHeader';
 import Divider from './Divider';
-
+import Link from 'next/link';
 // Resources data
 const resources = [
   {
     title: 'Docs',
     iconSrc: 'https://cdn.builder.io/api/v1/image/assets/TEMP/f06f5e3b7cf9aba144fec566daa94e25f75846be59eeb49943f224d9248e6cd8?apiKey=555c811dd3f44fc79b6b2689129389e8',
+    link:'/faq/docs'
   },
   {
     title: 'Demos',
     iconSrc: 'https://cdn.builder.io/api/v1/image/assets/TEMP/80236ed57e710888f8dae2e4b9cb53f6eeade73363ca4f47a390dc3a06405d4e?apiKey=555c811dd3f44fc79b6b2689129389e8',
+    link:'/faq/demos'
   },
   {
     title: 'FAQs',
     iconSrc: 'https://cdn.builder.io/api/v1/image/assets/TEMP/97d871d37e1997609d8de575111205fd492ac4e2186c9a8b1711df133cc3e624?apiKey=555c811dd3f44fc79b6b2689129389e8',
+    link:'/faq/questionsAns'
   },
   {
     title: 'Tutorials',
     iconSrc: 'https://cdn.builder.io/api/v1/image/assets/TEMP/b9ebbcabf4b486023303abbbf7526a7d1eaf5aed60cdf73b27fa4622274d9197?apiKey=555c811dd3f44fc79b6b2689129389e8',
+    link:'/faq/tutorials'
   },
 ];
 
@@ -68,7 +72,9 @@ const HelpCenter: React.FC = () => {
       <h2 className="mt-4 text-3xl leading-9 text-white max-md:max-w-full">Resources</h2>
       <section className="flex gap-5 py-2.5 mt-4 w-full max-md:flex-wrap max-md:max-w-full">
         {resources.map((resource, index) => (
+           <Link key={index} href={resource.link} className="flex w-full">
           <ResourceCard key={index} title={resource.title} iconSrc={resource.iconSrc} />
+          </Link>
         ))}
       </section>
       <Divider />
