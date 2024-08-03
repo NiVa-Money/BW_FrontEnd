@@ -14,47 +14,57 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 
 const DashBoard: React.FC = () => {
+  const userEmail = useSelector((state: RootState) => state.root?.user?.email);
+  const userDataRedux = useSelector(
+    (state: RootState) => state.root?.userProfile?.data
+  );
   const pathName = useSelector((state: RootState) => state.root?.pathName);
-  const dispatch = useDispatch();
   const verifyVal = useSelector((state: RootState) => state.root.userVerify);
   const userId = useSelector(
     (state: RootState) => state.root?.userData?.user_id
   );
 
+
   React.useEffect(() => {
     console.log('userid', userId)
   }, [userId]);
 
+
   const userMetricData = useSelector(
     (state: RootState) => state?.root?.userMetric?.data
   );
-  const userEmail = useSelector((state: RootState) => state.root?.user?.email);
-  const userDataRedux = useSelector(
-    (state: RootState) => state.root?.userProfile?.data
-  );
+  const [metricData, setMetricData] = useState(userMetricData);
+
   const [profileData, setProfileData] = React.useState<any>(userDataRedux);
+  const dispatch = useDispatch();
+
+  React.useEffect(() => {
+  }, [userId]);
 
   React.useEffect(() => {
     setProfileData(userDataRedux);
   }, [userDataRedux]);
 
   React.useEffect(() => {
+
     console.log('emaillll', userEmail)
     if (userEmail?.length || pathName === '/profile') {
       console.log('userrrr', userEmail)
+
       dispatch(getUserProfileAction(userEmail));
 
     }
   }, [userEmail, pathName]);
 
   React.useEffect(() => {
+
     console.log('SJSJSJSJS', userEmail)
+
     if (userEmail?.length) {
       dispatch(getUserProfileAction(userEmail));
     }
   }, []);
 
-  const [metricData, setMetricData] = useState(userMetricData);
 
   useEffect(() => {
     const savedMetrics = localStorage.getItem('metricsData');
@@ -78,7 +88,7 @@ const DashBoard: React.FC = () => {
       setMetricData(userMetricData);
     }
   }, [userMetricData]);
-  // console.log("dasfaesc",metricData)
+  
   return (
     <div className="w-[100%] h-[100%] flex flex-col p-8 bg-[#0B031E] text-white">
       <div className="w-[100%] flex h-[15%] gap-4">
