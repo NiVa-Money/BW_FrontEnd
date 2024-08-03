@@ -59,7 +59,6 @@ const Modal: React.FC<ModalProps> = ({ closeModal, handleSignUp }) => {
     const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     const passwordPattern = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/;
     const mobilePattern = /^\d{10}$/;
-
     const newErrors = {
       firstName: '',
       lastName: '',
