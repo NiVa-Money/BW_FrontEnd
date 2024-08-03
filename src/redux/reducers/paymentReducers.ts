@@ -47,7 +47,7 @@ import {
   CAPTURE_PAYMENT_FAILURE,
 } from "../actions/actionTypes";
 
-const paymentReducer = (state = initialState.payment, action: { type: any; payload: any; }) => {
+export default function paymentReducer(state = initialState.payment, action: any){
   switch (action.type) {
     case CREATE_PAYMENT_REQUEST:
     case CAPTURE_PAYMENT_REQUEST:
@@ -77,5 +77,3 @@ const paymentReducer = (state = initialState.payment, action: { type: any; paylo
       return state;
   }
 };
-
-export default paymentReducer;

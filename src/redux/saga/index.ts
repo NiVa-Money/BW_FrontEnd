@@ -216,7 +216,8 @@ export function* fetchuserMetricSaga({
 }
 function* loginSaga({ payload }: any) {
   try {
-    const result: UserCredential = yield call(signInWithPopup, auth, provider);
+    // const result: UserCredential = yield call(signInWithPopup, auth, provider);
+     const result: UserCredential = yield call(signInWithPopup, auth, provider);
     // console.log('re', result);
     const resObject: any = {
       displayName: result?.user?.displayName,
@@ -240,20 +241,21 @@ function* passwordLoginSaga({
 }): Generator<any> {
   try {
     console.log("passwordLoginSaga (SJ)", payload);
-    const result: UserCredential = yield call(LoginUserData,payload);
+    const result:any = yield call(LoginUserData,payload);
+    // const result: UserCredential = yield call(LoginUserData,payload);
     console.log("Login Response (SJ)", result);
-    const logObj:any = {
-      ...result
-    }
-    console.log("logOBj" , logObj)
-    const resObject: any = {
-      displayName: result?.user?.displayName,
-      email: result?.user?.email,
-    };
+    // const logObj = {
+    //   ...result
+    // }
+    // console.log("logOBj" , logObj)
+    // const resObject: any = {
+    //   displayName: result?.user?.displayName,
+    //   email: result?.user?.email,
+    // };
 
-    if(logObj?.success){
-      console.log("first",logObj?.success)
-      yield put({ type: 'PASSWORD_LOGIN_SUCESS', payload: logObj });
+    if(result?.success){
+      console.log("first",result?.success)
+      yield put({ type: 'PASSWORD_LOGIN_SUCESS', payload: result });
 
       const userProfileData = yield call(getUserProfileService, payload?.email);
     // notifySuccess('successfully getting userProfileData');
@@ -262,9 +264,9 @@ function* passwordLoginSaga({
         payload: userProfileData,
       });
     }else{
-      console.log("first",logObj?.success)
-      notifyError(`${logObj?.error}`)
-      yield put({ type: 'PASSWORD_LOGIN_FAILURE', payload: logObj });
+      console.log("first",result?.success)
+      notifyError(`${result?.error}`)
+      yield put({ type: 'PASSWORD_LOGIN_FAILURE', payload: result });
     }
     // notifySuccess('login successful');
   } catch (error) {
@@ -607,13 +609,13 @@ export function* payPalPaymentSaga({
   payload: any;
 }): Generator<any> {
   try {
-    const response = yield call(processPayPalPaymentService, payload);
+    const response:any = yield call(processPayPalPaymentService, payload);
     yield put({
       type: CREATE_PAYMENT_SUCCESS,
       payload: response,
     });
     notifySuccess('Payment processed successfully');
-    const _id = response._id; 
+    const _id:any = response?._id; 
     yield put(capturePaymentRequest(_id)); 
   } catch (error: any) {
     yield put({
