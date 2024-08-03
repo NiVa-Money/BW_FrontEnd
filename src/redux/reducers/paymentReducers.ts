@@ -63,7 +63,7 @@ const paymentReducer = (state = initialState.payment, action: { type: any; paylo
         ...state,
         loading: false,
         paymentData: action.payload,
-        // _id: action.payload._id,
+        _id: action.payload._id,
         error: null,
       };
     case CREATE_PAYMENT_FAILURE:
