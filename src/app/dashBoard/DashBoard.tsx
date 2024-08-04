@@ -25,11 +25,8 @@ const DashBoard: React.FC = () => {
   );
 
   React.useEffect(() => {
-   
   }, [userId]);
-
-
-
+  
   const userMetricData = useSelector(
     (state: RootState) => state?.root?.userMetric?.data
   );

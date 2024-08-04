@@ -2,7 +2,7 @@
 
 import { fetchMetricsAction } from '@/redux/actions/authActions';
 import { RootState } from '@/redux/configureStore';
-import { DonutChart } from '@tremor/react';
+import { DonutChart,Legend  } from '@tremor/react';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -65,17 +65,48 @@ export function SqureCardOne({ sessionTotal, sessionLeft }: SqureCardOneProps) {
     { name: 'Sessions Total', value: sessionTotal },
     { name: 'Sessions Consumed', value: sessionLeft },
   ];
-
+  const sales = [
+    {
+      name: 'Technology & equpiment',
+      sales: 980,
+    },
+    {
+      name: 'Marketing',
+      sales: 456,
+    },
+    {
+      name: 'Finance',
+      sales: 390,
+    },
+    {
+      name: 'Human Resource',
+      sales: 240,
+    },
+    {
+      name: 'Marketing',
+      sales: 190,
+    },
+  ];
+  
+  const valueFormatter = (number: number) =>
+    ` ${Intl.NumberFormat('us').format(number).toString()}`;
   return (
     <>
+    <div className='flex'>
       <DonutChart
-        className="h-[82%]"
-        data={data}
-        category="value"
-        index="name"
-        valueFormatter={valueFormatter}
-        colors={['blue', 'cyan']}
-      />
+          data={sales}
+          category="sales"
+          index="name"
+          valueFormatter={valueFormatter}
+          colors={['blue', 'cyan', 'indigo', 'violet', 'fuchsia']}
+          className="w-80"
+        />
+        <Legend
+          categories={['Technology & equpiment', 'Marketing', 'Finance', 'Human Resource', 'Marketing']}
+          colors={['blue', 'cyan', 'indigo', 'violet', 'fuchsia']}
+          className="max-w-xs"
+        />
+        </div>
     </>
   );
 }

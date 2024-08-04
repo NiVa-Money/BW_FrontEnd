@@ -30,7 +30,9 @@ export default function RootLayout({
     '/login',
     '/createKnowledgeBase',
     '/newchat',
-    '/botSession'
+    '/botSession',
+    '/faq/questionsAns',
+    '/faq/docs'
   ];
   const routeWithoutFooter: string[] = [
     '/MyChatBots',
@@ -44,7 +46,9 @@ export default function RootLayout({
     '/login',
     '/createKnowledgeBase',
     '/newchat',
-    '/botSession'
+    '/botSession',
+    '/faq/questionsAns',
+    '/faq/docs'
   ];
   const routeWithoutSidebar: string[] = [
     '/createBot',
