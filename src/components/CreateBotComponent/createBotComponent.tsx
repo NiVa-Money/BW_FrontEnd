@@ -107,7 +107,7 @@ const CreateBotComponent: React.FC = () => {
 
   const handleDocumentUpload = (event: any) => {
     const file = event.target.files[0];
-    setFileName(file.name);
+    // setFileName(file.name);
   };
   const validateStep1 = () => {
     if (!botName) {
@@ -332,33 +332,36 @@ const CreateBotComponent: React.FC = () => {
           <div className="text-red-500 mb-4">{error}</div>
         )}
       </div>
-      <div className="mb-4">
+      <div className="flex flex-col mb-4">
         <label className="block text-gray-200 mb-2">Custom Bot Profile</label>
-        <div className="relative mb-4"></div>
-        <span className="mr-2">
-                {imageName?.length ? imageName : 'Choose File'}
-        </span>
-        <div className="flex items-start">
-          <input
-            type="file"
-            onChange={handleFileUpload}
-            ref={imgViewerRef}
-            accept="image/*"
-            id="file-upload-image"
-            className="rounded-[70px] bg-[#3F2181] mt-0  text-white px-4 py-2 flex justify-center cursor-pointer"
-            // disabled
-          />
-          {/* <div className='mt-3 ml-3'>Comming soon ...</div> */}
-          {/* <button
-            disabled
-            className="rounded-[70px] bg-[#3F2181] mt-0  text-white px-4 py-2 flex justify-center"
-          >
-            <span>Upload</span>
-            <FileUploadIcon />
-          </button> */}
-          {/* <span className="text-white mb-2 ml-6">Coming Soon..</span> */}
+        <div className="mb-4">
+          <div className="relative mb-4">
+            <div className="flex items-center bg-gray-800 p-2 w-full rounded-[12px] absolute ">
+              <span className="mr-2">
+              {imageName?.length ? imageName : 'Choose File'}
+              </span>
+              <button
+                onClick={() => {
+                  setImageName('');
+                  setImageSrc('');
+                }}
+                className="ml-auto text-white"
+              >
+                ×
+              </button>
+            </div>
+            <input
+              type="file"
+              onChange={handleFileUpload}
+              ref={imgViewerRef}
+              accept="image/*"
+              id="file-upload-image"
+              className="absolute top-[0] opacity-0 -[12px] cursor-pointer"
+            />
+          </div>
         </div>
       </div>
+    
       <div className="mb-4">
         <label className="block text-gray-200 mb-2">Bot Greeting Message</label>
         <input
