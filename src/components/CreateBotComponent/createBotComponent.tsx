@@ -32,6 +32,7 @@ const CreateBotComponent: React.FC = () => {
   );
   //
   const viewerRef = useRef(null);
+  const imgViewerRef =  useRef(null);
   const [botIdentity, setBotIdentity] = useState("");
   const [knowledgeBase, setKnowledgeBase] = useState(['Assistant.pdf']);
   const [botLimit, setBotLimit] = useState<any>('50-100');
@@ -50,7 +51,7 @@ const CreateBotComponent: React.FC = () => {
     'How do I cancel my subscription?',
   ];
   const [imageSrc, setImageSrc] = useState('');
-  const [imagename, setImageName] = useState('');
+  const [imageName, setImageName] = useState('');
   const [filename, setFileName] = useState('');
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const dispatch = useDispatch();
@@ -81,17 +82,27 @@ const CreateBotComponent: React.FC = () => {
 
   const handleFileUpload = (event: any) => {
     const file = event.target.files[0];
-    console.log('img', file);
+    // console.log('img', file);
     setImageName(file.name);
-    if (file) {
-      const reader: any = new FileReader();
-      reader.onloadend = () => {
-        const base64String = reader?.result?.split(',')[1]; // Remove the "data:image/png;base64," part
-        setBase64Image(base64String);
-        console.log('base64String', base64String);
-      };
-      reader.readAsDataURL(file);
+    if (
+      file &&
+      file.size <= 2 * 1024 * 1024 
+      // file.type === 'application/pdf'
+    ) {
+      setBase64Image(file);
+      // await handleSave()
+    } else {
+      alert('File must be less than 2MB');
     }
+    // if (file) {
+    //   const reader: any = new FileReader();
+    //   reader.onloadend = () => {
+    //     const base64String = reader?.result?.split(',')[1]; // Remove the "data:image/png;base64," part
+    //     setBase64Image(base64String);
+    //     console.log('base64String', base64String);
+    //   };
+    //   reader.readAsDataURL(file);
+    // }
   };
 
   const handleDocumentUpload = (event: any) => {
@@ -195,6 +206,8 @@ const CreateBotComponent: React.FC = () => {
     formData.append('docName', filename);
     formData.append('docType', knowledgeBase.length > 0 ? 'pdf' : '');
     formData.append('docId', docId);
+    formData.append('customBotImage', base64Image);
+    // setBase64Image
     formData.append('userId', userId);
     formData.append('botURL', imageSrc)
     if (selectedFile) {
@@ -322,17 +335,20 @@ const CreateBotComponent: React.FC = () => {
       <div className="mb-4">
         <label className="block text-gray-200 mb-2">Custom Bot Profile</label>
         <div className="relative mb-4"></div>
+        <span className="mr-2">
+                {imageName?.length ? imageName : 'Choose File'}
+        </span>
         <div className="flex items-start">
           <input
             type="file"
             onChange={handleFileUpload}
-            ref={viewerRef}
+            ref={imgViewerRef}
             accept="image/*"
-            id="file-upload"
+            id="file-upload-image"
             className="rounded-[70px] bg-[#3F2181] mt-0  text-white px-4 py-2 flex justify-center cursor-pointer"
-            disabled
+            // disabled
           />
-          <div className='mt-3 ml-3'>Comming soon ...</div>
+          {/* <div className='mt-3 ml-3'>Comming soon ...</div> */}
           {/* <button
             disabled
             className="rounded-[70px] bg-[#3F2181] mt-0  text-white px-4 py-2 flex justify-center"
