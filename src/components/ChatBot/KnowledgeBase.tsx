@@ -69,7 +69,7 @@ const KnowledgeBase: React.FC = () => {
     //   userId: userIdLocal,
     // };
     // console.log('del', deletePayload);
-    setDocIdToDelete(knowledgebase[index]?.docId);
+    setDocIdToDelete(knowledgebase[index]?._id);
     setIsModalOpen(true);
   };
 
