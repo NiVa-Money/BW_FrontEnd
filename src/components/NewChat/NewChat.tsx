@@ -69,9 +69,9 @@ const NewChatComponent: React.FC = () => {
     setIsBotProfileOpen(!isBotProfileOpen);
   };
   
-  useEffect(() => {
-    dispatch(createPaymentRequest({ userId, currency: 'USD', paymentGateway: 'paypal' }));
-  }, []);
+  // useEffect(() => {
+  //   dispatch(createPaymentRequest({ userId, currency: 'USD', paymentGateway: 'paypal' }));
+  // }, []);
 
   const getChatHistory = () => {
     // console.log('userId', userId);
