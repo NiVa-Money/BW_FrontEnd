@@ -43,14 +43,14 @@ const Footer: React.FC = () => {
     {
       title: 'Company',
       links: [
-        { name: 'blog', path: 'blog' },
+        { name: 'Blog', path: 'blog' },
         // { name: 'Careers', path: 'Careers' },
       ],
     },
     {
       title: 'Product',
       links: [
-        { name: 'pricing', path: 'pricing' },
+        { name: 'Pricing', path: 'pricing' },
         { name: 'Download', path: 'Download' },
       ],
     },
@@ -58,7 +58,7 @@ const Footer: React.FC = () => {
       title: 'Support',
       links: [
         { name: 'Help Center', path: 'Help' },
-        { name: 'contactus', path: 'contactus' },
+        { name: 'Contact Us', path: 'contactus' },
         { name: 'Tutorials', path: 'Tutorials' },
       ],
     },
