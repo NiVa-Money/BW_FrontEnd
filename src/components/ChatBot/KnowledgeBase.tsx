@@ -14,6 +14,7 @@ import {
 import ConfirmModal from './modalDelete';
 
 interface KnowledgeBaseCardProps {
+  _id: string;
   bots: string;
   docId: any;
   name: string;
@@ -69,7 +70,7 @@ const KnowledgeBase: React.FC = () => {
     //   userId: userIdLocal,
     // };
     // console.log('del', deletePayload);
-    setDocIdToDelete(knowledgebase[index]?.docId);
+    setDocIdToDelete(knowledgebase[index]._id);
     setIsModalOpen(true);
   };
 

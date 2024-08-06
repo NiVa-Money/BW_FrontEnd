@@ -1,25 +1,29 @@
 'use client';
 
-import { createBotProfileAction } from '@/redux/actions/BotProfileActions';
 import { createKnowledgebaseAction } from '@/redux/actions/knowledgeBaseActions';
 import * as React from 'react';
 import { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useRouter } from 'next/navigation';
+
+import { useDispatch, useSelector } from 'react-redux';
 import { v4 as uuidv4 } from 'uuid';
+import { RootState } from '@/redux/configureStore';
 
 const CreateKnowledgeBase: React.FC = () => {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
-  const [docName, setDocName] = useState('Sample Document Name');
-  const [docType, setDocType] = useState('pdf');
-  const [docId, setDocId] = useState<string>(uuidv4().replace(/-/g, ''));
-  const [userId, setUserId] = useState('669bea6783f712df352b1331'); // Example valid ObjectId
-  const [botId, setBotId] = useState('60f7c2d12f9f9b02ec6a1c46'); // Example valid ObjectId
+  const [docName, setDocName] = useState('');
+  const [docType] = useState('pdf');
+  const userIdRedux = useSelector(
+    (state: RootState) => state.root?.userData?.user_id
+  );
   const dispatch = useDispatch();
-
+  const router = useRouter();
   const handleFileChange = async (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
-    const file = event.target.files?.[0];
+    const file:any = event.target.files?.[0];
+
+    setDocName(file.name);
     if (
       file &&
       file.size <= 2 * 1024 * 1024 &&
@@ -50,13 +54,12 @@ const CreateKnowledgeBase: React.FC = () => {
   };
 
   const handleUpload = async () => {
-    if (selectedFile && docName && docType && docId && userId) {
+    if (selectedFile && docName && docType && userIdRedux) {
       const formData = new FormData();
       formData.append('docName', docName);
       formData.append('docType', docType);
-      formData.append('docId', docId);
-      formData.append('userId', userId);
-      formData.append('botId', botId);
+      // formData.append('docId', docId);
+      formData.append('userId', userIdRedux);
       formData.append('file', selectedFile);
 
       formData.forEach((value, key) => {
@@ -64,6 +67,7 @@ const CreateKnowledgeBase: React.FC = () => {
       });
 
       dispatch(createKnowledgebaseAction(formData));
+      router.push('/knowledgeBase');
     } else {
       alert('Please select a file');
     }
