@@ -21,7 +21,6 @@ import { botImageBaseUrl } from '@/utils/constant';
 import { HexColorPicker } from 'react-colorful';
 import { BackgroundCss } from '../BackgroundAnimation/backgroundCss';
 
-
 const CreateBotComponent: React.FC = () => {
   const [step, setStep] = useState(1);
   const [botName, setBotName] = useState('');
@@ -32,8 +31,8 @@ const CreateBotComponent: React.FC = () => {
   );
   //
   const viewerRef = useRef(null);
-  const imgViewerRef =  useRef(null);
-  const [botIdentity, setBotIdentity] = useState("");
+  const imgViewerRef = useRef(null);
+  const [botIdentity, setBotIdentity] = useState('');
   const [knowledgeBase, setKnowledgeBase] = useState(['Assistant.pdf']);
   const [botLimit, setBotLimit] = useState<any>(200);
   // const [botIdentity, setBotIdentity] = useState('sales');
@@ -69,7 +68,7 @@ const CreateBotComponent: React.FC = () => {
     const file = event.target.files?.[0];
     if (
       file &&
-      file.size <= 2 * 1024 * 1024 
+      file.size <= 2 * 1024 * 1024
       // file.type === 'application/pdf'
     ) {
       setSelectedFile(file);
@@ -86,7 +85,7 @@ const CreateBotComponent: React.FC = () => {
     setImageName(file.name);
     if (
       file &&
-      file.size <= 2 * 1024 * 1024 
+      file.size <= 2 * 1024 * 1024
       // file.type === 'application/pdf'
     ) {
       setBase64Image(file);
@@ -193,7 +192,6 @@ const CreateBotComponent: React.FC = () => {
       return;
     }
 
-    const docId = uuidv4();
     const formData = new FormData();
     formData.append('botName', botName);
     formData.append('botTone', botTone);
@@ -207,11 +205,11 @@ const CreateBotComponent: React.FC = () => {
     formData.append('wordLimitPerMessage', botLimit);
     formData.append('docName', filename);
     formData.append('docType', knowledgeBase.length > 0 ? 'pdf' : '');
-    formData.append('docId', docId);
+    // formData.append('docId', docId);
     formData.append('customBotImage', base64Image);
     // setBase64Image
     formData.append('userId', userId);
-    formData.append('botURL', imageSrc)
+    formData.append('botURL', imageSrc);
     if (selectedFile) {
       formData.append('file', selectedFile);
     }
@@ -241,8 +239,8 @@ const CreateBotComponent: React.FC = () => {
     {
       imageUrl: `https://messages-dump.s3.ap-south-1.amazonaws.com/botwot_assets/bot_logo4.png`,
       iconType: 'bot5',
-    }
-  ]
+    },
+  ];
   const handleBotSampleClick = (item: any) => {
     setImageSrc(item?.imageUrl);
 
@@ -341,7 +339,7 @@ const CreateBotComponent: React.FC = () => {
           <div className="relative mb-4">
             <div className="flex items-center bg-gray-800 p-2 w-full rounded-[12px] absolute ">
               <span className="mr-2">
-              {imageName?.length ? imageName : 'Choose File'}
+                {imageName?.length ? imageName : 'Choose File'}
               </span>
               <button
                 onClick={() => {
@@ -364,7 +362,7 @@ const CreateBotComponent: React.FC = () => {
           </div>
         </div>
       </div>
-    
+
       <div className="mb-4">
         <label className="block text-gray-200 mb-2">Bot Greeting Message</label>
         <input
@@ -454,8 +452,8 @@ const CreateBotComponent: React.FC = () => {
         </div>
       </div>
       <div className="mb-4">
-      <label className="block text-gray-200 mb-2">
-          Bot limit per Message 
+        <label className="block text-gray-200 mb-2">
+          Bot limit per Message
         </label>
         <input
           min={200}
@@ -561,7 +559,6 @@ const CreateBotComponent: React.FC = () => {
                   {/* <div className="my-auto p-5 text-white">
                     <ZoomOutMapIcon style={{ color: 'white' }} />
                   </div> */}
-
                 </div>
                 {imageSrc ? (
                   <Image

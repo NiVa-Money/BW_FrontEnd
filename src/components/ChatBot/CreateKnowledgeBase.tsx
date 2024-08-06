@@ -23,7 +23,7 @@ const CreateKnowledgeBase: React.FC = () => {
   ) => {
     const file:any = event.target.files?.[0];
 
-    setDocName(file.name);
+    setDocName(file?.name ?? '');
     if (
       file &&
       file.size <= 2 * 1024 * 1024 &&

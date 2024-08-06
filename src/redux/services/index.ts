@@ -149,7 +149,7 @@ export const getUserBotProfileService = async (payload: any) => {
 export const deleteBotProfileService = async (payload: any) => {
   try {
     const response = await axiosInstance.put(
-      `user/deleteBotProfile/?botId=${payload.botId}&userId=${payload?.userId}`,
+      `user/deleteBotProfile?botId=${payload.botId}&userId=${payload?.userId}`,
       {}
     );
     return response.data;

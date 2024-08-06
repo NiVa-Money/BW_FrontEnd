@@ -26,7 +26,7 @@ interface KnowledgeBaseCardProps {
   color?: string;
   createdAt: string;
   docName: string; // Add docName here
-  botURL: string;  
+  botURL: string;
 }
 
 const KnowledgeBase: React.FC = () => {
@@ -43,6 +43,10 @@ const KnowledgeBase: React.FC = () => {
   );
   const dispatch = useDispatch();
   const pathName = useSelector((state: RootState) => state.root?.pathName);
+  const knowledgeBaseRedux = useSelector(
+    (state: RootState) => state.KnowledgeBase?.create?.loader
+  );
+
   const [userIdLocal, setUserIdLocal] = useState(userId);
   useEffect(() => {
     if (userId?.length) {
@@ -51,10 +55,10 @@ const KnowledgeBase: React.FC = () => {
   }, [userId]);
   // Fetch knowledge base data
   useEffect(() => {
-    if (userIdLocal || pathName === '/knowledgeBase') {
+    if (userIdLocal || pathName === '/knowledgeBase' || !knowledgeBaseRedux) {
       dispatch(getUserKnowledgeBaseAction(userIdLocal));
     }
-  }, [userIdLocal, pathName, dispatch]);
+  }, [userIdLocal, pathName, dispatch, knowledgeBaseRedux]);
 
   // Set local state with Redux state
   useEffect(() => {
@@ -100,7 +104,7 @@ const KnowledgeBase: React.FC = () => {
           My Knowledge Base
         </h1>
         <button className="flex gap-2 justify-center px-14 py-3 text-xl font-medium text-gray-100 bg-[#3F2181] rounded-[60px]">
-          <Link href="/createKnowledgeBase" className="flex px-8 py-1 gap-2" >
+          <Link href="/createKnowledgeBase" className="flex px-8 py-1 gap-2">
             <span>Create Knowledge Base</span>
           </Link>
           <FontAwesomeIcon icon={faPlus} className="w-[25px] h-[25px]" />
