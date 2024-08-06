@@ -68,9 +68,15 @@ const NewChatComponent: React.FC = () => {
     setBotId(botId);
     setIsBotProfileOpen(!isBotProfileOpen);
   };
-  
+
   useEffect(() => {
-    dispatch(createPaymentRequest({ userId, currency: 'USD', paymentGateway: 'paypal' }));
+    dispatch(
+      createPaymentRequest({
+        userId,
+        currency: 'USD',
+        paymentGateway: 'paypal',
+      })
+    );
   }, []);
 
   const getChatHistory = () => {
@@ -249,95 +255,99 @@ const NewChatComponent: React.FC = () => {
         </svg>
       </div>
 
-      <div className="flex gap-1 max-md:flex-wrap max-md:max-w-full mb-5 z-10">
-        <div className="flex flex-col self-stretch relative">
-          <div
-            className="flex gap-2.5 justify-center p-2.5 text-xl font-medium text-white rounded-t-lg cursor-pointer"
-            onClick={toggleBotProfile}
-          >
-            <div>Bot Profile</div>
-            <img
-              loading="lazy"
-              src="https://cdn.builder.io/api/v1/image/assets/TEMP/ecfab022e56ef6ff0a58045a291327eda3e871d2c6c2576eee117363bc12ecf0?apiKey=555c811dd3f44fc79b6b2689129389e8&"
-              className={`shrink-0 aspect-square w-[30px] transition-transform duration-300 ${
-                isBotProfileOpen ? 'rotate-180' : ''
-              }`}
-              alt="Bot Profile"
-            />
-          </div>
-          <div
-            className="flex w-[8.5vw] h-[60px] justify-center items-center py-2.5 bg-[#1E1533] overflow-y-scroll  rounded p-1 border-gray-500 border-solid"
-            // onClick={toggleBotProfile}
-          >
-            <div>{selectedBotName}</div>
-          </div>
-          {isBotProfileOpen && (
-            <div className="flex mt-2  w-[8.5vw] h-[25vh] overflow-y-auto flex-col py-2 text-base tracking-wide leading-6 bg-[#1E1533] rounded-b-lg shadow max-w-[280px] absolute top-full left-0 right-0 z-10">
-              {botProfiles?.botProfiles?.data?.map((bot: any, index: any) => (
-                <div
-                  key={index}
-                  className={`mb-2 flex justify-center items-center cursor-pointer ${
-                    activeBotIndex === index ? 'bg-[#3E3556]' : ''
-                  }`}
-                  onClick={() => handleBotClick(index, bot._id, bot.botName)}
-                >
-                  <div className="flex justify-center items-center px-2 py-2 text-white">
-                    {bot.botName}
-                  </div>
-                  {/* <div className="mt-2 px-3 text-gray-400">MarketBot</div> */}
+      <div className="flex flex-wrap gap-1 mb-5 z-10">
+        {/* Commented out section for Chat History */}
+        {/* 
+  <div className="flex flex-col self-stretch relative w-full md:w-auto">
+    <div
+      className="flex gap-2.5 justify-center p-2.5 text-xl font-medium bg-[#2D2640] text-white rounded-t-lg cursor-pointer"
+      onClick={toggleChatHistory}
+    >
+      <div>
+        <button onClick={getChatHistory}>Chat History</button>
+      </div>
+      <img
+        loading="lazy"
+        src="https://cdn.builder.io/api/v1/image/assets/TEMP/ecfab022e56ef6ff0a58045a291327eda3e871d2c6c2576eee117363bc12ecf0?apiKey=555c811dd3f44fc79b6b2689129389e8&"
+        className={`shrink-0 aspect-square w-[30px] transition-transform duration-300 ${
+          isChatHistoryOpen ? 'rotate-180' : ''
+        }`}
+        alt="Chat History"
+      />
+    </div>
+    {isChatHistoryOpen && (
+      <div className="flex w-full">
+        <div className="flex flex-col py-2 text-base tracking-wide leading-6 bg-[#1E1533] rounded-b-lg shadow max-w-[280px] absolute top-full left-0 right-0 z-10">
+          {allSession?.data?.sessions?.map(
+            (session, index) => (
+              <div className="px-3 py-2 text-white" key={index}>
+                <div>
+                  <button onClick={() => {
+                    getSession(session._id)
+                    setSessionId(session._id)
+                  }}>
+                    session Chat {index+1}
+                  </button>
                 </div>
-              ))}
-            </div>
+              </div>
+            )
           )}
         </div>
-        <div className="flex flex-col self-stretch relative">
-          {/* <div
-            className="flex gap-2.5 justify-center p-2.5 text-xl font-medium bg-[#2D2640] text-white rounded-t-lg cursor-pointer"
-            onClick={toggleChatHistory}
-          >
-            <div>
-              <button onClick={getChatHistory}>Chat History</button>
+      </div>
+    )}
+  </div>
+  */}
+
+        <div className="flex gap-3 flex-wrap md:flex-nowrap w-full">
+          <div className="flex flex-col self-stretch relative w-full md:w-auto">
+            <div
+              className="flex gap-2.5 justify-center p-2.5 text-xl font-medium text-white rounded-t-lg cursor-pointer"
+              onClick={toggleBotProfile}
+            >
+              <div>Bot Profile</div>
+              <img
+                loading="lazy"
+                src="https://cdn.builder.io/api/v1/image/assets/TEMP/ecfab022e56ef6ff0a58045a291327eda3e871d2c6c2576eee117363bc12ecf0?apiKey=555c811dd3f44fc79b6b2689129389e8&"
+                className={`shrink-0 aspect-square w-[30px] transition-transform duration-300 ${
+                  isBotProfileOpen ? 'rotate-180' : ''
+                }`}
+                alt="Bot Profile"
+              />
             </div>
-            <img
-              loading="lazy"
-              src="https://cdn.builder.io/api/v1/image/assets/TEMP/ecfab022e56ef6ff0a58045a291327eda3e871d2c6c2576eee117363bc12ecf0?apiKey=555c811dd3f44fc79b6b2689129389e8&"
-              className={`shrink-0 aspect-square w-[30px] transition-transform duration-300 ${
-                isChatHistoryOpen ? 'rotate-180' : ''
-              }`}
-              alt="Chat History"
-            />
-          </div>
-          {isChatHistoryOpen && (
-            <div className="flex w-full">
-              <div className="flex flex-col py-2 text-base tracking-wide leading-6 bg-[#1E1533] rounded-b-lg shadow max-w-[280px] absolute top-full left-0 right-0 z-10">
-                {allSession?.data?.sessions?.map(
-                  (session: any, index: number) => (
-                    <div className="px-3 py-2 text-white" key={index}>
-                      <div><button onClick={()=>{
-                        getSession(session._id)
-                        setSessionId(session._id)
-                      }}>session Chat {index+1}</button></div>
+            <div className="flex w-full md:w-[8.5vw] h-[60px] justify-center items-center py-2.5 bg-[#1E1533] overflow-y-scroll rounded p-1 border-gray-500 border-solid">
+              <div>{selectedBotName}</div>
+            </div>
+            {isBotProfileOpen && (
+              <div className="flex mt-2 w-full md:w-[8.5vw] h-[25vh] overflow-y-auto flex-col py-2 text-base tracking-wide leading-6 bg-[#1E1533] rounded-b-lg shadow max-w-[280px] absolute top-full left-0 right-0 z-10">
+                {botProfiles?.botProfiles?.data?.map((bot: any, index: any) => (
+                  <div
+                    key={index}
+                    className={`mb-2 flex justify-center items-center cursor-pointer ${
+                      activeBotIndex === index ? 'bg-[#3E3556]' : ''
+                    }`}
+                    onClick={() => handleBotClick(index, bot._id, bot.botName)}
+                  >
+                    <div className="flex justify-center items-center px-2 py-2 text-white">
+                      {bot.botName}
                     </div>
-                  )
-                )}
+                  </div>
+                ))}
               </div>
-            </div>
-          )} */}
-        </div>
-        <div className="flex gap-3 flex-1 justify-between">
-          <div className="flex w-[10vw] text-center flex-col bg-transparent py-2.5 px-1 rounded-xl border border-white border-solid">
+            )}
+          </div>
+          <div className="flex w-full md:w-[10vw] text-center flex-col bg-transparent py-2.5 px-1 rounded-xl border border-white border-solid">
             <div className="text-base text-gray-300">Number of bots:</div>
             <div className="flex items-center justify-center mt-2.5 text-3xl font-semibold text-white">
               {botProfiles?.botProfiles?.data?.length}
             </div>
           </div>
-          <div className="flex w-[10vw] text-center flex-col py-2.5 bg-transparent px-1 rounded-xl border border-white border-solid">
+          <div className="flex w-full md:w-[10vw] text-center flex-col py-2.5 bg-transparent px-1 rounded-xl border border-white border-solid">
             <div className="text-base text-gray-300">Messages left:</div>
             <div className="flex items-center justify-center mt-2.5 text-3xl font-semibold text-white">
               {messagesLeft}
             </div>
           </div>
-          <div className="flex w-[10vw] text-center flex-col py-2.5 bg-transparent px-1 whitespace-nowrap rounded-xl border border-white border-solid">
+          <div className="flex w-full md:w-[10vw] text-center flex-col py-2.5 bg-transparent px-1 whitespace-nowrap rounded-xl border border-white border-solid">
             <div className="text-base text-gray-300">Membership:</div>
             <div className="flex items-center justify-center mt-2.5 text-3xl font-semibold text-white">
               Basic
@@ -345,6 +355,7 @@ const NewChatComponent: React.FC = () => {
           </div>
         </div>
       </div>
+
       {/* <div className="mt-80 w-full max-w-[930px] max-md:mt-10 max-md:max-w-full">
         <div className="flex gap-5 max-md:flex-col max-md:gap-0">
           <div className="flex flex-col w-6/12 max-md:ml-0 max-md:w-full">
@@ -416,7 +427,7 @@ const NewChatComponent: React.FC = () => {
                             ? 'p-2.5 bg-[#5D39AD] rounded-xl'
                             : 'p-2.5 bg-[#2D2640] rounded-xl chat-box-size'
                         }`} */}
-                        {/* // dangerouslySetInnerHTML={{ __html: formattedText }}
+                      {/* // dangerouslySetInnerHTML={{ __html: formattedText }}
                       /> */}
                       {/* <ReactTyped strings={[formattedText]} typeSpeed={1000} /> */}
                       {/* </motion.div> */}
@@ -442,7 +453,7 @@ const NewChatComponent: React.FC = () => {
                           <ReactTyped
                             strings={[formattedText]}
                             typeSpeed={5}
-                            showCursor={false} 
+                            showCursor={false}
                           />
                         </div>
                       ) : (
