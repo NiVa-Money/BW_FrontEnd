@@ -7,6 +7,7 @@ import { useRouter } from 'next/navigation';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { v4 as uuidv4 } from 'uuid';
+import { RootState } from '@/redux/configureStore';
 
 const CreateKnowledgeBase: React.FC = () => {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
@@ -22,7 +23,7 @@ const CreateKnowledgeBase: React.FC = () => {
   ) => {
     const file = event.target.files?.[0];
 
-    setDocName(file.name);
+    setDocName(file?.name ?? '');
     if (
       file &&
       file.size <= 2 * 1024 * 1024 &&
