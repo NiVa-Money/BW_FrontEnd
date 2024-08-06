@@ -441,7 +441,7 @@ const NewChatComponent: React.FC = () => {
                         >
                           <ReactTyped
                             strings={[formattedText]}
-                            typeSpeed={10}
+                            typeSpeed={5}
                             showCursor={false} 
                           />
                         </div>

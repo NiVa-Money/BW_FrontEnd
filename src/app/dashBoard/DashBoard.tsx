@@ -25,11 +25,8 @@ const DashBoard: React.FC = () => {
   );
 
   React.useEffect(() => {
-   
   }, [userId]);
-
-
-
+  
   const userMetricData = useSelector(
     (state: RootState) => state?.root?.userMetric?.data
   );
@@ -46,22 +43,12 @@ const DashBoard: React.FC = () => {
   }, [userDataRedux]);
 
   React.useEffect(() => {
-
-
-
     if (userEmail?.length || pathName === '/profile' && !profileData) {
-
-
-
       dispatch(getUserProfileAction(userEmail));
-
     }
   }, [userEmail, pathName]);
 
   React.useEffect(() => {
-
-
-
     if (userEmail?.length && !profileData) {
       dispatch(getUserProfileAction(userEmail));
     }

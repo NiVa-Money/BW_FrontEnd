@@ -32,9 +32,10 @@ const CreateBotComponent: React.FC = () => {
   );
   //
   const viewerRef = useRef(null);
+  const imgViewerRef =  useRef(null);
   const [botIdentity, setBotIdentity] = useState("");
   const [knowledgeBase, setKnowledgeBase] = useState(['Assistant.pdf']);
-  const [botLimit, setBotLimit] = useState<any>('50-100');
+  const [botLimit, setBotLimit] = useState<any>(200);
   // const [botIdentity, setBotIdentity] = useState('sales');
   const [botSmartnessVal, setbotSmartnessVal] = useState<any>(false);
   const [showColorPicker, setShowColorPicker] = useState<any>(false);
@@ -50,7 +51,7 @@ const CreateBotComponent: React.FC = () => {
     'How do I cancel my subscription?',
   ];
   const [imageSrc, setImageSrc] = useState('');
-  const [imagename, setImageName] = useState('');
+  const [imageName, setImageName] = useState('');
   const [filename, setFileName] = useState('');
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const dispatch = useDispatch();
@@ -81,22 +82,32 @@ const CreateBotComponent: React.FC = () => {
 
   const handleFileUpload = (event: any) => {
     const file = event.target.files[0];
-    console.log('img', file);
+    // console.log('img', file);
     setImageName(file.name);
-    if (file) {
-      const reader: any = new FileReader();
-      reader.onloadend = () => {
-        const base64String = reader?.result?.split(',')[1]; // Remove the "data:image/png;base64," part
-        setBase64Image(base64String);
-        console.log('base64String', base64String);
-      };
-      reader.readAsDataURL(file);
+    if (
+      file &&
+      file.size <= 2 * 1024 * 1024 
+      // file.type === 'application/pdf'
+    ) {
+      setBase64Image(file);
+      // await handleSave()
+    } else {
+      alert('File must be less than 2MB');
     }
+    // if (file) {
+    //   const reader: any = new FileReader();
+    //   reader.onloadend = () => {
+    //     const base64String = reader?.result?.split(',')[1]; // Remove the "data:image/png;base64," part
+    //     setBase64Image(base64String);
+    //     console.log('base64String', base64String);
+    //   };
+    //   reader.readAsDataURL(file);
+    // }
   };
 
   const handleDocumentUpload = (event: any) => {
     const file = event.target.files[0];
-    setFileName(file.name);
+    // setFileName(file.name);
   };
   const validateStep1 = () => {
     if (!botName) {
@@ -195,6 +206,8 @@ const CreateBotComponent: React.FC = () => {
     formData.append('docName', filename);
     formData.append('docType', knowledgeBase.length > 0 ? 'pdf' : '');
     formData.append('docId', docId);
+    formData.append('customBotImage', base64Image);
+    // setBase64Image
     formData.append('userId', userId);
     formData.append('botURL', imageSrc)
     if (selectedFile) {
@@ -319,30 +332,36 @@ const CreateBotComponent: React.FC = () => {
           <div className="text-red-500 mb-4">{error}</div>
         )}
       </div>
-      <div className="mb-4">
+      <div className="flex flex-col mb-4">
         <label className="block text-gray-200 mb-2">Custom Bot Profile</label>
-        <div className="relative mb-4"></div>
-        <div className="flex items-start">
-          <input
-            type="file"
-            onChange={handleFileUpload}
-            ref={viewerRef}
-            accept="image/*"
-            id="file-upload"
-            className="rounded-[70px] bg-[#3F2181] mt-0  text-white px-4 py-2 flex justify-center cursor-pointer"
-            disabled
-          />
-          <div className='mt-3 ml-3'>Comming soon ...</div>
-          {/* <button
-            disabled
-            className="rounded-[70px] bg-[#3F2181] mt-0  text-white px-4 py-2 flex justify-center"
-          >
-            <span>Upload</span>
-            <FileUploadIcon />
-          </button> */}
-          {/* <span className="text-white mb-2 ml-6">Coming Soon..</span> */}
+        <div className="mb-4">
+          <div className="relative mb-4">
+            <div className="flex items-center bg-gray-800 p-2 w-full rounded-[12px] absolute ">
+              <span className="mr-2">
+              {imageName?.length ? imageName : 'Choose File'}
+              </span>
+              <button
+                onClick={() => {
+                  setImageName('');
+                  setImageSrc('');
+                }}
+                className="ml-auto text-white"
+              >
+                ×
+              </button>
+            </div>
+            <input
+              type="file"
+              onChange={handleFileUpload}
+              ref={imgViewerRef}
+              accept="image/*"
+              id="file-upload-image"
+              className="absolute top-[0] opacity-0 -[12px] cursor-pointer"
+            />
+          </div>
         </div>
       </div>
+    
       <div className="mb-4">
         <label className="block text-gray-200 mb-2">Bot Greeting Message</label>
         <input
@@ -431,24 +450,17 @@ const CreateBotComponent: React.FC = () => {
         </div>
       </div>
       <div className="mb-4">
-        <label className="block text-gray-200 mb-2">
-          Bot limit per Message
+      <label className="block text-gray-200 mb-2">
+          Bot limit per Message 
         </label>
-        {/* <input
+        <input
+          min={200}
+          max={700}
           type="number"
           value={botLimit}
           onChange={(e) => setBotLimit(Number(e.target.value))}
           className="w-full bg-[#171029] text-white p-2 rounded-[12px]"
-        /> */}
-        <select
-          value={botLimit}
-          onChange={(e) => setBotLimit(Number(e.target.value))}
-          className="w-full bg-[#171029] text-white p-2 rounded-[12px]"
-        >
-          <option value={50}>50-100</option>
-          <option value={100}>100-200</option>
-          <option value={200}>200-400</option>
-        </select>
+        />
       </div>
       {/* <div className="mb-4">
         <label className="block text-gray-200 mb-2">Bot Identity</label>
