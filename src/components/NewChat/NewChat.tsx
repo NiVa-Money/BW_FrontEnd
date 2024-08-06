@@ -292,11 +292,11 @@ const NewChatComponent: React.FC = () => {
   </div>
   */}
 
-        <div className="flex gap-3 flex-wrap md:flex-nowrap w-full">
+        <div className="flex gap-3 flex-wrap md:flex-nowrap w-full z-1">
           <div className="flex flex-col self-stretch relative w-full md:w-auto">
             <div
               className="flex gap-2.5 justify-center p-2.5 text-xl font-medium text-white rounded-t-lg cursor-pointer"
-              onClick={toggleBotProfile}
+              // onClick={toggleBotProfile}
             >
               <div>Bot Profile</div>
               <img
@@ -306,13 +306,14 @@ const NewChatComponent: React.FC = () => {
                   isBotProfileOpen ? 'rotate-180' : ''
                 }`}
                 alt="Bot Profile"
+                onClick={toggleBotProfile}
               />
             </div>
-            <div className="flex w-full md:w-[8.5vw] h-[60px] justify-center items-center py-2.5 bg-[#1E1533] overflow-y-scroll rounded p-1 border-gray-500 border-solid">
+            <div className="flex h-[60px] justify-center items-center py-2.5 bg-[#1E1533] overflow-y-scroll rounded p-1 border-gray-500 border-solid">
               <div>{selectedBotName}</div>
             </div>
             {isBotProfileOpen && (
-              <div className="flex mt-2 w-full md:w-[8.5vw] h-[25vh] overflow-y-auto flex-col py-2 text-base tracking-wide leading-6 bg-[#1E1533] rounded-b-lg shadow max-w-[280px] absolute top-full left-0 right-0 z-10">
+              <div className="flex mt-2 h-[25vh] overflow-y-auto flex-col py-2 text-base tracking-wide leading-6 bg-[#1E1533] rounded-b-lg shadow absolute top-full left-0 right-0 z-10">
                 {botProfiles?.botProfiles?.data?.map((bot: any, index: any) => (
                   <div
                     key={index}
