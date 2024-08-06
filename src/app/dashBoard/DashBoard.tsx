@@ -127,7 +127,7 @@ const DashBoard: React.FC = () => {
             <span className="text-white text-lg">Coming Soon</span>
           </div>
         </div>
-        <div className="flex w-full md:w-[20%] h-full flex-col gap-4 m-1">
+        <div className="flex w-full md:w-[20%] h-[40vh] md:h-[98%] flex-col gap-4 m-1">
           <div className="relative bg-[#1E1935] w-full h-full rounded-2xl p-4 flex flex-col items-center opacity-50">
             <div className="h-[89%] w-[10%] bg-gradient-to-t from-red-500 via-yellow-500 to-green-500 rounded-full relative">
               <div className="absolute -right-6 top-0">😄</div>
