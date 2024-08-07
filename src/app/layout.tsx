@@ -74,12 +74,10 @@ export default function RootLayout({
             <div className="flex flex-grow relative">
               <div className="">
                 {/* Toggle button to show/hide the sidebar */}
-                <button
-                  className="absolute top-4 left-0 m-4 p-2 w-8 h-8 bg-[rgb(192,13,200)] text-white rounded-full z-10 flex items-center justify-center"
+                <SidebarToggleButton
+                  isVisible={isSidebarVisible}
                   onClick={() => setIsSidebarVisible(!isSidebarVisible)}
-                >
-                  {isSidebarVisible ? 'X' : '✓'}
-                </button>
+                />
 
                 {/* Conditionally render the sidebar */}
                 {isSidebarVisible && (
@@ -98,6 +96,22 @@ export default function RootLayout({
     </html>
   );
 }
+
+const SidebarToggleButton = ({ isVisible, onClick }: any) => {
+  // Check if the current route is "/home" or "/botSession"
+  const pathname = useSelector((state: RootState) => state.root?.pathName);
+  const shouldShowButton = pathname !== '/home' && pathname !== '/botSession';
+  return (
+    shouldShowButton && (
+      <button
+        className="absolute top-4 left-0 m-4 p-2 w-8 h-8 bg-[rgb(192,13,200)] text-white rounded-full z-10 flex items-center justify-center"
+        onClick={onClick}
+      >
+        {isVisible ? 'X' : '✓'}
+      </button>
+    )
+  );
+};
 
 // Move ConditionalHeader outside of RootLayout
 function ConditionalHeader({
