@@ -27,7 +27,7 @@ export default function RootLayout({
     '/profile',
     '/memberShip',
     '/faq',
-    '/dashBoard',
+    '/dashboard',
     '/login',
     '/createKnowledgeBase',
     '/newchat',
@@ -43,7 +43,7 @@ export default function RootLayout({
     '/profile',
     '/memberShip',
     '/faq',
-    '/dashBoard',
+    '/dashboard',
     '/login',
     '/createKnowledgeBase',
     '/newchat',
@@ -78,7 +78,7 @@ export default function RootLayout({
                   className="absolute top-4 left-0 m-4 p-2 w-8 h-8 bg-[rgb(192,13,200)] text-white rounded-full z-10 flex items-center justify-center"
                   onClick={() => setIsSidebarVisible(!isSidebarVisible)}
                 >
-                  {isSidebarVisible ? 'X':'✓'}
+                  {isSidebarVisible ? 'X' : '✓'}
                 </button>
 
                 {/* Conditionally render the sidebar */}

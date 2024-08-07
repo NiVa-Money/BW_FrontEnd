@@ -2,11 +2,14 @@ import axiosInstance from '@/utils/axiosConfig';
 //for sign up
 export const signUpUserData = async (payload: any) => {
   try {
-    const response = await axiosInstance.post('/user/signup/otherEmail', payload);
+    const response = await axiosInstance.post(
+      '/user/signup/otherEmail',
+      payload
+    );
     return response.data;
-  } catch (error:any) {
+  } catch (error: any) {
     console.error('Error signing up user:', error);
-    
+
     throw new Error(`${error?.response?.data?.error}`);
   }
 };
@@ -15,13 +18,12 @@ export const LoginUserData = async (payload: any) => {
   try {
     const response = await axiosInstance.post('/user/login', payload);
     return response.data;
-  } catch (error:any) {
+  } catch (error: any) {
     console.error('Error signing up user:', error);
-    
+
     throw new Error(`${error?.response?.data?.error}`);
   }
 };
-
 
 export const signUpGoogleUserData = async (payload: any) => {
   try {
@@ -29,19 +31,21 @@ export const signUpGoogleUserData = async (payload: any) => {
     return response.data;
   } catch (error) {
     console.error('Error signing up user:', error);
-    
+
     throw new Error('Error signing up user');
   }
 };
 
-
 export const verifyOtpUserData = async (payload: any) => {
   try {
-    const response = await axiosInstance.post('/user/signup/verify/otherEmail', payload);
+    const response = await axiosInstance.post(
+      '/user/signup/verify/otherEmail',
+      payload
+    );
     return response.data;
   } catch (error) {
     console.error('Error signing up user:', error);
-    
+
     throw new Error('Error in verifying otp');
   }
 };
@@ -72,7 +76,7 @@ export const fetchUserData = async (userEmail: string) => {
 export const fetchUserMetrics = async (payload: any) => {
   try {
     const user_id = localStorage.getItem('user_id');
-    console.log('user_id' , payload)
+    console.log('user_id', payload);
     const response = await axiosInstance.get(`user/metrics/${payload}`, {});
     console.log('User metrics:', response.data);
     return response.data;
@@ -87,7 +91,7 @@ export const fetchUserMetrics = async (payload: any) => {
 export const getUserProfileService = async (payload: any) => {
   try {
     const response = await axiosInstance.get(
-      `user/getUserProfile/?emailId=${payload}`,
+      `user/getUserProfile?emailId=${payload}`,
       {}
     );
     console.log('User profile:', response.data);
@@ -131,7 +135,7 @@ export const editUserBotProfileService = async (payload: any) => {
 export const getUserBotProfileService = async (payload: any) => {
   try {
     const response = await axiosInstance.get(
-      `user/getUserBotProfiles/?userId=${payload}`,
+      `user/getUserBotProfiles?userId=${payload}`,
       {}
     );
 
@@ -164,10 +168,10 @@ export const deleteBotProfileService = async (payload: any) => {
 
 export const exportBotProfileService = async (payload: any) => {
   try {
-    const response = await axiosInstance.post(
-      "/user/widget/export/",
-      {botId:payload.botId,userId:payload?.userId}
-    );
+    const response = await axiosInstance.post('/user/widget/export/', {
+      botId: payload.botId,
+      userId: payload?.userId,
+    });
     return response.data;
   } catch (error: any) {
     console.error(
@@ -177,7 +181,6 @@ export const exportBotProfileService = async (payload: any) => {
     throw new Error('Error exporting bot');
   }
 };
-
 
 //create Knowledge base
 
@@ -198,7 +201,7 @@ export const createKnowledgeBaseService = async (payload: any) => {
 export const getUserKnowledgeBaseService = async (payload: any) => {
   try {
     const response = await axiosInstance.get(
-      `user/getUserKnowledgeBase/?userId=${payload}`,
+      `user/getUserKnowledgeBase?userId=${payload}`,
       {}
     );
     return response.data;
@@ -250,7 +253,7 @@ export const getUserChatService = async (payload: any) => {
   try {
     const response = await axiosInstance.post('user/sessionChat', payload);
     return response.data;
-  } catch (error:any) {
+  } catch (error: any) {
     console.error('Error signing up user:', error.response.data.error);
     // 2;
     throw new Error(`${error?.response?.data?.error}`);
@@ -283,21 +286,19 @@ export const getAdvanceFeatureService = async (payload: any) => {
   }
 };
 
-
-export const processPayPalPaymentService = async (payload : any) => {
+export const processPayPalPaymentService = async (payload: any) => {
   try {
     const response = await axiosInstance.post(`/payment/create`, payload);
-    console.log('response of payment' , payload.response.data)
+    console.log('response of payment', payload.response.data);
     return response.data;
   } catch (error) {
     throw new Error('Payment processing failed');
   }
 };
 
-
 export const capturePaymentService = async (_id: string) => {
-  console.log('response of capture' , _id)
+  console.log('response of capture', _id);
   const response = await axiosInstance.post(`/payment/capture/${_id}`);
-  console.log('response of capture' , response.data)
+  console.log('response of capture', response.data);
   return response.data;
 };

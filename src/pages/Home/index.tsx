@@ -25,28 +25,28 @@ const LandingPage: React.FC = () => {
   const dispatch = useDispatch();
   const router = useRouter();
 
-  useEffect(()=>{
-    if(GLoginData?.data?.success){
+  useEffect(() => {
+    if (GLoginData?.data?.success) {
       localStorage.setItem('user_id', GLoginData?.data?.user_id);
       localStorage.setItem('token', GLoginData?.data?.token);
-      if(GLoginData?.data?.success){
-        router.push('/dashBoard')
+      if (GLoginData?.data?.success) {
+        router.push('/dashboard');
       }
     }
-  },[GLoginData])
+  }, [GLoginData]);
 
   useEffect(() => {
     if (userEmail?.length && !googleVerifyRedux) {
       dispatch(verifyUserDataAction(userEmail));
     }
   }, [userEmail]);
-  
+
   useEffect(() => {
     if (userEmail?.length && !googleVerifyRedux) {
       dispatch(verifyUserDataAction(userEmail));
     }
     if (resOtp?.data?.success || userData?.token) {
-     router.replace('/dashBoard');
+      router.replace('/dashboard');
     } else {
       if (googleVerifyRedux) {
         const [firstName, lastName] = userRedux?.displayName.split(' ');
@@ -56,18 +56,18 @@ const LandingPage: React.FC = () => {
           lastName: lastName,
           emailId: email,
           mobileNo: '7779797977',
-          "password": "password"
+          password: 'password',
         };
         dispatch(signUpDataAction(payload));
       }
     }
   }, [userVerify]);
 
-  useEffect(()=>{
+  useEffect(() => {
     if (userData?.token) {
-        router.replace('/dashBoard');
-    } 
-  },[userData])
+      router.replace('/dashboard');
+    }
+  }, [userData]);
 
   return (
     <>
