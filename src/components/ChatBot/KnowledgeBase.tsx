@@ -46,6 +46,9 @@ const KnowledgeBase: React.FC = () => {
   const knowledgeBaseRedux = useSelector(
     (state: RootState) => state.KnowledgeBase?.create?.loader
   );
+  const knowledgeBaseDataRedux = useSelector(
+    (state: RootState) => state.KnowledgeBase?.user?.loader
+  );
   const knowledgeBaseDeleteRedux = useSelector(
     (state: RootState) => state.KnowledgeBase?.delete?.loader
   );
@@ -64,17 +67,20 @@ const KnowledgeBase: React.FC = () => {
       !knowledgeBaseRedux ||
       !knowledgeBaseDeleteRedux
     ) {
-      console.log('userIdLocal', userIdLocal);
       dispatch(getUserKnowledgeBaseAction(userIdLocal));
     }
   }, [userIdLocal, pathName, dispatch, knowledgeBaseRedux]);
 
   // Set local state with Redux state
   useEffect(() => {
-    if (knowledgeBaseData && knowledgeBaseData.length) {
+    setKnowledgebase(knowledgeBaseData);
+  }, [knowledgeBaseData, knowledgeBaseDeleteRedux, knowledgeBaseDataRedux]);
+  useEffect(() => {
+    if (!knowledgeBaseDeleteRedux) {
+      dispatch(getUserKnowledgeBaseAction(userId));
       setKnowledgebase(knowledgeBaseData);
     }
-  }, [knowledgeBaseData]);
+  }, [knowledgeBaseDeleteRedux]);
 
   // Handle delete action
   const handleDelete = (index: number) => {
@@ -92,6 +98,7 @@ const KnowledgeBase: React.FC = () => {
     if (docIdToDelete && userId) {
       dispatch(deleteUserKnowledgeBaseAction({ docId: docIdToDelete, userId }));
       setIsModalOpen(false);
+      // dispatch(getUserKnowledgeBaseAction(userId ));
     }
   };
 
