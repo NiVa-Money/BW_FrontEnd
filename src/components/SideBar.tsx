@@ -34,7 +34,7 @@ interface SidebarItemProps {
 }
 
 const DashboardItem: SidebarItemProps = {
-  path: '/dashboard',
+  path: '/dashBoard',
   icon: 'fa-gauge-high',
   text: 'Dashboard',
   hasDropdown: false,
@@ -107,7 +107,7 @@ const SideBar: React.FC = () => {
     <div className="w-64 h-[100%] p-4 bg-[#0B031E] flex flex-col h-screen relative">
       {/* <BackgroundCss/> */}
       <Link
-        href={'/dashboard'}
+        href={'/dashBoard'}
         className="flex justify-center w-full mt-[10px] mb-[20px]"
       >
         <Image src={mainLogo.src} alt="logo" width={90} height={80} />
