@@ -57,7 +57,7 @@ const CreateBotComponent: React.FC = () => {
   const [textVal, setTextVal] = useState('');
   const [error, setError] = useState('');
   const [base64Image, setBase64Image] = useState('');
-
+  
   const [botIconType, setBotIconType] = useState('second');
   const router = useRouter();
   // Function to handle file upload
@@ -114,10 +114,12 @@ const CreateBotComponent: React.FC = () => {
       return false;
     }
 
-    if (!imageSrc) {
-      setError('Please select a bot icon.');
-      return false;
-    }
+
+    if (!imageSrc && !base64Image) {
+    setError('Please select a bot profile or upload a custom bot profile.');
+    return false;
+  }
+
 
     if (!validateGreetingMessage(greetingMessage)) {
       setError('Please enter a valid greeting message.');
@@ -276,9 +278,9 @@ const CreateBotComponent: React.FC = () => {
           onChange={(e) => setBotName(e.target.value)}
           className="w-full bg-[#171029] text-white p-2 rounded-[12px]"
         />
-        {error.includes('name') && (
+        {/* {error.includes('name') && (
           <div className="text-red-500 mb-4">{error}</div>
-        )}
+        )} */}
       </div>
       <div className="mb-4">
         <label className="block text-gray-200 mb-2">Chat Color</label>
@@ -311,6 +313,7 @@ const CreateBotComponent: React.FC = () => {
           )}
         </div>
       </div>
+
       <div className="mb-4">
         <label className="block text-gray-200 mb-2">Bot profile</label>
         <div className="grid grid-cols-5 gap-2">
@@ -326,9 +329,9 @@ const CreateBotComponent: React.FC = () => {
             />
           ))}
         </div>
-        {error.includes('icon') && (
+        {/* {error.includes('icon') && (
           <div className="text-red-500 mb-4">{error}</div>
-        )}
+        )} */}
       </div>
       <div className="flex flex-col mb-4">
         <label className="block text-gray-200 mb-2">Custom Bot Profile</label>
@@ -369,6 +372,7 @@ const CreateBotComponent: React.FC = () => {
           className="w-full bg-[#171029] text-white p-2 rounded-[12px]"
         />
       </div>
+      {error && <div className="text-red-500 mb-4">{error}</div>}
     </div>
   );
 

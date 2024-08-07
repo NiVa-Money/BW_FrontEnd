@@ -21,7 +21,7 @@ const CreateKnowledgeBase: React.FC = () => {
   const handleFileChange = async (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
-    const file = event.target.files?.[0];
+    const file:any = event.target.files?.[0];
 
     setDocName(file?.name ?? '');
     if (

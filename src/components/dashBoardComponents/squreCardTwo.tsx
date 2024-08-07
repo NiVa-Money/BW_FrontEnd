@@ -1,7 +1,6 @@
-"use client"
+'use client';
 import { Card } from '@tremor/react';
 import { BarChart } from '@tremor/react';
-
 
 const chartdata = [
   {
@@ -39,19 +38,17 @@ const dataFormatter = (number: number) =>
 
 export function SqureCardTwo() {
   return (
-   
-     <>
+    <>
       <BarChart
-      className="h-[90%]"
-    data={chartdata}
-    index="name"
-    categories={['Chats per day']}
-    colors={['blue']}
-    valueFormatter={dataFormatter}
-    yAxisWidth={48}
-    onValueChange={(v) => console.log(v)}
-  />
-</>
-    
+        className="h-[40vh] md:h-[90%]"
+        data={chartdata}
+        index="name"
+        categories={['Chats per day']}
+        colors={['blue']}
+        valueFormatter={dataFormatter}
+        yAxisWidth={48}
+        onValueChange={(v) => console.log(v)}
+      />
+    </>
   );
 }
