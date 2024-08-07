@@ -14,7 +14,7 @@
 //   const handlePaymentSuccess = () => {
 //     setIsPaymentSuccessful(true);
 //   };
-  
+
 //   const showFreeTrialButton = pathname ? ['/home', '/pricing'].includes(pathname) : false;
 
 //   const pricingTiers = [
@@ -142,7 +142,7 @@ const PricingCard = () => {
     setIsPaymentSuccessful(true);
   };
 
-  const showFreeTrialButton = pathname ? ['/home', '/pricing', '/memberShip'].includes(pathname) : false;
+  const showFreeTrialButton = pathname ? ['/home', '/pricing'].includes(pathname) : false;
 
   const pricingTiers = [
     {
@@ -221,19 +221,28 @@ const PricingCard = () => {
             key={index}
             {...tier}
             paypalButton={
-              tier.title === 'Basic' ? (
-                <button
-                  className="py-2 px-6 text-base font-medium bg-gray-100 rounded-lg text-slate-950 w-full"
-                  onClick={handleBasicFreeTrial}
-                >
-                  Start a Free Trial
-                </button>
+              showFreeTrialButton ? (
+                tier.title === 'Basic' ? (
+                  <button
+                    className="py-2 px-6 text-base font-medium bg-gray-100 rounded-lg text-slate-950 w-full"
+                    onClick={handleBasicFreeTrial} // Open modal for Basic plan
+                  >
+                    Start a Free Trial
+                  </button>
+                ) : (
+                  <button
+                    className="py-2 px-6 text-base font-medium bg-gray-100 rounded-lg text-slate-950 w-full"
+                    onClick={() => router.push('/login')}
+                  >
+                    Start Free Trial
+                  </button>
+                )
               ) : (
-                showFreeTrialButton && (
+                tier.title !== 'Basic' && (
                   <PayPalButton
                     planId={tier.title}
                     price={tier.price}
-                    userId={"userId"}
+                    userId={'userId'}
                     isPaymentSuccessful={isPaymentSuccessful}
                     onPaymentSuccess={handlePaymentSuccess}
                   />
