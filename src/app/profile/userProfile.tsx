@@ -39,7 +39,7 @@ const ProfileComponent: React.FC = () => {
           value={`${profileData?.firstName} ${profileData?.lastName}`}
         />
         <ProfileField label="Email" value={`${profileData?.emailId}`} />
-        <ProfileField label="Country" value="United states" />
+        {/* <ProfileField label="Country" value="United states" /> */}
         <ProfileField label="Phone number" value={`${profileData?.mobileNo}`} />
       </div>
     </div>
