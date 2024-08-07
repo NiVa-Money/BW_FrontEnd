@@ -17,7 +17,6 @@ import { HexColorPicker } from 'react-colorful';
 interface BotData {
   botId?: string;
   botName: string;
-  botIconType: string;
   botColor: string;
   botTone: string;
   botGreetingMessage: string;
@@ -28,16 +27,34 @@ interface BotData {
   wordLimitPerMessage: any;
   userId: string;
 }
+interface KnowledgeBaseFile {
+  _id: string;
+  botId: string;
+  createdAt: string;
+  docName: string;
+  docType: string;
+  fileLocationS3: string;
+  status: string;
+  updatedAt: string;
+  userId: string;
+}
 
 const EditBotComponent: React.FC = () => {
   const botDataRedux = useSelector(
     (state: RootState) => state.botProfile?.botProfiles?.data
   );
+
+  const knowledgeBaseData = useSelector(
+    (state: RootState) => state.KnowledgeBase?.user?.data
+  );
+
+  console.log("knowledgeBaseData",knowledgeBaseData)
+  
   const dispatch = useDispatch();
   const [step, setStep] = useState(1);
   const [botName, setBotName] = useState('BotWot Assistant');
   const [botTone, setBotTone] = useState('Formal Tone');
-  const [botLimit, setBotLimit] = useState(0);
+  const [botLimit, setBotLimit] = useState<any>();
   const [botSmartnessVal, setbotSmartnessVal] = useState<any>(false);
   const [systemPrompt, setSystemPrompt] = useState(
     `You're a helpful customer support chatbot with excellent product
@@ -93,46 +110,6 @@ const EditBotComponent: React.FC = () => {
     {
       imageUrl: `${botImageBaseUrl}bot5.svg`,
       iconType: 'bot5',
-    },
-    {
-      imageUrl: `${botImageBaseUrl}bot6.svg`,
-      iconType: 'bot6',
-    },
-    {
-      imageUrl: `${botImageBaseUrl}bot7.svg`,
-      iconType: 'bot7',
-    },
-    {
-      imageUrl: `${botImageBaseUrl}bot8.svg`,
-      iconType: 'bot8',
-    },
-    {
-      imageUrl: `${botImageBaseUrl}bot9.svg`,
-      iconType: 'bot9',
-    },
-    {
-      imageUrl: `${botImageBaseUrl}bot10.svg`,
-      iconType: 'bot10',
-    },
-    {
-      imageUrl: `${botImageBaseUrl}bot11.svg`,
-      iconType: 'bot11',
-    },
-    {
-      imageUrl: `${botImageBaseUrl}bot12.svg`,
-      iconType: 'bot12',
-    },
-    {
-      imageUrl: `${botImageBaseUrl}bot13.svg`,
-      iconType: 'bot13',
-    },
-    {
-      imageUrl: `${botImageBaseUrl}bot14.svg`,
-      iconType: 'bot14',
-    },
-    {
-      imageUrl: `${botImageBaseUrl}bot15.svg`,
-      iconType: 'bot15',
     },
   ];
 
@@ -205,7 +182,6 @@ const EditBotComponent: React.FC = () => {
       botId: userId,
       botName,
       botTone,
-      botIconType,
       botColor:chatColor,
       botGreetingMessage: greetingMessage,
       botSmartness: false,
@@ -244,6 +220,8 @@ const EditBotComponent: React.FC = () => {
       }
     }
   }, [botDataRedux]);
+
+
 
   const renderStep1 = () => (
     <div onClick={() => (showColorPicker ? setShowColorPicker(false) : '')}>
@@ -348,41 +326,23 @@ const EditBotComponent: React.FC = () => {
         />
       </div>
       <div className="flex flex-col mb-4">
-        <label className="block text-gray-200 mb-2">Knowledge base</label>
-        <div className="mb-4">
-          <div className="relative mb-4">
-            <div className="flex items-center bg-gray-800 p-2 w-full rounded-[12px] absolute ">
-              <span className="mr-2">
-                {filename?.length ? filename : 'Choose File'}
-              </span>
-              <button
-                onClick={() => {
-                  setImageName('');
-                  setImageSrc('');
-                }}
-                className="ml-auto text-white"
-              >
-                ×
-              </button>
-            </div>
-            <input
-              type="file"
-              onChange={handleFileChange}
-              ref={viewerRef}
-              accept="pdf/*"
-              id="file-upload"
-              className="absolute top-[0] opacity-0 -[12px] cursor-pointer"
-            />
-          </div>
-        </div>
-        {error.includes('pdf') && (
-          <div className="relative mt-5 z-10 text-red-500">{error}</div>
-        )}
+
+      <label className="block text-gray-200 mb-2">Select Knowledge Base</label>
+      <div className="relative mb-4">
+        <select
+          className="block appearance-none w-full bg-gray-800 text-white p-2 rounded-[12px] focus:outline-none focus:ring-2 focus:ring-blue-500"
+          defaultValue=""
+        >
+          <option value="" disabled>Select a file</option>
+          {knowledgeBaseData && knowledgeBaseData.map((file: KnowledgeBaseFile) => (
+            <option key={file._id} value={file.fileLocationS3}>
+              {file.docName}
+            </option>
+          ))}
+        </select>
+      </div>
         <div className="flex items-center space-x-4 mt-5">
-          {/* <button className="rounded-[70px] bg-[#3F2181] text-white px-4 py-2 flex items-center justify-center">
-            <span>Upload</span>
-            <FileUploadIcon />
-          </button> */}
+
           <div className="flex items-center">
             <label className="block text-white mr-2">Enable Smartness</label>
             <Switch
@@ -396,34 +356,15 @@ const EditBotComponent: React.FC = () => {
         <label className="block text-gray-200 mb-2">
           Bot limit per Message
         </label>
-        {/* <input
+        <input
+          min={200}
+          max={700}
           type="number"
           value={botLimit}
           onChange={(e) => setBotLimit(Number(e.target.value))}
           className="w-full bg-[#171029] text-white p-2 rounded-[12px]"
-        /> */}
-        <select
-          value={botLimit}
-          onChange={(e) => setBotLimit(Number(e.target.value))}
-          className="w-full bg-[#171029] text-white p-2 rounded-[12px]"
-        >
-          <option value={50}>50-100</option>
-          <option value={100}>100-200</option>
-          <option value={200}>200-400</option>
-        </select>
+        />
       </div>
-      {/* <div className="mb-4">
-        <label className="block text-gray-200 mb-2">Bot Identity</label>
-        <select
-          value={botLimit}
-          onChange={(e) => setBotSmartness(e.target.value)}
-          className="w-full bg-[#171029] text-white p-2 rounded-[12px]"
-        >
-          <option value="Sales">Sales</option>
-          <option value="Finance">Finance</option>
-          <option value="Support">Support</option>
-        </select>
-      </div> */}
       <div className="mb-4">
         <label className="block text-gray-200 mb-2">Support email</label>
         <input
@@ -521,15 +462,6 @@ const EditBotComponent: React.FC = () => {
                   questions
                 </p>
                 <div className="flex flex-col w-full h-[17vh]">
-                  {/* {questionsSamples.map((value, index) => (
-                    <div
-                      key={index}
-                      className="clickable-div border-[1px] border-[solid] rounded-[12px] flex mt-2 mb-2 "
-                      onClick={() => handleDivClick(value)}
-                    >
-                      <span className="p-[10px]"> {value}</span>
-                    </div>
-                  ))} */}
                 </div>
                 <input
                   type="text"
