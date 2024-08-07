@@ -34,7 +34,7 @@ interface SidebarItemProps {
 }
 
 const DashboardItem: SidebarItemProps = {
-  path: '/dashboard',
+  path: '/dashBoard',
   icon: 'fa-gauge-high',
   text: 'Dashboard',
   hasDropdown: false,
