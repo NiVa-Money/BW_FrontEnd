@@ -46,6 +46,9 @@ const KnowledgeBase: React.FC = () => {
   const knowledgeBaseRedux = useSelector(
     (state: RootState) => state.KnowledgeBase?.create?.loader
   );
+  const knowledgeBaseDeleteRedux = useSelector(
+    (state: RootState) => state.KnowledgeBase?.delete?.loader
+  );
 
   const [userIdLocal, setUserIdLocal] = useState(userId);
   useEffect(() => {
@@ -55,7 +58,13 @@ const KnowledgeBase: React.FC = () => {
   }, [userId]);
   // Fetch knowledge base data
   useEffect(() => {
-    if (userIdLocal || pathName === '/knowledgeBase' || !knowledgeBaseRedux) {
+    if (
+      userIdLocal ||
+      pathName === '/knowledgeBase' ||
+      !knowledgeBaseRedux ||
+      !knowledgeBaseDeleteRedux
+    ) {
+      console.log('userIdLocal', userIdLocal);
       dispatch(getUserKnowledgeBaseAction(userIdLocal));
     }
   }, [userIdLocal, pathName, dispatch, knowledgeBaseRedux]);
