@@ -30,10 +30,10 @@ function AboutSection() {
                 </Link>
               </div>
               <div className="flex overflow-hidden flex-1 shrink gap-2 justify-center items-center p-3 rounded-lg basis-0 bg-white bg-opacity-10">
-                <div className="self-stretch my-auto text-2xl text-[color:var(--sds-color-text-brand-on-brand)]">
+                <div className="self-stretch opacity-30 my-auto text-2xl text-[color:var(--sds-color-text-brand-on-brand)]">
                   Demos
                 </div>
-                <div className="flex gap-2.5 items-center self-stretch p-2.5 my-auto w-11 h-11 rounded-xl bg-slate-500 bg-opacity-20">
+                <div className="flex opacity-30 gap-2.5 items-center self-stretch p-2.5 my-auto w-11 h-11 rounded-xl bg-slate-500 bg-opacity-20">
                   <img
                     loading="lazy"
                     src="https://cdn.builder.io/api/v1/image/assets/TEMP/80236ed57e710888f8dae2e4b9cb53f6eeade73363ca4f47a390dc3a06405d4e?apiKey=555c811dd3f44fc79b6b2689129389e8&&apiKey=555c811dd3f44fc79b6b2689129389e8"
@@ -56,15 +56,15 @@ function AboutSection() {
                   />
                 </div>
               </div>
-              <div className="flex overflow-hidden flex-1 shrink gap-2 justify-center items-center p-3 rounded-lg basis-0 bg-white bg-opacity-10">
-                <div className="self-stretch my-auto text-2xl text-[color:var(--sds-color-text-brand-on-brand)]">
+              <div className="flex overflow-hidden  flex-1 shrink gap-2 justify-center items-center p-3 rounded-lg basis-0 bg-white bg-opacity-10">
+                <div className="self-stretch opacity-30 my-auto text-2xl text-[color:var(--sds-color-text-brand-on-brand)]">
                   Tutorials
                 </div>
-                <div className="flex gap-2.5 items-center self-stretch p-2.5 my-auto w-11 h-11 rounded-xl bg-slate-500 bg-opacity-20">
+                <div className="flex gap-2.5 opacity-30 items-center self-stretch p-2.5 my-auto w-11 h-11 rounded-xl bg-slate-500 bg-opacity-20">
                   <img
                     loading="lazy"
                     src="https://cdn.builder.io/api/v1/image/assets/TEMP/b9ebbcabf4b486023303abbbf7526a7d1eaf5aed60cdf73b27fa4622274d9197?apiKey=555c811dd3f44fc79b6b2689129389e8&&apiKey=555c811dd3f44fc79b6b2689129389e8"
-                    className="object-contain self-stretch my-auto w-6 aspect-square"
+                    className="object-contain self-stretch my-auto w-19 aspect-square"
                   />
                 </div>
               </div>
