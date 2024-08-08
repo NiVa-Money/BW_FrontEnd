@@ -68,7 +68,7 @@ const HelpCenter: React.FC = () => {
       <h2 className="mt-4 text-3xl leading-9 text-white max-md:max-w-full">Resources</h2>
       <section className="flex gap-5 py-2.5 mt-4 w-full max-md:flex-wrap max-md:max-w-full">
         {resources.map((resource, index) => (
-          <ResourceCard key={index} title={resource.title} iconSrc={resource.iconSrc} />
+          <ResourceCard key={index} title={resource.title} iconSrc={resource.iconSrc} available={false} />
         ))}
       </section>
       <Divider />
