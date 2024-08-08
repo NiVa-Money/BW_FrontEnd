@@ -171,10 +171,10 @@ const CreateBotComponent: React.FC = () => {
       return;
     }
 
-    if (!imageSrc) {
-      setError('Please select a icon.');
-      return;
-    }
+    // if (!imageSrc) {
+    //   setError('Please select a icon.');
+    //   return;
+    // }
 
     if (!selectedFile) {
       setError('please select pdf file');
