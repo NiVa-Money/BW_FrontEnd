@@ -27,12 +27,14 @@ interface KnowledgeBaseCardProps {
   createdAt: string;
   docName: string; // Add docName here
   botURL: string;
+  fileLocationS3:string
 }
 
 const KnowledgeBase: React.FC = () => {
   const knowledgeBaseData = useSelector(
     (state: RootState) => state.KnowledgeBase?.user?.data
   );
+  console.log("knowledgeBaseData",knowledgeBaseData)
   const [knowledgebase, setKnowledgebase] = useState<KnowledgeBaseCardProps[]>(
     []
   );
@@ -110,9 +112,21 @@ const KnowledgeBase: React.FC = () => {
 
   // Handle download action (implement download logic here)
   const handleDownload = (index: number) => {
-    console.log(`Download bot at index ${index}`);
+    const fileURL = knowledgebase[index].fileLocationS3;
+    
+    const link = document.createElement('a');
+    link.href = fileURL;
+    link.target = '_blank'; 
+  
+  
+    document.body.appendChild(link);
+    
+    link.click();
+    
+    document.body.removeChild(link);
   };
-
+  
+  
   return (
     <main className="flex flex-col">
       <header className="flex gap-2.5 px-5 max-md:flex-wrap">
