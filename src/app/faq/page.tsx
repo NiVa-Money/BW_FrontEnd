@@ -122,11 +122,12 @@ const HelpCenter: React.FC = () => {
               key={index}
               className="flex flex-col w-[33%] max-md:ml-0 max-md:w-full"
             >
-              <img
-                loading="lazy"
+               <video
                 src={tutorial.imageSrc}
-                alt=""
                 className="grow w-full rounded-xl border border-solid aspect-[1.52] border-neutral-700 max-md:mt-5"
+                autoPlay
+                loop
+                muted
               />
             </div>
           ))}

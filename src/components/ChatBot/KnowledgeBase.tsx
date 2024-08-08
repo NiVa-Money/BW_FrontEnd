@@ -25,7 +25,7 @@ interface KnowledgeBaseCardProps {
   file: string;
   color?: string;
   createdAt: string;
-  docName: string; // Add docName here
+  docName: string; 
   botURL: string;
   fileLocationS3:string
 }
