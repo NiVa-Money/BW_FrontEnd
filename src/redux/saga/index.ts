@@ -490,19 +490,7 @@ export function* deleteUserKnowledgeBaseSaga({
       payload: botProfiles,
     });
 
-    try {
-      const botProfiles = yield call(getUserKnowledgeBaseService, payload);
-      // notifySuccess('knowledge base fetched successfully');
-      yield put({
-        type: GET_USER_KNOWLEDGE_BASE_SUCCESS,
-        payload: botProfiles,
-      });
-    } catch (error: any) {
-      notifyError(`${error}`)
-      yield put({
-        type: GET_USER_KNOWLEDGE_BASE_FAILURE,
-      });
-    }
+    
   } catch (error: any) {
     notifyError(`${error}`)
     yield put({
