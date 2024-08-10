@@ -12,7 +12,7 @@ const PlanModal: React.FC<ModalProps> = ({ isOpen, onClose, title, message }) =>
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center z-100">
+    <div className="fixed inset-0 flex items-center justify-center z-10">
         <div className="absolute inset-0 opacity-50"></div>
        <div className="bg-[#0B031E] flex flex-col items-center justify-center p-8 rounded-lg shadow-lg z-10">
         <h2 className="text-2xl font-bold mb-4">{title}</h2>

@@ -34,7 +34,7 @@ export default function RootLayout({
     '/profile',
     '/memberShip',
     '/faq',
-    '/dashBoard',
+    '/dashboard',
     '/login',
     '/createKnowledgeBase',
     '/newchat',
@@ -50,7 +50,7 @@ export default function RootLayout({
     '/profile',
     '/memberShip',
     '/faq',
-    '/dashBoard',
+    '/dashboard',
     '/login',
     '/createKnowledgeBase',
     '/newchat',
@@ -122,7 +122,7 @@ const SidebarToggleButton = ({ isVisible, onClick }: any) => {
           <Image
             src={cancelImg}
             alt="Background"
-            layout="fill" 
+            layout="fill"
             objectFit="cover"
             className="absolute inset-0"
           />
@@ -130,8 +130,8 @@ const SidebarToggleButton = ({ isVisible, onClick }: any) => {
           <Image
             src={menuImg}
             alt="Background"
-            layout="fill" 
-            objectFit="cover" 
+            layout="fill"
+            objectFit="cover"
             className="absolute inset-0"
           />
         )}

@@ -34,7 +34,7 @@ interface SidebarItemProps {
 }
 
 const DashboardItem: SidebarItemProps = {
-  path: '/dashBoard',
+  path: '/dashboard',
   icon: 'fa-gauge-high',
   text: 'Dashboard',
   hasDropdown: false,
@@ -51,7 +51,7 @@ const initialSIDENAV_ITEMS: SidebarItemProps[] = [
         hasDropdown: true,
         subChildItems: [{ title: 'hey', path: '/MyChatBots' }],
       },
-      { title: 'Customs' },
+      { title: 'Reports (coming soon)' },
     ],
   },
   {
@@ -85,7 +85,6 @@ const SideBar: React.FC = () => {
   const closeModal = () => setIsModalOpen(false);
 
   const LogoutButton = () => {
-
     localStorage.removeItem('user_id');
     localStorage.removeItem('token');
     dispatch(logoutUser());
@@ -101,8 +100,7 @@ const SideBar: React.FC = () => {
     getUserBotProfiles();
   }, [userData?.user_id]);
 
-  useEffect(() => {
-  }, [botProfiles]);
+  useEffect(() => {}, [botProfiles]);
   return (
     <div className="w-64 h-[100%] p-4 bg-[#0B031E] flex flex-col h-screen relative">
       {/* <BackgroundCss/> */}
@@ -124,27 +122,27 @@ const SideBar: React.FC = () => {
       </button>
 
       <MenuItem item={DashboardItem} key={DashboardItem?.text} />
-      <div className='flex flex-col h-[100%] justify-between overflow-y-scroll'>
-      <div className="flex flex-col space-y-2">
-        {SIDENAV_ITEMS.map((item, idx) => (
-          <MenuItem key={idx} item={item} />
-        ))}
-      </div>
-      <div className="flex flex-col space-y-2 mt-2">
-        {SIDENAV_ITEMS2.map((item, idx) => (
-          <MenuItem
-            key={idx}
-            item={item}
-            onClick={
-              item.text === 'Clear Conversations'
-                ? openModal
-                : item.text === 'Log Out'
-                ? LogoutButton
-                : undefined
-            }
-          />
-        ))}
-      </div>
+      <div className="flex flex-col h-[100%] justify-between overflow-y-scroll">
+        <div className="flex flex-col space-y-2">
+          {SIDENAV_ITEMS.map((item, idx) => (
+            <MenuItem key={idx} item={item} />
+          ))}
+        </div>
+        <div className="flex flex-col space-y-2 mt-2">
+          {SIDENAV_ITEMS2.map((item, idx) => (
+            <MenuItem
+              key={idx}
+              item={item}
+              onClick={
+                item.text === 'Clear Conversations'
+                  ? openModal
+                  : item.text === 'Log Out'
+                  ? LogoutButton
+                  : undefined
+              }
+            />
+          ))}
+        </div>
       </div>
 
       {isModalOpen && <ClearConversation closeModal={closeModal} />}
@@ -183,8 +181,7 @@ const MenuItem: React.FC<MenuItemProps> = ({ item, onClick }) => {
     router.push('/botSession');
   };
 
-  useEffect(() => {
-  }, [botSessionaa]);
+  useEffect(() => {}, [botSessionaa]);
 
   return (
     <div>
@@ -269,7 +266,7 @@ const MenuItem: React.FC<MenuItemProps> = ({ item, onClick }) => {
                           <div key={childIdx}>
                             <div
                               className={`text-gray-300 hover:bg-white hover:bg-opacity-10 rounded-full cursor-pointer`}
-                              onClick={()=>botSession(bot._id, bot.userId)}
+                              onClick={() => botSession(bot._id, bot.userId)}
                             >
                               <button
                                 // onClick={() => botSession(bot._id, bot.userId)}
