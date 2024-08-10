@@ -7,6 +7,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Link from 'next/link';
+import DescriptionIcon from '@mui/icons-material/Description';
 
 interface ChatBot {
   botId?: string;
@@ -72,7 +73,11 @@ const ChatBotCard: React.FC<ChatBotCardProps> = ({ bot, actions, botCard }) => {
             </p>
           </div>
         </div>
-        <div className="flex gap-5 px-20 mt-6 max-md:flex-wrap max-md:px-5">
+        <div
+          className={`flex gap-5 ${
+            botCard ? 'px-20' : ''
+          } mt-6 max-md:flex-wrap max-md:px-5`}
+        >
           <div className="flex gap-5 justify-between pt-2.5 pr-2.5">
             <div className="flex flex-col whitespace-nowrap">
               {/* <div className="flex gap-5 justify-between text-base text-neutral-400">
