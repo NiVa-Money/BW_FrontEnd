@@ -5,7 +5,7 @@ const EditBotPage: React.FC = () => {
   return (
     <>
       <main className='relative text-white h-[100%] overflow-hidden p-8'>
-        <BackgroundCss/>
+        {/* <BackgroundCss/> */}
         <EditBotComponent />
       </main>
     </>
