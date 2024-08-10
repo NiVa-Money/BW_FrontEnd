@@ -60,7 +60,6 @@ const EditBotComponent: React.FC = () => {
       console.log('SearchParams is null');
     }
   }, [searchParams]);
-
   const botDataRedux = useSelector(
     (state: RootState) => state.botProfile?.botProfiles?.data
   );
@@ -320,7 +319,6 @@ console.log("bot",botDataRedux)
       }
     }
   }, [botDataRedux, botId]);
-
   
 
   const renderStep1 = () => (
@@ -383,6 +381,35 @@ console.log("bot",botDataRedux)
           ))}
         </div>
 
+      </div>
+      <div className="flex flex-col mb-4">
+        <label className="block text-gray-200 mb-2">Custom Bot Profile</label>
+        <div className="mb-4">
+          <div className="relative mb-4">
+            <div className="flex items-center bg-gray-800 p-2 w-full rounded-[12px] absolute ">
+              <span className="mr-2">
+                {imageName?.length ? imageName : 'Choose File'}
+              </span>
+              <button
+                onClick={() => {
+                  setImageName('');
+                  setImageSrc('');
+                }}
+                className="ml-auto text-white"
+              >
+                ×
+              </button>
+            </div>
+            <input
+              type="file"
+              onChange={handleFileUpload}
+              ref={imgViewerRef}
+              accept="image/*"
+              id="file-upload-image"
+              className="absolute top-[0] opacity-0 -[12px] cursor-pointer"
+            />
+          </div>
+        </div>
       </div>
       <div className="flex flex-col mb-4">
         <label className="block text-gray-200 mb-2">Custom Bot Profile</label>
