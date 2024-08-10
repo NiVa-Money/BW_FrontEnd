@@ -5,6 +5,7 @@ import SectionHeader from './SectionHeader';
 import Divider from './Divider';
 import Link from 'next/link';
 // Resources data
+
 const resources = [
   {
     title: 'Docs',
@@ -40,22 +41,16 @@ const resources = [
 const gettingStartedTutorials = [
   {
     imageSrc: '/images/1.mp4',
-    iconSrc:
-      'https://cdn.builder.io/api/v1/image/assets/TEMP/9b9d365dd1cfe0493e38ca494929a2040135a9497260b3aaf8e3314f904296e3?apiKey=555c811dd3f44fc79b6b2689129389e8',
     tag: 'Introduction',
     title: 'UI kit for chat overview',
   },
   {
     imageSrc: '/images/3.mp4',
-    iconSrc:
-      'https://cdn.builder.io/api/v1/image/assets/TEMP/9ea5dbefe7f613ca4dbb4e632d72cc2fd6da4725a3ca179aa87aed359b5d70d6?apiKey=555c811dd3f44fc79b6b2689129389e8',
     tag: 'Tutorial',
     title: 'Build your bot in 2 steps',
   },
   {
     imageSrc: '/images/v5.mp4',
-    iconSrc:
-      'https://cdn.builder.io/api/v1/image/assets/TEMP/9ea5dbefe7f613ca4dbb4e632d72cc2fd6da4725a3ca179aa87aed359b5d70d6?apiKey=555c811dd3f44fc79b6b2689129389e8',
     tag: 'Tutorial',
     title: 'Increase customer engagement',
   },
@@ -73,8 +68,8 @@ const basicTutorials = [
     imageSrc: '/images/v4.mp4',
   },
 ];
-
 const HelpCenter: React.FC = () => {
+  console.log('basicTutorials',basicTutorials)
   return (
     <main className="flex flex-col px-12 py-20 max-md:px-5">
       <h1 className="mt-5 text-5xl font-bold tracking-tighter text-white leading-[58px] max-md:max-w-full max-md:text-4xl max-md:leading-[54px]">
@@ -122,13 +117,14 @@ const HelpCenter: React.FC = () => {
               key={index}
               className="flex flex-col w-[33%] max-md:ml-0 max-md:w-full"
             >
-               <video
-                src={tutorial.imageSrc}
-                className="grow w-full rounded-xl border border-solid aspect-[1.52] border-neutral-700 max-md:mt-5"
-                autoPlay
-                loop
-                muted
-              />
+            <video
+              className="grow w-full rounded-xl border border-solid aspect-[1.52] border-neutral-700 max-md:mt-5"
+              loop
+              controls
+              muted
+            >
+              <source src={tutorial.imageSrc} type="video/mp4"/>
+            </video>
             </div>
           ))}
         </div>

@@ -513,7 +513,7 @@ const CreateBotComponent: React.FC = () => {
               className={`flex w-full flex-col ml-5 max-md:ml-0 max-md:w-full`}
             >
               <div
-                className={`flex flex-col grow items-center px-3 rounded pt-3.5 pb-7 mt-4 w-full bg-[#171029] rounded-2xl shadow-sm text-zinc-400 max-md:pl-5 max-md:mt-10 max-md:max-w-full`}
+                className={`flex flex-col grow items-center px-3 pt-3.5 pb-7 mt-4 w-full bg-[#171029] rounded-2xl shadow-sm text-zinc-400 max-md:pl-5 max-md:mt-10 max-md:max-w-full`}
               >
                 <div
                   className="flex gap-5 justify-between rounded items-center w-full max-w-full text-xl font-bold leading-7 text-black whitespace-nowrap"
