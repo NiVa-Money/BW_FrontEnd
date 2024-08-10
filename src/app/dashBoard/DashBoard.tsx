@@ -64,7 +64,7 @@ const DashBoard: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    if (verifyVal || pathName === '/dashBoard') {
+    if (verifyVal || pathName === '/dashboard') {
       dispatch(fetchMetricsAction(userId));
     }
   }, [verifyVal]);
@@ -115,10 +115,7 @@ const DashBoard: React.FC = () => {
         <div className="bg-[#1E1935] w-full md:w-[40%] rounded-2xl p-4 m-1">
           <div className={`${styles.textSize} mb-4`}>Total no. of Messages</div>
           <div className={`${styles.textSize} relative w-full h-full mx-auto`}>
-            <SqureCardOne
-              sessionTotal={metricData?.sessionTotal}
-              sessionLeft={metricData?.sessionLeft}
-            />
+            <SqureCardOne sessionTotal={20} sessionLeft={11} />
           </div>
         </div>
         <div className="relative bg-[#1E1935] w-full md:w-[40%] rounded-2xl p-4 m-1 opacity-50">
