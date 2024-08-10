@@ -326,6 +326,7 @@ const ChatBotList: React.FC = () => {
       <section className="mt-6 px-10">
         {chatBotList?.map((chatBot: ChatBot) => (
           <ChatBotCard
+            botCard={true}
             key={chatBot._id}
             bot={chatBot}
             actions={{

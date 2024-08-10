@@ -51,7 +51,7 @@ const initialSIDENAV_ITEMS: SidebarItemProps[] = [
         hasDropdown: true,
         subChildItems: [{ title: 'hey', path: '/MyChatBots' }],
       },
-      { title: 'Customs' },
+      { title: 'Reports (coming soon)' },
     ],
   },
   {

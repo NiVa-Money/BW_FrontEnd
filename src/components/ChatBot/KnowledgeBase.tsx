@@ -25,16 +25,16 @@ interface KnowledgeBaseCardProps {
   file: string;
   color?: string;
   createdAt: string;
-  docName: string; 
+  docName: string;
   botURL: string;
-  fileLocationS3:string
+  fileLocationS3: string;
 }
 
 const KnowledgeBase: React.FC = () => {
   const knowledgeBaseData = useSelector(
     (state: RootState) => state.KnowledgeBase?.user?.data
   );
-  console.log("knowledgeBaseData",knowledgeBaseData)
+  console.log('knowledgeBaseData', knowledgeBaseData);
   const [knowledgebase, setKnowledgebase] = useState<KnowledgeBaseCardProps[]>(
     []
   );
@@ -113,20 +113,18 @@ const KnowledgeBase: React.FC = () => {
   // Handle download action (implement download logic here)
   const handleDownload = (index: number) => {
     const fileURL = knowledgebase[index].fileLocationS3;
-    
+
     const link = document.createElement('a');
     link.href = fileURL;
-    link.target = '_blank'; 
-  
-  
+    link.target = '_blank';
+
     document.body.appendChild(link);
-    
+
     link.click();
-    
+
     document.body.removeChild(link);
   };
-  
-  
+
   return (
     <main className="flex flex-col">
       <header className="flex gap-2.5 px-5 max-md:flex-wrap">
@@ -144,6 +142,7 @@ const KnowledgeBase: React.FC = () => {
         {knowledgebase?.map((bot, index) => (
           <ChatBotCard
             key={index}
+            botCard={false}
             bot={{
               ...bot,
               docName: bot.docName || 'Default Doc Name', // Ensure these fields exist
