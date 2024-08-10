@@ -233,6 +233,7 @@ const ChatBotList: React.FC = () => {
   const userId = useSelector(
     (state: RootState) => state.root?.userData?.user_id
   );
+  console.log(userId)
   const [userIdLocal, setUserIdLocal] = useState(userId);
   const dispatch = useDispatch();
   const pathName = useSelector((state: RootState) => state.root?.pathName);
