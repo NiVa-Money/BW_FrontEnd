@@ -77,6 +77,8 @@ const CreateBotComponent: React.FC = () => {
 
   const handleFileUpload = (event: any) => {
     const file = event.target.files[0];
+    const imagePath = URL.createObjectURL(file);
+    setImageSrc(imagePath)
     setImageName(file.name);
     if (
       file &&
@@ -92,6 +94,8 @@ const CreateBotComponent: React.FC = () => {
   const handleBotSampleClick = async(item: any) => {
 
     setImageSrc(item?.imageUrl)
+
+    console.log("ImagesCustom",item.imageUrl)
 
     const response = await fetch(item?.imageUrl);
             const blob = await response.blob();
