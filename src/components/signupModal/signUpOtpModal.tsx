@@ -1,6 +1,6 @@
 'use client';
 import { Modal } from '@mui/material';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { removeModalOtp, verifyOtp } from '@/redux/actions/authActions';
 import { RootState } from '@/redux/configureStore';
@@ -12,9 +12,10 @@ interface OtpModalProps {
 }
 
 const SignUpModalOtp: React.FC<OtpModalProps> = ({ viewOtp, setViewOtp }) => {
-  const [otp, setOtp] = useState(['', '', '', '']);
+  const [otp, setOtp] = useState(new Array(4).fill("")); // Assuming a 6-digit OTP
   const dispatch = useDispatch();
   const router = useRouter();
+  const inputRefs = useRef<any>([]);
   const emailId = useSelector(
     (state: RootState) => state?.root?.userData.emailId
   );
@@ -35,13 +36,13 @@ const SignUpModalOtp: React.FC<OtpModalProps> = ({ viewOtp, setViewOtp }) => {
     console.log("emailId", emailId);
   }, [emailId]);
 
-  const handleChange = (index: number, value: string) => {
-    if (/^\d$/.test(value) || value === '') { // Allow only single digit or empty string
-      const newOtp = [...otp];
-      newOtp[index] = value;
-      setOtp(newOtp);
-    }
-  };
+  // const handleChange = (index: number, value: string) => {
+  //   if (/^\d$/.test(value) || value === '') { // Allow only single digit or empty string
+  //     const newOtp = [...otp];
+  //     newOtp[index] = value;
+  //     setOtp(newOtp);
+  //   }
+  // };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -63,6 +64,23 @@ const SignUpModalOtp: React.FC<OtpModalProps> = ({ viewOtp, setViewOtp }) => {
 
   const otpModal = () => {
     dispatch(removeModalOtp());
+  };
+
+  const handleChange = (index:any, value:any) => {
+    if (!/^\d*$/.test(value)) return; // Only allow digits
+    const newOtp = [...otp];
+    newOtp[index] = value;
+    setOtp(newOtp);
+
+    if (value && index < otp.length - 1) {
+      inputRefs.current[index + 1].focus(); // Move to the next input
+    }
+  };
+
+  const handleBackspace = (index:any, e:any) => {
+    if (e.key === "Backspace" && index > 0 && otp[index] === "") {
+      inputRefs.current[index - 1].focus(); // Move to the previous input on Backspace
+    }
   };
 
   return (
@@ -89,10 +107,14 @@ const SignUpModalOtp: React.FC<OtpModalProps> = ({ viewOtp, setViewOtp }) => {
                   type="text"
                   value={digit}
                   onChange={(e) => handleChange(index, e.target.value)}
+                  onKeyDown={(e) => handleBackspace(index, e)}
                   className="w-12 p-2 border rounded text-center"
                   maxLength={1}
                   pattern="\d*" // Allows only digits
                   style={{ color: 'black' }}
+                  ref={(el) => {
+                    inputRefs.current[index] = el;
+                  }} // Store ref without returning it
                   required
                 />
               ))}
