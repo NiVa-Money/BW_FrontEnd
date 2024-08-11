@@ -1,7 +1,7 @@
 'use client';
 import * as React from 'react';
 import Link from 'next/link';
-import ContactUs from '../contactus/page';
+// import ContactUs from '../contactus/page';
 function QuestionAnswers() {
   const [openIndex, setOpenIndex] = React.useState<number | null>(null);
 
