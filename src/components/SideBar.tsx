@@ -102,7 +102,7 @@ const SideBar: React.FC = () => {
 
   useEffect(() => {}, [botProfiles]);
   return (
-    <div className="w-64 h-[100%] p-4 bg-[#0B031E] flex flex-col h-screen relative">
+    <div className="w-64 p-4 bg-[#0B031E] flex flex-col h-screen relative">
       {/* <BackgroundCss/> */}
       <Link
         href={'/dashboard'}

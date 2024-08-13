@@ -43,13 +43,13 @@ const PayPalButton: React.FC<PayPalButtonProps> = ({ planId, price ,
   };
 
   const onApprove = async (data: any, actions: any) => {
-    console.log('paymentID' , paymentId);
+    console.log('paymentID', paymentId);
     dispatch(capturePaymentRequest(paymentId)); 
     return actions.order.capture().then((details: any) => {
       setModalMessage('Transaction completed by ' + details.payer.name.given_name);
       setIsError(false); 
       onPaymentSuccess(); 
-      setIsPaymentSuccessful(true); // Set payment status to successful
+      setIsPaymentSuccessful(true);
       setModalOpen(true); 
     });
   };

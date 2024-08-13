@@ -25,12 +25,12 @@ const CreateKnowledgeBase: React.FC = () => {
     setDocName(file?.name ?? '');
     if (
       file &&
-      file.size <= 2 * 1024 * 1024 &&
+      file.size <= 10 * 1024 * 1024 &&
       file.type === 'application/pdf'
     ) {
       setSelectedFile(file);
     } else {
-      alert('File must be a PDF and less than 2MB');
+      alert('File must be a PDF and less than 10MB');
     }
   };
 
