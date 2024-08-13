@@ -117,8 +117,8 @@ const Modal: React.FC<ModalProps> = ({ closeModal, handleSignUp }) => {
 
   return (
     <>
-      <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 ">
-        <BackgroundAnimation children={undefined} />
+      <div className="fixed inset-0  flex items-center justify-center bg-black bg-opacity-50 ">
+        <BackgroundAnimation>
         <div className="p-6 rounded-lg max-w-lg mx-auto relative">
           <div className="flex justify-end">
             <button
@@ -224,6 +224,7 @@ const Modal: React.FC<ModalProps> = ({ closeModal, handleSignUp }) => {
           <SignUpModalOtp viewOtp={userSuccess} setViewOtp={setViewOtp} />
           } 
         </div>
+        </BackgroundAnimation>
       </div>
     </>
   );
