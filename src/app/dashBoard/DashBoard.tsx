@@ -5,7 +5,7 @@ import { CardHeader1 } from '@/components/dashBoardComponents/headerCard';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '@/redux/configureStore';
 import { useEffect, useState } from 'react';
-import styles from './dashboard.module.css';
+import styles from '../dashBoard/dashboard.module.css';
 import Link from 'next/link';
 import { fetchMetricsAction } from '@/redux/actions/authActions';
 import { getUserProfileAction } from '@/redux/actions/authActions';
