@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import Modal from '../signupModal/page';
-import { BackgroundAnimation } from '../BackgroundAnimation/backgroundAnimation';
+import  BackgroundAnimation  from '../BackgroundAnimation/backgroundAnimation';
 import LoginModal from '../loginModal/loginModal';
 import {
   verifyUserDataAction,
