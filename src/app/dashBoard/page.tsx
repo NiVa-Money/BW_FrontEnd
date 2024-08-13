@@ -1,7 +1,7 @@
 'use client';
 import React, { useEffect, useState } from 'react';
 
-import styles from './dashBoard.module.css';
+import styles from '../dashBoard/dashboard.module.css';
 import withAuth from '@/components/withAuth';
 import DashBoard from './DashBoard';
 
