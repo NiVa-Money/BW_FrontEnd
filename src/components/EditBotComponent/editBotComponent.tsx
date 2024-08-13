@@ -185,8 +185,6 @@ const EditBotComponent: React.FC = () => {
     if (step > 1) setStep(step - 1);
   };
 
-
-
   const handleFileChange = async (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
