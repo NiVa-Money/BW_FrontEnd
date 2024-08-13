@@ -60,17 +60,17 @@ const CreateBotComponent: React.FC = () => {
       setSelectedFile(file);
       setFileName(file.name);
     } else {
-      alert('File must be a PDF and less than 2MB');
+      alert('File must be a PDF and less than 10MB');
     }
   };
 
   const handleFileUpload = (event: any) => {
     const file = event.target.files[0];
     setImageName(file.name);
-    if (file && file.size <= 2 * 1024 * 1024) {
+    if (file && file.size <= 10 * 1024 * 1024) {
       setBase64Image(file);
     } else {
-      alert('File must be less than 2MB');
+      alert('File must be less than 10MB');
     }
   };
 
@@ -90,7 +90,7 @@ const CreateBotComponent: React.FC = () => {
     }
 
     if (!imageSrc && !base64Image) {
-      setError('Please select a bot profile or upload a custom bot profile.');
+      setError('Please select a bot icon or upload a custom bot icon.');
       return false;
     }
 
@@ -268,7 +268,7 @@ const CreateBotComponent: React.FC = () => {
       </div>
 
       <div className="mb-4">
-        <label className="block text-gray-200 mb-2">Bot profile</label>
+        <label className="block text-gray-200 mb-2">Bot Icon</label>
         <div className="grid grid-cols-5 gap-2">
           {/* Add bot profile images here */}
           {botSamples.map((item, idx) => (
@@ -284,7 +284,7 @@ const CreateBotComponent: React.FC = () => {
         </div>
       </div>
       <div className="flex flex-col mb-4">
-        <label className="block text-gray-200 mb-2">Custom Bot Profile</label>
+        <label className="block text-gray-200 mb-2">Custom Bot Icon</label>
         <div className="mb-4">
           <div className="relative mb-4">
             <div className="flex items-center bg-gray-800 p-2 w-full rounded-[12px] absolute ">

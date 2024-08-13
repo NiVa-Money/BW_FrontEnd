@@ -146,10 +146,10 @@ const EditBotComponent: React.FC = () => {
   const handleFileUpload = (event: any) => {
     const file = event.target.files[0];
     setImageName(file.name);
-    if (file && file.size <= 2 * 1024 * 1024) {
+    if (file && file.size <= 10 * 1024 * 1024) {
       setBase64Image(file);
     } else {
-      alert('File must be less than 2MB');
+      alert('File must be less than 10MB');
     }
   };
 
@@ -195,7 +195,7 @@ const EditBotComponent: React.FC = () => {
       setFileName(file.name);
       // await handleSave()
     } else {
-      alert('File must be a PDF and less than 2MB');
+      alert('File must be a PDF and less than 10MB');
     }
   };
 
