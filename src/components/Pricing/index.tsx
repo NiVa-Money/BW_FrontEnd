@@ -208,7 +208,7 @@ const PricingCard = () => {
   };
 
   return (
-    <div className="flex flex-col items-center px-8 pt-16 pb-9 text-gray-100">
+    <div className="flex flex-col w-screen items-center px-8 pt-16 pb-9 text-gray-100">
       <div className="text-center max-w-[1200px] mx-auto">
         <h1 className="text-6xl font-black">Flexible Pricing for Everyone</h1>
         <p className="mt-4 text-2xl">
