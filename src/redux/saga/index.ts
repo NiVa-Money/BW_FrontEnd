@@ -613,7 +613,8 @@ export function* capturePaymentSaga({ payload }: { type: string; payload: string
   try {
     const response = yield call(capturePaymentService, payload);
     console.log('Capture payment response:', response);
-    const paymentId = response._id;
+    // const paymentId = response._id;
+    const paymentId = (response as { _id: string })._id;
     console.log('paymentid same as response' , paymentId)
     // if (paymentId) {
     //   yield put(capturePaymentRequest(paymentId));
