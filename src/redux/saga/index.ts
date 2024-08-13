@@ -592,7 +592,6 @@ export function* payPalPaymentSaga({
   try {
     const response: any = yield call(processPayPalPaymentService, payload);
     console.log('API response:', response);
-    
     // Save the response in Redux
     yield put({
       type: CREATE_PAYMENT_SUCCESS,
@@ -601,13 +600,6 @@ export function* payPalPaymentSaga({
 
     notifySuccess('Payment processed successfully');
     
-    // Extract _id from the response and initiate capture
-    const paymentId = response._id;
-    if (paymentId) {
-      yield put(capturePaymentRequest(paymentId));
-    } else {
-      throw new Error('Payment ID is missing in the response');
-    }
   } catch (error: any) {
     yield put({
       type: CREATE_PAYMENT_FAILURE,
@@ -621,8 +613,14 @@ export function* capturePaymentSaga({ payload }: { type: string; payload: string
   try {
     const response = yield call(capturePaymentService, payload);
     console.log('Capture payment response:', response);
-
-    // Save the captured payment response in Redux
+    const paymentId = response._id;
+    console.log('paymentid same as response' , paymentId)
+    // if (paymentId) {
+    //   yield put(capturePaymentRequest(paymentId));
+    // } else {
+    //   throw new Error('Payment ID is missing in the response');
+    // }
+    // // Save the captured payment response in Redux
     yield put(capturePaymentSuccess(response));
     notifySuccess('Payment captured successfully');
   } catch (error: any) {
