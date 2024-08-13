@@ -289,7 +289,7 @@ export const getAdvanceFeatureService = async (payload: any) => {
 export const processPayPalPaymentService = async (payload: any) => {
   try {
     const response = await axiosInstance.post(`/payment/create`, payload);
-    console.log('response of payment', payload.response.data);
+    console.log('response of payment', response.data);
     return response.data;
   } catch (error) {
     throw new Error('Payment processing failed');
