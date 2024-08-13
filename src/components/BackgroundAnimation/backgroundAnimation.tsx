@@ -1,32 +1,63 @@
-import React from 'react';
-import './BackgroundAnimation.css';
+import React, { useEffect, useRef } from 'react';
+import './style.scss';
 
-export const BackgroundAnimation = () => {
+const BackgroundAnimation: React.FC = () => {
+  const interactiveRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const interactive = interactiveRef.current;
+    if (!interactive) return;
+
+    let curX = 0;
+    let curY = 0;
+    let tgX = 0;
+    let tgY = 0;
+
+    function move() {
+      if (interactive) {
+        curX += (tgX - curX) / 20;
+        curY += (tgY - curY) / 20;
+        interactive.style.transform = `translate(${Math.round(curX)}px, ${Math.round(curY)}px)`;
+        requestAnimationFrame(move);
+      }
+    }
+
+    window.addEventListener('mousemove', (event) => {
+      tgX = event.clientX;
+      tgY = event.clientY;
+    });
+
+    move();
+
+    return () => {
+      window.removeEventListener('mousemove', () => {});
+    };
+  }, []);
+
   return (
-    <>
-      <div className="absolute inset-0 -z-10 ">
-        <svg className="moving-svg" viewBox="0 0 1480 1774" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <rect width="1440" height="1287" transform="translate(20 20)" fill="#0B031E" />
-          <g filter="url(#filter0_f_180_721)">
-            <circle className="moving-circle" cx="686" cy="1022" r="252" fill="#C00DC8" />
-          </g>
-          <g filter="url(#filter1_f_180_721)">
-            <circle className="moving-circle" cx="1285" cy="272" r="252" fill="#C00DC8" />
-          </g>
-          <defs>
-            <filter id="filter0_f_180_721" x="-66" y="270" width="1504" height="1504" filterUnits="userSpaceOnUse" colorInterpolationFilters="sRGB">
-              <feFlood floodOpacity="0" result="BackgroundImageFix" />
-              <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape" />
-              <feGaussianBlur stdDeviation="250" result="effect1_foregroundBlur_180_721" />
-            </filter>
-            <filter id="filter1_f_180_721" x="533" y="-480" width="1504" height="1504" filterUnits="userSpaceOnUse" colorInterpolationFilters="sRGB">
-              <feFlood floodOpacity="0" result="BackgroundImageFix" />
-              <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape" />
-              <feGaussianBlur stdDeviation="250" result="effect1_foregroundBlur_180_721" />
-            </filter>
-          </defs>
-        </svg>
+    <div className="gradient-bg">
+      <svg xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <filter id="goo">
+            <feGaussianBlur in="SourceGraphic" stdDeviation="10" result="blur" />
+            <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 18 -8" result="goo" />
+            <feBlend in="SourceGraphic" in2="goo" />
+          </filter>
+        </defs>
+      </svg>
+      <div className="text-container">
+        Bot wot test
       </div>
-    </>
+      <div className="gradients-container">
+        <div className="g1"></div>
+        <div className="g2"></div>
+        <div className="g3"></div>
+        <div className="g4"></div>
+        <div className="g5"></div>
+        <div ref={interactiveRef} className="interactive"></div>
+      </div>
+    </div>
   );
-}
+};
+
+export default BackgroundAnimation;
