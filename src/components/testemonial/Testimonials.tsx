@@ -48,7 +48,7 @@ const Testimonials: React.FC = () => {
   }, []);
 
   return (
-    <div className="flex flex-col items-start self-stretch p-16 max-md:px-5">
+    <div className="flex flex-col w-screen items-start self-stretch p-16 max-md:px-5">
       <h2 className="text-2xl font-semibold tracking-tight leading-7 text-gray-100">
         Testimonials
       </h2>

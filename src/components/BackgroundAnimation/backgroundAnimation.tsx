@@ -1,7 +1,11 @@
-import React, { useEffect, useRef } from 'react';
+import React, { ReactNode, useEffect, useRef } from 'react';
 import './style.scss';
 
-const BackgroundAnimation: React.FC = () => {
+interface BackgroundAnimationProps {
+  children: ReactNode;
+}
+
+const BackgroundAnimation: React.FC<BackgroundAnimationProps> = ({children}) => {
   const interactiveRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -45,8 +49,8 @@ const BackgroundAnimation: React.FC = () => {
           </filter>
         </defs>
       </svg>
-      <div className="text-container">
-        Bot wot test
+      <div className="">
+        {children}
       </div>
       <div className="gradients-container">
         <div className="g1"></div>

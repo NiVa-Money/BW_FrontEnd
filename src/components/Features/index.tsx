@@ -25,7 +25,7 @@ const Features: React.FC = () => {
   ];
 
   return (
-    <div className="flex flex-col justify-center items-center px-20 py-20 mt-20 max-md:px-5 max-md:mt-10 max-md:mr-0.5 ">
+    <div className="flex flex-col w-screen justify-center items-center px-20 py-20 mt-20 max-md:px-5 max-md:mt-10 max-md:mr-0.5 ">
       <h3 className="self-start ml-16 text-5xl font-black text-gray-100">
         Learn more
       </h3>
