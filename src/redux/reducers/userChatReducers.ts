@@ -24,6 +24,7 @@ import {
           sessionChat: {
             ...state.sessionChat,
             loader: true,
+            lastMessageFrom:'sender'
             },
         };
 
@@ -55,7 +56,8 @@ import {
         const sessionId = action.payload.sessionId
         return {
             ...state,
-            sessionChat: { data: [...state.sessionChat.data,data], sessionId ,loader: true },
+            sessionChat: { data: [...state.sessionChat.data,data], sessionId ,loader: true,            lastMessageFrom:'receiver'
+            },
         };
       case GET_USER_CHAT_FAILURE:
         return {

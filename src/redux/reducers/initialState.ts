@@ -73,6 +73,7 @@ const initialState: any = {
       data: [],
       sessionId: null,
       loader: false,
+      lastMessageFrom:'receiver'
     },
     advanceFeature: {
       data: {},

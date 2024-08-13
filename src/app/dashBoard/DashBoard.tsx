@@ -64,7 +64,7 @@ const DashBoard: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    if (verifyVal || pathName === '/dashboard') {
+    if (verifyVal || pathName === '/dashBoard') {
       dispatch(fetchMetricsAction(userId));
     }
   }, [verifyVal]);

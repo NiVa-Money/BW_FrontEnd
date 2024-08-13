@@ -166,7 +166,7 @@ export function SqureCardOne({ sessionTotal, sessionLeft }: SqureCardOneProps) {
   }, []);
 
   useEffect(() => {
-    if (verifyVal || pathName === '/dashboard') {
+    if (verifyVal || pathName === '/dashBoard') {
       dispatch(fetchMetricsAction(userId));
     }
   }, [verifyVal, pathName]);
