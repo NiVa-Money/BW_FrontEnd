@@ -46,7 +46,7 @@
 //   }, []);
 
 //   useEffect(() => {
-//     if (verifyVal || pathName === '/dashBoard') {
+//     if (verifyVal || pathName === '/dashboard') {
 //       dispatch(fetchMetricsAction(userId));
 //     }
 //   }, [verifyVal, pathName]);
@@ -166,7 +166,7 @@ export function SqureCardOne({ sessionTotal, sessionLeft }: SqureCardOneProps) {
   }, []);
 
   useEffect(() => {
-    if (verifyVal || pathName === '/dashBoard') {
+    if (verifyVal || pathName === '/dashboard') {
       dispatch(fetchMetricsAction(userId));
     }
   }, [verifyVal, pathName]);

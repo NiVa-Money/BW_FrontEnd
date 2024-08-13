@@ -6,7 +6,6 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { v4 as uuidv4 } from 'uuid';
 import { RootState } from '@/redux/configureStore';
 
 const CreateKnowledgeBase: React.FC = () => {
@@ -21,7 +20,7 @@ const CreateKnowledgeBase: React.FC = () => {
   const handleFileChange = async (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
-    const file:any = event.target.files?.[0];
+    const file: any = event.target.files?.[0];
 
     setDocName(file?.name ?? '');
     if (
@@ -67,7 +66,7 @@ const CreateKnowledgeBase: React.FC = () => {
       });
 
       dispatch(createKnowledgebaseAction(formData));
-      router.push('/knowledgeBase');
+      router.push('/knowledgebase');
     } else {
       alert('Please select a file');
     }

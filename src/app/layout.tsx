@@ -27,47 +27,47 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   const routeWithoutHeader: string[] = [
-    '/MyChatBots',
-    '/createBot',
-    '/editBot',
-    '/knowledgeBase',
+    '/mychatbots',
+    '/createbot',
+    '/editbot',
+    '/knowledgebase',
     '/profile',
-    '/memberShip',
+    '/membership',
     '/faq',
-    '/dashBoard',
+    '/dashboard',
     '/login',
-    '/createKnowledgeBase',
+    '/createknowledgebase',
     '/newchat',
-    '/botSession',
+    '/botsession',
     '/faq/questionsAns',
     '/faq/docs',
   ];
   const routeWithoutFooter: string[] = [
-    '/MyChatBots',
-    '/createBot',
-    '/editBot',
-    '/knowledgeBase',
+    '/mychatbots',
+    '/createbot',
+    '/editbot',
+    '/knowledgebase',
     '/profile',
-    '/memberShip',
+    '/membership',
     '/faq',
-    '/dashBoard',
+    '/dashboard',
     '/login',
-    '/createKnowledgeBase',
+    '/createknowledgebase',
     '/newchat',
-    '/botSession',
+    '/botsession',
     '/faq/questionsAns',
     '/faq/docs',
   ];
   const routeWithoutSidebar: string[] = [
-    '/createBot',
-    '/editBot',
-    '/aboutUs',
+    '/createbot',
+    '/editbot',
+    '/aboutus',
     '/pricing',
     '/blog',
-    '/contactUs',
+    '/contactus',
     '/login',
     '/home',
-    '/botSession',
+    '/botsession',
   ];
   const [isSidebarVisible, setIsSidebarVisible] = React.useState(true);
   let persistor = persistStore(store);
@@ -109,7 +109,7 @@ export default function RootLayout({
 
 const SidebarToggleButton = ({ isVisible, onClick }: any) => {
   const pathname = useSelector((state: RootState) => state.root?.pathName);
-  const shouldShowButton = pathname !== '/home' && pathname !== '/botSession';
+  const shouldShowButton = pathname !== '/home' && pathname !== '/botsession';
   return (
     shouldShowButton && (
       <button
