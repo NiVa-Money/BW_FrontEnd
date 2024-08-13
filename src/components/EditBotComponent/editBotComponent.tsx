@@ -14,6 +14,7 @@ import { useRouter } from 'next/navigation';
 import { botImageBaseUrl } from '@/utils/constant';
 import { HexColorPicker } from 'react-colorful';
 import { useSearchParams } from 'next/navigation';
+import withAuth from '../withAuth';
 
 interface BotData {
   botId?: string;
@@ -27,7 +28,7 @@ interface BotData {
   supportEmail: string;
   wordLimitPerMessage: any;
   userId: string;
-  _id:any
+  _id: any;
 }
 interface KnowledgeBaseFile {
   _id: string;
@@ -57,16 +58,15 @@ const EditBotComponent: React.FC = () => {
       console.log('SearchParams is null');
     }
   }, [searchParams]);
- 
+
   const botDataRedux = useSelector(
     (state: RootState) => state.botProfile?.botProfiles?.data
   );
 
- 
   const userId = useSelector(
     (state: RootState) => state.root?.userData?.user_id
   );
-  
+
   const knowledgeBaseData = useSelector(
     (state: RootState) => state.KnowledgeBase?.user?.data
   );
@@ -109,7 +109,7 @@ const EditBotComponent: React.FC = () => {
   const [colorPicker, setColorPicker] = useState<any>(false);
   const [botIdToEdit, setBotIdToEdit] = useState<string | null>(null);
   const router = useRouter();
-  const [chatColor, setChatColor] = useState('#3B82F6'); 
+  const [chatColor, setChatColor] = useState('#3B82F6');
   const [base64Image, setBase64Image] = useState('');
   const imgViewerRef = useRef(null);
 
@@ -146,10 +146,7 @@ const EditBotComponent: React.FC = () => {
   const handleFileUpload = (event: any) => {
     const file = event.target.files[0];
     setImageName(file.name);
-    if (
-      file &&
-      file.size <= 2 * 1024 * 1024
-    ) {
+    if (file && file.size <= 2 * 1024 * 1024) {
       setBase64Image(file);
     } else {
       alert('File must be less than 2MB');
@@ -202,10 +199,8 @@ const EditBotComponent: React.FC = () => {
     }
   };
 
- 
-
   const handleSave = () => {
-    if (botId) { 
+    if (botId) {
       const botData: BotData = {
         botId: botId,
         botName,
@@ -221,10 +216,9 @@ const EditBotComponent: React.FC = () => {
         _id: botId,
       };
       dispatch(editBotProfileAction(botData));
-      router.push('/MyChatBots');
+      router.push('/mychatbots');
     } else {
       console.error('Bot ID is not available.');
-     
     }
   };
 
@@ -242,10 +236,11 @@ const EditBotComponent: React.FC = () => {
     }
   }, [searchParams]);
 
-
   useEffect(() => {
     if (botDataRedux && botId) {
-      const botToEdit = botDataRedux.find((bot: { _id: string; }) => bot._id === botId);
+      const botToEdit = botDataRedux.find(
+        (bot: { _id: string }) => bot._id === botId
+      );
       if (botToEdit) {
         setBotName(botToEdit.botName);
         setChatColor(botToEdit.botColor);
@@ -257,14 +252,15 @@ const EditBotComponent: React.FC = () => {
         setSupportEmail(botToEdit.supportEmail);
         setSupportPhone(botToEdit.supportNumber);
         setBotLimit(botToEdit.wordLimitPerMessage);
-        const botSample = botSamples.find((bot) => bot.iconType === botToEdit?.botIconType);
+        const botSample = botSamples.find(
+          (bot) => bot.iconType === botToEdit?.botIconType
+        );
         if (botSample) {
           setImageSrc(botSample.imageUrl);
         }
       }
     }
   }, [botDataRedux, botId]);
-  
 
   const renderStep1 = () => (
     <div onClick={() => (showColorPicker ? setShowColorPicker(false) : '')}>
@@ -277,7 +273,6 @@ const EditBotComponent: React.FC = () => {
             setBotName(e.target.value);
             console.log(e.target.value);
           }}
-          
           className="w-full bg-[#171029] text-white p-2 rounded-[12px]"
         />
       </div>
@@ -402,23 +397,26 @@ const EditBotComponent: React.FC = () => {
         />
       </div>
       <div className="flex flex-col mb-4">
-
-      <label className="block text-gray-200 mb-2">Select Knowledge Base</label>
-      <div className="relative mb-4">
-        <select
-          className="block appearance-none w-full bg-gray-800 text-white p-2 rounded-[12px] focus:outline-none focus:ring-2 focus:ring-blue-500"
-          defaultValue=""
-        >
-          <option value="" disabled>Select a file</option>
-          {knowledgeBaseData && knowledgeBaseData.map((file: KnowledgeBaseFile) => (
-            <option key={file._id} value={file.fileLocationS3}>
-              {file.docName}
+        <label className="block text-gray-200 mb-2">
+          Select Knowledge Base
+        </label>
+        <div className="relative mb-4">
+          <select
+            className="block appearance-none w-full bg-gray-800 text-white p-2 rounded-[12px] focus:outline-none focus:ring-2 focus:ring-blue-500"
+            defaultValue=""
+          >
+            <option value="" disabled>
+              Select a file
             </option>
-          ))}
-        </select>
-      </div>
+            {knowledgeBaseData &&
+              knowledgeBaseData.map((file: KnowledgeBaseFile) => (
+                <option key={file._id} value={file.fileLocationS3}>
+                  {file.docName}
+                </option>
+              ))}
+          </select>
+        </div>
         <div className="flex items-center space-x-4 mt-5">
-
           <div className="flex items-center">
             <label className="block text-white mr-2">Enable Smartness</label>
             <Switch
@@ -480,7 +478,7 @@ const EditBotComponent: React.FC = () => {
                 <ArrowBackIosNewIcon />
               </button>
             ) : (
-              <Link href={`/MyChatBots`}>
+              <Link href={`/mychatbots`}>
                 <ArrowBackIosNewIcon />
               </Link>
             )}
@@ -537,8 +535,7 @@ const EditBotComponent: React.FC = () => {
                   <br />
                   questions
                 </p>
-                <div className="flex flex-col w-full h-[17vh]">
-                </div>
+                <div className="flex flex-col w-full h-[17vh]"></div>
                 <input
                   type="text"
                   value={greetingMessage}
@@ -554,4 +551,4 @@ const EditBotComponent: React.FC = () => {
   );
 };
 
-export default EditBotComponent;
+export default withAuth(EditBotComponent);

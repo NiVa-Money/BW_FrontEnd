@@ -30,7 +30,7 @@ const LandingPage: React.FC = () => {
       localStorage.setItem('user_id', GLoginData?.data?.user_id);
       localStorage.setItem('token', GLoginData?.data?.token);
       if (GLoginData?.data?.success) {
-        router.push('/dashBoard');
+        router.push('/dashboard');
       }
     }
   }, [GLoginData]);
@@ -46,7 +46,7 @@ const LandingPage: React.FC = () => {
       dispatch(verifyUserDataAction(userEmail));
     }
     if (resOtp?.data?.success || userData?.token) {
-      router.replace('/dashBoard');
+      router.replace('/dashboard');
     } else {
       if (googleVerifyRedux) {
         const [firstName, lastName] = userRedux?.displayName.split(' ');
@@ -65,7 +65,7 @@ const LandingPage: React.FC = () => {
 
   useEffect(() => {
     if (userData?.token) {
-      router.replace('/dashBoard');
+      router.replace('/dashboard');
     }
   }, [userData]);
 

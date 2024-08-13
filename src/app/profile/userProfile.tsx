@@ -1,11 +1,14 @@
 'use client';
+import withAuth from '@/components/withAuth';
 import { getUserProfileAction } from '@/redux/actions/authActions';
 import { RootState } from '@/redux/configureStore';
 import * as React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 const ProfileComponent: React.FC = () => {
-  const userEmail = useSelector((state: RootState) => state.root?.userData?.email);
+  const userEmail = useSelector(
+    (state: RootState) => state.root?.userData?.email
+  );
   const userDataRedux = useSelector(
     (state: RootState) => state.root?.userProfile?.data
   );
@@ -22,10 +25,9 @@ const ProfileComponent: React.FC = () => {
       dispatch(getUserProfileAction(userEmail));
     }
   }, [userEmail, pathName]);
-  
+
   React.useEffect(() => {
     if (userEmail?.length && !profileData) {
-
       dispatch(getUserProfileAction(userEmail));
     }
   }, []);
@@ -60,4 +62,4 @@ const ProfileField: React.FC<ProfileFieldProps> = ({ label, value }) => {
   );
 };
 
-export default ProfileComponent;
+export default withAuth(ProfileComponent);

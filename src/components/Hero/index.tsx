@@ -23,7 +23,9 @@ const Hero = () => {
     (state: RootState) => state.root.googleLogin
   );
   const userRedux = useSelector((state: RootState) => state?.root?.user);
-  const googleLoginUser = useSelector((state: RootState) => state?.root?.googleLogin);
+  const googleLoginUser = useSelector(
+    (state: RootState) => state?.root?.googleLogin
+  );
 
   const router = useRouter();
   const dispatch = useDispatch();
@@ -37,7 +39,7 @@ const Hero = () => {
 
   const handleSignUp = (userData: any, router: any) => {
     // closeModal();
-    // router.push('/dashBoard');
+    // router.push('/dashboard');
   };
 
   const handleSignIn = () => {
@@ -51,14 +53,14 @@ const Hero = () => {
     setIsLoginModalOpen(false);
   };
   useEffect(() => {
-    console.log("googleVerifyRedux",googleVerifyRedux)
+    console.log('googleVerifyRedux', googleVerifyRedux);
     if (googleVerifyRedux) {
-      console.log("userRedux",userRedux)
+      console.log('userRedux', userRedux);
       const [firstName, lastName] = userRedux?.displayName.split(' ');
       const email = userRedux?.email;
       const payload = {
         firstName: firstName,
-        lastName: lastName ? lastName :'',
+        lastName: lastName ? lastName : '',
         emailId: email,
         mobileNo: '917779797977',
       };
@@ -66,24 +68,24 @@ const Hero = () => {
     }
   }, [googleVerifyRedux]);
 
-  useEffect(()=>{
+  useEffect(() => {
     if (googleVerifyRedux) {
-      console.log("userRedux",userRedux)
+      console.log('userRedux', userRedux);
       const [firstName, lastName] = userRedux?.displayName.split(' ');
       const email = userRedux?.email;
       const payload = {
         firstName: firstName,
-        lastName: lastName ? lastName :'',
+        lastName: lastName ? lastName : '',
         emailId: email,
         mobileNo: '917779797977',
       };
       // dispatch(verifyUserDataAction(email));
       // console.log("hello",payload)
-      if(!userData?.success){
-        dispatch(googleLogin(payload))
+      if (!userData?.success) {
+        dispatch(googleLogin(payload));
       }
     }
-  },[userRedux,googleLoginUser])
+  }, [userRedux, googleLoginUser]);
 
   return (
     <section>
@@ -114,12 +116,11 @@ const Hero = () => {
         >
           <span>Sign Up With Your Email</span>
         </button>
-       
-        
+
         {isModalOpen && (
           <Modal closeModal={closeModal} handleSignUp={handleSignUp} />
         )}
-        
+
         <button
           className="flex gap-4 justify-center px-3 py-2  text-2xl text-pink-200 rounded-[99px] max-md:px-5"
           onClick={handleLoginButtonClick}

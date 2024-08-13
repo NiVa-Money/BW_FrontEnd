@@ -18,25 +18,24 @@ const SignUpModalOtp: React.FC<OtpModalProps> = ({ viewOtp, setViewOtp }) => {
   const emailId = useSelector(
     (state: RootState) => state?.root?.userData.emailId
   );
-  const resOtp = useSelector(
-    (state: RootState) => state?.root?.otp
-  );
+  const resOtp = useSelector((state: RootState) => state?.root?.otp);
 
   useEffect(() => {
-    console.log("resOtp", resOtp);
+    console.log('resOtp', resOtp);
     localStorage.setItem('user_id', resOtp?.data?.user_id);
     localStorage.setItem('token', resOtp?.data?.token);
-    if(resOtp?.data?.success){
-      router.push('/dashBoard')
+    if (resOtp?.data?.success) {
+      router.push('/dashboard');
     }
   }, [resOtp]);
 
   useEffect(() => {
-    console.log("emailId", emailId);
+    console.log('emailId', emailId);
   }, [emailId]);
 
   const handleChange = (index: number, value: string) => {
-    if (/^\d$/.test(value) || value === '') { // Allow only single digit or empty string
+    if (/^\d$/.test(value) || value === '') {
+      // Allow only single digit or empty string
       const newOtp = [...otp];
       newOtp[index] = value;
       setOtp(newOtp);
@@ -47,10 +46,10 @@ const SignUpModalOtp: React.FC<OtpModalProps> = ({ viewOtp, setViewOtp }) => {
     e.preventDefault();
     const otpValue = otp.join('');
     if (otpValue.length === 3 || otpValue.length === 4) {
-      console.log("submit otp", otpValue, emailId);
+      console.log('submit otp', otpValue, emailId);
       const data = {
-        "emailId": emailId,
-        otp: otpValue
+        emailId: emailId,
+        otp: otpValue,
       };
       // Handle OTP verification logic
       dispatch(verifyOtp(data));
@@ -75,7 +74,10 @@ const SignUpModalOtp: React.FC<OtpModalProps> = ({ viewOtp, setViewOtp }) => {
       <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
         <div className="p-6 rounded-lg max-w-lg mx-auto relative bg-blue">
           <div className="flex justify-end">
-            <button onClick={otpModal} className="text-black-500 hover:text-black-800">
+            <button
+              onClick={otpModal}
+              className="text-black-500 hover:text-black-800"
+            >
               &times;
             </button>
           </div>

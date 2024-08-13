@@ -142,7 +142,9 @@ const PricingCard = () => {
     setIsPaymentSuccessful(true);
   };
 
-  const showFreeTrialButton = pathname ? ['/home', '/pricing'].includes(pathname) : false;
+  const showFreeTrialButton = pathname
+    ? ['/home', '/pricing'].includes(pathname)
+    : false;
 
   const pricingTiers = [
     {
@@ -163,7 +165,7 @@ const PricingCard = () => {
       price: '29.99',
       sessions: '10,000 Messages',
       features: [
-        "Advanced tools to create and manage your chatbot, featuring AI-generated responses",
+        'Advanced tools to create and manage your chatbot, featuring AI-generated responses',
         'Suitable for up to 10,000 chat messages.',
         'Manage 2 Bot Profiles with 2 Knowledge Bases.',
         'Text , PNG , JPEG uploads allowed for content.',
@@ -198,7 +200,7 @@ const PricingCard = () => {
 
   const handleBasicFreeTrial = () => {
     // Open modal only if on /memberShip
-    if (pathname === '/memberShip') {
+    if (pathname === '/membership') {
       setIsModalOpen(true);
     }
   };
@@ -233,7 +235,9 @@ const PricingCard = () => {
                 ) : (
                   <button
                     className="py-2 px-6 text-base font-medium bg-gray-100 rounded-lg text-slate-950 w-full"
-                    onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+                    onClick={() =>
+                      window.scrollTo({ top: 0, behavior: 'smooth' })
+                    }
                   >
                     Start Free Trial
                   </button>
