@@ -90,7 +90,7 @@ const Hero = () => {
   return (
     <section>
       <BackgroundAnimation>
-        <div className="flex w-screen flex-col items-center px-5 pt-6">
+        <div className=" flex w-screen flex-col items-center px-5 pt-6">
           <div className="shrink-0 mt-6 max-w-full" />
           <h1 className="mt-4 text-6xl font-black text-center text-gray-100 max-md:text-4xl">
             Build the Easiest No-Code <br /> AI Chatbot here!
@@ -118,7 +118,9 @@ const Hero = () => {
           </button>
 
           {isModalOpen && (
-            <Modal closeModal={closeModal} handleSignUp={handleSignUp} />
+            <div className=''>
+              <Modal closeModal={closeModal} handleSignUp={handleSignUp} />
+            </div>
           )}
 
           <button
