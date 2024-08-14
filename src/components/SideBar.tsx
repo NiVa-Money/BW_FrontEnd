@@ -92,7 +92,7 @@ const SideBar: React.FC = () => {
   };
 
   const handleClose: any = (): void => {
-    setOpen(false); 
+    setOpen(false);
   };
 
   const LogoutButton = () => {
@@ -137,10 +137,11 @@ const SideBar: React.FC = () => {
             <MenuItem key={idx} item={item} />
           ))}
         </div>
-        <button className="bg-[#1E1E2E] text-white rounded-full py-2 px-4 mb-8 flex items-center space-x-4 justify-center">
-          <button onClick={handleClickOpen}>
-            <span>Availale on Android</span>
-          </button>
+        <button
+          className="bg-[#1E1E2E] text-white rounded-full py-2 px-4 mb-8 flex items-center space-x-4 justify-center"
+          onClick={handleClickOpen}
+        >
+          <span>Availale on Android</span>
         </button>
         <div className="flex flex-col space-y-2 mt-2">
           {SIDENAV_ITEMS2.map((item, idx) => (

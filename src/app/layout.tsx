@@ -74,6 +74,7 @@ export default function RootLayout({
   ];
   const knownRoutes: string[] = [
     ...routeWithoutSidebar,
+    ...routeWithoutFooter,
     '/mychatbots',
     '/knowledgebase',
     '/profile',
