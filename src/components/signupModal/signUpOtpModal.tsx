@@ -34,15 +34,6 @@ const SignUpModalOtp: React.FC<OtpModalProps> = ({ viewOtp, setViewOtp }) => {
     console.log('emailId', emailId);
   }, [emailId]);
 
-  const handleChange = (index: number, value: string) => {
-    if (/^\d$/.test(value) || value === '') {
-      // Allow only single digit or empty string
-      const newOtp = [...otp];
-      newOtp[index] = value;
-      setOtp(newOtp);
-    }
-  };
-
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     const otpValue = otp.join('');
