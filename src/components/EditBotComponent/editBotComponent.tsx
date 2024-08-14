@@ -13,6 +13,8 @@ import Switch from '@mui/material/Switch';
 import { useRouter } from 'next/navigation';
 import { botImageBaseUrl } from '@/utils/constant';
 import { HexColorPicker } from 'react-colorful';
+import { useSearchParams } from 'next/navigation';
+import withAuth from '../withAuth';
 
 interface BotData {
   botId?: string;
@@ -26,6 +28,7 @@ interface BotData {
   supportEmail: string;
   wordLimitPerMessage: any;
   userId: string;
+  _id: any;
 }
 interface KnowledgeBaseFile {
   _id: string;
@@ -40,16 +43,34 @@ interface KnowledgeBaseFile {
 }
 
 const EditBotComponent: React.FC = () => {
+  const searchParams = useSearchParams();
+  const [botId, setBotId] = useState<string | null>(null);
+  useEffect(() => {
+    if (searchParams) {
+      const id = searchParams.get('id');
+      if (id) {
+        setBotId(id);
+        console.log('Bot ID from URL:', id);
+      } else {
+        console.log('ID not found in search params');
+      }
+    } else {
+      console.log('SearchParams is null');
+    }
+  }, [searchParams]);
+
   const botDataRedux = useSelector(
     (state: RootState) => state.botProfile?.botProfiles?.data
+  );
+
+  const userId = useSelector(
+    (state: RootState) => state.root?.userData?.user_id
   );
 
   const knowledgeBaseData = useSelector(
     (state: RootState) => state.KnowledgeBase?.user?.data
   );
 
-  console.log("knowledgeBaseData",knowledgeBaseData)
-  
   const dispatch = useDispatch();
   const [step, setStep] = useState(1);
   const [botName, setBotName] = useState('BotWot Assistant');
@@ -77,7 +98,7 @@ const EditBotComponent: React.FC = () => {
     "You're a helpful customer support chatbot with excellent product knowledge. You assist customers with inquiries about our products, including offers app functionality troubleshooting account management and more."
   );
   const [imageSrc, setImageSrc] = useState('');
-  const [imagename, setImageName] = useState('');
+  const [imageName, setImageName] = useState('');
   const [textVal, setTextVal] = useState('');
   const [filename, setFileName] = useState('');
   const [botIconType, setBotIconType] = useState('second');
@@ -88,7 +109,9 @@ const EditBotComponent: React.FC = () => {
   const [colorPicker, setColorPicker] = useState<any>(false);
   const [botIdToEdit, setBotIdToEdit] = useState<string | null>(null);
   const router = useRouter();
-  const [chatColor, setChatColor] = useState('#3B82F6'); // Default blue color
+  const [chatColor, setChatColor] = useState('#3B82F6');
+  const [base64Image, setBase64Image] = useState('');
+  const imgViewerRef = useRef(null);
 
   const botSamples = [
     {
@@ -123,8 +146,11 @@ const EditBotComponent: React.FC = () => {
   const handleFileUpload = (event: any) => {
     const file = event.target.files[0];
     setImageName(file.name);
-    const imageUrl = URL.createObjectURL(file);
-    setImageSrc(imageUrl);
+    if (file && file.size <= 10 * 1024 * 1024) {
+      setBase64Image(file);
+    } else {
+      alert('File must be less than 10MB');
+    }
   };
 
   const handleDocumentUpload = (event: any) => {
@@ -156,10 +182,6 @@ const EditBotComponent: React.FC = () => {
     if (step > 1) setStep(step - 1);
   };
 
-  const userId = useSelector(
-    (state: RootState) => state.root?.userData?.user_id
-  );
-
   const handleFileChange = async (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
@@ -173,55 +195,72 @@ const EditBotComponent: React.FC = () => {
       setFileName(file.name);
       // await handleSave()
     } else {
-      alert('File must be a PDF and less than 2MB');
+      alert('File must be a PDF and less than 10MB');
     }
   };
 
   const handleSave = () => {
-    const botData: BotData = {
-      botId: userId,
-      botName,
-      botTone,
-      botColor:chatColor,
-      botGreetingMessage: greetingMessage,
-      botSmartness: false,
-      botIdentity,
-      supportNumber: supportPhone,
-      supportEmail: supportEmail,
-      wordLimitPerMessage: botLimit,
-      userId: userId,
-    };
-    dispatch(editBotProfileAction(botData));
-    router.push('/MyChatBots');
+    if (botId) {
+      const botData: BotData = {
+        botId: botId,
+        botName,
+        botTone,
+        botColor: chatColor,
+        botGreetingMessage: greetingMessage,
+        botSmartness: false,
+        botIdentity,
+        supportNumber: supportPhone,
+        supportEmail: supportEmail,
+        wordLimitPerMessage: botLimit,
+        userId,
+        _id: botId,
+      };
+      dispatch(editBotProfileAction(botData));
+      router.push('/mychatbots');
+    } else {
+      console.error('Bot ID is not available.');
+    }
   };
+
   useEffect(() => {
-    if (botDataRedux) {
-      const botToEdit = botDataRedux[0];
+    if (searchParams) {
+      const id = searchParams.get('id');
+      if (id) {
+        setBotId(id);
+        console.log('Bot ID from URL:', id);
+      } else {
+        console.log('ID not found in search params');
+      }
+    } else {
+      console.log('SearchParams is null');
+    }
+  }, [searchParams]);
+
+  useEffect(() => {
+    if (botDataRedux && botId) {
+      const botToEdit = botDataRedux.find(
+        (bot: { _id: string }) => bot._id === botId
+      );
       if (botToEdit) {
         setBotName(botToEdit.botName);
-        setChatColor(botToEdit.botColor)
+        setChatColor(botToEdit.botColor);
         setBotTone(botToEdit.botTone);
         setGreetingMessage(botToEdit.botGreetingMessage);
         setbotSmartnessVal(botToEdit.botSmartness);
         setBotIdentity(botToEdit.botIdentity);
-        setFileName(botToEdit.docName)
+        setFileName(botToEdit.docName);
         setSupportEmail(botToEdit.supportEmail);
         setSupportPhone(botToEdit.supportNumber);
         setBotLimit(botToEdit.wordLimitPerMessage);
-        // Set any other properties as needed
         const botSample = botSamples.find(
           (bot) => bot.iconType === botToEdit?.botIconType
         );
-
         if (botSample) {
           setImageSrc(botSample.imageUrl);
-        } else {
         }
       }
     }
-  }, [botDataRedux]);
-
-
+  }, [botDataRedux, botId]);
 
   const renderStep1 = () => (
     <div onClick={() => (showColorPicker ? setShowColorPicker(false) : '')}>
@@ -230,7 +269,10 @@ const EditBotComponent: React.FC = () => {
         <input
           type="text"
           value={botName}
-          onChange={(e) => setBotName(e.target.value)}
+          onChange={(e) => {
+            setBotName(e.target.value);
+            console.log(e.target.value);
+          }}
           className="w-full bg-[#171029] text-white p-2 rounded-[12px]"
         />
       </div>
@@ -284,6 +326,35 @@ const EditBotComponent: React.FC = () => {
           <div className="text-red-500 mb-4">{error}</div>
         )}
       </div>
+      <div className="flex flex-col mb-4">
+        <label className="block text-gray-200 mb-2">Custom Bot Profile</label>
+        <div className="mb-4">
+          <div className="relative mb-4">
+            <div className="flex items-center bg-gray-800 p-2 w-full rounded-[12px] absolute ">
+              <span className="mr-2">
+                {imageName?.length ? imageName : 'Choose File'}
+              </span>
+              <button
+                onClick={() => {
+                  setImageName('');
+                  setImageSrc('');
+                }}
+                className="ml-auto text-white"
+              >
+                ×
+              </button>
+            </div>
+            <input
+              type="file"
+              onChange={handleFileUpload}
+              ref={imgViewerRef}
+              accept="image/*"
+              id="file-upload-image"
+              className="absolute top-[0] opacity-0 -[12px] cursor-pointer"
+            />
+          </div>
+        </div>
+      </div>
       <div className="mb-4">
         <label className="block text-gray-200 mb-2">Bot Greeting Message</label>
         <input
@@ -326,23 +397,26 @@ const EditBotComponent: React.FC = () => {
         />
       </div>
       <div className="flex flex-col mb-4">
-
-      <label className="block text-gray-200 mb-2">Select Knowledge Base</label>
-      <div className="relative mb-4">
-        <select
-          className="block appearance-none w-full bg-gray-800 text-white p-2 rounded-[12px] focus:outline-none focus:ring-2 focus:ring-blue-500"
-          defaultValue=""
-        >
-          <option value="" disabled>Select a file</option>
-          {knowledgeBaseData && knowledgeBaseData.map((file: KnowledgeBaseFile) => (
-            <option key={file._id} value={file.fileLocationS3}>
-              {file.docName}
+        <label className="block text-gray-200 mb-2">
+          Select Knowledge Base
+        </label>
+        <div className="relative mb-4">
+          <select
+            className="block appearance-none w-full bg-gray-800 text-white p-2 rounded-[12px] focus:outline-none focus:ring-2 focus:ring-blue-500"
+            defaultValue=""
+          >
+            <option value="" disabled>
+              Select a file
             </option>
-          ))}
-        </select>
-      </div>
+            {knowledgeBaseData &&
+              knowledgeBaseData.map((file: KnowledgeBaseFile) => (
+                <option key={file._id} value={file.fileLocationS3}>
+                  {file.docName}
+                </option>
+              ))}
+          </select>
+        </div>
         <div className="flex items-center space-x-4 mt-5">
-
           <div className="flex items-center">
             <label className="block text-white mr-2">Enable Smartness</label>
             <Switch
@@ -404,7 +478,7 @@ const EditBotComponent: React.FC = () => {
                 <ArrowBackIosNewIcon />
               </button>
             ) : (
-              <Link href={`/MyChatBots`}>
+              <Link href={`/mychatbots`}>
                 <ArrowBackIosNewIcon />
               </Link>
             )}
@@ -461,8 +535,7 @@ const EditBotComponent: React.FC = () => {
                   <br />
                   questions
                 </p>
-                <div className="flex flex-col w-full h-[17vh]">
-                </div>
+                <div className="flex flex-col w-full h-[17vh]"></div>
                 <input
                   type="text"
                   value={greetingMessage}
@@ -478,4 +551,4 @@ const EditBotComponent: React.FC = () => {
   );
 };
 
-export default EditBotComponent;
+export default withAuth(EditBotComponent);

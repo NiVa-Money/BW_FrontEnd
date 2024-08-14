@@ -3,36 +3,29 @@
 import React, { useState, useRef } from 'react';
 import Image from 'next/image';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
-import ZoomOutMapIcon from '@mui/icons-material/ZoomOutMap';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 //redux post
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '@/redux/configureStore';
-import { v4 as uuidv4 } from 'uuid';
-import {
-  createBotProfileAction,
-  getUserBotProfileAction,
-} from '@/redux/actions/BotProfileActions';
+import { createBotProfileAction } from '@/redux/actions/BotProfileActions';
 import Switch from '@mui/material/Switch';
-import { botImageBaseUrl } from '@/utils/constant';
 import { HexColorPicker } from 'react-colorful';
 import { BackgroundCss } from '../BackgroundAnimation/backgroundCss';
+import withAuth from '../withAuth';
 const CreateBotComponent: React.FC = () => {
   const [step, setStep] = useState(1);
   const [botName, setBotName] = useState('');
   const [botTone, setBotTone] = useState('Formal Tone');
-  const [chatColor, setChatColor] = useState('#5D39AD'); 
+  const [chatColor, setChatColor] = useState('#5D39AD');
   const [botProfile, setBotProfile] = useState(
     '/path/to/default/bot/image.png'
   );
-  //
   const viewerRef = useRef(null);
   const imgViewerRef = useRef(null);
   const [botIdentity, setBotIdentity] = useState('');
-  const [knowledgeBase, setKnowledgeBase] = useState(['Assistant.pdf']);
+  const [knowledgeBase] = useState(['Assistant.pdf']);
   const [botLimit, setBotLimit] = useState<any>(200);
-  // const [botIdentity, setBotIdentity] = useState('sales');
   const [botSmartnessVal, setbotSmartnessVal] = useState<any>(false);
   const [showColorPicker, setShowColorPicker] = useState<any>(false);
   const [colorPicker, setColorPicker] = useState<any>(false);
@@ -55,8 +48,7 @@ const CreateBotComponent: React.FC = () => {
   const [textVal, setTextVal] = useState('');
   const [error, setError] = useState('');
   const [base64Image, setBase64Image] = useState('');
-  
-  const [botIconType, setBotIconType] = useState('second');
+
   const router = useRouter();
   // Function to handle file upload
 
@@ -64,14 +56,11 @@ const CreateBotComponent: React.FC = () => {
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
     const file = event.target.files?.[0];
-    if (
-      file &&
-      file.size <= 2 * 1024 * 1024
-    ) {
+    if (file && file.size <= 2 * 1024 * 1024) {
       setSelectedFile(file);
       setFileName(file.name);
     } else {
-      alert('File must be a PDF and less than 2MB');
+      alert('File must be a PDF and less than 10MB');
     }
   };
 
@@ -80,48 +69,34 @@ const CreateBotComponent: React.FC = () => {
     const imagePath = URL.createObjectURL(file);
     setImageSrc(imagePath)
     setImageName(file.name);
-    if (
-      file &&
-      file.size <= 2 * 1024 * 1024
-    ) {
+    if (file && file.size <= 10 * 1024 * 1024) {
       setBase64Image(file);
     } else {
-      alert('File must be less than 2MB');
+      alert('File must be less than 10MB');
     }
   };
 
-
-  const handleBotSampleClick = async(item: any) => {
-
-    setImageSrc(item?.imageUrl)
+  const handleBotSampleClick = async (item: any) => {
+    setImageSrc(item?.imageUrl);
 
     console.log("ImagesCustom",item.imageUrl)
 
     const response = await fetch(item?.imageUrl);
-            const blob = await response.blob();
-            const file = new File([blob], 'image.jpg', { type: blob.type });
-            setSelectedFileImage(file);
-   
+    const blob = await response.blob();
+    const file = new File([blob], 'image.jpg', { type: blob.type });
+    setSelectedFileImage(file);
   };
 
-
-
-  const handleDocumentUpload = (event: any) => {
-    const file = event.target.files[0];
-    // setFileName(file.name);
-  };
   const validateStep1 = () => {
     if (!botName) {
       setError('Please enter a bot name.');
       return false;
     }
 
-
     if (!imageSrc && !base64Image) {
-    setError('Please select a bot profile or upload a custom bot profile.');
-    return false;
-  }
-
+      setError('Please select a bot icon or upload a custom bot icon.');
+      return false;
+    }
 
     if (!validateGreetingMessage(greetingMessage)) {
       setError('Please enter a valid greeting message.');
@@ -193,9 +168,9 @@ const CreateBotComponent: React.FC = () => {
       setError('Please enter a valid phone number with 10 digits.');
       return;
     }
-  
+
     const formData = new FormData();
-    const imageFile:any = base64Image ? base64Image : selectedFileImage
+    const imageFile: any = base64Image ? base64Image : selectedFileImage;
     formData.append('botName', botName);
     formData.append('botTone', botTone);
     formData.append('botColor', chatColor);
@@ -215,7 +190,7 @@ const CreateBotComponent: React.FC = () => {
     }
     dispatch(createBotProfileAction(formData));
     // dispatch(getUserBotProfileAction(userId));
-    router.push('/MyChatBots');
+    router.push('/mychatbots');
   };
 
   const botSamples = [
@@ -234,16 +209,9 @@ const CreateBotComponent: React.FC = () => {
     {
       imageUrl: `/images/bot5.svg`,
     },
-
   ];
 
-
- 
-
   // Path to your SVG file
- 
-  
-
 
   const handleColorClick = (color: any) => {
     if (color === 'rainbow') {
@@ -270,7 +238,6 @@ const CreateBotComponent: React.FC = () => {
           onChange={(e) => setBotName(e.target.value)}
           className="w-full bg-[#171029] text-white p-2 rounded-[12px]"
         />
-
       </div>
       <div className="mb-4">
         <label className="block text-gray-200 mb-2">Chat Color</label>
@@ -305,7 +272,7 @@ const CreateBotComponent: React.FC = () => {
       </div>
 
       <div className="mb-4">
-        <label className="block text-gray-200 mb-2">Bot profile</label>
+        <label className="block text-gray-200 mb-2">Bot Icon</label>
         <div className="grid grid-cols-5 gap-2">
           {/* Add bot profile images here */}
           {botSamples.map((item, idx) => (
@@ -319,10 +286,9 @@ const CreateBotComponent: React.FC = () => {
             />
           ))}
         </div>
-
       </div>
       <div className="flex flex-col mb-4">
-        <label className="block text-gray-200 mb-2">Custom Bot Profile</label>
+        <label className="block text-gray-200 mb-2">Custom Bot Icon</label>
         <div className="mb-4">
           <div className="relative mb-4">
             <div className="flex items-center bg-gray-800 p-2 w-full rounded-[12px] absolute ">
@@ -416,7 +382,6 @@ const CreateBotComponent: React.FC = () => {
               type="file"
               onChange={handleFileChange}
               ref={viewerRef}
-  
               id="file-upload"
               className="absolute top-[0] opacity-0 -[12px] cursor-pointer"
             />
@@ -426,7 +391,6 @@ const CreateBotComponent: React.FC = () => {
           <div className="relative mt-5 z-10 text-red-500">{error}</div>
         )}
         <div className="flex items-center space-x-4 mt-5">
-
           <div className="flex items-center">
             <label className="block text-white mr-2">Enable Smartness</label>
             <Switch
@@ -489,7 +453,7 @@ const CreateBotComponent: React.FC = () => {
                 <ArrowBackIosNewIcon />
               </button>
             ) : (
-              <Link href={`/MyChatBots`}>
+              <Link href={`/mychatbots`}>
                 <ArrowBackIosNewIcon />
               </Link>
             )}
@@ -527,7 +491,6 @@ const CreateBotComponent: React.FC = () => {
                   }}
                 >
                   <h2 className="my-auto p-5 text-white">Preview</h2>
-
                 </div>
                 {imageSrc ? (
                   <Image
@@ -540,7 +503,6 @@ const CreateBotComponent: React.FC = () => {
                 ) : (
                   <span className="mr-2 mt-4">Choose Profile</span>
                 )}{' '}
-
                 <h3 className="mt-1 text-2xl font-bold leading-9 text-center text-white">
                   {botName}
                 </h3>
@@ -549,10 +511,7 @@ const CreateBotComponent: React.FC = () => {
                   <br />
                   questions
                 </p>
-                <div className="flex flex-col w-full h-[17vh]">
-                
-                </div>
-               
+                <div className="flex flex-col w-full h-[17vh]"></div>
                 <input
                   type="text"
                   value={greetingMessage}
@@ -567,4 +526,4 @@ const CreateBotComponent: React.FC = () => {
     </div>
   );
 };
-export default CreateBotComponent;
+export default withAuth(CreateBotComponent);

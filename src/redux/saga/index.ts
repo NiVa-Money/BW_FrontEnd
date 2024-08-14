@@ -83,9 +83,8 @@ import {
   verifyOtpUserData,
   capturePaymentService,
 } from '../services';
-import { useRouter } from 'next/navigation';
 import { notifyError, notifySuccess } from '@/components/Toaster/toast';
-import { capturePaymentFailure, capturePaymentRequest, capturePaymentSuccess } from '../actions/paymentActions';
+import {capturePaymentFailure, capturePaymentRequest, capturePaymentSuccess } from '../actions/paymentActions';
 interface BotData {
   userChat: any;
 }
@@ -591,34 +590,45 @@ export function* payPalPaymentSaga({
   payload: any;
 }): Generator<any> {
   try {
-    const response:any = yield call(processPayPalPaymentService, payload);
+    const response: any = yield call(processPayPalPaymentService, payload);
+    console.log('API response:', response);
+    // Save the response in Redux
     yield put({
       type: CREATE_PAYMENT_SUCCESS,
       payload: response,
     });
+
     notifySuccess('Payment processed successfully');
-    const _id:any = response?._id; 
-    yield put(capturePaymentRequest(_id)); 
+    
   } catch (error: any) {
     yield put({
       type: CREATE_PAYMENT_FAILURE,
-      payload: error,
+      payload: error.message,
     });
     notifyError('Payment processing failed');
   }
 }
 
-function* capturePaymentSaga({ payload }: { type: string; payload: string; }): Generator<any> {
+export function* capturePaymentSaga({ payload }: { type: string; payload: string; }): Generator<any> {
   try {
-    const response = yield call(capturePaymentService, payload); // Call the capture payment service
-    yield put(capturePaymentSuccess(response)); // Dispatch success action
+    const response = yield call(capturePaymentService, payload);
+    console.log('Capture payment response:', response);
+    // const paymentId = response._id;
+    const paymentId = (response as { _id: string })._id;
+    console.log('paymentid same as response' , paymentId)
+    // if (paymentId) {
+    //   yield put(capturePaymentRequest(paymentId));
+    // } else {
+    //   throw new Error('Payment ID is missing in the response');
+    // }
+    // // Save the captured payment response in Redux
+    yield put(capturePaymentSuccess(response));
     notifySuccess('Payment captured successfully');
   } catch (error: any) {
-    yield put(capturePaymentFailure(error)); // Dispatch failure action
+    yield put(capturePaymentFailure(error.message));
     notifyError('Payment capture failed');
   }
 }
-
 export default function* rootSaga() {
   yield takeLatest(VERIFY_USER_DATA, verifyUserSaga);
   yield takeLatest(SIGN_UP_DATA, signUpUserSaga);

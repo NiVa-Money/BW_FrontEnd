@@ -46,7 +46,7 @@ const PricingTier: React.FC<PricingTierProps> = ({
         <button
           className="py-2 px-6 text-base font-medium bg-gray-100 rounded-lg text-slate-950 w-full"
         >
-          Start Free Trial
+          Start For Free
         </button>
       )}
     </div>

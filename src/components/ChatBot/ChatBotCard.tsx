@@ -157,7 +157,7 @@ const ChatBotCard: React.FC<ChatBotCardProps> = ({ bot, actions, botCard }) => {
             onClick={actions.onEdit}
           >
             <FontAwesomeIcon icon={faPencilAlt} />
-            <Link href={`/editBot`}>
+            <Link href={`/editbot`}>
               <span>Edit</span>
             </Link>
           </button>

@@ -49,7 +49,7 @@ const initialSIDENAV_ITEMS: SidebarItemProps[] = [
       {
         title: 'All Chats',
         hasDropdown: true,
-        subChildItems: [{ title: 'hey', path: '/MyChatBots' }],
+        subChildItems: [{ title: 'hey', path: '/mychatbots' }],
       },
       { title: 'Reports (coming soon)' },
     ],
@@ -59,8 +59,8 @@ const initialSIDENAV_ITEMS: SidebarItemProps[] = [
     text: 'Bots',
     hasDropdown: true,
     subMenuItems: [
-      { path: '/MyChatBots', title: 'My Chatbots' },
-      { path: '/knowledgeBase', title: 'Knowledge Base' },
+      { path: '/mychatbots', title: 'My Chatbots' },
+      { path: '/knowledgebase', title: 'Knowledge Base' },
     ],
   },
 ];
@@ -68,7 +68,7 @@ const initialSIDENAV_ITEMS: SidebarItemProps[] = [
 const SIDENAV_ITEMS2: SidebarItemProps[] = [
   { icon: 'fa-user', text: 'Profile', path: '/profile' },
   // { icon: 'fa-trash', text: 'Clear Conversations', onClick: undefined },
-  { icon: 'fa-crown', text: 'Membership', path: '/memberShip' },
+  { icon: 'fa-crown', text: 'Membership', path: '/membership' },
   { icon: 'fa-question-circle', text: 'Help Center', path: '/faq' },
   { icon: 'fa-sign-out-alt', text: 'Log Out', path: '/' },
 ];
@@ -102,7 +102,7 @@ const SideBar: React.FC = () => {
 
   useEffect(() => {}, [botProfiles]);
   return (
-    <div className="w-64 h-[100%] p-4 bg-[#0B031E] flex flex-col h-screen relative">
+    <div className="w-64 p-4 bg-[#0B031E] flex flex-col h-screen relative">
       {/* <BackgroundCss/> */}
       <Link
         href={'/dashboard'}
@@ -178,7 +178,7 @@ const MenuItem: React.FC<MenuItemProps> = ({ item, onClick }) => {
       userId,
     };
     dispatch(botSessionId(data));
-    router.push('/botSession');
+    router.push('/botsession');
   };
 
   useEffect(() => {}, [botSessionaa]);

@@ -46,7 +46,7 @@
 //   }, []);
 
 //   useEffect(() => {
-//     if (verifyVal || pathName === '/dashBoard') {
+//     if (verifyVal || pathName === '/dashboard') {
 //       dispatch(fetchMetricsAction(userId));
 //     }
 //   }, [verifyVal, pathName]);
