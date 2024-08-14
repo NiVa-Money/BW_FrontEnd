@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuthContext } from '@/context/AuthContext';
-import { BackgroundAnimation } from '../BackgroundAnimation/backgroundAnimation';
+import  BackgroundAnimation  from '../BackgroundAnimation/backgroundAnimation';
 import { fetchUserData } from '@/redux/services';
 import { signUpDataAction, resetUserDataAction } from '@/redux/actions/authActions';
 import { useDispatch } from 'react-redux';
@@ -117,8 +117,8 @@ const Modal: React.FC<ModalProps> = ({ closeModal, handleSignUp }) => {
 
   return (
     <>
-      <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 ">
-        <BackgroundAnimation />
+      <div className="fixed inset-0  flex items-center justify-center bg-black bg-opacity-50 ">
+        <BackgroundAnimation>
         <div className="p-6 rounded-lg max-w-lg mx-auto relative">
           <div className="flex justify-end">
             <button
@@ -224,6 +224,7 @@ const Modal: React.FC<ModalProps> = ({ closeModal, handleSignUp }) => {
           <SignUpModalOtp viewOtp={userSuccess} setViewOtp={setViewOtp} />
           } 
         </div>
+        </BackgroundAnimation>
       </div>
     </>
   );
