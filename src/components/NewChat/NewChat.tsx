@@ -122,6 +122,12 @@ const NewChatComponent: React.FC = () => {
     dispatch(filteredSession(data));
   };
 
+  const scrollToBottom = () => {
+    if (chatContainerRef.current) {
+      chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
+    }
+  };
+
   const messageVariants = {
     hidden: { opacity: 0, x: 50 },
     visible: { opacity: 1, x: 0 },
@@ -162,6 +168,12 @@ const NewChatComponent: React.FC = () => {
       chatContainerRef.current.scrollTop =
         chatContainerRef.current.scrollHeight;
     }
+
+    const intervalId = setInterval(() => {
+      scrollToBottom(); // Keeps scrolling as ReactTyped types
+    }, 50); // Adjust the interval as needed
+
+    return () => clearInterval(intervalId); 
     // console.log('newMessage', newMessage);
     // console.log('botProfiles', botProfiles);
   }, [userChatMessagesRes]);
@@ -446,6 +458,7 @@ const NewChatComponent: React.FC = () => {
                             strings={[formattedText]}
                             typeSpeed={5}
                             showCursor={false}
+                            onComplete={() => scrollToBottom()} 
                           />
                         </div>
                       ) : (
