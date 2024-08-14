@@ -18,6 +18,7 @@ const NewChatComponent: React.FC = () => {
   const dispatch = useDispatch();
   const [isBotProfileOpen, setIsBotProfileOpen] = React.useState(false);
   const [isChatHistoryOpen, setIsChatHistoryOpen] = React.useState(false);
+  const [isAutoScrollEnabled, setIsAutoScrollEnabled] = React.useState(true);
   const [showPopup, setShowPopup] = React.useState<any>(false);
   const [activeBotIndex, setActiveBotIndex] = React.useState(null);
   // const [sessionId, setSessionId] = React.useState<any>('');
@@ -49,10 +50,7 @@ const NewChatComponent: React.FC = () => {
     (state: RootState) => state?.userChat?.sessionChat?.lastMessageFrom
   );
   React.useEffect(() => {
-    if (chatContainerRef.current) {
-      chatContainerRef.current.scrollTop =
-        chatContainerRef.current.scrollHeight;
-    }
+    scrollToBottom();
   }, [messages]);
 
   const handleBotClick = (index: any, botId: any, botName: any) => {
@@ -76,6 +74,7 @@ const NewChatComponent: React.FC = () => {
   };
 
   const sendMessage = (event: any) => {
+    setIsAutoScrollEnabled(true)
     event.preventDefault();
     // console.log('botProfiles', newMessage);
     if (newMessage.trim() !== '') {
@@ -122,11 +121,7 @@ const NewChatComponent: React.FC = () => {
     dispatch(filteredSession(data));
   };
 
-  const scrollToBottom = () => {
-    if (chatContainerRef.current) {
-      chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
-    }
-  };
+  
 
   const messageVariants = {
     hidden: { opacity: 0, x: 50 },
@@ -164,19 +159,32 @@ const NewChatComponent: React.FC = () => {
   React.useEffect(() => {
     // console.log('userChatMessagesRes', userChatMessagesRes);
     setSessionId(userChatMessagesRes?.sessionId);
-    if (chatContainerRef.current) {
-      chatContainerRef.current.scrollTop =
-        chatContainerRef.current.scrollHeight;
-    }
-
-    const intervalId = setInterval(() => {
-      scrollToBottom(); // Keeps scrolling as ReactTyped types
-    }, 50); // Adjust the interval as needed
-
-    return () => clearInterval(intervalId); 
+    scrollToBottom();
     // console.log('newMessage', newMessage);
     // console.log('botProfiles', botProfiles);
   }, [userChatMessagesRes]);
+
+
+  const scrollToBottom = () => {
+    if (chatContainerRef.current && isAutoScrollEnabled) {
+      chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
+    }
+  };
+
+  React.useEffect(() => {
+    const intervalId = setInterval(() => {
+      if (isAutoScrollEnabled) {
+        scrollToBottom(); 
+      }
+    }, 50); 
+
+    return () => clearInterval(intervalId);
+  }, [isAutoScrollEnabled]); 
+
+  const handleTypingComplete = () => {
+    // console.log("Typing complete");
+    setIsAutoScrollEnabled(false); 
+  };
 
   return (
     <div className="relative flex flex-col justify-between items-center px-10 py-10 bg-[#0B031E] min-h-screen max-md:px-5 overflow-hidden">
@@ -458,7 +466,7 @@ const NewChatComponent: React.FC = () => {
                             strings={[formattedText]}
                             typeSpeed={5}
                             showCursor={false}
-                            onComplete={() => scrollToBottom()} 
+                            onComplete={() => handleTypingComplete()} 
                           />
                         </div>
                       ) : (
