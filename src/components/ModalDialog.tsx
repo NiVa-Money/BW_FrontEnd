@@ -35,9 +35,9 @@ const ModalDialog: React.FC<ModalDialogProps> = ({ open, onClose }) => {
             <a
               href="https://www.installonair.com/app-download-link/PKtMr3"
               target="blank"
-              className="text-[purple] underline font-bold"
+              className="text-[purple] underline font-bold text-center"
             >
-              Download Now!
+              Available for Android Devices!
             </a>
             <Image
               src={apkQR.src} // Replace with your image path
