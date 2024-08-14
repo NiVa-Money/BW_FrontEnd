@@ -60,6 +60,8 @@ export default function RootLayout({
     '/botsession',
     '/faq/questionsAns',
     '/faq/docs',
+    '/privacy',
+    '/terms',
   ];
   const routeWithoutSidebar: string[] = [
     '/createbot',
@@ -71,6 +73,8 @@ export default function RootLayout({
     '/login',
     '/home',
     '/botsession',
+    '/privacy',
+    '/terms',
   ];
   const knownRoutes: string[] = [
     ...routeWithoutSidebar,
@@ -89,6 +93,8 @@ export default function RootLayout({
     '/blog',
     '/contactus',
     '/home',
+    '/privacy',
+    '/terms',
   ];
 
   const [isSidebarVisible, setIsSidebarVisible] = React.useState(true);
