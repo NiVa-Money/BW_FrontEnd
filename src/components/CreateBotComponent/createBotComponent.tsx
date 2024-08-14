@@ -56,7 +56,7 @@ const CreateBotComponent: React.FC = () => {
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
     const file = event.target.files?.[0];
-    if (file && file.size <= 2 * 1024 * 1024) {
+    if (file && file.size <= 10 * 1024 * 1024) {
       setSelectedFile(file);
       setFileName(file.name);
     } else {
