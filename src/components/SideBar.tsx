@@ -17,6 +17,8 @@ import {
 import { logoutUser } from '@/redux/actions/authActions';
 import { botSessionId } from '@/redux/actions/userChatAction';
 import { BackgroundCss } from './BackgroundAnimation/backgroundCss';
+import { Modal } from '@mui/material';
+import ModalDialog from './ModalDialog';
 
 interface SidebarItemProps {
   path?: string;
@@ -83,6 +85,15 @@ const SideBar: React.FC = () => {
 
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
+  const [open, setOpen] = useState<any>(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose: any = (): void => {
+    setOpen(false); 
+  };
 
   const LogoutButton = () => {
     localStorage.removeItem('user_id');
@@ -110,7 +121,6 @@ const SideBar: React.FC = () => {
       >
         <Image src={mainLogo.src} alt="logo" width={90} height={80} />
       </Link>
-
       <button
         onClick={getUserBotProfiles}
         className="bg-[#1E1E2E] text-white rounded-full py-4 px-4 mb-8 flex items-center space-x-4 justify-center"
@@ -119,8 +129,7 @@ const SideBar: React.FC = () => {
         <Link href={`/newchat`}>
           <span>Test your Bot</span>
         </Link>
-      </button>
-
+      </button>{' '}
       <MenuItem item={DashboardItem} key={DashboardItem?.text} />
       <div className="flex flex-col h-[100%] justify-between overflow-y-scroll">
         <div className="flex flex-col space-y-2">
@@ -128,6 +137,11 @@ const SideBar: React.FC = () => {
             <MenuItem key={idx} item={item} />
           ))}
         </div>
+        <button className="bg-[#1E1E2E] text-white rounded-full py-2 px-4 mb-8 flex items-center space-x-4 justify-center">
+          <button onClick={handleClickOpen}>
+            <span>Availale on Android</span>
+          </button>
+        </button>
         <div className="flex flex-col space-y-2 mt-2">
           {SIDENAV_ITEMS2.map((item, idx) => (
             <MenuItem
@@ -144,8 +158,8 @@ const SideBar: React.FC = () => {
           ))}
         </div>
       </div>
-
       {isModalOpen && <ClearConversation closeModal={closeModal} />}
+      <ModalDialog open={open} onClose={handleClose} />
     </div>
   );
 };
