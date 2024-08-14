@@ -39,8 +39,8 @@ const BackgroundAnimation: React.FC<BackgroundAnimationProps> = ({children}) => 
   }, []);
 
   return (
-    <div className="gradient-bg">
-      <svg xmlns="http://www.w3.org/2000/svg">
+    <div className="gradient-bg absolute inset-0 w-[100vw] h-[100vh] z-0">
+      <svg className='h-full w-full' xmlns="http://www.w3.org/2000/svg">
         <defs>
           <filter id="goo">
             <feGaussianBlur in="SourceGraphic" stdDeviation="10" result="blur" />

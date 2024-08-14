@@ -22,16 +22,20 @@ html, body {
   }
   
   :root {
-    --color-bg1: rgb(41, 1, 61);
-    --color-bg2: rgb(56, 3, 79);
-    --color1: 75, 0, 130;
-    --color2: 221, 74, 255;
-    --color3: 100, 220, 255;
-    --color4: 200, 50, 50;
-    --color5: 180, 180, 50;
+    --color-bg1: #222b27
+    --color-bg2: #222b27
+    // --color1: 75, 0, 130;
+    // --color2: 221, 74, 255;
+    // --color3: 100, 220, 255;
+    // --color4: 200, 50, 50;
+    // --color5: 180, 180, 50;
     --color-interactive: 140, 100, 255;
     --circle-size: 80%;
     --blending: hard-light;
+    --color-bg2: #222b27
+    ; /* Vibrant purple-pink shade from your image */
+    --color1: 123, 0, 125; /* Adjust these values if needed */
+    --color-interactive: 123, 0, 125; /* Use the same as one of your colors */
   }
   
   @keyframes moveInCircle {

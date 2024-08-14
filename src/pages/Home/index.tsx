@@ -3,6 +3,7 @@ import PricingCard from '@/components/Pricing';
 import Factors from '@/components/Factors';
 import Features from '@/components/Features';
 import Hero from '@/components/Hero';
+import BackgroundAnimation from '@/components/BackgroundAnimation/backgroundAnimation';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@/redux/configureStore';
 import { useEffect } from 'react';
@@ -72,17 +73,11 @@ const LandingPage: React.FC = () => {
   return (
     <>
       <main>
-        <Hero />
-        <section>
-          <div>
-            <Features />
-          </div>
-        </section>
-        <section>
-          <div>
-            <Factors />
-          </div>
-        </section>
+        <BackgroundAnimation>
+          <Hero />
+        </BackgroundAnimation>
+          <Features />
+          <Factors />
         <section>
           <div>
             <Testimonials />
