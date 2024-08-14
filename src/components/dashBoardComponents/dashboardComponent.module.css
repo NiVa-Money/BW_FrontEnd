@@ -3,3 +3,7 @@
     display: flex;
     gap: 16px; /* Adjust the gap as needed */
   }
+
+.textOfCreateBot{
+  font-size: 1vw;
+}
