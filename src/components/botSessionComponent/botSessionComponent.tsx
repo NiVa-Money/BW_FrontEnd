@@ -341,7 +341,7 @@ const BotSessionComponent: React.FC = () => {
         </div>
         <div className="text-white mt-[54px]">
           <Link
-            href={'/dashBoard'}
+            href={'/dashboard'}
             className={`flex items-center space-x-3 py-2 px-3 text-gray-300 hover:bg-white' 
           }`}
           >

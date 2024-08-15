@@ -1,5 +1,5 @@
 import { Card } from '@tremor/react';
-import styles from "../dashBoardComponents/dashboardComponent.module.css"
+import styles from "../dashboardComponents/dashboardComponent.module.css"
 
 interface MiniCardProps {
   uniqueClientToday: number;

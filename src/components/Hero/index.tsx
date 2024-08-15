@@ -39,7 +39,7 @@ const Hero = () => {
 
   const handleSignUp = (userData: any, router: any) => {
     // closeModal();
-    // router.push('/dashBoard');
+    // router.push('/dashboard');
   };
 
   const handleSignIn = () => {
