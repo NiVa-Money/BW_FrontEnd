@@ -104,7 +104,7 @@ const DashBoardComponent: React.FC = () => {
             {metricData?.activeBots}
           </div>
           <button className="flex justify-center text-xl font-medium text-gray-100 bg-[#3F2181] rounded-[60px] mt-2 md:mt-0">
-            <Link href="/createBot" className="flex px-8 md:px-14 py-3 gap-2">
+            <Link href="/createbot" className="flex px-8 md:px-14 py-3 gap-2">
               <span>Create Bot</span>
               <FontAwesomeIcon icon={faPlus} className="w-[25px] h-[25px]" />
             </Link>

@@ -22,7 +22,7 @@ const PricingCard = () => {
   const pricingTiers = [
     {
       title: 'Basic',
-      price: '$0.00',
+      price: '0.00',
       sessions: '100 Messages',
       features: [
         'Access to essential features for creating your AI chatbot.',
@@ -35,7 +35,7 @@ const PricingCard = () => {
     },
     {
       title: 'BotWot Starter',
-      price: '$29.99',
+      price: '29.99',
       sessions: '10,000 Messages',
       features: [
         'Advanced tools to create and manage your chatbot, featuring AI-generated responses',
@@ -47,7 +47,7 @@ const PricingCard = () => {
     },
     {
       title: 'BotWot Pro',
-      price: '$59.99',
+      price: '59.99',
       sessions: '20,000 Messages',
       features: [
         'Enhanced features for extensive chatbot needs with AI-generated responses.',
