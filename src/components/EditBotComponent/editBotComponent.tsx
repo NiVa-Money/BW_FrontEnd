@@ -60,7 +60,7 @@ const EditBotComponent: React.FC = () => {
       console.log('SearchParams is null');
     }
   }, [searchParams]);
- 
+
   const botDataRedux = useSelector(
     (state: RootState) => state.botProfile?.botProfiles?.data
   );
@@ -320,6 +320,7 @@ console.log("bot",botDataRedux)
       }
     }
   }, [botDataRedux, botId]);
+
   
 
   const renderStep1 = () => (
