@@ -394,7 +394,7 @@ export function* deleteBotProfilesSaga({
 }): Generator<any> {
   try {
     const botProfiles = yield call(deleteBotProfileService, payload)
-    // notifySuccess('botProfile deleted successfully');
+    notifySuccess('botProfile deleted successfully');
     yield put({
       type: DELETE_BOT_PROFILE_SUCCESS,
       payload: botProfiles,

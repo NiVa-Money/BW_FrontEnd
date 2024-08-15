@@ -210,6 +210,7 @@ const CreateBotComponent: React.FC = () => {
       formData.append('file', selectedFile);
     }
     dispatch(createBotProfileAction(formData));
+   
     // dispatch(getUserBotProfileAction(userId));
     router.push('/MyChatBots');
   };

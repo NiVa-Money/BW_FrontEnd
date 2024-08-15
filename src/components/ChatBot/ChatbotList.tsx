@@ -212,16 +212,27 @@ const ChatBotList: React.FC = () => {
   const botDataRedux = useSelector(
     (state: RootState) => state.botProfile?.botProfiles?.data
   );
+ 
   const botloader = useSelector(
     (state: RootState) => state.botProfile?.botProfiles?.loader
   );
+
+
+  const botDataLoader =  useSelector(
+    (state: RootState) => state.botProfile?.create?.loader
+  );
+
+  const botDataLoader2 =  useSelector(
+    (state: RootState) => state.botProfile?.delete?.loader
+  );
+
+
   const [chatBotList, setChatBotList] = useState<ChatBot[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [botIdToDelete, setBotIdToDelete] = useState<string | null>(null);
   const userId = useSelector(
     (state: RootState) => state.root?.userData?.user_id
   );
-  console.log(userId)
   const [userIdLocal, setUserIdLocal] = useState(userId);
   const dispatch = useDispatch();
   const pathName = useSelector((state: RootState) => state.root?.pathName);
@@ -259,14 +270,21 @@ const ChatBotList: React.FC = () => {
   };
 
   // Confirm deletion
-  const confirmDelete = () => {
-    if (userId && botIdToDelete) {
-      dispatch(
-        deleteBotProfileServiceAction({ botId: botIdToDelete, userId: userId })
-      );
-      setIsModalOpen(false);
-    }
-  };
+
+const confirmDelete = () => {
+  if (userId && botIdToDelete) {
+    dispatch(
+      deleteBotProfileServiceAction({ botId: botIdToDelete, userId: userId })
+    );
+
+    setChatBotList((prevList) => prevList.filter(bot => bot._id !== botIdToDelete));
+
+    // Close the modal
+    setIsModalOpen(false);
+    setBotIdToDelete(null);
+  }
+};
+
 
   // Close the modal
   const closeModal = () => {
