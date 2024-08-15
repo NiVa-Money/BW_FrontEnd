@@ -1,4 +1,5 @@
 import * as React from 'react';
+<<<<<<<< HEAD:src/components/dashBoardComponents/DashBoardComponent.tsx
 import { SqureCardOne } from '@/components/dashBoardComponents/squreCardOne';
 import { SqureCardTwo } from '@/components/dashBoardComponents/squreCardTwo';
 import { CardHeader1 } from '@/components/dashBoardComponents/headerCard';
@@ -14,10 +15,31 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import withAuth from '../withAuth';
 const DashBoardComponent: React.FC = () => {
+========
+import { SqureCardOne } from '@/components/dashboardComponents/squreCardOne';
+import { SqureCardTwo } from '@/components/dashboardComponents/squreCardTwo';
+import { CardHeader1 } from '@/components/dashboardComponents/headerCard';
+import { useSelector, useDispatch } from 'react-redux';
+import { RootState } from '@/redux/configureStore';
+import { useEffect, useState } from 'react';
+import styles from './dashboard.module.css';
+import Link from 'next/link';
+import { fetchMetricsAction } from '@/redux/actions/authActions';
+import { getUserProfileAction } from '@/redux/actions/authActions';
+import withAuth from '@/components/withAuth';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
+
+const DashBoard: React.FC = () => {
+>>>>>>>> origin/predev:src/app/dashboard/DashBoard.tsx
   const userEmail = useSelector((state: RootState) => state.root?.user?.email);
   const userDataRedux = useSelector(
     (state: RootState) => state.root?.userProfile?.data
   );
+<<<<<<<< HEAD:src/components/dashBoardComponents/DashBoardComponent.tsx
+========
+
+>>>>>>>> origin/predev:src/app/dashboard/DashBoard.tsx
   const pathName = useSelector((state: RootState) => state.root?.pathName);
   const verifyVal = useSelector((state: RootState) => state.root.userVerify);
   const userId = useSelector(
@@ -29,11 +51,63 @@ const DashBoardComponent: React.FC = () => {
   const userMetricData = useSelector(
     (state: RootState) => state?.root?.userMetric?.data
   );
+<<<<<<<< HEAD:src/components/dashBoardComponents/DashBoardComponent.tsx
   const [metricData, setMetricData] = useState(userMetricData);
+========
+
+  const [metricData, setMetricData] = useState(userMetricData);
+  console.log('metricData', metricData);
+>>>>>>>> origin/predev:src/app/dashboard/DashBoard.tsx
 
   const [profileData, setProfileData] = React.useState<any>(userDataRedux);
   const dispatch = useDispatch();
 
+<<<<<<<< HEAD:src/components/dashBoardComponents/DashBoardComponent.tsx
+========
+  //user sat
+  const totalSatisfaction =
+    metricData.userSatisfaction?.good +
+    metricData.userSatisfaction?.bad +
+    metricData.userSatisfaction?.neutral;
+  const goodPercentage =
+    totalSatisfaction > 0
+      ? (metricData.userSatisfaction.good / totalSatisfaction) * 100
+      : 0;
+  const badPercentage =
+    totalSatisfaction > 0
+      ? (metricData.userSatisfaction.bad / totalSatisfaction) * 100
+      : 0;
+  const neutralPercentage =
+    totalSatisfaction > 0
+      ? (metricData.userSatisfaction.neutral / totalSatisfaction) * 100
+      : 0;
+
+  // Determine what to display
+  let displayEmoji = '😐';
+  let displayPercentage = 0;
+
+  if (badPercentage > 50) {
+    displayEmoji = '😢';
+    displayPercentage = badPercentage;
+  } else if (goodPercentage > 50) {
+    displayEmoji = '😄';
+    displayPercentage = goodPercentage;
+  } else if (
+    goodPercentage === 0 &&
+    badPercentage === 0 &&
+    neutralPercentage === 0
+  ) {
+    displayEmoji = '😢';
+    displayPercentage = 0;
+  } else {
+    displayEmoji = '😐';
+    displayPercentage = neutralPercentage;
+  }
+  const meterHeight = '90%';
+  const emojiPosition =
+    (displayPercentage / 100) * parseFloat(meterHeight.replace('%', '')) + '%';
+
+>>>>>>>> origin/predev:src/app/dashboard/DashBoard.tsx
   React.useEffect(() => {}, [userId]);
 
   React.useEffect(() => {
@@ -98,6 +172,7 @@ const DashBoardComponent: React.FC = () => {
             <div className="text-3xl font-bold">{metricData?.sessionTotal}</div>
           </div>
         </div>
+<<<<<<<< HEAD:src/components/dashBoardComponents/DashBoardComponent.tsx
         <div className="bg-[#1E1935] w-full md:w-[31%] rounded-2xl p-2 flex flex-col items-center">
           <div className={styles.textSize}>Total Bots Created</div>
           <div className={`${styles.textSize} font-bold`}>
@@ -107,6 +182,17 @@ const DashBoardComponent: React.FC = () => {
             <Link href="/createBot" className="flex justify-center items-center px-8 md:px-14 py-3 gap-5">
               <div className={`${styles.textOfCreateBot} flex `}>Create Bot</div>
               <FontAwesomeIcon icon={faPlus} className="w-[7%] h-[7%]" />
+========
+        <div className="bg-[#1E1935] w-full md:w-[31%] rounded-2xl p-4 m-1 flex flex-col items-center">
+          <div className={styles.textSize}>Total Bots Created</div>
+          <div className={`${styles.textSize} font-bold mt-1`}>
+            {metricData?.activeBots}
+          </div>
+          <button className="flex justify-center text-xl font-medium text-gray-100 bg-[#3F2181] rounded-[60px] mt-2 md:mt-0">
+            <Link href="/createbot" className="flex px-8 md:px-14 py-3 gap-2">
+              <span>Create Bot</span>
+              <FontAwesomeIcon icon={faPlus} className="w-[25px] h-[25px]" />
+>>>>>>>> origin/predev:src/app/dashboard/DashBoard.tsx
             </Link>
           </button>
         </div>
@@ -124,6 +210,7 @@ const DashBoardComponent: React.FC = () => {
             <span className="text-white text-lg">Coming Soon</span>
           </div>
         </div>
+<<<<<<<< HEAD:src/components/dashBoardComponents/DashBoardComponent.tsx
         <div className="flex w-full md:w-[20%] h-[40vh] md:h-[98%] flex-col gap-4 m-1">
           <div className="relative bg-[#1E1935] w-full h-full rounded-2xl p-4 flex flex-col items-center opacity-50">
             <div className="h-[89%] w-[10%] bg-gradient-to-t from-red-500 via-yellow-500 to-green-500 rounded-full relative">
@@ -134,6 +221,23 @@ const DashBoardComponent: React.FC = () => {
             <div className="absolute inset-0 flex items-center justify-center bg-gray-900 bg-opacity-75 rounded-2xl">
               <span className="text-white text-lg">Coming Soon</span>
             </div>
+========
+
+        <div className="flex w-full md:w-[20%] h-[40vh] md:h-[98%] flex-col gap-4 m-1">
+          <div className="relative bg-[#1E1935] w-full h-full rounded-2xl p-4 flex flex-col items-center">
+            <div className="h-[89%] w-[10%] bg-gradient-to-t from-red-500 via-yellow-500 to-green-500 rounded-full relative">
+              <div
+                className="absolute w-full flex items-center justify-center"
+                style={{ top: `calc(${meterHeight} - ${emojiPosition})` }}
+              >
+                <div className="flex items-center text-2xl">
+                  <span>{displayEmoji}</span>
+                  <span className="ml-2">{displayPercentage.toFixed(2)}%</span>
+                </div>
+              </div>
+            </div>
+            <div className={`${styles.textSize} mt-2`}>Satisfaction meter</div>
+>>>>>>>> origin/predev:src/app/dashboard/DashBoard.tsx
           </div>
         </div>
       </div>
@@ -158,6 +262,7 @@ const DashBoardComponent: React.FC = () => {
             User ID {profileData?.emailId}
           </div>
         </div>
+<<<<<<<< HEAD:src/components/dashBoardComponents/DashBoardComponent.tsx
         <div className="relative bg-[#1E1935] w-full md:w-[70%] rounded-2xl p-4 m-1 md:col-span-2 opacity-50">
           <div className={`${styles.textSize} mb-4`}>Resolved/UnResolved</div>
           <CardHeader1 />
@@ -173,6 +278,14 @@ const DashBoardComponent: React.FC = () => {
           </div>
           <div className="absolute inset-0 flex items-center justify-center bg-gray-900 bg-opacity-75 rounded-2xl">
             <span className="text-white text-lg">Coming Soon</span>
+========
+        <div className="relative bg-[#1E1935] w-full md:w-[70%] rounded-2xl p-4 m-1 md:col-span-2 ">
+          <div className={`${styles.textSize} mt-2`}>Resolved/UnResolved</div>
+          <CardHeader1 />
+          <div className="flex mt-2">
+            <div className="flex items-center mr-4"></div>
+            <div className="flex items-center"></div>
+>>>>>>>> origin/predev:src/app/dashboard/DashBoard.tsx
           </div>
         </div>
       </div>
@@ -180,4 +293,8 @@ const DashBoardComponent: React.FC = () => {
   );
 };
 
+<<<<<<<< HEAD:src/components/dashBoardComponents/DashBoardComponent.tsx
 export default withAuth(DashBoardComponent);
+========
+export default withAuth(DashBoard);
+>>>>>>>> origin/predev:src/app/dashboard/DashBoard.tsx

@@ -10,7 +10,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import {
   getUserKnowledgeBaseAction,
   deleteUserKnowledgeBaseAction,
-} from '@/redux/actions/knowledgeBaseActions';
+} from '@/redux/actions/knowledgebaseActions';
 import ConfirmModal from './modalDelete';
 import withAuth from '../withAuth';
 

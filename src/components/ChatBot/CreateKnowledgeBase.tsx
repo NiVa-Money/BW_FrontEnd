@@ -1,6 +1,6 @@
 'use client';
 
-import { createKnowledgebaseAction } from '@/redux/actions/knowledgeBaseActions';
+import { createKnowledgebaseAction } from '@/redux/actions/knowledgebaseActions';
 import * as React from 'react';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';

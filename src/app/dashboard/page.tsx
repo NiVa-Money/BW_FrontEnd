@@ -1,13 +1,16 @@
 'use client';
-import React from 'react';
-import DashBoardComponent from '@/components/dashBoardComponents/DashBoardComponent';
+import React, { useEffect, useState } from 'react';
+
+import styles from './dashboard.module.css';
+import withAuth from '@/components/withAuth';
+import DashBoard from './DashBoard';
 
 const Page = () => {
   return (
-    <>
-      <DashBoardComponent />
-    </>
+    <div className={styles.wrapper}>
+      <DashBoard />
+    </div>
   );
 };
 
-export default Page;
+export default withAuth(Page);

@@ -28,7 +28,8 @@ interface BotData {
   supportEmail: string;
   wordLimitPerMessage: any;
   userId: string;
-  _id: any;
+  _id: string;
+  docType: string;
 }
 interface KnowledgeBaseFile {
   _id: string;
@@ -40,6 +41,7 @@ interface KnowledgeBaseFile {
   status: string;
   updatedAt: string;
   userId: string;
+  knowledgeBaseId: string;
 }
 
 const EditBotComponent: React.FC = () => {
@@ -62,6 +64,7 @@ const EditBotComponent: React.FC = () => {
   const botDataRedux = useSelector(
     (state: RootState) => state.botProfile?.botProfiles?.data
   );
+  console.log('bot', botDataRedux);
 
   const userId = useSelector(
     (state: RootState) => state.root?.userData?.user_id
@@ -70,6 +73,8 @@ const EditBotComponent: React.FC = () => {
   const knowledgeBaseData = useSelector(
     (state: RootState) => state.KnowledgeBase?.user?.data
   );
+
+  console.log('knowledgeBaseData', knowledgeBaseData);
 
   const dispatch = useDispatch();
   const [step, setStep] = useState(1);
@@ -101,6 +106,9 @@ const EditBotComponent: React.FC = () => {
   const [imageName, setImageName] = useState('');
   const [textVal, setTextVal] = useState('');
   const [filename, setFileName] = useState('');
+  const [fileType, setFileType] = useState('');
+  const [knowledgeBaseIdDoc, setknowledgeBaseIdDoc] = useState<string>('');
+  const [botImageS3Urldata, setbotImageS3Url] = useState<string>('');
   const [botIconType, setBotIconType] = useState('second');
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const viewerRef = useRef(null);
@@ -111,6 +119,10 @@ const EditBotComponent: React.FC = () => {
   const router = useRouter();
   const [chatColor, setChatColor] = useState('#3B82F6');
   const [base64Image, setBase64Image] = useState('');
+  const [selectedFileImage, setSelectedFileImage] = useState<File | null>(null);
+  const [docName, setDocName] = useState<string>('');
+  const [docType, setDocType] = useState<string>('');
+  const [knowledgeBaseId, setKnowledgeBaseId] = useState<string>('');
   const imgViewerRef = useRef(null);
 
   const botSamples = [
@@ -136,17 +148,32 @@ const EditBotComponent: React.FC = () => {
     },
   ];
 
-  const handleBotSampleClick = (item: any) => {
-    setImageSrc(item?.imageUrl);
+  useEffect(() => {
+    if (botDataRedux && botId) {
+      const botToEdit = botDataRedux.find(
+        (bot: { _id: string }) => bot._id === botId
+      );
+      if (botToEdit) {
+        setFileType(botToEdit.docType);
+        setknowledgeBaseIdDoc(botToEdit.userId);
+        setbotImageS3Url(botToEdit.botURL);
+      }
+    }
+  }, [botDataRedux, botId]);
 
-    setBotIconType(item?.iconType);
+  const handleBotSampleClick = async (item: any) => {
+    setImageSrc(item?.imageUrl);
+    const response = await fetch(item?.imageUrl);
+    const blob = await response.blob();
+    const file = new File([blob], 'image.jpg', { type: blob.type });
+    setSelectedFileImage(file);
   };
 
   // Function to handle file upload
   const handleFileUpload = (event: any) => {
     const file = event.target.files[0];
     setImageName(file.name);
-    if (file && file.size <= 10 * 1024 * 1024) {
+    if (file && file.size <= 2 * 1024 * 1024) {
       setBase64Image(file);
     } else {
       alert('File must be less than 10MB');
@@ -199,23 +226,45 @@ const EditBotComponent: React.FC = () => {
     }
   };
 
-  const handleSave = () => {
-    if (botId) {
-      const botData: BotData = {
-        botId: botId,
-        botName,
-        botTone,
-        botColor: chatColor,
-        botGreetingMessage: greetingMessage,
-        botSmartness: false,
-        botIdentity,
-        supportNumber: supportPhone,
-        supportEmail: supportEmail,
-        wordLimitPerMessage: botLimit,
-        userId,
-        _id: botId,
-      };
-      dispatch(editBotProfileAction(botData));
+  const selectedKnowledgeBase = (
+    event: React.ChangeEvent<HTMLSelectElement>
+  ) => {
+    const selectedFile = knowledgeBaseData.find(
+      (file: KnowledgeBaseFile) => file.fileLocationS3 === event.target.value
+    );
+
+    if (selectedFile) {
+      // Update the state with the selected file's data
+      setDocName(selectedFile.docName);
+      setDocType(selectedFile.docType);
+      setKnowledgeBaseId(selectedFile.knowledgeBaseId);
+    }
+  };
+
+  const handleSave = async () => {
+    console.log('botImageS3Urldata', botImageS3Urldata);
+    // await handleBot(botImageS3Urldata)
+    if (botId && userId) {
+      const formData = new FormData();
+      const imageFile: any = base64Image ? base64Image : selectedFileImage;
+      formData.append('botId', botId);
+      formData.append('botName', botName);
+      formData.append('botTone', botTone);
+      formData.append('botColor', chatColor);
+      formData.append('customBotImage', imageFile);
+      formData.append('botGreetingMessage', greetingMessage);
+      formData.append('botSmartness', botSmartnessVal);
+      formData.append('botIdentity', botIdentity);
+      formData.append('supportNumber', supportPhone);
+      formData.append('supportEmail', supportEmail);
+      formData.append('wordLimitPerMessage', botLimit);
+      formData.append('docName', docName);
+      formData.append('docType', docType);
+      formData.append('docId', knowledgeBaseId);
+      formData.append('userId', userId);
+
+      dispatch(editBotProfileAction(formData));
+
       router.push('/mychatbots');
     } else {
       console.error('Bot ID is not available.');
@@ -322,9 +371,6 @@ const EditBotComponent: React.FC = () => {
             />
           ))}
         </div>
-        {error.includes('icon') && (
-          <div className="text-red-500 mb-4">{error}</div>
-        )}
       </div>
       <div className="flex flex-col mb-4">
         <label className="block text-gray-200 mb-2">Custom Bot Profile</label>
@@ -401,20 +447,54 @@ const EditBotComponent: React.FC = () => {
           Select Knowledge Base
         </label>
         <div className="relative mb-4">
-          <select
-            className="block appearance-none w-full bg-gray-800 text-white p-2 rounded-[12px] focus:outline-none focus:ring-2 focus:ring-blue-500"
-            defaultValue=""
-          >
-            <option value="" disabled>
-              Select a file
-            </option>
-            {knowledgeBaseData &&
-              knowledgeBaseData.map((file: KnowledgeBaseFile) => (
-                <option key={file._id} value={file.fileLocationS3}>
-                  {file.docName}
-                </option>
-              ))}
-          </select>
+          {knowledgeBaseData && knowledgeBaseData.length > 0 ? (
+            <select
+              className="block appearance-none w-full bg-gray-800 text-white p-2 rounded-[12px] focus:outline-none focus:ring-2 focus:ring-blue-500"
+              defaultValue=""
+              onChange={selectedKnowledgeBase}
+            >
+              <option value="" disabled>
+                Select a file
+              </option>
+              {knowledgeBaseData.map(
+                (file: {
+                  knowledgeBaseId: React.Key | null | undefined;
+                  fileLocationS3:
+                    | string
+                    | number
+                    | readonly string[]
+                    | undefined;
+                  docName:
+                    | string
+                    | number
+                    | bigint
+                    | boolean
+                    | React.ReactElement<
+                        any,
+                        string | React.JSXElementConstructor<any>
+                      >
+                    | Iterable<React.ReactNode>
+                    | React.ReactPortal
+                    | Promise<React.AwaitedReactNode>
+                    | null
+                    | undefined;
+                }) => (
+                  <option
+                    key={file.knowledgeBaseId}
+                    value={file.fileLocationS3}
+                  >
+                    {file.docName}
+                  </option>
+                )
+              )}
+            </select>
+          ) : (
+            <Link href="/createknowledgebase" legacyBehavior>
+              <a className="flex px-8 py-1 gap-2 bg-blue-500 text-white rounded-[12px] hover:bg-blue-600">
+                <span>Create Knowledge Base</span>
+              </a>
+            </Link>
+          )}
         </div>
         <div className="flex items-center space-x-4 mt-5">
           <div className="flex items-center">
