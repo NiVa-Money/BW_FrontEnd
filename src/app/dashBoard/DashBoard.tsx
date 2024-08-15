@@ -18,23 +18,52 @@ const DashBoard: React.FC = () => {
   const userDataRedux = useSelector(
     (state: RootState) => state.root?.userProfile?.data
   );
+
   const pathName = useSelector((state: RootState) => state.root?.pathName);
   const verifyVal = useSelector((state: RootState) => state.root.userVerify);
   const userId = useSelector(
     (state: RootState) => state.root?.userData?.user_id
   );
 
-  React.useEffect(() => {}, [userId]);
+  React.useEffect(() => { }, [userId]);
 
   const userMetricData = useSelector(
     (state: RootState) => state?.root?.userMetric?.data
   );
+
   const [metricData, setMetricData] = useState(userMetricData);
+  console.log("metricData", metricData)
 
   const [profileData, setProfileData] = React.useState<any>(userDataRedux);
   const dispatch = useDispatch();
 
-  React.useEffect(() => {}, [userId]);
+  //user sat
+  const totalSatisfaction = metricData.userSatisfaction?.good + metricData.userSatisfaction?.bad + metricData.userSatisfaction?.neutral;
+  const goodPercentage = totalSatisfaction > 0 ? (metricData.userSatisfaction.good / totalSatisfaction) * 100 : 0;
+  const badPercentage = totalSatisfaction > 0 ? (metricData.userSatisfaction.bad / totalSatisfaction) * 100 : 0;
+  const neutralPercentage = totalSatisfaction > 0 ? (metricData.userSatisfaction.neutral / totalSatisfaction) * 100 : 0;
+
+  // Determine what to display
+  let displayEmoji = "😐";
+  let displayPercentage = 0;
+
+  if (badPercentage > 50) {
+    displayEmoji = "😢";
+    displayPercentage = badPercentage;
+  } else if (goodPercentage > 50) {
+    displayEmoji = "😄";
+    displayPercentage = goodPercentage;
+  } else if (goodPercentage === 0 && badPercentage === 0 && neutralPercentage === 0) {
+    displayEmoji = "😢";
+    displayPercentage = 0;
+  } else {
+    displayEmoji = "😐";
+    displayPercentage = neutralPercentage;
+  }
+  const meterHeight = '90%';
+  const emojiPosition = (displayPercentage / 100) * parseFloat(meterHeight.replace('%', '')) + '%';
+
+  React.useEffect(() => { }, [userId]);
 
   React.useEffect(() => {
     setProfileData(userDataRedux);
@@ -64,7 +93,7 @@ const DashBoard: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    if (verifyVal || pathName === '/dashboard') {
+    if (verifyVal || pathName === '/dashBoard') {
       dispatch(fetchMetricsAction(userId));
     }
   }, [verifyVal]);
@@ -124,16 +153,21 @@ const DashBoard: React.FC = () => {
             <span className="text-white text-lg">Coming Soon</span>
           </div>
         </div>
+
         <div className="flex w-full md:w-[20%] h-[40vh] md:h-[98%] flex-col gap-4 m-1">
-          <div className="relative bg-[#1E1935] w-full h-full rounded-2xl p-4 flex flex-col items-center opacity-50">
+          <div className="relative bg-[#1E1935] w-full h-full rounded-2xl p-4 flex flex-col items-center">
             <div className="h-[89%] w-[10%] bg-gradient-to-t from-red-500 via-yellow-500 to-green-500 rounded-full relative">
-              <div className="absolute -right-6 top-0">😄</div>
-              <div className="absolute -right-6 bottom-0">😢</div>
+              <div
+                className="absolute w-full flex items-center justify-center"
+                style={{ top: `calc(${meterHeight} - ${emojiPosition})` }}
+              >
+                <div className="flex items-center text-2xl">
+                  <span>{displayEmoji}</span>
+                  <span className="ml-2">{displayPercentage.toFixed(2)}%</span>
+                </div>
+              </div>
             </div>
             <div className={`${styles.textSize} mt-2`}>Satisfaction meter</div>
-            <div className="absolute inset-0 flex items-center justify-center bg-gray-900 bg-opacity-75 rounded-2xl">
-              <span className="text-white text-lg">Coming Soon</span>
-            </div>
           </div>
         </div>
       </div>
@@ -158,22 +192,16 @@ const DashBoard: React.FC = () => {
             User ID {profileData?.emailId}
           </div>
         </div>
-        <div className="relative bg-[#1E1935] w-full md:w-[70%] rounded-2xl p-4 m-1 md:col-span-2 opacity-50">
-          <div className={`${styles.textSize} mb-4`}>Resolved/UnResolved</div>
-          <CardHeader1 />
-          <div className="flex mt-2">
+        <div className="relative bg-[#1E1935] w-full md:w-[70%] rounded-2xl p-4 m-1 md:col-span-2 ">
+          <div className={`${styles.textSize} mt-2`}>Resolved/UnResolved</div>
+            <CardHeader1 />
+            <div className="flex mt-2">
             <div className="flex items-center mr-4">
-              <div className="w-3 h-3 bg-[#6E54EF] rounded-full mr-2"></div>
-              <span className={styles.textSize}>Resolved</span>
             </div>
             <div className="flex items-center">
-              <div className="w-3 h-3 bg-[#8E2DA0] rounded-full mr-2"></div>
-              <span className={styles.textSize}>UnResolved</span>
             </div>
           </div>
-          <div className="absolute inset-0 flex items-center justify-center bg-gray-900 bg-opacity-75 rounded-2xl">
-            <span className="text-white text-lg">Coming Soon</span>
-          </div>
+
         </div>
       </div>
     </div>

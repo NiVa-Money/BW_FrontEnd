@@ -47,7 +47,9 @@ const NewChatComponent: React.FC = () => {
   const messagesLeft = useSelector(
     (state: RootState) => state?.root?.userMetric?.data?.sessionLeft
   );
-
+  const lastMessageFrom =useSelector(
+    (state: RootState) => state?.userChat?.sessionChat?.lastMessageFrom
+  );
   React.useEffect(() => {
     if (chatContainerRef.current) {
       chatContainerRef.current.scrollTop =
@@ -486,6 +488,7 @@ const NewChatComponent: React.FC = () => {
             className="flex-1 bg-transparent outline-none"
             onChange={(e) => setNewMessage(e.target.value)}
             value={newMessage}
+            disabled={lastMessageFrom==undefined?false: lastMessageFrom=='receiver'?false:true}
           />
           <button
             className="shrink-0 w-8 h-8 flex items-center justify-center rounded-full hover:bg-[#4A2E8B] transition-colors duration-300"

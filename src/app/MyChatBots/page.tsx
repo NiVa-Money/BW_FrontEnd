@@ -7,7 +7,7 @@ const MyChatBots: React.FC = () => {
   return (
     <>
       <div className="relative text-white h-[100%] overflow-hidden p-8">
-        <BackgroundCss/>
+        {/* <BackgroundCss/> */}
         <ChatBotList />
       </div>
     </>
