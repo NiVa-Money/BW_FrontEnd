@@ -319,6 +319,7 @@ console.log("bot",botDataRedux)
       }
     }
   }, [botDataRedux, botId]);
+
   
 
   const renderStep1 = () => (
