@@ -14,7 +14,8 @@ import React from 'react';
 import cancelImg from '../../public/images/icons8-cancel-64.png';
 import menuImg from '../../public/images/icons8-menu-64.png';
 import Image from 'next/image';
-
+import { usePathname } from 'next/navigation';
+import NotFound from './not-found';
 interface cancelImg {
   img: string;
 }
@@ -26,6 +27,8 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const pathnameBrowser: any = usePathname();
+
   const routeWithoutHeader: string[] = [
     '/mychatbots',
     '/createbot',
@@ -57,6 +60,8 @@ export default function RootLayout({
     '/botsession',
     '/faq/questionsAns',
     '/faq/docs',
+    '/privacy',
+    '/terms',
   ];
   const routeWithoutSidebar: string[] = [
     '/createbot',
@@ -68,40 +73,67 @@ export default function RootLayout({
     '/login',
     '/home',
     '/botsession',
+    '/privacy',
+    '/terms',
   ];
+  const knownRoutes: string[] = [
+    ...routeWithoutSidebar,
+    ...routeWithoutFooter,
+    '/mychatbots',
+    '/knowledgebase',
+    '/profile',
+    '/membership',
+    '/faq',
+    '/dashboard',
+    '/login',
+    '/createknowledgebase',
+    '/newchat',
+    '/aboutus',
+    '/pricing',
+    '/blog',
+    '/contactus',
+    '/home',
+    '/privacy',
+    '/terms',
+  ];
+
   const [isSidebarVisible, setIsSidebarVisible] = React.useState(true);
   let persistor = persistStore(store);
   return (
     <html lang="en">
       <body className="flex flex-col min-h-screen">
-        <Provider store={store}>
-          <PersistGate loading={<div>Loading...</div>} persistor={persistor}>
-            <PathnameHandler />
-            <ConditionalHeader routeWithoutHeader={routeWithoutHeader} />
-            <div className="flex flex-grow relative">
-              <div className="">
-                <SidebarToggleButton
-                  isVisible={isSidebarVisible}
-                  onClick={() => setIsSidebarVisible(!isSidebarVisible)}
-                />
-                <div
-                  className={`relative transition-transform duration-800 ease-in ${
-                    isSidebarVisible ? 'translate-x-0' : '-translate-x-full'
-                  }`}
-                >
-                  {isSidebarVisible && (
-                    <ConditionalSideBar
-                      routeWithoutSidebar={routeWithoutSidebar}
-                    />
-                  )}
+        {knownRoutes.includes(pathnameBrowser) ? (
+          <Provider store={store}>
+            <PersistGate loading={<div>Loading...</div>} persistor={persistor}>
+              <PathnameHandler />
+              <ConditionalHeader routeWithoutHeader={routeWithoutHeader} />
+              <div className="flex flex-grow relative">
+                <div className="">
+                  <SidebarToggleButton
+                    isVisible={isSidebarVisible}
+                    onClick={() => setIsSidebarVisible(!isSidebarVisible)}
+                  />
+                  <div
+                    className={`relative transition-transform duration-800 ease-in ${
+                      isSidebarVisible ? 'translate-x-0' : '-translate-x-full'
+                    }`}
+                  >
+                    {isSidebarVisible && (
+                      <ConditionalSideBar
+                        routeWithoutSidebar={routeWithoutSidebar}
+                      />
+                    )}
+                  </div>
                 </div>
+                <main className="flex-grow">{children}</main>
               </div>
-              <main className="flex-grow">{children}</main>
-            </div>
-            <ConditionalFooter routeWithoutFooter={routeWithoutFooter} />
-          </PersistGate>
-          <Toast />
-        </Provider>
+              <ConditionalFooter routeWithoutFooter={routeWithoutFooter} />
+            </PersistGate>
+            <Toast />
+          </Provider>
+        ) : (
+          <NotFound />
+        )}
       </body>
     </html>
   );

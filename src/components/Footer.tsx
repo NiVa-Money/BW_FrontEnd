@@ -63,7 +63,7 @@ const Footer: React.FC = () => {
       ],
     },
     {
-      title: 'Legal',
+      title: 'Legall',
       links: [
         { name: 'Privacy', path: 'privacy' },
         { name: 'Terms', path: 'terms' },

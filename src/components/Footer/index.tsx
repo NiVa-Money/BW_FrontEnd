@@ -32,7 +32,7 @@ const Footer: React.FC = () => {
     { title: 'Support', links: ['Help Center', 'Contact Us', 'Tutorials'] },
     {
       title: 'Legal',
-      links: ['Privacy', 'Terms', 'Cancellation Policy', 'Shipping & Delivery'],
+      links: ['privacy', 'terms', 'Cancellation Policy', 'Shipping & Delivery'],
     },
   ];
 
