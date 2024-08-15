@@ -27,44 +27,44 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   const routeWithoutHeader: string[] = [
-    '/MyChatBots',
-    '/createBot',
-    '/editBot',
-    '/knowledgeBase',
+    '/mychatbots',
+    '/createbot',
+    '/editbot',
+    '/knowledgebase',
     '/profile',
-    '/memberShip',
+    '/membership',
     '/faq',
     '/dashboard',
     '/login',
-    '/createKnowledgeBase',
+    '/createknowledgebase',
     '/newchat',
     '/botSession',
     '/faq/questionsAns',
     '/faq/docs',
   ];
   const routeWithoutFooter: string[] = [
-    '/MyChatBots',
-    '/createBot',
-    '/editBot',
-    '/knowledgeBase',
+    '/mychatbots',
+    '/createbot',
+    '/editbot',
+    '/knowledgebase',
     '/profile',
-    '/memberShip',
+    '/membership',
     '/faq',
     '/dashboard',
     '/login',
-    '/createKnowledgeBase',
+    '/createknowledgebase',
     '/newchat',
     '/botSession',
     '/faq/questionsAns',
     '/faq/docs',
   ];
   const routeWithoutSidebar: string[] = [
-    '/createBot',
-    '/editBot',
-    '/aboutUs',
+    '/createbot',
+    '/editbot',
+    '/aboutus',
     '/pricing',
     '/blog',
-    '/contactUs',
+    '/contactus',
     '/login',
     '/home',
     '/botSession',
@@ -108,37 +108,41 @@ export default function RootLayout({
   );
 }
 
-const SidebarToggleButton = ({ isVisible, onClick,routeWithoutSidebar }: any) => {
+const SidebarToggleButton = ({
+  isVisible,
+  onClick,
+  routeWithoutSidebar,
+}: any) => {
   const pathname = useSelector((state: RootState) => state.root?.pathName);
   // const shouldShowButton = pathname !== '/home' && pathname !== '/botSession';
-  
-  return (
-    !routeWithoutSidebar.includes(pathname) ? (
-      <button
-        className={`absolute ${
-          isVisible ? 'top-4' : 'top-2'
-        } left-0 m-4 p-2 w-8 h-8 bg-[rgb(192,13,200)] text-white rounded-full z-10 flex items-center justify-center`}
-        onClick={onClick}
-      >
-        {isVisible ? (
-          <Image
-            src={cancelImg}
-            alt="Background"
-            layout="fill"
-            objectFit="cover"
-            className="absolute inset-0"
-          />
-        ) : (
-          <Image
-            src={menuImg}
-            alt="Background"
-            layout="fill"
-            objectFit="cover"
-            className="absolute inset-0"
-          />
-        )}
-      </button>
-    ):''
+
+  return !routeWithoutSidebar.includes(pathname) ? (
+    <button
+      className={`absolute ${
+        isVisible ? 'top-4' : 'top-2'
+      } left-0 m-4 p-2 w-8 h-8 bg-[rgb(192,13,200)] text-white rounded-full z-10 flex items-center justify-center`}
+      onClick={onClick}
+    >
+      {isVisible ? (
+        <Image
+          src={cancelImg}
+          alt="Background"
+          layout="fill"
+          objectFit="cover"
+          className="absolute inset-0"
+        />
+      ) : (
+        <Image
+          src={menuImg}
+          alt="Background"
+          layout="fill"
+          objectFit="cover"
+          className="absolute inset-0"
+        />
+      )}
+    </button>
+  ) : (
+    ''
   );
 };
 

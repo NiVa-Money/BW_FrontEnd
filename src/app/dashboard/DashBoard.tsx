@@ -25,45 +25,62 @@ const DashBoard: React.FC = () => {
     (state: RootState) => state.root?.userData?.user_id
   );
 
-  React.useEffect(() => { }, [userId]);
+  React.useEffect(() => {}, [userId]);
 
   const userMetricData = useSelector(
     (state: RootState) => state?.root?.userMetric?.data
   );
 
   const [metricData, setMetricData] = useState(userMetricData);
-  console.log("metricData", metricData)
+  console.log('metricData', metricData);
 
   const [profileData, setProfileData] = React.useState<any>(userDataRedux);
   const dispatch = useDispatch();
 
   //user sat
-  const totalSatisfaction = metricData.userSatisfaction?.good + metricData.userSatisfaction?.bad + metricData.userSatisfaction?.neutral;
-  const goodPercentage = totalSatisfaction > 0 ? (metricData.userSatisfaction.good / totalSatisfaction) * 100 : 0;
-  const badPercentage = totalSatisfaction > 0 ? (metricData.userSatisfaction.bad / totalSatisfaction) * 100 : 0;
-  const neutralPercentage = totalSatisfaction > 0 ? (metricData.userSatisfaction.neutral / totalSatisfaction) * 100 : 0;
+  const totalSatisfaction =
+    metricData.userSatisfaction?.good +
+    metricData.userSatisfaction?.bad +
+    metricData.userSatisfaction?.neutral;
+  const goodPercentage =
+    totalSatisfaction > 0
+      ? (metricData.userSatisfaction.good / totalSatisfaction) * 100
+      : 0;
+  const badPercentage =
+    totalSatisfaction > 0
+      ? (metricData.userSatisfaction.bad / totalSatisfaction) * 100
+      : 0;
+  const neutralPercentage =
+    totalSatisfaction > 0
+      ? (metricData.userSatisfaction.neutral / totalSatisfaction) * 100
+      : 0;
 
   // Determine what to display
-  let displayEmoji = "😐";
+  let displayEmoji = '😐';
   let displayPercentage = 0;
 
   if (badPercentage > 50) {
-    displayEmoji = "😢";
+    displayEmoji = '😢';
     displayPercentage = badPercentage;
   } else if (goodPercentage > 50) {
-    displayEmoji = "😄";
+    displayEmoji = '😄';
     displayPercentage = goodPercentage;
-  } else if (goodPercentage === 0 && badPercentage === 0 && neutralPercentage === 0) {
-    displayEmoji = "😢";
+  } else if (
+    goodPercentage === 0 &&
+    badPercentage === 0 &&
+    neutralPercentage === 0
+  ) {
+    displayEmoji = '😢';
     displayPercentage = 0;
   } else {
-    displayEmoji = "😐";
+    displayEmoji = '😐';
     displayPercentage = neutralPercentage;
   }
   const meterHeight = '90%';
-  const emojiPosition = (displayPercentage / 100) * parseFloat(meterHeight.replace('%', '')) + '%';
+  const emojiPosition =
+    (displayPercentage / 100) * parseFloat(meterHeight.replace('%', '')) + '%';
 
-  React.useEffect(() => { }, [userId]);
+  React.useEffect(() => {}, [userId]);
 
   React.useEffect(() => {
     setProfileData(userDataRedux);
@@ -133,7 +150,7 @@ const DashBoard: React.FC = () => {
             {metricData?.activeBots}
           </div>
           <button className="flex justify-center text-xl font-medium text-gray-100 bg-[#3F2181] rounded-[60px] mt-2 md:mt-0">
-            <Link href="/createBot" className="flex px-8 md:px-14 py-3 gap-2">
+            <Link href="/createbot" className="flex px-8 md:px-14 py-3 gap-2">
               <span>Create Bot</span>
               <FontAwesomeIcon icon={faPlus} className="w-[25px] h-[25px]" />
             </Link>
@@ -194,14 +211,11 @@ const DashBoard: React.FC = () => {
         </div>
         <div className="relative bg-[#1E1935] w-full md:w-[70%] rounded-2xl p-4 m-1 md:col-span-2 ">
           <div className={`${styles.textSize} mt-2`}>Resolved/UnResolved</div>
-            <CardHeader1 />
-            <div className="flex mt-2">
-            <div className="flex items-center mr-4">
-            </div>
-            <div className="flex items-center">
-            </div>
+          <CardHeader1 />
+          <div className="flex mt-2">
+            <div className="flex items-center mr-4"></div>
+            <div className="flex items-center"></div>
           </div>
-
         </div>
       </div>
     </div>

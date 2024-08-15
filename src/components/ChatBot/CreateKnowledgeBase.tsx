@@ -1,6 +1,6 @@
 'use client';
 
-import { createKnowledgebaseAction } from '@/redux/actions/knowledgeBaseActions';
+import { createKnowledgebaseAction } from '@/redux/actions/knowledgebaseActions';
 import * as React from 'react';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
@@ -21,7 +21,7 @@ const CreateKnowledgeBase: React.FC = () => {
   const handleFileChange = async (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
-    const file:any = event.target.files?.[0];
+    const file: any = event.target.files?.[0];
 
     setDocName(file?.name ?? '');
     if (
@@ -67,7 +67,7 @@ const CreateKnowledgeBase: React.FC = () => {
       });
 
       dispatch(createKnowledgebaseAction(formData));
-      router.push('/knowledgeBase');
+      router.push('/knowledgebase');
     } else {
       alert('Please select a file');
     }

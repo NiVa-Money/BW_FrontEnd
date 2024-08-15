@@ -27,9 +27,8 @@ interface BotData {
   supportEmail: string;
   wordLimitPerMessage: any;
   userId: string;
-  _id:string;
-  docType:string;
- 
+  _id: string;
+  docType: string;
 }
 interface KnowledgeBaseFile {
   _id: string;
@@ -64,7 +63,7 @@ const EditBotComponent: React.FC = () => {
   const botDataRedux = useSelector(
     (state: RootState) => state.botProfile?.botProfiles?.data
   );
-console.log("bot",botDataRedux)
+  console.log('bot', botDataRedux);
 
   const userId = useSelector(
     (state: RootState) => state.root?.userData?.user_id
@@ -74,8 +73,7 @@ console.log("bot",botDataRedux)
     (state: RootState) => state.KnowledgeBase?.user?.data
   );
 
-  console.log("knowledgeBaseData", knowledgeBaseData)
-
+  console.log('knowledgeBaseData', knowledgeBaseData);
 
   const dispatch = useDispatch();
   const [step, setStep] = useState(1);
@@ -109,7 +107,7 @@ console.log("bot",botDataRedux)
   const [filename, setFileName] = useState('');
   const [fileType, setFileType] = useState('');
   const [knowledgeBaseIdDoc, setknowledgeBaseIdDoc] = useState<string>('');
-  const [botImageS3Urldata, setbotImageS3Url] = useState<string>('')
+  const [botImageS3Urldata, setbotImageS3Url] = useState<string>('');
   const [botIconType, setBotIconType] = useState('second');
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const viewerRef = useRef(null);
@@ -151,37 +149,30 @@ console.log("bot",botDataRedux)
 
   useEffect(() => {
     if (botDataRedux && botId) {
-      const botToEdit = botDataRedux.find((bot: { _id: string; }) => bot._id === botId);
+      const botToEdit = botDataRedux.find(
+        (bot: { _id: string }) => bot._id === botId
+      );
       if (botToEdit) {
-        setFileType(botToEdit.docType)
-        setknowledgeBaseIdDoc(botToEdit.userId)
-        setbotImageS3Url(botToEdit.botURL)
-        
+        setFileType(botToEdit.docType);
+        setknowledgeBaseIdDoc(botToEdit.userId);
+        setbotImageS3Url(botToEdit.botURL);
       }
     }
   }, [botDataRedux, botId]);
 
-
-
   const handleBotSampleClick = async (item: any) => {
-    setImageSrc(item?.imageUrl)
+    setImageSrc(item?.imageUrl);
     const response = await fetch(item?.imageUrl);
     const blob = await response.blob();
     const file = new File([blob], 'image.jpg', { type: blob.type });
     setSelectedFileImage(file);
-
   };
-
-
 
   // Function to handle file upload
   const handleFileUpload = (event: any) => {
     const file = event.target.files[0];
     setImageName(file.name);
-    if (
-      file &&
-      file.size <= 2 * 1024 * 1024
-    ) {
+    if (file && file.size <= 2 * 1024 * 1024) {
       setBase64Image(file);
     } else {
       alert('File must be less than 2MB');
@@ -217,8 +208,6 @@ console.log("bot",botDataRedux)
     if (step > 1) setStep(step - 1);
   };
 
-
-
   const handleFileChange = async (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
@@ -236,51 +225,50 @@ console.log("bot",botDataRedux)
     }
   };
 
-  const selectedKnowledgeBase = (event: React.ChangeEvent<HTMLSelectElement>) => {
+  const selectedKnowledgeBase = (
+    event: React.ChangeEvent<HTMLSelectElement>
+  ) => {
     const selectedFile = knowledgeBaseData.find(
       (file: KnowledgeBaseFile) => file.fileLocationS3 === event.target.value
     );
-  
+
     if (selectedFile) {
       // Update the state with the selected file's data
       setDocName(selectedFile.docName);
       setDocType(selectedFile.docType);
       setKnowledgeBaseId(selectedFile.knowledgeBaseId);
-    } 
+    }
   };
 
-
-  const handleSave =async () => {
-    console.log("botImageS3Urldata",botImageS3Urldata)
-  // await handleBot(botImageS3Urldata)
+  const handleSave = async () => {
+    console.log('botImageS3Urldata', botImageS3Urldata);
+    // await handleBot(botImageS3Urldata)
     if (botId && userId) {
       const formData = new FormData();
       const imageFile: any = base64Image ? base64Image : selectedFileImage;
-      formData.append("botId", botId);
-      formData.append("botName", botName);
-      formData.append("botTone", botTone);
-      formData.append("botColor", chatColor);
+      formData.append('botId', botId);
+      formData.append('botName', botName);
+      formData.append('botTone', botTone);
+      formData.append('botColor', chatColor);
       formData.append('customBotImage', imageFile);
-      formData.append("botGreetingMessage", greetingMessage);
-      formData.append("botSmartness", botSmartnessVal);
-      formData.append("botIdentity", botIdentity);
-      formData.append("supportNumber", supportPhone);
-      formData.append("supportEmail", supportEmail);
-      formData.append("wordLimitPerMessage", botLimit);
-      formData.append("docName", docName);
-      formData.append("docType", docType);
-      formData.append("docId", knowledgeBaseId);  
-      formData.append("userId", userId);
-     
+      formData.append('botGreetingMessage', greetingMessage);
+      formData.append('botSmartness', botSmartnessVal);
+      formData.append('botIdentity', botIdentity);
+      formData.append('supportNumber', supportPhone);
+      formData.append('supportEmail', supportEmail);
+      formData.append('wordLimitPerMessage', botLimit);
+      formData.append('docName', docName);
+      formData.append('docType', docType);
+      formData.append('docId', knowledgeBaseId);
+      formData.append('userId', userId);
+
       dispatch(editBotProfileAction(formData));
-    
-      router.push('/MyChatBots');
+
+      router.push('/mychatbots');
     } else {
       console.error('Bot ID is not available.');
     }
   };
-  
-
 
   useEffect(() => {
     if (searchParams) {
@@ -296,10 +284,11 @@ console.log("bot",botDataRedux)
     }
   }, [searchParams]);
 
-
   useEffect(() => {
     if (botDataRedux && botId) {
-      const botToEdit = botDataRedux.find((bot: { _id: string; }) => bot._id === botId);
+      const botToEdit = botDataRedux.find(
+        (bot: { _id: string }) => bot._id === botId
+      );
       if (botToEdit) {
         setBotName(botToEdit.botName);
         setChatColor(botToEdit.botColor);
@@ -311,15 +300,15 @@ console.log("bot",botDataRedux)
         setSupportEmail(botToEdit.supportEmail);
         setSupportPhone(botToEdit.supportNumber);
         setBotLimit(botToEdit.wordLimitPerMessage);
-        const botSample = botSamples.find((bot) => bot.iconType === botToEdit?.botIconType);
+        const botSample = botSamples.find(
+          (bot) => bot.iconType === botToEdit?.botIconType
+        );
         if (botSample) {
           setImageSrc(botSample.imageUrl);
         }
       }
     }
   }, [botDataRedux, botId]);
-
-  
 
   const renderStep1 = () => (
     <div onClick={() => (showColorPicker ? setShowColorPicker(false) : '')}>
@@ -332,7 +321,6 @@ console.log("bot",botDataRedux)
             setBotName(e.target.value);
             console.log(e.target.value);
           }}
-
           className="w-full bg-[#171029] text-white p-2 rounded-[12px]"
         />
       </div>
@@ -350,10 +338,11 @@ console.log("bot",botDataRedux)
             <button
               key={color}
               onClick={() => handleColorClick(color)}
-              className={`w-8 h-8 rounded-full ${color === 'rainbow'
+              className={`w-8 h-8 rounded-full ${
+                color === 'rainbow'
                   ? 'bg-gradient-to-r from-red-500 via-green-500 to-blue-500'
                   : ''
-                }${chatColor === color ? 'border-4 border-gray-400' : ''}`}
+              }${chatColor === color ? 'border-4 border-gray-400' : ''}`}
               style={{
                 backgroundColor: color !== 'rainbow' ? color : undefined,
               }}
@@ -381,7 +370,6 @@ console.log("bot",botDataRedux)
             />
           ))}
         </div>
-
       </div>
       <div className="flex flex-col mb-4">
         <label className="block text-gray-200 mb-2">Custom Bot Profile</label>
@@ -433,10 +421,11 @@ console.log("bot",botDataRedux)
             <button
               key={tone}
               onClick={() => setBotTone(tone)}
-              className={`px-4 py-2 rounded ${botTone === tone
+              className={`px-4 py-2 rounded ${
+                botTone === tone
                   ? 'bg-[#3F2181] text-white h-[Hug (38px)px] rounded-[24px]'
                   : 'text-gray-200'
-                }`}
+              }`}
             >
               {tone}
             </button>
@@ -453,32 +442,60 @@ console.log("bot",botDataRedux)
         />
       </div>
       <div className="flex flex-col mb-4">
-
-        <label className="block text-gray-200 mb-2">Select Knowledge Base</label>
+        <label className="block text-gray-200 mb-2">
+          Select Knowledge Base
+        </label>
         <div className="relative mb-4">
-      {knowledgeBaseData && knowledgeBaseData.length > 0 ? (
-        <select
-          className="block appearance-none w-full bg-gray-800 text-white p-2 rounded-[12px] focus:outline-none focus:ring-2 focus:ring-blue-500"
-          defaultValue=""
-          onChange={selectedKnowledgeBase}
-        >
-          <option value="" disabled>Select a file</option>
-          {knowledgeBaseData.map((file: { knowledgeBaseId: React.Key | null | undefined; fileLocationS3: string | number | readonly string[] | undefined; docName: string | number | bigint | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | React.ReactPortal | Promise<React.AwaitedReactNode> | null | undefined; }) => (
-            <option key={file.knowledgeBaseId} value={file.fileLocationS3}>
-              {file.docName}
-            </option>
-          ))}
-        </select>
-      ) : (
-        <Link href="/createKnowledgeBase" legacyBehavior>
-          <a className="flex px-8 py-1 gap-2 bg-blue-500 text-white rounded-[12px] hover:bg-blue-600">
-            <span>Create Knowledge Base</span>
-          </a>
-        </Link>
-      )}
-    </div>
+          {knowledgeBaseData && knowledgeBaseData.length > 0 ? (
+            <select
+              className="block appearance-none w-full bg-gray-800 text-white p-2 rounded-[12px] focus:outline-none focus:ring-2 focus:ring-blue-500"
+              defaultValue=""
+              onChange={selectedKnowledgeBase}
+            >
+              <option value="" disabled>
+                Select a file
+              </option>
+              {knowledgeBaseData.map(
+                (file: {
+                  knowledgeBaseId: React.Key | null | undefined;
+                  fileLocationS3:
+                    | string
+                    | number
+                    | readonly string[]
+                    | undefined;
+                  docName:
+                    | string
+                    | number
+                    | bigint
+                    | boolean
+                    | React.ReactElement<
+                        any,
+                        string | React.JSXElementConstructor<any>
+                      >
+                    | Iterable<React.ReactNode>
+                    | React.ReactPortal
+                    | Promise<React.AwaitedReactNode>
+                    | null
+                    | undefined;
+                }) => (
+                  <option
+                    key={file.knowledgeBaseId}
+                    value={file.fileLocationS3}
+                  >
+                    {file.docName}
+                  </option>
+                )
+              )}
+            </select>
+          ) : (
+            <Link href="/createknowledgebase" legacyBehavior>
+              <a className="flex px-8 py-1 gap-2 bg-blue-500 text-white rounded-[12px] hover:bg-blue-600">
+                <span>Create Knowledge Base</span>
+              </a>
+            </Link>
+          )}
+        </div>
         <div className="flex items-center space-x-4 mt-5">
-
           <div className="flex items-center">
             <label className="block text-white mr-2">Enable Smartness</label>
             <Switch
@@ -540,7 +557,7 @@ console.log("bot",botDataRedux)
                 <ArrowBackIosNewIcon />
               </button>
             ) : (
-              <Link href={`/MyChatBots`}>
+              <Link href={`/mychatbots`}>
                 <ArrowBackIosNewIcon />
               </Link>
             )}
@@ -597,8 +614,7 @@ console.log("bot",botDataRedux)
                   <br />
                   questions
                 </p>
-                <div className="flex flex-col w-full h-[17vh]">
-                </div>
+                <div className="flex flex-col w-full h-[17vh]"></div>
                 <input
                   type="text"
                   value={greetingMessage}

@@ -54,7 +54,7 @@
 
 //   // Function to handle edit action
 //   const handleEdit = (botId: string) => {
-//     router.push(`/editBot?id=${botId}`);
+//     router.push(`/editbot?id=${botId}`);
 //   };
 
 //   // Function to handle export action
@@ -205,27 +205,25 @@ interface ChatBot {
   _id: string;
   docName: string;
   botURL: string;
-  userId:string
+  userId: string;
 }
 
 const ChatBotList: React.FC = () => {
   const botDataRedux = useSelector(
     (state: RootState) => state.botProfile?.botProfiles?.data
   );
- 
+
   const botloader = useSelector(
     (state: RootState) => state.botProfile?.botProfiles?.loader
   );
 
-
-  const botDataLoader =  useSelector(
+  const botDataLoader = useSelector(
     (state: RootState) => state.botProfile?.create?.loader
   );
 
-  const botDataLoader2 =  useSelector(
+  const botDataLoader2 = useSelector(
     (state: RootState) => state.botProfile?.delete?.loader
   );
-
 
   const [chatBotList, setChatBotList] = useState<ChatBot[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -248,7 +246,7 @@ const ChatBotList: React.FC = () => {
 
   // Function to handle edit action
   const handleEdit = (botId: string) => {
-    router.push(`/editBot?id=${botId}`);
+    router.push(`/editbot?id=${botId}`);
   };
 
   // Function to handle export action
@@ -271,20 +269,21 @@ const ChatBotList: React.FC = () => {
 
   // Confirm deletion
 
-const confirmDelete = () => {
-  if (userId && botIdToDelete) {
-    dispatch(
-      deleteBotProfileServiceAction({ botId: botIdToDelete, userId: userId })
-    );
+  const confirmDelete = () => {
+    if (userId && botIdToDelete) {
+      dispatch(
+        deleteBotProfileServiceAction({ botId: botIdToDelete, userId: userId })
+      );
 
-    setChatBotList((prevList) => prevList.filter(bot => bot._id !== botIdToDelete));
+      setChatBotList((prevList) =>
+        prevList.filter((bot) => bot._id !== botIdToDelete)
+      );
 
-    // Close the modal
-    setIsModalOpen(false);
-    setBotIdToDelete(null);
-  }
-};
-
+      // Close the modal
+      setIsModalOpen(false);
+      setBotIdToDelete(null);
+    }
+  };
 
   // Close the modal
   const closeModal = () => {
@@ -337,7 +336,7 @@ const confirmDelete = () => {
           My ChatBots
         </h1>
         <button className="flex  justify-center  text-xl font-medium text-gray-100 bg-[#3F2181] rounded-[60px]">
-          <Link href="/createBot" className="flex px-14 py-3 gap-2">
+          <Link href="/createbot" className="flex px-14 py-3 gap-2">
             <span>Create Bot</span>
             <FontAwesomeIcon icon={faPlus} className="w-[25px] h-[25px]" />
           </Link>

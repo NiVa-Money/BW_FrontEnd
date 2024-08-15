@@ -216,7 +216,7 @@ const CreateBotComponent: React.FC = () => {
     dispatch(createBotProfileAction(formData));
    
     // dispatch(getUserBotProfileAction(userId));
-    router.push('/MyChatBots');
+    router.push('/mychatbots');
   };
 
   const botSamples = [
@@ -481,7 +481,7 @@ const CreateBotComponent: React.FC = () => {
 
   return (
     <div className="relative text-white h-[100%] overflow-hidden p-8">
-      <BackgroundCss />
+      {/* <BackgroundCss /> */}
       <div className="max-w-[80%] mx-auto">
         <div className="flex justify-between items-center mb-8">
           <div className="flex gap-[8px]">
@@ -490,7 +490,7 @@ const CreateBotComponent: React.FC = () => {
                 <ArrowBackIosNewIcon />
               </button>
             ) : (
-              <Link href={`/MyChatBots`}>
+              <Link href={`/mychatbots`}>
                 <ArrowBackIosNewIcon />
               </Link>
             )}
