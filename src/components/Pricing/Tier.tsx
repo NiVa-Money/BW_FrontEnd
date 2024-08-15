@@ -7,7 +7,7 @@ type PricingTierProps = {
   features: string[];
   backgroundColor: string;
   paypalButton?: React.ReactNode;
-  userId? : string;
+  userId?: string;
 };
 
 const PricingTier: React.FC<PricingTierProps> = ({
@@ -23,7 +23,7 @@ const PricingTier: React.FC<PricingTierProps> = ({
   >
     <div className="flex flex-col items-center pb-4">
       <h3 className="text-2xl font-bold">{title}</h3>
-      <p className="mt-2 text-4xl font-black text-center">{price}</p>
+      <p className="mt-2 text-4xl font-black text-center">{`$${price}`}</p>
       {sessions && <p className="mt-2 text-xl">{sessions}</p>}
     </div>
     <ul className="flex flex-col items-center justify-center flex-1 text-base">
@@ -43,9 +43,7 @@ const PricingTier: React.FC<PricingTierProps> = ({
       {paypalButton ? (
         <div className="w-full">{paypalButton}</div>
       ) : (
-        <button
-          className="py-2 px-6 text-base font-medium bg-gray-100 rounded-lg text-slate-950 w-full"
-        >
+        <button className="py-2 px-6 text-base font-medium bg-gray-100 rounded-lg text-slate-950 w-full">
           Start For Free
         </button>
       )}
@@ -54,4 +52,3 @@ const PricingTier: React.FC<PricingTierProps> = ({
 );
 
 export default PricingTier;
-
