@@ -9,7 +9,7 @@ import { RootState } from '@/redux/configureStore';
 import { useDispatch, useSelector } from 'react-redux';
 
 import ConfirmModal from './modalDelete';
-import { deleteUserKnowledgeBaseAction } from '@/redux/actions/knowledgeBaseActions';
+import { deleteUserKnowledgeBaseAction,getUserKnowledgeBaseAction } from '@/redux/actions/knowledgeBaseActions';
 
 interface KnowledgeBaseCardProps {
   _id: string;
@@ -54,6 +54,7 @@ const KnowledgeBase: React.FC = () => {
   );
 
   const [userIdLocal, setUserIdLocal] = useState(userId);
+  
   useEffect(() => {
     if (userId?.length) {
       setUserIdLocal(userId);
@@ -165,7 +166,6 @@ const KnowledgeBase: React.FC = () => {
 };
 
 export default KnowledgeBase;
-function getUserKnowledgeBaseAction(userIdLocal: any): any {
-  throw new Error('Function not implemented.');
-}
+
+
 
