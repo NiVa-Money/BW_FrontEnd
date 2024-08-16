@@ -36,16 +36,17 @@ const ChatBotList: React.FC = () => {
   const botDataRedux = useSelector(
     (state: RootState) => state.botProfile?.botProfiles?.data
   );
+
   const botloader = useSelector(
     (state: RootState) => state.botProfile?.botProfiles?.loader
   );
+
   const [chatBotList, setChatBotList] = useState<ChatBot[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [botIdToDelete, setBotIdToDelete] = useState<string | null>(null);
   const userId = useSelector(
     (state: RootState) => state.root?.userData?.user_id
   );
-  console.log(userId);
   const [userIdLocal, setUserIdLocal] = useState(userId);
   const dispatch = useDispatch();
   const pathName = useSelector((state: RootState) => state.root?.pathName);
@@ -57,6 +58,9 @@ const ChatBotList: React.FC = () => {
   } | null>(null);
   const exportS = useSelector(
     (state: RootState) => state?.botProfile?.export?.data
+  );
+  const editBotLoader = useSelector(
+    (state: RootState) => state?.botProfile?.edit?.loader
   );
 
   // Function to handle edit action
@@ -83,12 +87,20 @@ const ChatBotList: React.FC = () => {
   };
 
   // Confirm deletion
+
   const confirmDelete = () => {
     if (userId && botIdToDelete) {
       dispatch(
         deleteBotProfileServiceAction({ botId: botIdToDelete, userId: userId })
       );
+
+      setChatBotList((prevList) =>
+        prevList.filter((bot) => bot._id !== botIdToDelete)
+      );
+
+      // Close the modal
       setIsModalOpen(false);
+      setBotIdToDelete(null);
     }
   };
 
@@ -106,11 +118,16 @@ const ChatBotList: React.FC = () => {
 
   useEffect(() => {
     if (userId !== undefined) {
-      if (userId?.length || pathName === '/mychatbots') {
+      if (
+        userId?.length ||
+        pathName === '/mychatbots' ||
+        userIdLocal ||
+        !editBotLoader
+      ) {
         dispatch(getUserBotProfileAction(userId));
       }
     }
-  }, [userId, pathName, dispatch]);
+  }, [userId, pathName, dispatch, editBotLoader]);
 
   useEffect(() => {
     if (userId?.length) {
@@ -122,13 +139,7 @@ const ChatBotList: React.FC = () => {
     if (botDataRedux && botDataRedux.length) {
       setChatBotList(botDataRedux);
     }
-  }, [botDataRedux, botloader]);
-
-  useEffect(() => {
-    if (userIdLocal || pathName === '/mychatbots') {
-      dispatch(getUserBotProfileAction(userIdLocal));
-    }
-  }, [userIdLocal, pathName, dispatch]);
+  }, [botDataRedux, botloader, editBotLoader]);
 
   useEffect(() => {
     if (exportS) {

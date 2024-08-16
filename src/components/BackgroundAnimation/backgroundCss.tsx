@@ -13,7 +13,7 @@ export const BackgroundCss = () => {
           width="1440"
           height="800"
           transform="translate(20 20)"
-          fill="#0B031E"
+          fill="#380857"
         />
         <g filter="url(#filter0_f_180_721)" className="">
           <circle
@@ -21,7 +21,7 @@ export const BackgroundCss = () => {
             cx="300"
             cy="1022"
             r="252"
-            fill="#C00DC8"
+            fill="#28043d"
           />
         </g>
         <g filter="url(#filter1_f_180_721)" className="">
@@ -30,7 +30,7 @@ export const BackgroundCss = () => {
             cx="1285"
             cy="150"
             r="252"
-            fill="#C00DC8"
+            fill="#28043d"
           />
         </g>
         <defs>

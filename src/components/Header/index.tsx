@@ -30,7 +30,7 @@ const Header: React.FC = () => {
   const pathname = usePathname();
 
   return (
-    <header className="flex justify-center items-center px-6 py-4 w-full text-gray-100">
+    <header className="flex justify-center items-center px-6 py-4 w-screen text-gray-100">
       <div className="flex gap-5 justify-between py-0.5 pl-1.5 w-full max-w-[1184px] max-md:flex-wrap ">
         <Link className={`link ${pathname === '/'}`} href="/">
           <div className="flex gap-2 justify-center px-1.5 py-2 my-auto text-2xl font-bold tracking-widest whitespace-nowrap">
@@ -40,36 +40,21 @@ const Header: React.FC = () => {
         </Link>
         <nav className="flex gap-5 justify-between items-center py-2 pl-3 text-sm leading-5 max-md:flex-wrap ">
           <ul className="flex gap-10">
-            <Link
-              className={`link ${pathname === '/home' ? 'active' : ''}`}
-              href="/home"
-            >
-              Home
-            </Link>
-            <Link
-              className={`link ${pathname === '/aboutUs' ? 'active' : ''}`}
-              href="/aboutus"
-            >
-              About Us
-            </Link>
-            <Link
-              className={`link ${pathname === '/pricing' ? 'active' : ''}`}
-              href="/pricing"
-            >
-              Pricing
-            </Link>
-            <Link
-              className={`link ${pathname === '/blog' ? 'active' : ''}`}
-              href="/blog"
-            >
-              Blog
-            </Link>
-            <Link
-              className={`link ${pathname === '/contactus' ? 'active' : ''}`}
-              href="/contactus"
-            >
-              Contact Us
-            </Link>
+          <Link className={`link ${pathname === '/home' ? 'active' : ''}`} href="/home">
+            Home
+          </Link>
+          <Link className={`link ${pathname === '/aboutUs' ? 'active' : ''}`} href="/aboutUs">
+          About Us
+          </Link>
+          <Link className={`link ${pathname === '/pricing' ? 'active' : ''}`} href="/pricing">
+          Pricing
+          </Link>
+          <Link className={`link ${pathname === '/blog' ? 'active' : ''}`} href="/blog">
+            Blog
+          </Link>
+          <Link className={`link ${pathname === '/contactUs' ? 'active' : ''}`} href="/contactUs">
+            Contact Us
+          </Link>
           </ul>
         </nav>
       </div>

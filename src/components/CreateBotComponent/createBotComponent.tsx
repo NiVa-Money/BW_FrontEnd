@@ -66,6 +66,8 @@ const CreateBotComponent: React.FC = () => {
 
   const handleFileUpload = (event: any) => {
     const file = event.target.files[0];
+    const imagePath = URL.createObjectURL(file);
+    setImageSrc(imagePath)
     setImageName(file.name);
     if (file && file.size <= 10 * 1024 * 1024) {
       setBase64Image(file);
@@ -76,6 +78,8 @@ const CreateBotComponent: React.FC = () => {
 
   const handleBotSampleClick = async (item: any) => {
     setImageSrc(item?.imageUrl);
+
+    console.log("ImagesCustom",item.imageUrl)
 
     const response = await fetch(item?.imageUrl);
     const blob = await response.blob();
@@ -185,6 +189,7 @@ const CreateBotComponent: React.FC = () => {
       formData.append('file', selectedFile);
     }
     dispatch(createBotProfileAction(formData));
+   
     // dispatch(getUserBotProfileAction(userId));
     router.push('/mychatbots');
   };
@@ -440,7 +445,7 @@ const CreateBotComponent: React.FC = () => {
 
   return (
     <div className="relative text-white h-[100%] overflow-hidden p-8">
-      <BackgroundCss />
+      {/* <BackgroundCss /> */}
       <div className="max-w-[80%] mx-auto">
         <div className="flex justify-between items-center mb-8">
           <div className="flex gap-[8px]">

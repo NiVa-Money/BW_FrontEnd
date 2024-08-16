@@ -7,11 +7,9 @@ import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import Link from 'next/link';
 import { RootState } from '@/redux/configureStore';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-  getUserKnowledgeBaseAction,
-  deleteUserKnowledgeBaseAction,
-} from '@/redux/actions/knowledgeBaseActions';
+
 import ConfirmModal from './modalDelete';
+import { deleteUserKnowledgeBaseAction, getUserKnowledgeBaseAction } from '@/redux/actions/knowledgeBaseActions';
 import withAuth from '../withAuth';
 
 interface KnowledgeBaseCardProps {
@@ -57,6 +55,7 @@ const KnowledgeBase: React.FC = () => {
   );
 
   const [userIdLocal, setUserIdLocal] = useState(userId);
+  
   useEffect(() => {
     if (userId?.length) {
       setUserIdLocal(userId);

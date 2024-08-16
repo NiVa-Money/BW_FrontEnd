@@ -349,7 +349,7 @@ export function* editBotProfileSaga({
 }): Generator<any> {
   try {
     const editBot = yield call(editUserBotProfileService, payload);
-    // notifySuccess('botProfile edited successfully');
+    notifySuccess('botProfile edited successfully');
     yield put({
       type: EDIT_BOT_PROFILE_SUCCESS,
       payload: editBot,
@@ -393,7 +393,7 @@ export function* deleteBotProfilesSaga({
 }): Generator<any> {
   try {
     const botProfiles = yield call(deleteBotProfileService, payload)
-    // notifySuccess('botProfile deleted successfully');
+    notifySuccess('botProfile deleted successfully');
     yield put({
       type: DELETE_BOT_PROFILE_SUCCESS,
       payload: botProfiles,
@@ -439,7 +439,7 @@ export function* createKnowledgeBaseSaga({
 }): Generator<any> {
   try {
     const knowledgebase = yield call(createKnowledgeBaseService, payload);
-    // notifySuccess('knowledge base created successfully');
+    notifySuccess('knowledge base created successfully');
     yield put({
       type: CREATE_KNOWLEDGE_BASE_SUCCESS,
       payload: knowledgebase,
@@ -483,7 +483,7 @@ export function* deleteUserKnowledgeBaseSaga({
 }): Generator<any> {
   try {
     const botProfiles = yield call(deleteUserKnowledgeBaseService, payload);
-    // notifySuccess('knowledge base deleted successfully');
+    notifySuccess('knowledge base deleted successfully');
     yield put({
       type: DELETE_USER_KNOWLEDGE_BASE_SUCCESS,
       payload: botProfiles,
