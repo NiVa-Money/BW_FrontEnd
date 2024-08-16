@@ -217,13 +217,7 @@ const ChatBotList: React.FC = () => {
     (state: RootState) => state.botProfile?.botProfiles?.loader
   );
 
-  const botDataLoader = useSelector(
-    (state: RootState) => state.botProfile?.create?.loader
-  );
 
-  const botDataLoader2 = useSelector(
-    (state: RootState) => state.botProfile?.delete?.loader
-  );
 
   const [chatBotList, setChatBotList] = useState<ChatBot[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
