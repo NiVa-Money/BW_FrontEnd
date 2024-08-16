@@ -112,6 +112,7 @@ export default function RootLayout({
                   <SidebarToggleButton
                     isVisible={isSidebarVisible}
                     onClick={() => setIsSidebarVisible(!isSidebarVisible)}
+                    routeWithoutSidebar={routeWithoutSidebar}
                   />
                   <div
                     className={`relative transition-transform duration-800 ease-in ${
@@ -145,9 +146,9 @@ const SidebarToggleButton = ({
   routeWithoutSidebar,
 }: any) => {
   const pathname = useSelector((state: RootState) => state.root?.pathName);
-  const shouldShowButton = pathname !== '/home' && pathname !== '/botsession';
+  // const shouldShowButton = pathname !== '/home' && pathname !== '/botsession';
   return (
-    shouldShowButton && (
+    !routeWithoutSidebar.includes(pathname) && (
       <button
         className={`absolute ${
           isVisible ? 'top-4' : 'top-2'
