@@ -1,7 +1,10 @@
 'use client';
 
 import React, { useState, useEffect, useRef } from 'react';
-import { editBotProfileAction,getUserBotProfileAction } from '../../redux/actions/BotProfileActions';
+import {
+  editBotProfileAction,
+  getUserBotProfileAction,
+} from '../../redux/actions/BotProfileActions';
 import Image from 'next/image';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import FileUploadIcon from '@mui/icons-material/FileUpload';
@@ -28,7 +31,7 @@ interface BotData {
   supportEmail: string;
   wordLimitPerMessage: any;
   userId: string;
- 
+
   docType: string;
   _id: any;
 }
@@ -66,7 +69,6 @@ const EditBotComponent: React.FC = () => {
     (state: RootState) => state.botProfile?.botProfiles?.data
   );
 
- 
   const userId = useSelector(
     (state: RootState) => state.root?.userData?.user_id
   );
@@ -242,30 +244,30 @@ const EditBotComponent: React.FC = () => {
     }
   };
 
-  const handleSave =async () => {
+  const handleSave = async () => {
     if (botId && userId) {
       const formData = new FormData();
-      const imageFile: any = base64Image || selectedFileImage || botImageS3Urldata;
-      formData.append("botId", botId);
-      formData.append("botName", botName);
-      formData.append("botTone", botTone);
-      formData.append("botColor", chatColor);
-      formData.append('customBotImage', imageFile  );
-      formData.append("botGreetingMessage", greetingMessage);
-      formData.append("botSmartness", botSmartnessVal);
-      formData.append("botIdentity", botIdentity);
-      formData.append("supportNumber", supportPhone);
-      formData.append("supportEmail", supportEmail);
-      formData.append("wordLimitPerMessage", botLimit);
-      formData.append("docName", docName || filename );
-      formData.append("docType", docType || fileType);
-      formData.append("docId", knowledgeBaseId ||knowledgeBaseIdDoc);  
-      formData.append("userId", userId);
-     
+      const imageFile: any =
+        base64Image || selectedFileImage || botImageS3Urldata;
+      formData.append('botId', botId);
+      formData.append('botName', botName);
+      formData.append('botTone', botTone);
+      formData.append('botColor', chatColor);
+      formData.append('customBotImage', imageFile);
+      formData.append('botGreetingMessage', greetingMessage);
+      formData.append('botSmartness', botSmartnessVal);
+      formData.append('botIdentity', botIdentity);
+      formData.append('supportNumber', supportPhone);
+      formData.append('supportEmail', supportEmail);
+      formData.append('wordLimitPerMessage', botLimit);
+      formData.append('docName', docName || filename);
+      formData.append('docType', docType || fileType);
+      formData.append('docId', knowledgeBaseId || knowledgeBaseIdDoc);
+      formData.append('userId', userId);
+
       dispatch(editBotProfileAction(formData));
-      
+
       router.push('/mychatbots');
-      
     } else {
       console.error('Bot ID is not available.');
     }
@@ -443,7 +445,7 @@ const EditBotComponent: React.FC = () => {
         />
       </div>
       <div className="flex flex-col mb-4">
-        <label className="block text-gray-200 mb-2">
+        {/* <label className="block text-gray-200 mb-2">
           Select Knowledge Base
         </label>
         <div className="relative mb-4">
@@ -461,7 +463,7 @@ const EditBotComponent: React.FC = () => {
                 </option>
               ))}
           </select>
-        </div>
+        </div> */}
         <label className="block text-gray-200 mb-2">
           Select Knowledge Base
         </label>
