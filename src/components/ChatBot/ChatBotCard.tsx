@@ -8,6 +8,7 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Link from 'next/link';
 import DescriptionIcon from '@mui/icons-material/Description';
+import { formatedDate } from '@/utils/commonFunctions';
 
 interface ChatBot {
   botId?: string;
@@ -133,8 +134,8 @@ const ChatBotCard: React.FC<ChatBotCardProps> = ({ bot, actions, botCard }) => {
           <div className="flex flex-col justify-between pt-3 whitespace-nowrap text-neutral-400">
             <span className="text-base">Created at</span>
 
-            <span className="flex gap-2.5 p-2.5 mt-4 text-sm leading-5 text-center rounded-full">
-              {bot.createdAt}
+            <span className="flex gap-2.5 pl-0 p-2.5 mt-4 text-sm leading-5 text-center rounded-full">
+              {formatedDate(bot.createdAt)}
             </span>
           </div>
         </div>

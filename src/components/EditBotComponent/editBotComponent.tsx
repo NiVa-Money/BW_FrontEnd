@@ -610,10 +610,8 @@ const EditBotComponent: React.FC = () => {
                 <h3 className="mt-4 text-2xl font-bold leading-9 text-center text-white">
                   {botName}
                 </h3>
-                <p className="mt-6 text-sm leading-6 mb-6 text-center text-neutral-400 w-[344px]">
-                  I'm your customer support, ready to answer your
-                  <br />
-                  questions
+                <p className="mt-6 text-sm leading-6 mb-6 w-full text-center text-center text-neutral-400 w-[344px]">
+                  I'm your customer support, ready to answer your questions
                 </p>
                 <div className="flex flex-col w-full h-[17vh]"></div>
                 <input
