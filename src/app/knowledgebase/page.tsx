@@ -1,4 +1,5 @@
-import KnowledgeBase from '@/components/ChatBot/knowledgebase';
+
+import KnowledgeBase from '@/components/ChatBot/KnowledgeBase';
 import React from 'react';
 
 const page = () => {

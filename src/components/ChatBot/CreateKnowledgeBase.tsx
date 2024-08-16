@@ -1,6 +1,5 @@
 'use client';
 
-import { createKnowledgebaseAction } from '@/redux/actions/knowledgebaseActions';
 import * as React from 'react';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
@@ -8,6 +7,7 @@ import { useRouter } from 'next/navigation';
 import { useDispatch, useSelector } from 'react-redux';
 import { v4 as uuidv4 } from 'uuid';
 import { RootState } from '@/redux/configureStore';
+import { createKnowledgebaseAction } from '@/redux/actions/knowledgeBaseActions';
 
 const CreateKnowledgeBase: React.FC = () => {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);

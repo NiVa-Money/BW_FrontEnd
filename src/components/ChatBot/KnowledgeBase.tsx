@@ -7,11 +7,9 @@ import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import Link from 'next/link';
 import { RootState } from '@/redux/configureStore';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-  getUserKnowledgeBaseAction,
-  deleteUserKnowledgeBaseAction,
-} from '@/redux/actions/knowledgebaseActions';
+
 import ConfirmModal from './modalDelete';
+import { deleteUserKnowledgeBaseAction } from '@/redux/actions/knowledgeBaseActions';
 
 interface KnowledgeBaseCardProps {
   _id: string;
@@ -167,3 +165,7 @@ const KnowledgeBase: React.FC = () => {
 };
 
 export default KnowledgeBase;
+function getUserKnowledgeBaseAction(userIdLocal: any): any {
+  throw new Error('Function not implemented.');
+}
+
