@@ -243,12 +243,12 @@ const EditBotComponent: React.FC = () => {
   const handleSave =async () => {
     if (botId && userId) {
       const formData = new FormData();
-      const imageFile: any = base64Image ? base64Image : selectedFileImage;
+      const imageFile: any = base64Image || selectedFileImage || botImageS3Urldata;
       formData.append("botId", botId);
       formData.append("botName", botName);
       formData.append("botTone", botTone);
       formData.append("botColor", chatColor);
-      formData.append('customBotImage', imageFile);
+      formData.append('customBotImage', imageFile  );
       formData.append("botGreetingMessage", greetingMessage);
       formData.append("botSmartness", botSmartnessVal);
       formData.append("botIdentity", botIdentity);
@@ -263,7 +263,7 @@ const EditBotComponent: React.FC = () => {
       dispatch(editBotProfileAction(formData));
       
       router.push('/mychatbots');
-     
+      
     } else {
       console.error('Bot ID is not available.');
     }
