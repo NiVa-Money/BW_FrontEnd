@@ -1,7 +1,7 @@
 import * as React from 'react';
-import { SqureCardOne } from '@/components/dashboardComponents/squreCardOne';
-import { SqureCardTwo } from '@/components/dashboardComponents/squreCardTwo';
-import { CardHeader1 } from '@/components/dashboardComponents/headerCard';
+import { SqureCardOne } from '@/components/dashBoardComponents/squreCardOne';
+// import { SqureCardTwo } from '@/components/dashboardComponents/squreCardTwo';
+import { CardHeader1 } from '@/components/dashBoardComponents/headerCard';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '@/redux/configureStore';
 import { useEffect, useState } from 'react';
