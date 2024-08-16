@@ -299,7 +299,7 @@ const ChatBotList: React.FC = () => {
 
   useEffect(() => {
     if (userId !== undefined) {
-      if (userId?.length || pathName === '/MyChatBots') {
+      if (userId?.length || pathName === '/mychatbots') {
         dispatch(getUserBotProfileAction(userId));
       }
     }

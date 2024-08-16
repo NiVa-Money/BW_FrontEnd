@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useEffect, useRef } from 'react';
-import { editBotProfileAction } from '../../redux/actions/BotProfileActions';
+import { editBotProfileAction,getUserBotProfileAction } from '../../redux/actions/BotProfileActions';
 import Image from 'next/image';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import FileUploadIcon from '@mui/icons-material/FileUpload';
@@ -240,31 +240,30 @@ const EditBotComponent: React.FC = () => {
     }
   };
 
-  const handleSave = async () => {
-    console.log('botImageS3Urldata', botImageS3Urldata);
-    // await handleBot(botImageS3Urldata)
+  const handleSave =async () => {
     if (botId && userId) {
       const formData = new FormData();
       const imageFile: any = base64Image ? base64Image : selectedFileImage;
-      formData.append('botId', botId);
-      formData.append('botName', botName);
-      formData.append('botTone', botTone);
-      formData.append('botColor', chatColor);
+      formData.append("botId", botId);
+      formData.append("botName", botName);
+      formData.append("botTone", botTone);
+      formData.append("botColor", chatColor);
       formData.append('customBotImage', imageFile);
-      formData.append('botGreetingMessage', greetingMessage);
-      formData.append('botSmartness', botSmartnessVal);
-      formData.append('botIdentity', botIdentity);
-      formData.append('supportNumber', supportPhone);
-      formData.append('supportEmail', supportEmail);
-      formData.append('wordLimitPerMessage', botLimit);
-      formData.append('docName', docName);
-      formData.append('docType', docType);
-      formData.append('docId', knowledgeBaseId);
-      formData.append('userId', userId);
-
+      formData.append("botGreetingMessage", greetingMessage);
+      formData.append("botSmartness", botSmartnessVal);
+      formData.append("botIdentity", botIdentity);
+      formData.append("supportNumber", supportPhone);
+      formData.append("supportEmail", supportEmail);
+      formData.append("wordLimitPerMessage", botLimit);
+      formData.append("docName", docName || filename );
+      formData.append("docType", docType || fileType);
+      formData.append("docId", knowledgeBaseId ||knowledgeBaseIdDoc);  
+      formData.append("userId", userId);
+     
       dispatch(editBotProfileAction(formData));
-
+      
       router.push('/mychatbots');
+     
     } else {
       console.error('Bot ID is not available.');
     }
