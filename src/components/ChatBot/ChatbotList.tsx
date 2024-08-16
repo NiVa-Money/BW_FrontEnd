@@ -54,7 +54,7 @@
 
 //   // Function to handle edit action
 //   const handleEdit = (botId: string) => {
-//     router.push(`/editbot?id=${botId}`);
+//     router.push(`/editBot?id=${botId}`);
 //   };
 
 //   // Function to handle export action
@@ -206,6 +206,7 @@ interface ChatBot {
   docName: string;
   botURL: string;
   userId: string;
+  userId: string;
 }
 
 const ChatBotList: React.FC = () => {
@@ -231,6 +232,7 @@ const ChatBotList: React.FC = () => {
   const userId = useSelector(
     (state: RootState) => state.root?.userData?.user_id
   );
+  console.log(userId)
   const [userIdLocal, setUserIdLocal] = useState(userId);
   const dispatch = useDispatch();
   const pathName = useSelector((state: RootState) => state.root?.pathName);
@@ -247,6 +249,7 @@ const ChatBotList: React.FC = () => {
   // Function to handle edit action
   const handleEdit = (botId: string) => {
     router.push(`/editbot?id=${botId}`);
+   
   };
 
   // Function to handle export action
@@ -318,7 +321,7 @@ const ChatBotList: React.FC = () => {
   }, [botDataRedux, botloader]);
 
   useEffect(() => {
-    if (userIdLocal || pathName === '/MyChatBots') {
+    if (userIdLocal || pathName === '/mychatbots') {
       dispatch(getUserBotProfileAction(userIdLocal));
     }
   }, [userIdLocal, pathName, dispatch]);

@@ -5,7 +5,6 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { v4 as uuidv4 } from 'uuid';
 import { RootState } from '@/redux/configureStore';
 import { createKnowledgebaseAction } from '@/redux/actions/knowledgeBaseActions';
 
@@ -26,12 +25,12 @@ const CreateKnowledgeBase: React.FC = () => {
     setDocName(file?.name ?? '');
     if (
       file &&
-      file.size <= 2 * 1024 * 1024 &&
+      file.size <= 10 * 1024 * 1024 &&
       file.type === 'application/pdf'
     ) {
       setSelectedFile(file);
     } else {
-      alert('File must be a PDF and less than 2MB');
+      alert('File must be a PDF and less than 10MB');
     }
   };
 
@@ -44,12 +43,12 @@ const CreateKnowledgeBase: React.FC = () => {
     const file = event.dataTransfer.files[0];
     if (
       file &&
-      file.size <= 2 * 1024 * 1024 &&
+      file.size <= 10 * 1024 * 1024 &&
       file.type === 'application/pdf'
     ) {
       setSelectedFile(file);
     } else {
-      alert('File must be a PDF and less than 2MB');
+      alert('File must be a PDF and less than 10MB');
     }
   };
 
@@ -92,7 +91,7 @@ const CreateKnowledgeBase: React.FC = () => {
           />
           <div className="mt-2.5 text-white">Select a file or drag here</div>
           <div className="mt-2.5 text-base text-zinc-400">
-            File accepted: PDFs, max: 2MB
+            File accepted: PDFs, max: 10MB
           </div>
           <input
             type="file"

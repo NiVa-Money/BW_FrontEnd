@@ -15,6 +15,7 @@ type PayPalButtonProps = {
 
 const PayPalButton: React.FC<PayPalButtonProps> = ({ planId, price , 
   onPaymentSuccess  }) => {
+  console.log('Price received in PayPalButton:', price);
   const dispatch = useDispatch();
   // const { _id: paymentId } = useSelector((state: RootState) => state.payment.paymentData); 
   const paymentData = useSelector((state: RootState) => state.payment?.paymentData);
@@ -30,6 +31,7 @@ const PayPalButton: React.FC<PayPalButtonProps> = ({ planId, price ,
 
 
   const createOrder = async (data: any, actions: any) => {
+    console.log('amount' , data.amount )
     dispatch(createPaymentRequest({ userId, amount: Number(price), currency: 'USD', paymentGateway: 'paypal' }));
     return actions.order.create({
       purchase_units: [
@@ -43,13 +45,13 @@ const PayPalButton: React.FC<PayPalButtonProps> = ({ planId, price ,
   };
 
   const onApprove = async (data: any, actions: any) => {
-    console.log('paymentID' , paymentId);
+    console.log('paymentID', paymentId);
     dispatch(capturePaymentRequest(paymentId)); 
     return actions.order.capture().then((details: any) => {
       setModalMessage('Transaction completed by ' + details.payer.name.given_name);
       setIsError(false); 
       onPaymentSuccess(); 
-      setIsPaymentSuccessful(true); // Set payment status to successful
+      setIsPaymentSuccessful(true);
       setModalOpen(true); 
     });
   };

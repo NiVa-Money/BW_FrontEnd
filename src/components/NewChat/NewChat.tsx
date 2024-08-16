@@ -13,8 +13,6 @@ import {
   sendUserQuestionOnly,
 } from '@/redux/actions/userChatAction';
 import withAuth from '../withAuth';
-import { createPaymentRequest } from '@/redux/actions/paymentActions';
-import { useEffect } from 'react';
 
 const NewChatComponent: React.FC = () => {
   const dispatch = useDispatch();
@@ -70,10 +68,7 @@ const NewChatComponent: React.FC = () => {
     setBotId(botId);
     setIsBotProfileOpen(!isBotProfileOpen);
   };
-  
-  // useEffect(() => {
-  //   dispatch(createPaymentRequest({ userId, currency: 'USD', paymentGateway: 'paypal' }));
-  // }, []);
+
 
   const getChatHistory = () => {
     // console.log('userId', userId);

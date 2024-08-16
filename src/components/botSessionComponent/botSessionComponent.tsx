@@ -1,15 +1,11 @@
 'use client';
-import {
-  getUserBotProfileAction,
-  removeAdvanceFeature,
-} from '@/redux/actions/BotProfileActions';
+import { removeAdvanceFeature } from '@/redux/actions/BotProfileActions';
 import { RootState } from '@/redux/configureStore';
 import * as React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import icon from '../../public/assets/chatBotSymbol.svg';
 import mainLogo from '@/public/assets/mainLogo.svg';
-import { useRouter } from 'next/router';
-import './botSession.css'
+import './botSession.css';
 
 import '../NewChat/newchat.css';
 import {
@@ -19,10 +15,10 @@ import {
   sendUserQuestion,
   sendUserQuestionOnly,
 } from '@/redux/actions/userChatAction';
-import withAuth from '../withAuth';
 import Image from 'next/image';
 import Link from 'next/link';
 import { BarChart } from '@tremor/react';
+import withAuth from '../withAuth';
 
 const BotSessionComponent: React.FC = () => {
   const dispatch = useDispatch();
@@ -294,7 +290,10 @@ const BotSessionComponent: React.FC = () => {
     setReasonDetails(advanceFeature?.data?.data?.cause);
     setSummary(advanceFeature?.data?.data?.summary);
     setSentimentAnalysis(advanceFeature?.data?.data?.sentiments);
-    const formattedNextSteps = advanceFeature?.data?.data?.nextStep.replace(/\n/g, '<br />')
+    const formattedNextSteps = advanceFeature?.data?.data?.nextStep.replace(
+      /\n/g,
+      '<br />'
+    );
     setNextSteps(formattedNextSteps);
   }, [advanceFeature]);
 
@@ -305,7 +304,7 @@ const BotSessionComponent: React.FC = () => {
   //   // console.log('botProfiles', botProfiles);
   // }, [userChatMessagesRes]);
   React.useEffect(() => {
-    if (botIdLocal?.length || pathName === '/botSession') {
+    if (botIdLocal?.length || pathName === '/botsession') {
       getChatHistory();
     }
   }, [botIdLocal, pathName, dispatch]);
@@ -749,10 +748,11 @@ const BotSessionComponent: React.FC = () => {
                 Feedback / AI Recommendations
               </button>
               {nextSteps ? (
-                <div className="w-[80%] flex justify-center items-center mt-2 border-4 border-[#DB88DB] py-4 px-10 text-base"
-                dangerouslySetInnerHTML={{
-                  __html: nextSteps
-                }}
+                <div
+                  className="w-[80%] flex justify-center items-center mt-2 border-4 border-[#DB88DB] py-4 px-10 text-base"
+                  dangerouslySetInnerHTML={{
+                    __html: nextSteps,
+                  }}
                 />
               ) : (
                 ''
@@ -883,4 +883,4 @@ const BotSessionComponent: React.FC = () => {
   );
 };
 
-export default BotSessionComponent;
+export default withAuth(BotSessionComponent);

@@ -14,6 +14,7 @@ import { useRouter } from 'next/navigation';
 import { botImageBaseUrl } from '@/utils/constant';
 import { HexColorPicker } from 'react-colorful';
 import { useSearchParams } from 'next/navigation';
+import withAuth from '../withAuth';
 
 interface BotData {
   botId?: string;
@@ -27,8 +28,9 @@ interface BotData {
   supportEmail: string;
   wordLimitPerMessage: any;
   userId: string;
-  _id: string;
+ 
   docType: string;
+  _id: any;
 }
 interface KnowledgeBaseFile {
   _id: string;
@@ -63,8 +65,8 @@ const EditBotComponent: React.FC = () => {
   const botDataRedux = useSelector(
     (state: RootState) => state.botProfile?.botProfiles?.data
   );
-  console.log('bot', botDataRedux);
 
+ 
   const userId = useSelector(
     (state: RootState) => state.root?.userData?.user_id
   );
@@ -172,10 +174,10 @@ const EditBotComponent: React.FC = () => {
   const handleFileUpload = (event: any) => {
     const file = event.target.files[0];
     setImageName(file.name);
-    if (file && file.size <= 2 * 1024 * 1024) {
+    if (file && file.size <= 10 * 1024 * 1024) {
       setBase64Image(file);
     } else {
-      alert('File must be less than 2MB');
+      alert('File must be less than 10MB');
     }
   };
 
@@ -221,7 +223,7 @@ const EditBotComponent: React.FC = () => {
       setFileName(file.name);
       // await handleSave()
     } else {
-      alert('File must be a PDF and less than 2MB');
+      alert('File must be a PDF and less than 10MB');
     }
   };
 
@@ -445,6 +447,25 @@ const EditBotComponent: React.FC = () => {
           Select Knowledge Base
         </label>
         <div className="relative mb-4">
+          <select
+            className="block appearance-none w-full bg-gray-800 text-white p-2 rounded-[12px] focus:outline-none focus:ring-2 focus:ring-blue-500"
+            defaultValue=""
+          >
+            <option value="" disabled>
+              Select a file
+            </option>
+            {knowledgeBaseData &&
+              knowledgeBaseData.map((file: KnowledgeBaseFile) => (
+                <option key={file._id} value={file.fileLocationS3}>
+                  {file.docName}
+                </option>
+              ))}
+          </select>
+        </div>
+        <label className="block text-gray-200 mb-2">
+          Select Knowledge Base
+        </label>
+        <div className="relative mb-4">
           {knowledgeBaseData && knowledgeBaseData.length > 0 ? (
             <select
               className="block appearance-none w-full bg-gray-800 text-white p-2 rounded-[12px] focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -608,10 +629,8 @@ const EditBotComponent: React.FC = () => {
                 <h3 className="mt-4 text-2xl font-bold leading-9 text-center text-white">
                   {botName}
                 </h3>
-                <p className="mt-6 text-sm leading-6 mb-6 text-center text-neutral-400 w-[344px]">
-                  I'm your customer support, ready to answer your
-                  <br />
-                  questions
+                <p className="mt-6 text-sm leading-6 mb-6 w-full text-center text-center text-neutral-400 w-[344px]">
+                  I'm your customer support, ready to answer your questions
                 </p>
                 <div className="flex flex-col w-full h-[17vh]"></div>
                 <input
@@ -629,4 +648,4 @@ const EditBotComponent: React.FC = () => {
   );
 };
 
-export default EditBotComponent;
+export default withAuth(EditBotComponent);

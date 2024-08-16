@@ -23,11 +23,11 @@ const LoginModal: React.FC<ModalProps> = ({ closeModal }) => {
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
     setError('');
-    
+
     try {
       // console.log('Calling handleSignInWithEmail'); // Log before calling the function
       // await handleSignInWithEmail(email, password);
-      console.log('Successfully logged in'); // Log if login is successful  
+      console.log('Successfully logged in'); // Log if login is successful
       // Dispatch the passwordLoginAction
       dispatch(passwordLoginAction({ email, password }));
       // closeModal();
@@ -40,6 +40,7 @@ const LoginModal: React.FC<ModalProps> = ({ closeModal }) => {
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-[#0B031E] bg-opacity-50">
+      <BackgroundAnimation />
       <div className="bg-[#0B031E] p-6 rounded-lg max-w-md mx-auto">
         <div className="flex justify-end">
           <button
@@ -73,15 +74,15 @@ const LoginModal: React.FC<ModalProps> = ({ closeModal }) => {
             />
           </label>
           <button
-              type="submit"
-              className="w-full text-white p-2 rounded mt-8"
-              style={{
-                background:
-                  'conic-gradient(from 180deg at 50% 50%, #C729B9 -28.32deg, #B52BBA 4.67deg, #A12CBC 23.65deg, #8C2EBE 44.86deg, #792FBF 72.46deg, #6C30C0 82.5deg, #4B32C3 127.99deg, #5831C2 160.97deg, #6330C1 178.46deg, #742FC0 189.48deg, #8D2DBE 202.95deg, #A62CBC 230.66deg, #B92ABA 251.35deg, #D029B8 276.44deg, #EC27B6 306.45deg, #C729B9 331.68deg, #B52BBA 364.67deg)',
-              }}
-            >
-              Log in
-            </button>
+            type="submit"
+            className="w-full text-white p-2 rounded mt-8"
+            style={{
+              background:
+                'conic-gradient(from 180deg at 50% 50%, #C729B9 -28.32deg, #B52BBA 4.67deg, #A12CBC 23.65deg, #8C2EBE 44.86deg, #792FBF 72.46deg, #6C30C0 82.5deg, #4B32C3 127.99deg, #5831C2 160.97deg, #6330C1 178.46deg, #742FC0 189.48deg, #8D2DBE 202.95deg, #A62CBC 230.66deg, #B92ABA 251.35deg, #D029B8 276.44deg, #EC27B6 306.45deg, #C729B9 331.68deg, #B52BBA 364.67deg)',
+            }}
+          >
+            Log in
+          </button>
         </form>
       </div>
     </div>

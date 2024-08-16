@@ -1,7 +1,6 @@
 'use client';
 import * as React from 'react';
 import Link from 'next/link';
-// import ContactUs from '../contactus/page';
 function QuestionAnswers() {
   const [openIndex, setOpenIndex] = React.useState<number | null>(null);
 
@@ -485,6 +484,9 @@ function QuestionAnswers() {
                   </div>
                   {openIndex ===
                     sectionIndex * section.questions.length + faqIndex && (
+                    <div className="mt-2 text-white text-wrap mb-8">
+                      {faq.answer}
+                    </div>
                     <div className="mt-2 text-white text-wrap mb-8">
                       {faq.answer}
                     </div>

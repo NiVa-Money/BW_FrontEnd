@@ -10,6 +10,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import ConfirmModal from './modalDelete';
 import { deleteUserKnowledgeBaseAction } from '@/redux/actions/knowledgeBaseActions';
+import withAuth from '../withAuth';
 
 interface KnowledgeBaseCardProps {
   _id: string;
@@ -164,8 +165,4 @@ const KnowledgeBase: React.FC = () => {
   );
 };
 
-export default KnowledgeBase;
-function getUserKnowledgeBaseAction(userIdLocal: any): any {
-  throw new Error('Function not implemented.');
-}
-
+export default withAuth(KnowledgeBase);
