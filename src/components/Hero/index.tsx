@@ -90,7 +90,7 @@ const Hero = () => {
   return (
     <section>
       <div className="flex flex-col items-center px-5 pt-6">
-        <BackgroundAnimation />
+        <BackgroundAnimation children={undefined} />
         <div className="shrink-0 mt-6 max-w-full" />
         <h1 className="mt-4 text-6xl font-black text-center text-gray-100 max-md:text-4xl">
           Build the Easiest No-Code <br /> AI Chatbot here!

@@ -40,7 +40,7 @@ const LoginModal: React.FC<ModalProps> = ({ closeModal }) => {
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-[#0B031E] bg-opacity-50">
-      <BackgroundAnimation />
+      <BackgroundAnimation children={undefined} />
       <div className="bg-[#0B031E] p-6 rounded-lg max-w-md mx-auto">
         <div className="flex justify-end">
           <button

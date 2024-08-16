@@ -9,7 +9,7 @@ import { RootState } from '@/redux/configureStore';
 import { useDispatch, useSelector } from 'react-redux';
 
 import ConfirmModal from './modalDelete';
-import { deleteUserKnowledgeBaseAction } from '@/redux/actions/knowledgeBaseActions';
+import { deleteUserKnowledgeBaseAction, getUserKnowledgeBaseAction } from '@/redux/actions/knowledgeBaseActions';
 import withAuth from '../withAuth';
 
 interface KnowledgeBaseCardProps {

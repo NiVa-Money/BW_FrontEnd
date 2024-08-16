@@ -487,9 +487,7 @@ function QuestionAnswers() {
                     <div className="mt-2 text-white text-wrap mb-8">
                       {faq.answer}
                     </div>
-                    <div className="mt-2 text-white text-wrap mb-8">
-                      {faq.answer}
-                    </div>
+            
                   )}
                 </div>
               ))}

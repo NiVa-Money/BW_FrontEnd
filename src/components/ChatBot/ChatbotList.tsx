@@ -206,7 +206,7 @@ interface ChatBot {
   docName: string;
   botURL: string;
   userId: string;
-  userId: string;
+  
 }
 
 const ChatBotList: React.FC = () => {
