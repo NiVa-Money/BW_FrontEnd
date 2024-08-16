@@ -318,7 +318,7 @@ const ChatBotList: React.FC = () => {
   }, [botDataRedux, botloader]);
 
   useEffect(() => {
-    if (userIdLocal || pathName === '/MyChatBots') {
+    if (userIdLocal || pathName === '/mychatbots') {
       dispatch(getUserBotProfileAction(userIdLocal));
     }
   }, [userIdLocal, pathName, dispatch]);
