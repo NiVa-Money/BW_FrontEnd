@@ -6,7 +6,6 @@ import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '@/redux/configureStore';
 import { useEffect, useState } from 'react';
 import styles from './dashboardComponent.module.css';
-// import styles from './DashBoardComponents/dashboard.module.css';
 import Link from 'next/link';
 import { fetchMetricsAction } from '@/redux/actions/authActions';
 import { getUserProfileAction } from '@/redux/actions/authActions';
@@ -34,46 +33,46 @@ const DashBoardComponent: React.FC = () => {
   const [profileData, setProfileData] = React.useState<any>(userDataRedux);
   const dispatch = useDispatch();
   const totalSatisfaction =
-  metricData.userSatisfaction?.good +
-  metricData.userSatisfaction?.bad +
-  metricData.userSatisfaction?.neutral;
-const goodPercentage =
-  totalSatisfaction > 0
-    ? (metricData.userSatisfaction.good / totalSatisfaction) * 100
-    : 0;
-const badPercentage =
-  totalSatisfaction > 0
-    ? (metricData.userSatisfaction.bad / totalSatisfaction) * 100
-    : 0;
-const neutralPercentage =
-  totalSatisfaction > 0
-    ? (metricData.userSatisfaction.neutral / totalSatisfaction) * 100
-    : 0;
+    metricData?.userSatisfaction?.good +
+    metricData?.userSatisfaction?.bad +
+    metricData?.userSatisfaction?.neutral;
+  const goodPercentage =
+    totalSatisfaction > 0
+      ? (metricData?.userSatisfaction.good / totalSatisfaction) * 100
+      : 0;
+  const badPercentage =
+    totalSatisfaction > 0
+      ? (metricData?.userSatisfaction.bad / totalSatisfaction) * 100
+      : 0;
+  const neutralPercentage =
+    totalSatisfaction > 0
+      ? (metricData.userSatisfaction.neutral / totalSatisfaction) * 100
+      : 0;
 
-// Determine what to display
-let displayEmoji = '😐';
-let displayPercentage = 0;
+  // Determine what to display
+  let displayEmoji = '😐';
+  let displayPercentage = 0;
 
-if (badPercentage > 50) {
-  displayEmoji = '😢';
-  displayPercentage = badPercentage;
-} else if (goodPercentage > 50) {
-  displayEmoji = '😄';
-  displayPercentage = goodPercentage;
-} else if (
-  goodPercentage === 0 &&
-  badPercentage === 0 &&
-  neutralPercentage === 0
-) {
-  displayEmoji = '😢';
-  displayPercentage = 0;
-} else {
-  displayEmoji = '😐';
-  displayPercentage = neutralPercentage;
-}
-const meterHeight = '90%';
-const emojiPosition =
-  (displayPercentage / 100) * parseFloat(meterHeight.replace('%', '')) + '%';
+  if (badPercentage > 50) {
+    displayEmoji = '😢';
+    displayPercentage = badPercentage;
+  } else if (goodPercentage > 50) {
+    displayEmoji = '😄';
+    displayPercentage = goodPercentage;
+  } else if (
+    goodPercentage === 0 &&
+    badPercentage === 0 &&
+    neutralPercentage === 0
+  ) {
+    displayEmoji = '😢';
+    displayPercentage = 0;
+  } else {
+    displayEmoji = '😐';
+    displayPercentage = neutralPercentage;
+  }
+  const meterHeight = '90%';
+  const emojiPosition =
+    (displayPercentage / 100) * parseFloat(meterHeight.replace('%', '')) + '%';
   React.useEffect(() => {}, [userId]);
 
   React.useEffect(() => {
@@ -115,7 +114,7 @@ const emojiPosition =
     }
   }, [userMetricData]);
 
- return (
+  return (
     <div className="w-full h-full flex flex-col p-4 md:p-8 bg-[#0B031E] text-white">
       <div className="w-full flex flex-col md:flex-row h-auto md:h-[15%] gap-4">
         <div className="bg-[#8E2DA0] w-full md:w-[23%] rounded-2xl p-4 m-1">
@@ -153,7 +152,9 @@ const emojiPosition =
       </div>
       <div className="w-full flex flex-col md:flex-row h-auto md:h-[45%] gap-4 mt-4">
         <div className="bg-[#1E1935] w-full md:w-[100%] rounded-2xl p-4 m-1">
-          <div className={`${styles.textSize} mb-4 `}>Total no. of Messages</div>
+          <div className={`${styles.textSize} mb-4 `}>
+            Total no. of Messages
+          </div>
           <div className={`${styles.textSize} relative w-full h-full mx-auto`}>
             <SqureCardOne sessionTotal={20} sessionLeft={11} />
           </div>
@@ -196,11 +197,13 @@ const emojiPosition =
             </div>
             <div className={styles.textSize}>User Profile</div>
           </div>
-          <div className={`${styles.textSize} text-gray-400`}>
-            Name {profileData?.firstName}
+          <div className={`${styles.textSize} gap-[8px] flex text-gray-400`}>
+            <div>Name</div>
+            <div> {profileData?.firstName}</div>
           </div>
-          <div className={`${styles.textSize} text-gray-400`}>
-            User ID {profileData?.emailId}
+          <div className={`${styles.textSize} gap-[8px] flex text-gray-400`}>
+            <div>User ID </div>
+            <div>{profileData?.emailId}</div>
           </div>
         </div>
         <div className="relative bg-[#1E1935] w-full md:w-[70%] rounded-2xl p-4 m-1 md:col-span-2 ">

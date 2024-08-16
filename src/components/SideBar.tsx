@@ -276,23 +276,24 @@ const MenuItem: React.FC<MenuItemProps> = ({ item, onClick }) => {
                   )}
                   {subItem.hasDropdown && subMenuChildOpen[idx] && (
                     <div className="ml-4">
-                      {botProfiles?.botProfiles?.data?.map(
-                        (bot: any, childIdx: any) => (
-                          <div key={childIdx}>
-                            <div
-                              className={`text-gray-300 hover:bg-white hover:bg-opacity-10 rounded-full cursor-pointer`}
-                              onClick={() => botSession(bot._id, bot.userId)}
-                            >
-                              <button
-                                // onClick={() => botSession(bot._id, bot.userId)}
-                                className="flex items-center space-x-3 py-2 px-3"
+                      {botProfiles &&
+                        botProfiles?.botProfiles?.data?.map(
+                          (bot: any, childIdx: any) => (
+                            <div key={childIdx}>
+                              <div
+                                className={`text-gray-300 hover:bg-white hover:bg-opacity-10 rounded-full cursor-pointer`}
+                                onClick={() => botSession(bot._id, bot.userId)}
                               >
-                                <span>{bot.botName}</span>
-                              </button>
+                                <button
+                                  // onClick={() => botSession(bot._id, bot.userId)}
+                                  className="flex items-center space-x-3 py-2 px-3"
+                                >
+                                  <span>{bot.botName}</span>
+                                </button>
+                              </div>
                             </div>
-                          </div>
-                        )
-                      )}
+                          )
+                        )}
                     </div>
                   )}
                 </div>
