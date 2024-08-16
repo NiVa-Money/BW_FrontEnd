@@ -55,6 +55,7 @@ const KnowledgeBase: React.FC = () => {
   );
 
   const [userIdLocal, setUserIdLocal] = useState(userId);
+  
   useEffect(() => {
     if (userId?.length) {
       setUserIdLocal(userId);
