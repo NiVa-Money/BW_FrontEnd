@@ -54,7 +54,7 @@
 
 //   // Function to handle edit action
 //   const handleEdit = (botId: string) => {
-//     router.push(`/editBot?id=${botId}`);
+//     router.push(`/editbot?id=${botId}`);
 //   };
 
 //   // Function to handle export action
@@ -206,7 +206,6 @@ interface ChatBot {
   docName: string;
   botURL: string;
   userId: string;
-  
 }
 
 const ChatBotList: React.FC = () => {
@@ -232,7 +231,6 @@ const ChatBotList: React.FC = () => {
   const userId = useSelector(
     (state: RootState) => state.root?.userData?.user_id
   );
-  console.log(userId)
   const [userIdLocal, setUserIdLocal] = useState(userId);
   const dispatch = useDispatch();
   const pathName = useSelector((state: RootState) => state.root?.pathName);
@@ -245,11 +243,13 @@ const ChatBotList: React.FC = () => {
   const exportS = useSelector(
     (state: RootState) => state?.botProfile?.export?.data
   );
-
+  const editBotLoader = useSelector(
+    (state: RootState) => state?.botProfile?.edit?.loader
+  );
+   
   // Function to handle edit action
   const handleEdit = (botId: string) => {
     router.push(`/editbot?id=${botId}`);
-   
   };
 
   // Function to handle export action
@@ -302,11 +302,11 @@ const ChatBotList: React.FC = () => {
 
   useEffect(() => {
     if (userId !== undefined) {
-      if (userId?.length || pathName === '/mychatbots') {
+      if (userId?.length || pathName === '/mychatbots' || userIdLocal || !editBotLoader) {
         dispatch(getUserBotProfileAction(userId));
       }
     }
-  }, [userId, pathName, dispatch]);
+  }, [userId, pathName, dispatch ,editBotLoader]);
 
   useEffect(() => {
     if (userId?.length) {
@@ -318,13 +318,9 @@ const ChatBotList: React.FC = () => {
     if (botDataRedux && botDataRedux.length) {
       setChatBotList(botDataRedux);
     }
-  }, [botDataRedux, botloader]);
+  }, [botDataRedux, botloader, editBotLoader]);
 
-  useEffect(() => {
-    if (userIdLocal || pathName === '/mychatbots') {
-      dispatch(getUserBotProfileAction(userIdLocal));
-    }
-  }, [userIdLocal, pathName, dispatch]);
+
 
   useEffect(() => {
     if (exportS) {
