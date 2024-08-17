@@ -205,13 +205,9 @@ const DashBoardComponent: React.FC = () => {
           </div>
         </div>
 
-        <div className="relative bg-[#1E1935] w-full md:w-[70%] rounded-2xl p-4 m-1 md:col-span-2 ">
-        <div>Message Count</div>
+        <div className="relative bg-[#1E1935] w-full md:w-[70%] rounded-2xl md:col-span-2 ">
+          <div>Message Count</div>
           <SqureCardTwo />
-          {/* <div className="flex mt-2">
-            <div className="flex items-center mr-4"></div>
-            <div className="flex items-center"></div>
-          </div> */}
         </div>
       </div>
     </div>
