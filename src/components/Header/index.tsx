@@ -43,7 +43,7 @@ const Header: React.FC = () => {
           <Link className={`link ${pathname === '/home' ? 'active' : ''}`} href="/home">
             Home
           </Link>
-          <Link className={`link ${pathname === '/aboutUs' ? 'active' : ''}`} href="/aboutUs">
+          <Link className={`link ${pathname === '/aboutus' ? 'active' : ''}`} href="/aboutus">
           About Us
           </Link>
           <Link className={`link ${pathname === '/pricing' ? 'active' : ''}`} href="/pricing">
@@ -52,7 +52,7 @@ const Header: React.FC = () => {
           <Link className={`link ${pathname === '/blog' ? 'active' : ''}`} href="/blog">
             Blog
           </Link>
-          <Link className={`link ${pathname === '/contactUs' ? 'active' : ''}`} href="/contactUs">
+          <Link className={`link ${pathname === '/contactus' ? 'active' : ''}`} href="/contactus">
             Contact Us
           </Link>
           </ul>
