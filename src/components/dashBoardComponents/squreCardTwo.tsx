@@ -36,7 +36,7 @@ export function SqureCardTwo() {
   // Group the results by botId and formatted date
   const groupedData: { [key: string]: { [key: string]: number } } = {};
 
-  metrics.results.forEach((result: { botId: { createdAt: string | number | Date; botId: any; }; messageCount: number; }) => {
+  metrics.results?.forEach((result: { botId: { createdAt: string | number | Date; botId: any; }; messageCount: number; }) => {
     const formattedDate = format(new Date(result.botId.createdAt), 'MMM dd');
     const botId = result.botId.botId;
 
