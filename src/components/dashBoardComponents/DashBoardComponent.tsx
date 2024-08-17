@@ -204,11 +204,12 @@ const DashBoardComponent: React.FC = () => {
             <div>{profileData?.emailId}</div>
           </div>
         </div>
-
         <div className="relative bg-[#1E1935] w-full md:w-[70%] rounded-2xl md:col-span-2 ">
           <div>Message Count</div>
+          <div className="relative -mt-2">
           <SqureCardTwo />
         </div>
+      </div>
       </div>
     </div>
   );
