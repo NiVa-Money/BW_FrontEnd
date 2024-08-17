@@ -38,7 +38,7 @@ export function SqureCardTwo() {
 
   metrics.results?.forEach((result: { botId: { createdAt: string | number | Date; botId: any; }; messageCount: number; }) => {
     const formattedDate = format(new Date(result.botId.createdAt), 'MMM dd');
-    const botId = result.botId.botId;
+    const botId = result?.botId.botId;
 
     if (!groupedData[formattedDate]) {
       groupedData[formattedDate] = {};
@@ -51,13 +51,13 @@ export function SqureCardTwo() {
     groupedData[formattedDate][botId] += result.messageCount;
   });
 
-  const chartdata = Object.keys(groupedData).map((date) => {
+  const chartdata = Object.keys(groupedData)?.map((date) => {
     return { date, ...groupedData[date] };
   });
 
 
   const categories:any = Array.from(
-    new Set(metrics.results.map((result: { botId: { botId: any; }; }) => result.botId.botId))
+    new Set(metrics.results?.map((result: { botId: { botId: any; }; }) => result?.botId.botId))
   );
 
 
