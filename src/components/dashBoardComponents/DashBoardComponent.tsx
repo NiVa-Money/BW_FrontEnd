@@ -159,12 +159,10 @@ const DashBoardComponent: React.FC = () => {
             <SqureCardOne sessionTotal={20} sessionLeft={11} />
           </div>
         </div>
-        {/* <div className="relative bg-[#1E1935] w-full md:w-[40%] rounded-2xl p-4 m-1 opacity-50">
-          <SqureCardTwo />
-          <div className="absolute inset-0 flex items-center justify-center bg-gray-900 bg-opacity-75 rounded-2xl">
-            <span className="text-white text-lg">Coming Soon</span>
-          </div>
-        </div> */}
+        <div className="relative bg-[#1E1935] w-full md:w-[40%] rounded-2xl p-4 m-1 ">
+        <div className={`${styles.textSize} mb-8`}>Resolved/UnResolved</div>
+          <CardHeader1 />
+        </div>
 
         <div className="flex w-full md:w-[20%] h-[40vh] md:h-[98%] flex-col gap-4 m-1">
           <div className="relative bg-[#1E1935] w-full h-full rounded-2xl p-4 flex flex-col items-center">
@@ -206,14 +204,12 @@ const DashBoardComponent: React.FC = () => {
             <div>{profileData?.emailId}</div>
           </div>
         </div>
-        <div className="relative bg-[#1E1935] w-full md:w-[70%] rounded-2xl p-4 m-1 md:col-span-2 ">
-          <div className={`${styles.textSize} mb-8`}>Resolved/UnResolved</div>
-          <CardHeader1 />
-          <div className="flex mt-2">
-            <div className="flex items-center mr-4"></div>
-            <div className="flex items-center"></div>
-          </div>
+        <div className="relative bg-[#1E1935] w-full md:w-[70%] rounded-2xl md:col-span-2 ">
+          <div>Message Count</div>
+          <div className="relative -mt-2">
+          <SqureCardTwo />
         </div>
+      </div>
       </div>
     </div>
   );

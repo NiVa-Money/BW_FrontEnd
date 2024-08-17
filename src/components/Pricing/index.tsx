@@ -231,57 +231,61 @@ const PricingCard = () => {
   };
 
   return (
-    <div className="flex flex-col w-screen items-center px-8 pt-16 pb-9 text-gray-100">
-      <div className="text-center max-w-[1200px] mx-auto">
-        <h1 className="text-6xl font-black">Flexible Pricing for Everyone</h1>
-        <p className="mt-4 text-2xl">
-          Unlock Your Creative Potential with Our Tailored Plans
-        </p>
-      </div>
-      <div className="flex gap-5 justify-center py-6 mt-8 max-w-[1200px] mx-auto">
-        {pricingTiers.map((tier, index) => (
-          <PricingTier
-            userId={''}
-            key={index}
-            {...tier}
-            paypalButton={
-              showFreeTrialButton ? (
-                tier.title === 'Basic' ? (
-                  <button
-                    className="py-2 px-6 text-base font-medium bg-gray-100 rounded-lg text-slate-950 w-full"
-                    onClick={handleBasicFreeTrial}
-                  >
-                    Start For Free
-                  </button>
+    <div className="h-[100vh] text-gray-100">
+      <div className="flex h-[100vh] flex-col justify-center">
+        <div className="text-center mx-auto">
+          <h1 className="text-6xl font-black">Flexible Pricing for Everyone</h1>
+          <p className="mt-4 text-2xl">
+            Unlock Your Creative Potential with Our Tailored Plans
+          </p>
+        </div>
+        <div className="flex gap-5 justify-center py-6 mt-8 max-w-[1200px] mx-auto">
+          {pricingTiers.map((tier, index) => (
+            <PricingTier
+              userId={''}
+              key={index}
+              {...tier}
+              paypalButton={
+                showFreeTrialButton ? (
+                  tier.title === 'Basic' ? (
+                    <button
+                      className="py-2 px-6 text-base font-medium bg-gray-100 rounded-lg text-slate-950 w-full"
+                      onClick={handleBasicFreeTrial} // Open modal for Basic plan
+                    >
+                      Start For Free
+                    </button>
+                  ) : (
+                    <button
+                      className="py-2 px-6 text-base font-medium bg-gray-100 rounded-lg text-slate-950 w-full"
+                      onClick={() =>
+                        window.scrollTo({ top: 0, behavior: 'smooth' })
+                      }
+                    >
+                      Start For Free
+                    </button>
+                  )
                 ) : (
-                  <button
-                    className="py-2 px-6 text-base font-medium bg-gray-100 rounded-lg text-slate-950 w-full"
-                    onClick={() =>
-                      window.scrollTo({ top: 0, behavior: 'smooth' })
-                    }
-                  >
-                    Start For Free
-                  </button>
+                  tier.title !== 'Basic' && (
+                    <PayPalButton
+                      planId={tier.title}
+                      price={tier.price}
+                      userId={'userId'}
+                      // isPaymentSuccessful={isPaymentSuccessful}
+                      onPaymentSuccess={handlePaymentSuccess}
+                    />
+                  )
                 )
-              ) : (
-                tier.title !== 'Basic' && (
-                  <PayPalButton
-                    planId={tier.title}
-                    price={tier.price}
-                    onPaymentSuccess={handlePaymentSuccess}
-                  />
-                )
-              )
-            }
-          />
-        ))}
+              }
+            />
+          ))}
+        </div>
+        <PlanModal
+          isOpen={isModalOpen}
+          onClose={closeModal}
+          title="Congratulations"
+          message="Free trial is started. Make some creative chatbots!"
+        />
       </div>
-      <PlanModal
-        isOpen={isModalOpen}
-        onClose={closeModal}
-        title={isPaymentSuccessful ? "Payment Successful" : "Information"}
-        message={modalMessage}
-      />
     </div>
   );
 };
