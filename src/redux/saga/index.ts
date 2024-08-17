@@ -438,8 +438,12 @@ export function* createKnowledgeBaseSaga({
   payload: any;
 }): Generator<any> {
   try {
-    const knowledgebase = yield call(createKnowledgeBaseService, payload);
+    const knowledgebase :any = yield call(createKnowledgeBaseService, payload);
+    if(knowledgebase.success){
     notifySuccess('knowledge base created successfully');
+    } else {
+      notifyError(`${knowledgebase.error}`);
+    }
     yield put({
       type: CREATE_KNOWLEDGE_BASE_SUCCESS,
       payload: knowledgebase,
