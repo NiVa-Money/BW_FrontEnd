@@ -1,100 +1,174 @@
-import React, { useEffect, useState } from 'react';
+// import React, { useEffect, useState } from 'react';
+// import { useDispatch, useSelector } from 'react-redux';
+// import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
+// import { capturePaymentRequest, createPaymentRequest } from '@/redux/actions/paymentActions';
+// import PaymentModal from '../Pricing/paymentModal'; // Import the PaymentModal component
+// import { RootState } from '@/redux/configureStore';
+
+// type PayPalButtonProps = {
+//   planId: string;
+//   price: string;
+//   userId: string; 
+//   isPaymentSuccessful: boolean;
+//   onPaymentSuccess: () => void;
+// };
+
+// const PayPalButton: React.FC<PayPalButtonProps> = ({ planId, price , 
+//   onPaymentSuccess  }) => {
+//   console.log('Price received in PayPalButton:', price);
+//   const dispatch = useDispatch();
+//   // const { _id: paymentId } = useSelector((state: RootState) => state.payment.paymentData); 
+//   const paymentData = useSelector((state: RootState) => state.payment?.paymentData);
+//   const paymentId = paymentData ? paymentData._id : '';
+//   const { orderId } = useSelector((state: RootState) => state.payment);
+//   const [modalOpen, setModalOpen] = useState(false); 
+//   const [modalMessage, setModalMessage] = useState(''); 
+//   const userId = useSelector(
+//     (state: RootState) => state.root?.userData?.user_id
+//   );
+//   const [isError, setIsError] = useState(false); 
+//   const [isPaymentSuccessful, setIsPaymentSuccessful] = useState(false); // New state for payment status
+
+
+//   const createOrder = async (data: any, actions: any) => {
+//     console.log('amount' , data.amount )
+//     dispatch(createPaymentRequest({ userId, amount: Number(price), currency: 'USD', paymentGateway: 'paypal' }));
+//     return actions.order.create({
+//       purchase_units: [
+//         {
+//           amount: {
+//             value: price,
+//           },
+//         },
+//       ],
+//     });
+//   };
+
+//   const onApprove = async (data: any, actions: any) => {
+//     console.log('paymentID', paymentId);
+//     dispatch(capturePaymentRequest(paymentId)); 
+//     return actions.order.capture().then((details: any) => {
+//       setModalMessage('Transaction completed by ' + details.payer.name.given_name);
+//       setIsError(false); 
+//       onPaymentSuccess(); 
+//       setIsPaymentSuccessful(true);
+//       setModalOpen(true); 
+//     });
+//   };
+
+//   const onError = (err: any) => {
+//     setModalMessage('Transaction failed: ' + (err.message || 'Unknown error'));
+//     setIsError(true); 
+//     setModalOpen(true); 
+//   };
+
+//   const handleCloseModal = () => {
+//     setModalOpen(false); 
+//   };
+
+//   if (!process.env.NEXT_PUBLIC_PAYPAL_CLIENT_ID) {
+//     return <div>PayPal client ID is not set</div>;
+//   }
+
+//   return (
+//     <PayPalScriptProvider options={{ clientId: process.env.NEXT_PUBLIC_PAYPAL_CLIENT_ID }}>
+//       <PayPalButtons 
+//         createOrder={createOrder} 
+//         onApprove={onApprove}   
+//         onError={onError}   
+//         fundingSource="paypal"  
+//         style={{
+//           layout: 'horizontal',
+//           color: 'white',
+//           shape: 'rect',
+//           label: 'paypal',
+//         }} 
+//         disabled={isPaymentSuccessful} // Disable buttons if payment is successful
+//       />
+//       {/* Only one PaymentModal to show transaction result */}
+//       <PaymentModal 
+//         isOpen={modalOpen} 
+//         onClose={handleCloseModal} 
+//         message={modalMessage} 
+//         isError={isError} 
+//       />
+//     </PayPalScriptProvider>
+//   );
+// };
+
+// export default PayPalButton;
+
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
-import { capturePaymentRequest, createPaymentRequest } from '@/redux/actions/paymentActions';
-import PaymentModal from '../Pricing/paymentModal'; // Import the PaymentModal component
+import { createPaymentRequest, capturePaymentRequest } from '@/redux/actions/paymentActions';
 import { RootState } from '@/redux/configureStore';
 
 type PayPalButtonProps = {
   planId: string;
   price: string;
-  userId: string; 
-  isPaymentSuccessful: boolean;
   onPaymentSuccess: () => void;
 };
 
-const PayPalButton: React.FC<PayPalButtonProps> = ({ planId, price , 
-  onPaymentSuccess  }) => {
-  console.log('Price received in PayPalButton:', price);
+const PayPalButton: React.FC<PayPalButtonProps> = ({ planId, price, onPaymentSuccess }) => {
   const dispatch = useDispatch();
-  // const { _id: paymentId } = useSelector((state: RootState) => state.payment.paymentData); 
-  const paymentData = useSelector((state: RootState) => state.payment?.paymentData);
-  const paymentId = paymentData ? paymentData._id : '';
-  const { orderId } = useSelector((state: RootState) => state.payment);
-  const [modalOpen, setModalOpen] = useState(false); 
-  const [modalMessage, setModalMessage] = useState(''); 
-  const userId = useSelector(
-    (state: RootState) => state.root?.userData?.user_id
-  );
-  const [isError, setIsError] = useState(false); 
-  const [isPaymentSuccessful, setIsPaymentSuccessful] = useState(false); // New state for payment status
+  const userId = useSelector((state: RootState) => state.root?.userData?.user_id);
+  const paypalUrl = useSelector((state: RootState) => state.payment?.paypalUrl);
 
+  useEffect(() => {
+    // Check if we're returning from PayPal
+    const urlParams = new URLSearchParams(window.location.search);
+    const token = urlParams.get('token');
 
-  const createOrder = async (data: any, actions: any) => {
-    console.log('amount' , data.amount )
-    dispatch(createPaymentRequest({ userId, amount: Number(price), currency: 'USD', paymentGateway: 'paypal' }));
-    return actions.order.create({
-      purchase_units: [
-        {
-          amount: {
-            value: price,
-          },
-        },
-      ],
-    });
+    if (token) {
+      handlePayPalReturn(token);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (paypalUrl) {
+      // Redirect the user to the PayPal approval page
+      window.location.href = paypalUrl;
+    }
+  }, [paypalUrl]);
+
+  const handlePayPalReturn = async (token: string) => {
+    try {
+      const result = await dispatch(capturePaymentRequest(token));
+      if (result.type === 'CAPTURE_PAYMENT_SUCCESS') {
+        onPaymentSuccess();
+      } else {
+        throw new Error('Payment capture failed');
+      }
+    } catch (error) {
+      console.error('Transaction failed:', error);
+      // You might want to show an error message to the user here
+    }
   };
 
-  const onApprove = async (data: any, actions: any) => {
-    console.log('paymentID', paymentId);
-    dispatch(capturePaymentRequest(paymentId)); 
-    return actions.order.capture().then((details: any) => {
-      setModalMessage('Transaction completed by ' + details.payer.name.given_name);
-      setIsError(false); 
-      onPaymentSuccess(); 
-      setIsPaymentSuccessful(true);
-      setModalOpen(true); 
-    });
+  const createOrder = async () => {
+    console.log('Create order button clicked');
+    try {
+      dispatch(createPaymentRequest({ 
+        userId, 
+        amount: Number(price), 
+        currency: 'USD', 
+        paymentGateway: 'paypal',
+        planId
+      }));
+    } catch (error) {
+      console.error('Failed to create order:', error);
+      // Optionally show an error message to the user here
+    }
   };
-
-  const onError = (err: any) => {
-    setModalMessage('Transaction failed: ' + (err.message || 'Unknown error'));
-    setIsError(true); 
-    setModalOpen(true); 
-  };
-
-  const handleCloseModal = () => {
-    setModalOpen(false); 
-  };
-
-  if (!process.env.NEXT_PUBLIC_PAYPAL_CLIENT_ID) {
-    return <div>PayPal client ID is not set</div>;
-  }
 
   return (
-    <PayPalScriptProvider options={{ clientId: process.env.NEXT_PUBLIC_PAYPAL_CLIENT_ID }}>
-      <PayPalButtons 
-        createOrder={createOrder} 
-        onApprove={onApprove}   
-        onError={onError}   
-        fundingSource="paypal"  
-        style={{
-          layout: 'horizontal',
-          color: 'white',
-          shape: 'rect',
-          label: 'paypal',
-        }} 
-        disabled={isPaymentSuccessful} // Disable buttons if payment is successful
-      />
-      {/* Only one PaymentModal to show transaction result */}
-      <PaymentModal 
-        isOpen={modalOpen} 
-        onClose={handleCloseModal} 
-        message={modalMessage} 
-        isError={isError} 
-      />
-    </PayPalScriptProvider>
+    <button 
+      onClick={createOrder}
+      className="py-2 px-6 text-base font-medium bg-white rounded-lg text-black w-full"
+    >
+      Pay with PayPal
+    </button>
   );
 };
 
 export default PayPalButton;
-
