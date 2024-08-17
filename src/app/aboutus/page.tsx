@@ -2,7 +2,6 @@ import React from 'react'
 
 const aboutUs = () => {
   return (
-    <div>
      <div >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div className="shadow-xl rounded-2xl p-8" style={{ 
@@ -61,7 +60,6 @@ const aboutUs = () => {
           </p>
         </div>
       </div>
-    </div>
     </div>
   )
 }
