@@ -5,6 +5,7 @@ import {
   capturePaymentRequest,
 } from '@/redux/actions/paymentActions';
 import { RootState } from '@/redux/configureStore';
+import { useRouter } from 'next/navigation';
 
 type PayPalButtonProps = {
   planId: string;
@@ -23,7 +24,10 @@ const PayPalButton: React.FC<PayPalButtonProps> = ({
     (state: RootState) => state.root?.userData?.user_id
   );
   const paypalUrl = useSelector((state: RootState) => state.payment?.paypalUrl);
-  const [isRedirecting, setIsRedirecting] = useState(false);
+  const paypalCreateLoader = useSelector(
+    (state: RootState) => state.payment?.loading
+  );
+  const router = useRouter();
 
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
@@ -35,10 +39,10 @@ const PayPalButton: React.FC<PayPalButtonProps> = ({
   }, []);
 
   useEffect(() => {
-    if (paypalUrl && isRedirecting) {
+    if (paypalUrl.length && !paypalCreateLoader) {
       window.location.href = paypalUrl;
     }
-  }, [paypalUrl, isRedirecting]);
+  }, [paypalUrl, paypalCreateLoader]);
 
   const handlePayPalReturn = async (token: string) => {
     try {
@@ -58,7 +62,6 @@ const PayPalButton: React.FC<PayPalButtonProps> = ({
   const createOrder = async () => {
     console.log('Create order button clicked');
     try {
-      setIsRedirecting(true);
       dispatch(
         createPaymentRequest({
           userId,
@@ -70,7 +73,6 @@ const PayPalButton: React.FC<PayPalButtonProps> = ({
       );
     } catch (error) {
       console.error('Failed to create order:', error);
-      setIsRedirecting(false);
     }
   };
 
