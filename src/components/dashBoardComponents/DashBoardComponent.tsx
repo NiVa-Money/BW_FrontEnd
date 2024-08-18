@@ -153,7 +153,7 @@ const DashBoardComponent: React.FC = () => {
       <div className="w-full flex flex-col md:flex-row h-auto md:h-[45%] gap-4 mt-4">
         <div className="bg-[#1E1935] w-full md:w-[100%] rounded-2xl p-4 m-1">
           <div className={`${styles.textSize} mb-4 `}>
-            Total no. of Messages
+            Total no. of Users
           </div>
           <div className={`${styles.textSize} relative w-full h-full mx-auto`}>
             <SqureCardOne sessionTotal={20} sessionLeft={11} />
