@@ -262,9 +262,9 @@ const EditBotComponent: React.FC = () => {
       formData.append('supportNumber', supportPhone);
       formData.append('supportEmail', supportEmail);
       formData.append('wordLimitPerMessage', botLimit);
-      formData.append('docName', docName || filename);
-      formData.append('docType', docType || fileType);
-      formData.append('docId', knowledgeBaseId || knowledgeBaseIdDoc);
+      formData.append('docName', docName || "");
+      formData.append('docType',  docType || "");
+      formData.append('docId',  knowledgeBaseId || "");
       formData.append('userId', userId);
 
       dispatch(editBotProfileAction(formData));
