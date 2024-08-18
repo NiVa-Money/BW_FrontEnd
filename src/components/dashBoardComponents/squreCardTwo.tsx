@@ -41,7 +41,7 @@ export function SqureCardTwo() {
     const botId = result.botId.botId;
     const botName = result.botId.botName;
 
-    if (!botNameMap[botId] && botName.length > 0) {
+    if (!botNameMap[botId] && botName?.length > 0) {
       botNameMap[botId] = botName;
     }
   });
