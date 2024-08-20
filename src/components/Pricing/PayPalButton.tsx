@@ -39,7 +39,7 @@ const PayPalButton: React.FC<PayPalButtonProps> = ({
   }, []);
 
   useEffect(() => {
-    if (paypalUrl.length && !paypalCreateLoader) {
+    if (paypalUrl?.length && !paypalCreateLoader) {
       window.location.href = paypalUrl;
     }
   }, [paypalUrl, paypalCreateLoader]);
