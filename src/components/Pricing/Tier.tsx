@@ -8,6 +8,7 @@ type PricingTierProps = {
   backgroundColor: string;
   paypalButton?: React.ReactNode;
   userId?: string;
+  planName? : string;
 };
 
 const PricingTier: React.FC<PricingTierProps> = ({
