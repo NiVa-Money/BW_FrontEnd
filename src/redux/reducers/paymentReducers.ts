@@ -16,6 +16,7 @@ export default function paymentReducer(state = initialState.payment, action: any
         ...state,
         loading: false,
         paymentData: action.payload,
+        paypalUrl: action.payload.paypalUrl, 
         error: null,
       };
     case CAPTURE_PAYMENT_SUCCESS:

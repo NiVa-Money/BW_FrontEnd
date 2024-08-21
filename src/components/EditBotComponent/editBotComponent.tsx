@@ -158,11 +158,12 @@ const EditBotComponent: React.FC = () => {
       );
       if (botToEdit) {
         setFileType(botToEdit.docType);
-        setknowledgeBaseIdDoc(botToEdit.userId);
+        setknowledgeBaseIdDoc(botToEdit._id);
         setbotImageS3Url(botToEdit.botURL);
       }
     }
   }, [botDataRedux, botId]);
+  
 
   const handleBotSampleClick = async (item: any) => {
     setImageSrc(item?.imageUrl);
@@ -240,9 +241,10 @@ const EditBotComponent: React.FC = () => {
       // Update the state with the selected file's data
       setDocName(selectedFile.docName);
       setDocType(selectedFile.docType);
-      setKnowledgeBaseId(selectedFile.knowledgeBaseId);
+      setKnowledgeBaseId(selectedFile._id);
     }
   };
+
 
   const handleSave = async () => {
     if (botId && userId) {
@@ -260,9 +262,9 @@ const EditBotComponent: React.FC = () => {
       formData.append('supportNumber', supportPhone);
       formData.append('supportEmail', supportEmail);
       formData.append('wordLimitPerMessage', botLimit);
-      formData.append('docName', docName || filename);
-      formData.append('docType', docType || fileType);
-      formData.append('docId', knowledgeBaseId || knowledgeBaseIdDoc);
+      formData.append('docName', docName);
+      formData.append('docType',  docType);
+      formData.append('docId',  knowledgeBaseId);
       formData.append('userId', userId);
 
       dispatch(editBotProfileAction(formData));

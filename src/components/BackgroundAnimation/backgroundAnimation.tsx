@@ -3,9 +3,13 @@ import './style.scss';
 
 interface BackgroundAnimationProps {
   children: ReactNode;
+  className?: string;
 }
 
-const BackgroundAnimation: React.FC<BackgroundAnimationProps> = ({children}) => {
+const BackgroundAnimation: React.FC<BackgroundAnimationProps> = ({
+  children,
+  className,
+}) => {
   const interactiveRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -21,7 +25,9 @@ const BackgroundAnimation: React.FC<BackgroundAnimationProps> = ({children}) => 
       if (interactive) {
         curX += (tgX - curX) / 20;
         curY += (tgY - curY) / 20;
-        interactive.style.transform = `translate(${Math.round(curX)}px, ${Math.round(curY)}px)`;
+        interactive.style.transform = `translate(${Math.round(
+          curX
+        )}px, ${Math.round(curY)}px)`;
         requestAnimationFrame(move);
       }
     }
@@ -39,19 +45,26 @@ const BackgroundAnimation: React.FC<BackgroundAnimationProps> = ({children}) => 
   }, []);
 
   return (
-    <div className="gradient-bg">
+    <div className={`gradient-bg  `}>
       <svg xmlns="http://www.w3.org/2000/svg">
         <defs>
           <filter id="goo">
-            <feGaussianBlur in="SourceGraphic" stdDeviation="10" result="blur" />
-            <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 18 -8" result="goo" />
+            <feGaussianBlur
+              in="SourceGraphic"
+              stdDeviation="10"
+              result="blur"
+            />
+            <feColorMatrix
+              in="blur"
+              mode="matrix"
+              values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 18 -8"
+              result="goo"
+            />
             <feBlend in="SourceGraphic" in2="goo" />
           </filter>
         </defs>
       </svg>
-      <div className="">
-        {children}
-      </div>
+      <div className={`${className}`}>{children}</div>
       <div className="gradients-container">
         <div className="g1"></div>
         <div className="g2"></div>

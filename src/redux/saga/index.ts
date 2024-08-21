@@ -600,6 +600,7 @@ export function* payPalPaymentSaga({
     yield put({
       type: CREATE_PAYMENT_SUCCESS,
       payload: response,
+      paypalUrl: response.paypalUrl,
     });
 
     notifySuccess('Payment processed successfully');
