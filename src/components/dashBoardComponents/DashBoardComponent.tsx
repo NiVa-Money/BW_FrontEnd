@@ -406,11 +406,24 @@ const DashBoardComponent: React.FC = () => {
       <div className="w-full flex flex-col md:flex-row h-auto md:h-[40%] gap-4 mt-4">
         <div className="bg-[#1E1935] w-full md:w-[30%] rounded-2xl p-4 m-1">
           <div className="flex items-center mb-4">
-            <div className={`${styles.textSize} mr-2`}>Top Metrics</div>
-            <FontAwesomeIcon icon={faPlus} className="text-lg cursor-pointer" />
+            <div className="bg-[#46217C] rounded-full p-2 mr-2">
+              <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+                <path
+                  fillRule="evenodd"
+                  d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
+                  clipRule="evenodd"
+                />
+              </svg>
+            </div>
+            <div className={styles.textSize}>User Profile</div>
           </div>
-          <div className={`${styles.textSize} text-gray-400`}>
-            Detailed metrics about bot usage
+          <div className={`${styles.textSize} gap-[8px] flex text-gray-400`}>
+            <div>Name</div>
+            <div> {profileData?.firstName}</div>
+          </div>
+          <div className={`${styles.textSize} gap-[8px] flex text-gray-400`}>
+            <div>User ID </div>
+            <div>{profileData?.emailId}</div>
           </div>
         </div>
         <div className="bg-[#1E1935] w-full md:w-[70%] rounded-2xl p-4 m-1">
