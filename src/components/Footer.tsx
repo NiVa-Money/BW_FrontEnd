@@ -98,8 +98,36 @@ const Footer: React.FC = () => {
         </div>
       </main>
       <div className="mt-20 w-full bg-white bg-opacity-30 min-h-[2px]" />
-      <footer className="self-center mt-10 mb-5 text-base text-stone-50">
-        © 2024 BotWot Chat Bot AI. All rights reserved.
+      <footer className="flex justify-between items-center mt-10 mb-5 text-base text-stone-50">
+        <div className="flex-1 text-center">
+          © 2024 BotWot Chat Bot AI. All rights reserved.
+        </div>
+        <div className="flex space-x-6">
+          <Link href="https://www.instagram.com/botwot.io?igsh=eW9jdmgxbWRuampo" target="_blank">
+            <Image
+              src="/images/insta.png"
+              alt="Instagram"
+              width={24}
+              height={24}
+            />
+          </Link>
+          <Link href="https://www.youtube.com/@BotWot-04" target="_blank">
+            <Image
+              src="/images/youtube.png"
+              alt="YouTube"
+              width={24}
+              height={24}
+            />
+          </Link>
+          <Link href="https://www.linkedin.com/company/botwot/" target="_blank">
+            <Image
+              src="/images/linkedin.png"
+              alt="LinkedIn"
+              width={24}
+              height={24}
+            />
+          </Link>
+        </div>
       </footer>
     </div>
   );
