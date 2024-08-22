@@ -11,24 +11,23 @@ interface Testimonial {
 
 const testimonials: Testimonial[] = [
   {
-    name: 'Deepika Manhari',
-    text: '"Conversational Alchemy": Transform inquiries into magic with BotWot Chatbot Builder. 🚀🤖',
-    quote: '"BotWot transformed our customer interactions from mundane to magical. With its intuitive interface and powerful AI, our chatbots now engage users like never before."',
-    img: 'https://cdn.builder.io/api/v1/image/assets/TEMP/b7ad23889c1acca2a12804f00c11b12980fc398725762c81489fd00c54554c07?apiKey=555c811dd3f44fc79b6b2689129389e8&',
+    "name": "Deepika Manhari",
+    "text": "\"Conversational Alchemy\": Transform inquiries into magic with BotWot Chatbot Builder. 🚀🤖",
+    "quote": "\"BotWot turned our customer interactions into unforgettable experiences. The intuitive interface and powerful AI have our chatbots engaging users like never before.\"",
+    "img": "https://cdn.builder.io/api/v1/image/assets/TEMP/b7ad23889c1acca2a12804f00c11b12980fc398725762c81489fd00c54554c07?apiKey=555c811dd3f44fc79b6b2689129389e8&"
   },
   {
-    name: 'Gati savarkar',
-    text: '"Always-On Assistants Description: Meet your new round-the-clock team members. BotWot chatbots never take a coffee break—they’re always there to assist.',
-    quote: '"BotWot’s chatbots are our 24/7 virtual assistants. They handle queries, collect leads, and even crack a joke or two. A reliable team member!."',
-    img: '/images/testPhoto.jpg',
+    "name": "Gati Savarkar",
+    "text": "\"Always-On Assistants: Meet your new round-the-clock team members. BotWot chatbots never take a coffee break—they’re always there to assist.\"",
+    "quote": "\"BotWot’s chatbots are our 24/7 virtual assistants. They efficiently handle queries, gather leads, and even share a laugh. Truly dependable team members!\"",
+    "img": "/images/testPhoto.jpg"
   },
   {
-    name: 'Faizal ameer',
-    text: '"Discover the secret sauce behind successful e-commerce: BotWot chatbots. They guide users through the buying journey, turning clicks into sales.',
-    quote: '"“BotWot transformed our e-commerce game. Their chatbots engage shoppers, recommend products, and boost conversions. Sales have never been smoother.”"',
-    img: '/images/testPhoto2.jpg',
-  },
-
+    "name": "Faizal Ameer",
+    "text": "\"Discover the secret sauce behind successful e-commerce: BotWot chatbots. They guide users through the buying journey, turning clicks into sales.\"",
+    "quote": "\"BotWot revolutionized our e-commerce strategy. Their chatbots engage customers, recommend products, and drive conversions. Our sales process has never been this seamless.\"",
+    "img": "/images/testPhoto2.jpg"
+  } 
 ];
 
 const Testimonials: React.FC = () => {
@@ -70,7 +69,7 @@ const Testimonials: React.FC = () => {
                     alt={`${testimonial.name}'s avatar`}
                   />
                   <p className="text-fuchsia-700 font-semibold mb-2">{testimonial.name}</p>
-                  <p className="text-gray-400 text-sm mb-4">{testimonial.text}</p>
+                  <p className="text-gray-400 text-center text-sm mb-4">{testimonial.text}</p>
                   <blockquote className="text-xl text-gray-100 text-center font-semibold">
                     {testimonial.quote}
                   </blockquote>

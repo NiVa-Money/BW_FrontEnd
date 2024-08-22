@@ -12,6 +12,7 @@ import {
 } from '@/redux/actions/authActions';
 import Testimonials from '@/components/testemonial/Testimonials';
 import { useRouter } from 'next/navigation';
+import Media from '@/components/Media/mediaLinks';
 const LandingPage: React.FC = () => {
   const userEmail = useSelector((state: RootState) => state.root?.user?.email);
   const userVerify = useSelector((state: RootState) => state.root?.userVerify);
@@ -87,6 +88,9 @@ const LandingPage: React.FC = () => {
           <div>
             <Testimonials />
           </div>
+        </section>
+        <section>
+          <Media />
         </section>
         <section>
           <PricingCard />
