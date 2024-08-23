@@ -8,7 +8,7 @@ type PricingTierProps = {
   backgroundColor: string;
   paypalButton?: React.ReactNode;
   userId?: string;
-  planName? : string;
+  planName?: string;
 };
 
 const PricingTier: React.FC<PricingTierProps> = ({
@@ -31,7 +31,6 @@ const PricingTier: React.FC<PricingTierProps> = ({
       {features.map((feature, index) => (
         <li key={index} className="flex gap-2 mt-2 first:mt-0 w-full">
           <img
-            loading="lazy"
             src="https://cdn.builder.io/api/v1/image/assets/TEMP/1a967d6b262918ca21f2212dc4e36c3bbc1cb3a100ce53d260188117cc5ebf09?apiKey=555c811dd3f44fc79b6b2689129389e8&"
             alt=""
             className="w-5 h-5"

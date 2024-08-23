@@ -7,13 +7,26 @@ import Footer from '@/components/Footer';
 import { Inter } from 'next/font/google';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
+import Image from 'next/image';
 
 const inter = Inter({ subsets: ['latin'] });
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <Provider store={store}>
-      <PersistGate loading={<div>Loading...</div>} persistor={persistor}>
+      <PersistGate
+        loading={
+          <div className="h-screen w-screen flex justify-center items-center">
+            <Image
+              src="/images/bot-loader.gif"
+              alt="BotWot"
+              width={500}
+              height={300}
+            />
+          </div>
+        }
+        persistor={persistor}
+      >
         <div className={`${inter.className} flex flex-col min-h-screen`}>
           <Header />
           <main className="flex-grow">

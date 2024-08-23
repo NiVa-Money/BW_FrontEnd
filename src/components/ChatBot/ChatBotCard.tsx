@@ -60,7 +60,6 @@ const ChatBotCard: React.FC<ChatBotCardProps> = ({ bot, actions, botCard }) => {
         <div className="flex gap-2.5 self-start">
           {botCard ? (
             <img
-              loading="lazy"
               src={bot.botURL}
               alt={`${bot.botName} icon`}
               className="shrink-0 w-[35%]"
@@ -110,7 +109,6 @@ const ChatBotCard: React.FC<ChatBotCardProps> = ({ bot, actions, botCard }) => {
 
             <div className="flex gap-2.5 p-2.5 mt-4 text-sm leading-5 text-center rounded-xl">
               <img
-                loading="lazy"
                 src="https://cdn.builder.io/api/v1/image/assets/TEMP/216ef81b1307e56bac33de96edb3047cf27218916242cd7c47a7551edb14a929?apiKey=555c811dd3f44fc79b6b2689129389e8&"
                 alt=""
                 className="shrink-0 w-6 aspect-square"
