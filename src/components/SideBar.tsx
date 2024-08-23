@@ -143,7 +143,7 @@ const SideBar: React.FC = () => {
             className="text-white rounded-full py-2 px-2  flex items-center space-x-4 justify-start"
             onClick={handleClickOpen}
           >
-            <div className="flex justify-start items-center">
+            <div className="flex justify-start space-x-3 items-center">
               <Image
                 src="/images/mobile.svg"
                 width={20}
