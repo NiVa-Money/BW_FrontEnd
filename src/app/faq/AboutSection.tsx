@@ -20,7 +20,6 @@ function AboutSection() {
                 <Link href="/faq">
                   <div className="flex border-1  overflow-hidden gap-2 justify-center items-center px-3 py-3.5 rounded-lg min-h-[68px]">
                     <img
-                      loading="lazy"
                       src="https://cdn.builder.io/api/v1/image/assets/TEMP/e278a7f82980de7cf346817ac32e91fce1b62f93dbc5402d6e159520d7a5c8ef?apiKey=555c811dd3f44fc79b6b2689129389e8&&apiKey=555c811dd3f44fc79b6b2689129389e8"
                       className="object-contain shrink-0 self-stretch my-auto w-10 aspect-square"
                     />
@@ -35,7 +34,6 @@ function AboutSection() {
                 </div>
                 <div className="flex opacity-30 gap-2.5 items-center self-stretch p-2.5 my-auto w-11 h-11 rounded-xl bg-slate-500 bg-opacity-20">
                   <img
-                    loading="lazy"
                     src="https://cdn.builder.io/api/v1/image/assets/TEMP/80236ed57e710888f8dae2e4b9cb53f6eeade73363ca4f47a390dc3a06405d4e?apiKey=555c811dd3f44fc79b6b2689129389e8&&apiKey=555c811dd3f44fc79b6b2689129389e8"
                     className="object-contain self-stretch my-auto w-6 aspect-square"
                   />
@@ -50,7 +48,6 @@ function AboutSection() {
                 </Link>
                 <div className="flex gap-2.5 items-center self-stretch p-2.5 my-auto w-11 h-11 rounded-xl bg-slate-500 bg-opacity-20">
                   <img
-                    loading="lazy"
                     src="https://cdn.builder.io/api/v1/image/assets/TEMP/97d871d37e1997609d8de575111205fd492ac4e2186c9a8b1711df133cc3e624?apiKey=555c811dd3f44fc79b6b2689129389e8&&apiKey=555c811dd3f44fc79b6b2689129389e8"
                     className="object-contain self-stretch my-auto w-6 aspect-square"
                   />
@@ -62,7 +59,6 @@ function AboutSection() {
                 </div>
                 <div className="flex gap-2.5 opacity-30 items-center self-stretch p-2.5 my-auto w-11 h-11 rounded-xl bg-slate-500 bg-opacity-20">
                   <img
-                    loading="lazy"
                     src="https://cdn.builder.io/api/v1/image/assets/TEMP/b9ebbcabf4b486023303abbbf7526a7d1eaf5aed60cdf73b27fa4622274d9197?apiKey=555c811dd3f44fc79b6b2689129389e8&&apiKey=555c811dd3f44fc79b6b2689129389e8"
                     className="object-contain self-stretch my-auto w-19 aspect-square"
                   />
@@ -217,7 +213,6 @@ function AboutSection() {
             {isExpanded ? 'View Less' : 'View More'}
           </div>
           <img
-            loading="lazy"
             src="https://cdn.builder.io/api/v1/image/assets/TEMP/8af6e72c4afd34b9a0eebc6e34b6b2b9dd8327d61d939073261537dc65dca77f?apiKey=555c811dd3f44fc79b6b2689129389e8&&apiKey=555c811dd3f44fc79b6b2689129389e8"
             className="object-contain mb-1 ml-4 aspect-[1.05] w-[50px]"
           />

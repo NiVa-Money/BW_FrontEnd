@@ -110,7 +110,19 @@ export default function RootLayout({
       <body className="flex flex-col min-h-screen">
         {knownRoutes.includes(pathnameBrowser) ? (
           <Provider store={store}>
-            <PersistGate loading={<div>Loading...</div>} persistor={persistor}>
+            <PersistGate
+              loading={
+                <div className="h-screen w-screen flex justify-center items-center">
+                  <Image
+                    src="/images/bot-loader.gif"
+                    alt="BotWot"
+                    width={500}
+                    height={300}
+                  />
+                </div>
+              }
+              persistor={persistor}
+            >
               <PathnameHandler />
               <ConditionalHeader routeWithoutHeader={routeWithoutHeader} />
               <div className="flex flex-grow relative">

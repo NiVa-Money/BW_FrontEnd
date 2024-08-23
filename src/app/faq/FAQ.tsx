@@ -181,7 +181,6 @@ function QuestionAnswers() {
               <Link href="/faq">
                 <div className="flex text-lg overflow-hidden gap-2 justify-center items-center px-3 py-3.5 rounded-lg min-h-[68px]">
                   <img
-                    loading="lazy"
                     src="https://cdn.builder.io/api/v1/image/assets/TEMP/bbc18e22c259998f76896de6832b2b7da3a0c1c5a4f651768cd85fe7c8e3a67d?apiKey=555c811dd3f44fc79b6b2689129389e8&&apiKey=555c811dd3f44fc79b6b2689129389e8"
                     className="object-contain shrink-0 self-stretch my-auto w-10 aspect-square"
                   />
@@ -199,7 +198,6 @@ function QuestionAnswers() {
 
                 <div className="flex gap-2.5 items-center self-stretch p-2.5 my-auto w-11 h-11 rounded-xl bg-slate-500 bg-opacity-20">
                   <img
-                    loading="lazy"
                     src="https://cdn.builder.io/api/v1/image/assets/TEMP/d5352569509cef3186d2c42182fdc5a716c159f52911eb6b7c650bc65aba9b21?apiKey=555c811dd3f44fc79b6b2689129389e8&&apiKey=555c811dd3f44fc79b6b2689129389e8"
                     className="object-contain self-stretch my-auto w-6 aspect-square"
                   />
@@ -212,7 +210,6 @@ function QuestionAnswers() {
               </div>
               <div className="flex gap-2.5  opacity-30 items-center self-stretch p-2.5 my-auto w-11 h-11 rounded-xl bg-slate-500 bg-opacity-20">
                 <img
-                  loading="lazy"
                   src="https://cdn.builder.io/api/v1/image/assets/TEMP/cc4e00acef46ac64ee86f50035eeebe6d499de4e0083c6753ba10c9533995363?apiKey=555c811dd3f44fc79b6b2689129389e8&&apiKey=555c811dd3f44fc79b6b2689129389e8"
                   className="object-contain self-stretch my-auto w-6 aspect-square"
                 />
@@ -224,7 +221,6 @@ function QuestionAnswers() {
               </div>
               <div className="flex gap-2.5  opacity-30 items-center self-stretch p-2.5 my-auto w-11 h-11 rounded-xl bg-slate-500 bg-opacity-20">
                 <img
-                  loading="lazy"
                   src="https://cdn.builder.io/api/v1/image/assets/TEMP/b9ebbcabf4b486023303abbbf7526a7d1eaf5aed60cdf73b27fa4622274d9197?apiKey=555c811dd3f44fc79b6b2689129389e8&&apiKey=555c811dd3f44fc79b6b2689129389e8"
                   className="object-contain self-stretch my-auto w-6 aspect-square"
                 />
@@ -487,7 +483,6 @@ function QuestionAnswers() {
                     <div className="mt-2 text-white text-wrap mb-8">
                       {faq.answer}
                     </div>
-            
                   )}
                 </div>
               ))}
