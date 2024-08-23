@@ -2,8 +2,6 @@
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuthContext } from '@/context/AuthContext';
-import BackgroundAnimation from '../BackgroundAnimation/backgroundAnimation';
-import { fetchUserData } from '@/redux/services';
 import {
   signUpDataAction,
   resetUserDataAction,
@@ -108,10 +106,8 @@ const Modal: React.FC<ModalProps> = ({ closeModal, handleSignUp }) => {
     }
 
     try {
-      console.log('form', formData);
       localStorage.setItem('emailId', formData.emailId);
       dispatch(signUpDataAction(formData));
-      // handleSignUp(formData, router);
     } catch (error) {
       setErrors((prevErrors) => ({
         ...prevErrors,

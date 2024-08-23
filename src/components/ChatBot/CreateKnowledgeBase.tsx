@@ -62,7 +62,7 @@ const CreateKnowledgeBase: React.FC = () => {
       formData.append('file', selectedFile);
 
       formData.forEach((value, key) => {
-        console.log(key, value);
+        // console.log(key, value);
       });
 
       dispatch(createKnowledgebaseAction(formData));
