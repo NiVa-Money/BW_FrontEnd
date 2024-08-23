@@ -24,7 +24,7 @@ const DashBoardComponent: React.FC = () => {
     (state: RootState) => state.root?.userData?.user_id
   );
 
-  React.useEffect(() => {}, [userId]);
+  React.useEffect(() => { }, [userId]);
 
   const userMetricData = useSelector(
     (state: RootState) => state?.root?.userMetric?.data
@@ -74,7 +74,7 @@ const DashBoardComponent: React.FC = () => {
   const meterHeight = '90%';
   const emojiPosition =
     (displayPercentage / 100) * parseFloat(meterHeight.replace('%', '')) + '%';
-  React.useEffect(() => {}, [userId]);
+  React.useEffect(() => { }, [userId]);
 
   React.useEffect(() => {
     setProfileData(userDataRedux);
@@ -161,7 +161,7 @@ const DashBoardComponent: React.FC = () => {
           </div>
         </div>
         <div className="relative bg-[#1E1935] w-full md:w-[40%] rounded-2xl p-4 m-1 ">
-        <div className={`${styles.textSize} mb-8`}>Resolved/UnResolved</div>
+          <div className={`${styles.textSize} mb-8`}>Resolved/UnResolved</div>
           <CardHeader1 />
         </div>
 
@@ -205,10 +205,11 @@ const DashBoardComponent: React.FC = () => {
             <div>{profileData?.emailId}</div>
           </div>
         </div>
-        <div className="bg-[#1E1935] w-full md:w-[70%] rounded-2xl p-4 m-1">
+        <div className="bg-[#1E1935] w-full md:w-[70%] rounded-2xl p-4 m-1 -mt-6">
           <div className={`${styles.textSize} mb-4`}>Bot Usage</div>
           <SqureCardTwo />
         </div>
+
       </div>
     </div>
   );
