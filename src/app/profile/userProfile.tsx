@@ -1,4 +1,3 @@
-'use client';
 import withAuth from '@/components/withAuth';
 import { getUserProfileAction } from '@/redux/actions/authActions';
 import { RootState } from '@/redux/configureStore';
@@ -41,7 +40,6 @@ const ProfileComponent: React.FC = () => {
           value={`${profileData?.firstName} ${profileData?.lastName}`}
         />
         <ProfileField label="Email" value={`${profileData?.emailId}`} />
-        {/* <ProfileField label="Country" value="United states" /> */}
         <ProfileField label="Phone number" value={`${profileData?.mobileNo}`} />
       </div>
     </div>
