@@ -22,7 +22,7 @@ const SignUpModalOtp: React.FC<OtpModalProps> = ({ viewOtp, setViewOtp }) => {
   const resOtp = useSelector((state: RootState) => state?.root?.otp);
 
   useEffect(() => {
-    console.log('resOtp', resOtp);
+    // console.log('resOtp', resOtp);
     localStorage.setItem('user_id', resOtp?.data?.user_id);
     localStorage.setItem('token', resOtp?.data?.token);
     if(resOtp?.data?.success){
@@ -31,14 +31,14 @@ const SignUpModalOtp: React.FC<OtpModalProps> = ({ viewOtp, setViewOtp }) => {
   }, [resOtp]);
 
   useEffect(() => {
-    console.log('emailId', emailId);
+    // console.log('emailId', emailId);
   }, [emailId]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     const otpValue = otp.join('');
     if (otpValue.length === 3 || otpValue.length === 4) {
-      console.log('submit otp', otpValue, emailId);
+      // console.log('submit otp', otpValue, emailId);
       const data = {
         emailId: emailId,
         otp: otpValue,
@@ -46,7 +46,7 @@ const SignUpModalOtp: React.FC<OtpModalProps> = ({ viewOtp, setViewOtp }) => {
       // Handle OTP verification logic
       dispatch(verifyOtp(data));
       router.push('/login');
-      console.log('OTP submitted:', otpValue);
+      // console.log('OTP submitted:', otpValue);
     } else {
       console.error('OTP must be 3 or 4 digits');
     }
