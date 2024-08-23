@@ -238,6 +238,15 @@ function* passwordLoginSaga({
 }): Generator<any> {
   try {
     const result:any = yield call(LoginUserData,payload);
+    // const result: UserCredential = yield call(LoginUserData,payload);
+    // const logObj = {
+    //   ...result
+    // }
+    // console.log("logOBj" , logObj)
+    // const resObject: any = {
+    //   displayName: result?.user?.displayName,
+    //   email: result?.user?.email,
+    // };
 
     if(result?.success){
       yield put({ type: 'PASSWORD_LOGIN_SUCESS', payload: result });
@@ -530,12 +539,19 @@ export function* getUserAllSessionSaga({
   payload: any;
 }): Generator<any> {
   try {
+    // console.log("payload",payload)
+
+    // console.log("getSession ",data)
+    // console.log('p', payload);
     const userChat = yield call(getUserAllSessionService, payload);
+    // notifySuccess('UserAllSession fetched successfully');
+    // console.log("api userChat with bot res All session",userChat)
     yield put({
       type: GET_USER_All_SESSION_SUCCESS,
       payload: userChat,
     });
   } catch (error: any) {
+    // notifyError(`${error}`)
     yield put({
       type: GET_USER_All_SESSION_FAILURE,
     });
@@ -550,10 +566,14 @@ export function* getAdvanceFeatureSaga({
   payload: any;
 }): Generator<any> {
   try {
+    // console.log("payload",payload)
     const data = {
       sessionId: payload,
     };
+    // console.log("getSession ",data)
     const userChat = yield call(getAdvanceFeatureService, data);
+    // notifySuccess('Successfully fetched advance feature')
+    // console.log("api userChat with bot res All session",userChat)
     yield put({
       type: ADVANCE_FEATURE_SUCCESS,
       payload: userChat,
@@ -575,7 +595,7 @@ export function* payPalPaymentSaga({
 }): Generator<any> {
   try {
     const response: any = yield call(processPayPalPaymentService, payload);
-    // console.log('API response:', response);
+    console.log('API response:', response);
     // Save the response in Redux
     yield put({
       type: CREATE_PAYMENT_SUCCESS,
@@ -597,7 +617,15 @@ export function* payPalPaymentSaga({
 export function* capturePaymentSaga({ payload }: { type: string; payload: string; }): Generator<any> {
   try {
     const response = yield call(capturePaymentService, payload);
+    console.log('Capture payment response:', response);
+    // const paymentId = response._id;
     const paymentId = (response as { _id: string })._id;
+    console.log('paymentid same as response' , paymentId)
+    // if (paymentId) {
+    //   yield put(capturePaymentRequest(paymentId));
+    // } else {
+    //   throw new Error('Payment ID is missing in the response');
+    // }
     // // Save the captured payment response in Redux
     yield put(capturePaymentSuccess(response));
     notifySuccess('Payment captured successfully');

@@ -92,7 +92,7 @@ export function SqureCardOne({ sessionTotal, sessionLeft }: SqureCardOneProps) {
       }
     }
   }, [metrics]);
-  // console.log('me', metrics?.botSessionMapping);
+  console.log('me', metrics?.botSessionMapping);
   const iteratorData: any = [];
   // Transform the botSessionMapping data to match the format required by DonutChart
   const mappingData = metrics?.botSessionMapping?.length
@@ -104,7 +104,7 @@ export function SqureCardOne({ sessionTotal, sessionLeft }: SqureCardOneProps) {
           status: item[1][1],
         };
         iteratorData.push(obj);
-        // console.log('oi', item);
+        console.log('oi', item);
       })
     : [];
   let colorIndex = 0;
@@ -117,6 +117,14 @@ export function SqureCardOne({ sessionTotal, sessionLeft }: SqureCardOneProps) {
       return '#D1D5DB'; // Grey color for false status
     }
   });
+
+  console.log(
+    'mappingData',
+    mappingData,
+    iteratorData,
+    metrics?.botSessionMapping,
+    colors
+  );
   return iteratorData?.length ? (
     <div className="flex">
       <DonutChart

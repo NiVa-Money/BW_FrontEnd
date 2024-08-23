@@ -231,7 +231,7 @@ const BotSessionComponent: React.FC = () => {
 
   React.useEffect(() => {
     if (sentimentAnalysis) {
-      // console.log('sentimentAnalysis', sentimentAnalysis);
+      console.log('sentimentAnalysis', sentimentAnalysis);
       const parseValue = (value: any) => {
         return value ? parseFloat(value.replace('%', '')) : 0;
       };
@@ -314,7 +314,7 @@ const BotSessionComponent: React.FC = () => {
       setBotSessionsList(tempArray);
     }
   }, [userChatSessionsRedux]);
-  // console.log('botSessionsList', sessionId);
+  console.log('botSessionsList', sessionId);
 
   React.useEffect(() => {
     if (isDragging) {
@@ -735,7 +735,7 @@ const BotSessionComponent: React.FC = () => {
                     colors={['blue']}
                     valueFormatter={dataFormatter}
                     yAxisWidth={48}
-                    // onValueChange={(v) => console.log(v)}
+                    onValueChange={(v) => console.log(v)}
                   />
                 </div>
               ) : (

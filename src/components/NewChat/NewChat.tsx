@@ -46,7 +46,7 @@ const NewChatComponent: React.FC = () => {
   const messagesLeft = useSelector(
     (state: RootState) => state?.root?.userMetric?.data?.sessionLeft
   );
-  const lastMessageFrom = useSelector(
+  const lastMessageFrom =useSelector(
     (state: RootState) => state?.userChat?.sessionChat?.lastMessageFrom
   );
   React.useEffect(() => {
@@ -67,13 +67,14 @@ const NewChatComponent: React.FC = () => {
     setIsBotProfileOpen(!isBotProfileOpen);
   };
 
+
   const getChatHistory = () => {
     // console.log('userId', userId);
     dispatch(getAllSession(userId));
   };
 
   const sendMessage = (event: any) => {
-    setIsAutoScrollEnabled(true);
+    setIsAutoScrollEnabled(true)
     event.preventDefault();
     // console.log('botProfiles', newMessage);
     if (newMessage.trim() !== '') {
@@ -120,6 +121,8 @@ const NewChatComponent: React.FC = () => {
     dispatch(filteredSession(data));
   };
 
+  
+
   const messageVariants = {
     hidden: { opacity: 0, x: 50 },
     visible: { opacity: 1, x: 0 },
@@ -161,26 +164,26 @@ const NewChatComponent: React.FC = () => {
     // console.log('botProfiles', botProfiles);
   }, [userChatMessagesRes]);
 
+
   const scrollToBottom = () => {
     if (chatContainerRef.current && isAutoScrollEnabled) {
-      chatContainerRef.current.scrollTop =
-        chatContainerRef.current.scrollHeight;
+      chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
     }
   };
 
   React.useEffect(() => {
     const intervalId = setInterval(() => {
       if (isAutoScrollEnabled) {
-        scrollToBottom();
+        scrollToBottom(); 
       }
-    }, 50);
+    }, 50); 
 
     return () => clearInterval(intervalId);
-  }, [isAutoScrollEnabled]);
+  }, [isAutoScrollEnabled]); 
 
   const handleTypingComplete = () => {
     // console.log("Typing complete");
-    setIsAutoScrollEnabled(false);
+    setIsAutoScrollEnabled(false); 
   };
 
   return (
@@ -264,6 +267,48 @@ const NewChatComponent: React.FC = () => {
       </div>
 
       <div className="flex flex-wrap gap-1 mb-5 z-10">
+        {/* Commented out section for Chat History */}
+        {/* 
+  <div className="flex flex-col self-stretch relative w-full md:w-auto">
+    <div
+      className="flex gap-2.5 justify-center p-2.5 text-xl font-medium bg-[#2D2640] text-white rounded-t-lg cursor-pointer"
+      onClick={toggleChatHistory}
+    >
+      <div>
+        <button onClick={getChatHistory}>Chat History</button>
+      </div>
+      <img
+        loading="lazy"
+        src="https://cdn.builder.io/api/v1/image/assets/TEMP/ecfab022e56ef6ff0a58045a291327eda3e871d2c6c2576eee117363bc12ecf0?apiKey=555c811dd3f44fc79b6b2689129389e8&"
+        className={`shrink-0 aspect-square w-[30px] transition-transform duration-300 ${
+          isChatHistoryOpen ? 'rotate-180' : ''
+        }`}
+        alt="Chat History"
+      />
+    </div>
+    {isChatHistoryOpen && (
+      <div className="flex w-full">
+        <div className="flex flex-col py-2 text-base tracking-wide leading-6 bg-[#1E1533] rounded-b-lg shadow max-w-[280px] absolute top-full left-0 right-0 z-10">
+          {allSession?.data?.sessions?.map(
+            (session, index) => (
+              <div className="px-3 py-2 text-white" key={index}>
+                <div>
+                  <button onClick={() => {
+                    getSession(session._id)
+                    setSessionId(session._id)
+                  }}>
+                    session Chat {index+1}
+                  </button>
+                </div>
+              </div>
+            )
+          )}
+        </div>
+      </div>
+    )}
+  </div>
+  */}
+
         <div className="flex gap-3 flex-wrap md:flex-nowrap w-full z-1">
           <div className="flex flex-col self-stretch relative w-full md:w-auto">
             <div
@@ -323,7 +368,31 @@ const NewChatComponent: React.FC = () => {
         </div>
       </div>
 
-      
+      {/* <div className="mt-80 w-full max-w-[930px] max-md:mt-10 max-md:max-w-full">
+        <div className="flex gap-5 max-md:flex-col max-md:gap-0">
+          <div className="flex flex-col w-6/12 max-md:ml-0 max-md:w-full">
+            <div className="flex flex-col grow mt-24 text-xl font-medium text-white max-md:mt-10 max-md:max-w-full">
+              <div className="justify-center p-2.5 bg-[#2D2640] rounded-xl max-md:max-w-full">
+                Because it couldn't find the right "match"!
+              </div>
+              <div className="justify-center p-2.5 mt-32 bg-[#2D2640] rounded-xl max-md:mt-10 max-md:max-w-full">
+                To optimize its path-finding algorithm! 🤖🚗
+              </div>
+            </div>
+          </div>
+          <div className="flex flex-col ml-5 w-6/12 max-md:ml-0 max-md:w-full">
+            <div className="flex flex-col text-xl font-medium text-white max-md:max-w-full">
+              <div className="justify-center p-2.5 bg-[#5D39AD] rounded-xl max-md:max-w-full">
+                Hey Botwot, why did the chatbot break up with its algorithm?
+              </div>
+              <div className="justify-center self-end p-2.5 mt-24 max-w-full bg-[#5D39AD] rounded-xl w-[446px] max-md:mt-10 max-md:max-w-full">
+                Haha, good one! But seriously, why did the chatbot cross the
+                road?
+              </div>
+            </div>
+          </div>
+        </div>
+      </div> */}
       <div className="mt-5 w-full max-w-[930px] max-md:mt-10 max-md:max-w-full h-[60vh] rounded-lg relative">
         <div
           ref={chatContainerRef}
@@ -355,7 +424,34 @@ const NewChatComponent: React.FC = () => {
                           : 'grow text-xl font-medium text-white max-md:mt-10'
                       }`}
                     >
-                      
+                      {/* <motion.div
+                      className={`w-full py-2 gap-2 rounded-3xl text-white mb-2`}
+                      initial="hidden"
+                      animate="visible"
+                      exit="exit"
+                      variants={messageVariants}
+                      transition={{ duration: 0.5 }}
+                    > */}
+                      {/* <div
+                        id="typewriter-gpt-2"
+                        className={`${
+                          message?.sender === 'user'
+                            ? 'p-2.5 bg-[#5D39AD] rounded-xl'
+                            : 'p-2.5 bg-[#2D2640] rounded-xl chat-box-size'
+                        }`} */}
+                      {/* // dangerouslySetInnerHTML={{ __html: formattedText }}
+                      /> */}
+                      {/* <ReactTyped strings={[formattedText]} typeSpeed={1000} /> */}
+                      {/* </motion.div> */}
+                      {/* <div
+                        id="typewriter-gpt-2"
+                        className={`${
+                          message?.sender === 'user'
+                            ? 'p-2.5 bg-[#5D39AD] rounded-xl'
+                            : 'p-2.5 bg-[#2D2640] rounded-xl chat-box-size'
+                        }`}
+                        dangerouslySetInnerHTML={{ __html: formattedText }}
+                      > */}
                       {message?.sender !== 'user' ? (
                         <div
                           id="typewriter-gpt-2"
@@ -364,12 +460,13 @@ const NewChatComponent: React.FC = () => {
                               ? 'p-2.5 bg-[#5D39AD] rounded-xl'
                               : 'p-2.5 bg-[#2D2640] rounded-xl chat-box-size'
                           }`}
+                          // dangerouslySetInnerHTML={{ __html: formattedText }}
                         >
                           <ReactTyped
                             strings={[formattedText]}
                             typeSpeed={5}
                             showCursor={false}
-                            onComplete={() => handleTypingComplete()}
+                            onComplete={() => handleTypingComplete()} 
                           />
                         </div>
                       ) : (
@@ -382,6 +479,7 @@ const NewChatComponent: React.FC = () => {
                           dangerouslySetInnerHTML={{ __html: formattedText }}
                         />
                       )}
+                      {/* </div> */}
                     </div>
                   </div>
                 </div>
@@ -406,13 +504,7 @@ const NewChatComponent: React.FC = () => {
             className="flex-1 bg-transparent outline-none"
             onChange={(e) => setNewMessage(e.target.value)}
             value={newMessage}
-            disabled={
-              lastMessageFrom == undefined
-                ? false
-                : lastMessageFrom == 'receiver'
-                ? false
-                : true
-            }
+            disabled={lastMessageFrom==undefined?false: lastMessageFrom=='receiver'?false:true}
           />
           <button
             className="shrink-0 w-8 h-8 flex items-center justify-center rounded-full hover:bg-[#4A2E8B] transition-colors duration-300"

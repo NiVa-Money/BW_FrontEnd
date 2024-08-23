@@ -29,7 +29,7 @@ const AuthContextProvider = ({ children }: PropsWithChildren) => {
       const result = await signInWithPopup(auth, provider);
       setUser(result.user);
     } catch (error) {
-      // console.log(error);
+      console.log(error);
     }
   };
 
@@ -39,7 +39,7 @@ const AuthContextProvider = ({ children }: PropsWithChildren) => {
       setUser(result.user);
       return result.user;
     } catch (error) {
-      // console.log(error);
+      console.log(error);
       return null;
     }
   };
@@ -48,7 +48,7 @@ const AuthContextProvider = ({ children }: PropsWithChildren) => {
       const result = await signInWithEmailAndPassword(auth, email, password);
       setUser(result.user);
     } catch (error) {
-      // console.log(error);
+      console.log(error);
       throw new Error('Failed to log in');
     }
   };
