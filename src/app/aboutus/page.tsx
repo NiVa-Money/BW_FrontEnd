@@ -1,17 +1,13 @@
-import React from 'react';
+import React from 'react'
 
-const AboutUs = () => {
+const aboutUs = () => {
   return (
-    <div>
+     <div >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div
-          className="shadow-xl rounded-2xl p-8"
-          style={{
-            background: 'linear-gradient(180deg, #2B243C 0%, #0B031E 100%)',
-            border: '2px solid #2B243C',
-          }}
-        >
-          <h1 className="text-4xl font-bold text-white-800 mb-6">About BotWot.io</h1>
+      <div className="shadow-xl rounded-2xl p-8" style={{ 
+          background: 'linear-gradient(180deg, #2B243C 0%, #0B031E 100%)',
+          border: '2px solid #2B243C' 
+        }}>      <h1 className="text-4xl font-bold text-white-800 mb-6">About BotWot.io</h1>
           <p className="text-lg text-white-800 mb-4">
             Building Your AI Chatbot in Minutes - No Coding Required
           </p>
@@ -65,7 +61,8 @@ const AboutUs = () => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default AboutUs;
+export default aboutUs
+

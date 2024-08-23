@@ -1,3 +1,5 @@
+// components/withAuth.js
+// components/withAuth.tsx
 "use client";
 import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';

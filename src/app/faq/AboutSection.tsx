@@ -209,20 +209,22 @@ function AboutSection() {
         </div>
       </div>
       <div
-        className="flex items-center justify-center absolute inset-x-0 top-[100%] z-10 cursor-pointer"
-        onClick={toggleViewMore}
-      >
-        <div className="flex items-center justify-center">
-          <div className="text-lg">
-            {isExpanded ? 'View Less' : 'View More'}
-          </div>
-          <img
-            loading="lazy"
-            src="https://cdn.builder.io/api/v1/image/assets/TEMP/8af6e72c4afd34b9a0eebc6e34b6b2b9dd8327d61d939073261537dc65dca77f?apiKey=555c811dd3f44fc79b6b2689129389e8&&apiKey=555c811dd3f44fc79b6b2689129389e8"
-            className="object-contain mb-1 ml-4 aspect-[1.05] w-[50px]"
-          />
-        </div>
-      </div>
+  className="flex items-center justify-center absolute inset-x-0 top-[100%] z-10 cursor-pointer"
+  onClick={toggleViewMore}
+>
+  <div className="flex items-center justify-center">
+    <div className="text-lg">
+      {isExpanded ? 'View Less' : 'View More'}
+    </div>
+    <img
+      loading="lazy"
+      src="https://cdn.builder.io/api/v1/image/assets/TEMP/8af6e72c4afd34b9a0eebc6e34b6b2b9dd8327d61d939073261537dc65dca77f?apiKey=555c811dd3f44fc79b6b2689129389e8&&apiKey=555c811dd3f44fc79b6b2689129389e8"
+      className="object-contain mb-1 ml-4 aspect-[1.05] w-[50px]"
+    />
+  </div>
+</div>
+
+
     </div>
   );
 }

@@ -33,7 +33,7 @@ const KnowledgeBase: React.FC = () => {
   const knowledgeBaseData = useSelector(
     (state: RootState) => state.KnowledgeBase?.user?.data
   );
-  // console.log('knowledgeBaseData', knowledgeBaseData);
+  console.log('knowledgeBaseData', knowledgeBaseData);
   const [knowledgebase, setKnowledgebase] = useState<KnowledgeBaseCardProps[]>(
     []
   );
@@ -86,6 +86,11 @@ const KnowledgeBase: React.FC = () => {
 
   // Handle delete action
   const handleDelete = (index: number) => {
+    // const deletePayload: any = {
+    //   docId: knowledgebase[index]?.docId,
+    //   userId: userIdLocal,
+    // };
+    // console.log('del', deletePayload);
     setDocIdToDelete(knowledgebase[index]._id);
     setIsModalOpen(true);
   };
@@ -95,6 +100,7 @@ const KnowledgeBase: React.FC = () => {
     if (docIdToDelete && userId) {
       dispatch(deleteUserKnowledgeBaseAction({ docId: docIdToDelete, userId }));
       setIsModalOpen(false);
+      // dispatch(getUserKnowledgeBaseAction(userId ));
     }
   };
 

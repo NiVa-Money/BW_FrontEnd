@@ -60,8 +60,8 @@ export const fetchUserData = async (userEmail: string) => {
     localStorage.setItem('user_id', user_id);
     localStorage.setItem('token', token);
     // Logging to confirm they are set
-    // console.log('user_id saved:', localStorage.getItem('user_id'));
-    // console.log('token saved:', localStorage.getItem('token'));
+    console.log('user_id saved:', localStorage.getItem('user_id'));
+    console.log('token saved:', localStorage.getItem('token'));
     return response.data;
   } catch (error: any) {
     console.error(
@@ -76,9 +76,9 @@ export const fetchUserData = async (userEmail: string) => {
 export const fetchUserMetrics = async (payload: any) => {
   try {
     const user_id = localStorage.getItem('user_id');
-    // console.log('user_id', payload);
+    console.log('user_id', payload);
     const response = await axiosInstance.get(`user/metrics/${payload}`, {});
-    // console.log('User metrics:', response.data);
+    console.log('User metrics:', response.data);
     return response.data;
   } catch (error: any) {
     console.error(
@@ -94,7 +94,7 @@ export const getUserProfileService = async (payload: any) => {
       `user/getUserProfile?emailId=${payload}`,
       {}
     );
-    // console.log('User profile:', response.data);
+    console.log('User profile:', response.data);
     return response.data;
   } catch (error: any) {
     console.error(
@@ -217,7 +217,7 @@ export const getUserKnowledgeBaseService = async (payload: any) => {
 //delete knowledge base
 export const deleteUserKnowledgeBaseService = async (payload: any) => {
   try {
-    // console.log('del', payload);
+    console.log('del', payload);
     const response = await axiosInstance.put(
       `user/deleteUserKnowledgeBase?docId=${payload.docId}&userId=${payload?.userId}`
     );
@@ -234,11 +234,11 @@ export const deleteUserKnowledgeBaseService = async (payload: any) => {
 // export const logoutUser = () => {
 //   try {
 
-//     // console.log("logut user ")
+//     console.log("logut user ")
 //     localStorage.removeItem('user_id');
 //     localStorage.removeItem('token');
 
-//     // console.log("logut user ",localStorage.getItem('token'))
+//     console.log("logut user ",localStorage.getItem('token'))
 
 //     window.location.href = '/';
 //   } catch (error) {
@@ -262,9 +262,9 @@ export const getUserChatService = async (payload: any) => {
 
 export const getUserAllSessionService = async (payload: any) => {
   try {
-    // console.log('get user getsession', payload);
+    console.log('get user getsession', payload);
     const response = await axiosInstance.post(`user/getSession`, payload);
-    // // console.log("res all session",response)
+    // console.log("res all session",response)
     return response.data;
   } catch (error) {
     console.error('Error signing up user:', error);
@@ -275,9 +275,9 @@ export const getUserAllSessionService = async (payload: any) => {
 
 export const getAdvanceFeatureService = async (payload: any) => {
   try {
-    // // console.log("get user getsession",payload)
+    // console.log("get user getsession",payload)
     const response = await axiosInstance.post(`user/chat-analysis`, payload);
-    // // console.log("res all session",response)
+    // console.log("res all session",response)
     return response.data;
   } catch (error) {
     console.error('Error signing up user:', error);
@@ -289,7 +289,7 @@ export const getAdvanceFeatureService = async (payload: any) => {
 export const processPayPalPaymentService = async (payload: any) => {
   try {
     const response = await axiosInstance.post(`/payment/create`, payload);
-    // console.log('response of payment', response.data);
+    console.log('response of payment', response.data);
     return response.data;
   } catch (error) {
     throw new Error('Payment processing failed');
@@ -297,8 +297,8 @@ export const processPayPalPaymentService = async (payload: any) => {
 };
 
 export const capturePaymentService = async (_id: string) => {
-  // console.log('response of capture', _id);
+  console.log('response of capture', _id);
   const response = await axiosInstance.post(`/payment/capture/${_id}`);
-  // console.log('response of capture', response.data);
+  console.log('response of capture', response.data);
   return response.data;
 };

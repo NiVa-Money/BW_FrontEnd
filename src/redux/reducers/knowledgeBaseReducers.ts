@@ -72,7 +72,7 @@ export default function knowledgeBaseReducers(
         },
       };
     case GET_USER_KNOWLEDGE_BASE_SUCCESS:
-      // console.log('s', action);
+      console.log('s', action);
       return {
         ...state,
         user: {

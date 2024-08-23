@@ -36,7 +36,7 @@ const ContactForm: React.FC = () => {
         }
       );
 
-      // console.log('Form submitted successfully:', response.data);
+      console.log('Form submitted successfully:', response.data);
 
       // Show success toast
       toast.success('Form submitted successfully!', {});
