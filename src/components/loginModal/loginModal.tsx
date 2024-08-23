@@ -26,8 +26,6 @@ const LoginModal: React.FC<ModalProps> = ({ closeModal }) => {
 
     try {
       dispatch(passwordLoginAction({ email, password }));
-      closeModal();
-      router.push('/dashboard');
     } catch (err) {
       console.error('Login failed', err);
       setError('Failed to log in. Please check your email and password.');
