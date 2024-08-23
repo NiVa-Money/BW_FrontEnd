@@ -9,7 +9,7 @@ const NotFound = () => {
       <p className="text-xl mb-4">Error 404</p>
       <div className="relative w-[605px] h-[486px] mb-8">
         <Image
-          src={notFoundImg.src} // Replace with your image path
+          src={notFoundImg.src} 
           alt="Lost"
           layout="fill"
           objectFit="contain"
