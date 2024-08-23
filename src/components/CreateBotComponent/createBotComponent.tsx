@@ -79,7 +79,7 @@ const CreateBotComponent: React.FC = () => {
   const handleBotSampleClick = async (item: any) => {
     setImageSrc(item?.imageUrl);
 
-    console.log("ImagesCustom",item.imageUrl)
+    // console.log("ImagesCustom",item.imageUrl)
 
     const response = await fetch(item?.imageUrl);
     const blob = await response.blob();

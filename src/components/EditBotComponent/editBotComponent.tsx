@@ -56,12 +56,12 @@ const EditBotComponent: React.FC = () => {
       const id = searchParams.get('id');
       if (id) {
         setBotId(id);
-        console.log('Bot ID from URL:', id);
+        // // console.log('Bot ID from URL:', id);
       } else {
-        console.log('ID not found in search params');
+        // // console.log('ID not found in search params');
       }
     } else {
-      console.log('SearchParams is null');
+      // // console.log('SearchParams is null');
     }
   }, [searchParams]);
 
@@ -77,7 +77,7 @@ const EditBotComponent: React.FC = () => {
     (state: RootState) => state.KnowledgeBase?.user?.data
   );
 
-  console.log('knowledgeBaseData', knowledgeBaseData);
+  // // console.log('knowledgeBaseData', knowledgeBaseData);
 
   const dispatch = useDispatch();
   const [step, setStep] = useState(1);
@@ -280,12 +280,12 @@ const EditBotComponent: React.FC = () => {
       const id = searchParams.get('id');
       if (id) {
         setBotId(id);
-        console.log('Bot ID from URL:', id);
+        // console.log('Bot ID from URL:', id);
       } else {
-        console.log('ID not found in search params');
+        // console.log('ID not found in search params');
       }
     } else {
-      console.log('SearchParams is null');
+      // console.log('SearchParams is null');
     }
   }, [searchParams]);
 
@@ -324,7 +324,7 @@ const EditBotComponent: React.FC = () => {
           value={botName}
           onChange={(e) => {
             setBotName(e.target.value);
-            console.log(e.target.value);
+            // console.log(e.target.value);
           }}
           className="w-full bg-[#171029] text-white p-2 rounded-[12px]"
         />

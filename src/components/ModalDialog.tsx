@@ -59,15 +59,7 @@ const ModalDialog: React.FC<ModalDialogProps> = ({ open, onClose }) => {
             />
           </div>
         </div>
-        {/* <Link href="https://www.installonair.com/app-download-link/PKtMr3">
-            <span>APK URL</span>
-          </Link> */}
       </DialogContent>
-      {/* <DialogActions className="p-4 bg-gray-200">
-        <Button onClick={onClose} color="primary" variant="contained">
-          Close
-        </Button>
-      </DialogActions> */}
     </Dialog>
   );
 };
