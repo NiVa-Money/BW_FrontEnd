@@ -53,9 +53,9 @@ const Hero = () => {
     setIsLoginModalOpen(false);
   };
   useEffect(() => {
-    console.log('googleVerifyRedux', googleVerifyRedux);
+    // console.log('googleVerifyRedux', googleVerifyRedux);
     if (googleVerifyRedux) {
-      console.log('userRedux', userRedux);
+      // console.log('userRedux', userRedux);
       const [firstName, lastName] = userRedux?.displayName.split(' ');
       const email = userRedux?.email;
       const payload = {
@@ -70,7 +70,7 @@ const Hero = () => {
 
   useEffect(() => {
     if (googleVerifyRedux) {
-      console.log('userRedux', userRedux);
+      // console.log('userRedux', userRedux);
       const [firstName, lastName] = userRedux?.displayName.split(' ');
       const email = userRedux?.email;
       const payload = {
@@ -80,7 +80,7 @@ const Hero = () => {
         mobileNo: '917779797977',
       };
       // dispatch(verifyUserDataAction(email));
-      // console.log("hello",payload)
+      // // console.log("hello",payload)
       if (!userData?.success) {
         dispatch(googleLogin(payload));
       }

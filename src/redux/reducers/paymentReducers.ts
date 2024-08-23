@@ -11,7 +11,7 @@ export default function paymentReducer(state = initialState.payment, action: any
         error: null,
       };
     case CREATE_PAYMENT_SUCCESS:
-      console.log('Create Payment Success Payload:', action.payload);
+      // console.log('Create Payment Success Payload:', action.payload);
       return {
         ...state,
         loading: false,
@@ -20,7 +20,7 @@ export default function paymentReducer(state = initialState.payment, action: any
         error: null,
       };
     case CAPTURE_PAYMENT_SUCCESS:
-      console.log('Capture Payment Success Payload:', action.payload);
+      // console.log('Capture Payment Success Payload:', action.payload);
       return {
         ...state,
         loading: false,

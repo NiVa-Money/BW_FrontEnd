@@ -18,7 +18,7 @@ import {
     switch (action.type) {
        case USER_CHAT_DATA:
 
-       console.log("USER_CHAT_DATA")
+       // console.log("USER_CHAT_DATA")
         return {
           ...state,
           sessionChat: {
@@ -29,9 +29,9 @@ import {
         };
 
       case USER_OUESTION_SESSION:
-        // console.log("USER_OUESTION_SESSION",action.payload)
+        // // console.log("USER_OUESTION_SESSION",action.payload)
         const previousData = state.sessionChat.data
-        // console.log("previousdata",previousData)
+        // // console.log("previousdata",previousData)
         const newData = previousData ? [...previousData, action.payload] : [action.payload];
         return {
           ...state,
@@ -39,7 +39,7 @@ import {
       };
 
       case USER_SESSION_HISTORY:
-        // console.log("USER_OUESTION_SESSION",action.payload)
+        // // console.log("USER_OUESTION_SESSION",action.payload)
         const userSessionData = action.payload.sessionData
         const selecSessionId = action.payload.sessionId
         return {
@@ -48,7 +48,7 @@ import {
       };
         
       case GET_USER_CHAT_SUCCESS:
-        // console.log("GET_USER_CHAT_SUCCESS",action.payload)
+        // // console.log("GET_USER_CHAT_SUCCESS",action.payload)
         const data = {
           text: action.payload.text,
           sender: action.payload.sender,
@@ -70,48 +70,48 @@ import {
           allSession: { data: action.payload, loader: false },
       };
       case GET_USER_All_SESSION_SUCCESS:
-        console.log("GET_USER_All_SESSION_SUCCESS")
+        // console.log("GET_USER_All_SESSION_SUCCESS")
         return {
             ...state,
             allSession: { data: action.payload, loader: true },
         };
       case GET_USER_All_SESSION_FAILURE:
-        console.log("GET_USER_All_SESSION_FAILURE")
+        // console.log("GET_USER_All_SESSION_FAILURE")
         return {
             ...state,
             allSession: { data: action.payload, loader: false },
         };
 
         case ADVANCE_FEATURE:
-          console.log("ADVANCE_FEATURE")
+          // console.log("ADVANCE_FEATURE")
           return {
               ...state,
               advanceFeature : { data: action.payload, loader: true },
           };
 
         case ADVANCE_FEATURE_SUCCESS:
-          console.log("ADVANCE_FEATURE_SUCCESS")
+          // console.log("ADVANCE_FEATURE_SUCCESS")
           return {
               ...state,
               advanceFeature : { data: action.payload, loader: true },
           };
 
         case ADVANCE_FEATURE_FAILURE:
-            console.log("ADVANCE_FEATURE_SUCCESS")
+            // console.log("ADVANCE_FEATURE_SUCCESS")
             return {
                 ...state,
                 advanceFeature : { data: action.payload, loader: false },
             };
         
         case BOTSESSION_ID:
-          console.log("BOTSESSION_ID")
+          // console.log("BOTSESSION_ID")
           return {
             ...state,
             botProfileSelect : { data: action.payload, loader: true },
         };
 
         case REMOVE_ADVANCE_FEATURE:
-          console.log("REMOVE_ADVANCE_FEATURE")
+          // console.log("REMOVE_ADVANCE_FEATURE")
           return {
               ...state,
               session:{
