@@ -25,13 +25,11 @@ const LoginModal: React.FC<ModalProps> = ({ closeModal }) => {
     setError('');
 
     try {
-      // console.log('Calling handleSignInWithEmail'); // Log before calling the function
-      // await handleSignInWithEmail(email, password);
-      console.log('Successfully logged in'); // Log if login is successful
-      // Dispatch the passwordLoginAction
       dispatch(passwordLoginAction({ email, password }));
-      // closeModal();
-      // router.push('/dashboard');
+
+      closeModal();
+      router.push('/dashboard');
+
     } catch (err) {
       console.error('Login failed', err);
       setError('Failed to log in. Please check your email and password.');

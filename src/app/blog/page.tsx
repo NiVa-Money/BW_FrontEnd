@@ -1,12 +1,14 @@
-import React from 'react'
+import React from 'react';
 import Card from '@mui/material/Card';
 import Typography from '@mui/material/Typography';
 import CardContent from '@mui/material/CardContent';
+
 interface ContentCardPropsType {
   img: string;
   title: string;
   desc: string;
 }
+
 function ContentCard({ img, title, desc }: ContentCardPropsType) {
   return (
     <Card
@@ -23,16 +25,14 @@ function ContentCard({ img, title, desc }: ContentCardPropsType) {
         <Typography variant="h4" color="white">
           {title}
         </Typography>
-        <Typography
-          color="white"
-          className="my-2 font-normal"
-        >
+        <Typography color="white" className="my-2 font-normal">
           {desc}
         </Typography>
       </CardContent>
     </Card>
   );
 }
+
 const contents = [
   {
     img: "/images/blog1.png",
@@ -50,6 +50,7 @@ const contents = [
     desc: "Harness BotWot.io's no-code platform for revolutionizing customer service with 24/7 chatbot support, driving sales through engaging customer interactions, and optimizing operations for enhanced efficiency and cost savings.",
   },
 ];
+
 const Blog = () => {
   return (
     <div>
@@ -61,9 +62,7 @@ const Blog = () => {
         >
           Build something great With BotWot !
         </Typography>
-        <Typography
-          className="mt-2 max-w-lg !font-normal !text-gray-500"
-        >
+        <Typography className="mt-2 max-w-lg !font-normal !text-gray-500">
           To democratize AI-powered customer engagement by providing an intuitive, no-code platform that enables businesses of all sizes to create, deploy, and evolve intelligent chatbots.
         </Typography>
 
@@ -74,8 +73,7 @@ const Blog = () => {
         </div>
       </section>
     </div>
+  );
+};
 
-  )
-}
-
-export default Blog
+export default Blog;

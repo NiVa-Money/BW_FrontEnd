@@ -1,15 +1,9 @@
-// ModalDialog.tsx
-import React, { useState } from 'react';
+import React from 'react';
 import Dialog from '@mui/material/Dialog';
+import DialogContent from '@mui/material/DialogContent';
+import Image from 'next/image';
 import apkQR from '@/public/assets/apkQr.png';
 import mobileView from '@/public/assets/mobileView.png';
-
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogTitle from '@mui/material/DialogTitle';
-import Button from '@mui/material/Button';
-import Image from 'next/image';
-import Link from 'next/link';
 
 interface ModalDialogProps {
   open: boolean;
@@ -25,49 +19,44 @@ const ModalDialog: React.FC<ModalDialogProps> = ({ open, onClose }) => {
         sx: {
           width: '70%',
           height: '70vh',
-          borderRadius: '0.5rem', // Tailwind rounded-lg
+          borderRadius: '0.5rem',
+          backgroundColor: '#1E1E2D',
         },
       }}
     >
-      <DialogContent className="p-6">
-        <div className="flex justify-center items-center h-full ">
-          <div className="flex flex-col justify-center items-center w-2/5 h-full">
+      <DialogContent className="p-6 bg-[#1E1E2D] text-white">
+        <div className="flex justify-between items-center h-full">
+          <div className="flex flex-col justify-center items-center w-2/5 h-full space-y-4">
             <a
               href="https://www.installonair.com/app-download-link/PKtMr3"
-              target="blank"
-              className="text-[purple] underline font-bold text-center"
+              target="_blank"
+              rel="noopener noreferrer"
+              className= "rounded-lg p-2 mb-2 text-white text-2xl font-semibold text-center"
             >
-              Available for Android Devices!
+              Available on <br/>Android Devices
             </a>
-            <Image
-              src={apkQR.src} // Replace with your image path
-              alt="Lost"
-              layout="responsive"
-              objectFit="cover"
-              width={400}
-              height={400}
-            />
+            <div className="bg-white p-4 rounded-lg">
+              <Image
+                src={apkQR}
+                alt="Android QR Code"
+                width={200}
+                height={200}
+                layout="responsive"
+              />
+            </div>
           </div>
-          <div style={{ width: '40%', height: '100%' }}>
-            <Image
-              src={mobileView.src} // Replace with your image path
-              alt="Lost"
-              objectFit="cover"
-              width={375}
-              className={'h-full'}
-              height={60}
-            />
+          <div className="w-3/5 h-full flex justify-center items-center">
+            <div className="w-full h-full relative">
+              <Image
+                src={mobileView}
+                alt="Mobile App Preview"
+                layout="fill"
+                objectFit="contain"
+              />
+            </div>
           </div>
         </div>
-        {/* <Link href="https://www.installonair.com/app-download-link/PKtMr3">
-            <span>APK URL</span>
-          </Link> */}
       </DialogContent>
-      {/* <DialogActions className="p-4 bg-gray-200">
-        <Button onClick={onClose} color="primary" variant="contained">
-          Close
-        </Button>
-      </DialogActions> */}
     </Dialog>
   );
 };

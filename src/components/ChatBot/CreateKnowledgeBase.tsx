@@ -62,7 +62,7 @@ const CreateKnowledgeBase: React.FC = () => {
       formData.append('file', selectedFile);
 
       formData.forEach((value, key) => {
-        console.log(key, value);
+        // console.log(key, value);
       });
 
       dispatch(createKnowledgebaseAction(formData));
@@ -84,7 +84,6 @@ const CreateKnowledgeBase: React.FC = () => {
       >
         <div className="flex flex-col items-center max-w-full w-[432px]">
           <img
-            loading="lazy"
             src="https://cdn.builder.io/api/v1/image/assets/TEMP/0fdc897821e0f9ef3a45cd43a45c0a2646c6fb3a66d51fb8aa86e7b8052ea1ee?"
             className="aspect-square w-[50px]"
             alt="Upload Icon"

@@ -231,7 +231,7 @@ const BotSessionComponent: React.FC = () => {
 
   React.useEffect(() => {
     if (sentimentAnalysis) {
-      console.log('sentimentAnalysis', sentimentAnalysis);
+      // console.log('sentimentAnalysis', sentimentAnalysis);
       const parseValue = (value: any) => {
         return value ? parseFloat(value.replace('%', '')) : 0;
       };
@@ -314,7 +314,7 @@ const BotSessionComponent: React.FC = () => {
       setBotSessionsList(tempArray);
     }
   }, [userChatSessionsRedux]);
-  console.log('botSessionsList', sessionId);
+  // console.log('botSessionsList', sessionId);
 
   React.useEffect(() => {
     if (isDragging) {
@@ -507,7 +507,6 @@ const BotSessionComponent: React.FC = () => {
                 >
                   <div>Bot Profile</div>
                   <img
-                    loading="lazy"
                     src="https://cdn.builder.io/api/v1/image/assets/TEMP/ecfab022e56ef6ff0a58045a291327eda3e871d2c6c2576eee117363bc12ecf0?apiKey=555c811dd3f44fc79b6b2689129389e8&"
                     className={`shrink-0 aspect-square w-[30px] transition-transform duration-300 ${
                       isBotProfileOpen ? 'rotate-180' : ''
@@ -735,7 +734,7 @@ const BotSessionComponent: React.FC = () => {
                     colors={['blue']}
                     valueFormatter={dataFormatter}
                     yAxisWidth={48}
-                    onValueChange={(v) => console.log(v)}
+                    // onValueChange={(v) => console.log(v)}
                   />
                 </div>
               ) : (

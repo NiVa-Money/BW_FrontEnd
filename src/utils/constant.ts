@@ -1,2 +1,2 @@
-export const botImageBaseUrl =
-  '/images/';
+export const botImageBaseUrl = '/images/';
+
