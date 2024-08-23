@@ -137,13 +137,22 @@ const SideBar: React.FC = () => {
             <MenuItem key={idx} item={item} />
           ))}
         </div>
-        <button
-          className="bg-[#1E1E2E] text-white rounded-full py-2 px-4 mb-8 flex items-center space-x-4 justify-center"
-          onClick={handleClickOpen}
-        >
-          <span>Available on Android</span>
-        </button>
+
         <div className="flex flex-col space-y-2 mt-2">
+          <button
+            className="text-white rounded-full py-2 px-2  flex items-center space-x-4 justify-start"
+            onClick={handleClickOpen}
+          >
+            <div className="flex justify-start items-center">
+              <Image
+                src="/images/mobile.svg"
+                width={20}
+                height={30}
+                alt="mobile"
+              />
+              <span>Available on Android</span>
+            </div>
+          </button>
           {SIDENAV_ITEMS2.map((item, idx) => (
             <MenuItem
               key={idx}

@@ -3,6 +3,7 @@ import withAuth from '@/components/withAuth';
 import { getUserProfileAction } from '@/redux/actions/authActions';
 import { RootState } from '@/redux/configureStore';
 import * as React from 'react';
+import PersonIcon from '@mui/icons-material/Person';
 import { useDispatch, useSelector } from 'react-redux';
 
 const ProfileComponent: React.FC = () => {
@@ -33,8 +34,12 @@ const ProfileComponent: React.FC = () => {
   }, []);
 
   return (
-    <div className="flex flex-col p-6 bg-[#0B031E] text-white">
-      <h1 className="text-4xl font-bold text-center mb-10">Profile</h1>
+    <div className="flex flex-col w-[90%] p-6 bg-[#0B031E] text-white">
+      <div className="flex justify-start gap-[8px] items-center mb-10 mt-[60px]">
+        <h1 className="text-4xl font-bold text-center ">Profile</h1>
+        <PersonIcon style={{ color: '#476B8E', fontSize: '4rem' }} />
+      </div>
+
       <div className="space-y-5">
         <ProfileField
           label="Name"
