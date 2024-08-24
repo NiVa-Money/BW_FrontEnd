@@ -13,6 +13,7 @@ import {
 import Testimonials from '@/components/testemonial/Testimonials';
 import { useRouter } from 'next/navigation';
 import Media from '@/components/Media/mediaLinks';
+import BackgroundAnimation from '@/components/BackgroundAnimation/backgroundAnimation';
 const LandingPage: React.FC = () => {
   const userEmail = useSelector((state: RootState) => state.root?.user?.email);
   const userVerify = useSelector((state: RootState) => state.root?.userVerify);
