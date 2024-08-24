@@ -110,7 +110,7 @@ const Hero = () => {
             <span>Sign in with Google</span>
           </button>
           <button
-            className="flex gap-4 justify-center px-6 py-4 mt-4 text-2xl  text-gray-500 rounded-[99px] max-md:px-5"
+            className="flex gap-4 justify-center px-6 py-4 mt-4 text-2xl  text-white rounded-[99px] max-md:px-5"
             onClick={handleButtonClick}
           >
             <span>Sign Up With Your Email</span>
