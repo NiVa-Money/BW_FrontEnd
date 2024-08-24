@@ -591,7 +591,7 @@ const EditBotComponent: React.FC = () => {
           <div>
             <button
               onClick={step === 2 ? handleSave : handleContinue}
-              className="bg-[#3F2181] w-[Hug (287px)px] rounded-[99px] text-white px-6 py-2 "
+               className="flex gap-2 justify-center px-14 py-3 text-xl font-medium text-gray-100 bg-[#3F2181] rounded-[60px]"
             >
               {step === 2 ? 'Save' : 'Continue'}
             </button>
