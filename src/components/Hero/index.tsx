@@ -121,7 +121,7 @@ const Hero = () => {
           )}
 
           <button
-            className="flex gap-4 justify-center px-3 py-2  text-2xl text-pink-200 rounded-[99px] max-md:px-5"
+            className="flex gap-4 justify-center px-3 py-2 text-4xl text-white rounded-[99px] max-md:px-5"
             onClick={handleLoginButtonClick}
           >
             <span className="text-sm">
