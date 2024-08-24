@@ -465,40 +465,6 @@ const BotSessionComponent: React.FC = () => {
           style={{ width: `${leftWidth}%`, height: '100%' }}
         >
           <div className="flex  justify-center items-center gap-1 h-[125px] max-md:flex-wrap max-md:max-w-full mb-5">
-            <div className="flex flex-col self-stretch relative">
-              {/* <div
-            className="flex gap-2.5 justify-center p-2.5 text-xl font-medium bg-[#2D2640] text-white rounded-t-lg cursor-pointer"
-            onClick={toggleChatHistory}
-          >
-            <div>
-              <button onClick={getChatHistory}>Chat History</button>
-            </div>
-            <img
-              loading="lazy"
-              src="https://cdn.builder.io/api/v1/image/assets/TEMP/ecfab022e56ef6ff0a58045a291327eda3e871d2c6c2576eee117363bc12ecf0?apiKey=555c811dd3f44fc79b6b2689129389e8&"
-              className={`shrink-0 aspect-square w-[30px] transition-transform duration-300 ${
-                isChatHistoryOpen ? 'rotate-180' : ''
-              }`}
-              alt="Chat History"
-            />
-          </div>
-          {isChatHistoryOpen && (
-            <div className="flex w-full">
-              <div className="flex flex-col py-2 text-base tracking-wide leading-6 bg-[#1E1533] rounded-b-lg shadow max-w-[280px] absolute top-full left-0 right-0 z-10">
-                {allSession?.data?.sessions?.map(
-                  (session: any, index: number) => (
-                    <div className="px-3 py-2 text-white" key={index}>
-                      <div><button onClick={()=>{
-                        getSession(session._id)
-                        setSessionId(session._id)
-                      }}>session Chat {index+1}</button></div>
-                    </div>
-                  )
-                )}
-              </div>
-            </div>
-          )} */}
-            </div>
             <div className="flex gap-3 flex-1 justify-center items-center">
               <div className="flex flex-col self-stretch relative">
                 <div
