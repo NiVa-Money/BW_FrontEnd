@@ -1,5 +1,3 @@
-// 'use client';
-
 import React, { useEffect, useState } from 'react';
 import Modal from '../signupModal/page';
 import BackgroundAnimation from '../BackgroundAnimation/backgroundAnimation';
@@ -52,10 +50,23 @@ const Hero = () => {
   const closeLoginModal = () => {
     setIsLoginModalOpen(false);
   };
+
+  // Toggle no-scroll class based on modal state
+  // useEffect(() => {
+  //   if (isModalOpen || isLoginModalOpen) {
+  //     document.body.classList.add('no-scroll');
+  //   } else {
+  //     document.body.classList.remove('no-scroll');
+  //   }
+
+  //   // Cleanup on component unmount
+  //   return () => {
+  //     document.body.classList.remove('no-scroll');
+  //   };
+  // }, [isModalOpen, isLoginModalOpen]);
+
   useEffect(() => {
-    // console.log('googleVerifyRedux', googleVerifyRedux);
     if (googleVerifyRedux) {
-      // console.log('userRedux', userRedux);
       const [firstName, lastName] = userRedux?.displayName.split(' ');
       const email = userRedux?.email;
       const payload = {
@@ -70,7 +81,6 @@ const Hero = () => {
 
   useEffect(() => {
     if (googleVerifyRedux) {
-      // console.log('userRedux', userRedux);
       const [firstName, lastName] = userRedux?.displayName.split(' ');
       const email = userRedux?.email;
       const payload = {
@@ -79,8 +89,6 @@ const Hero = () => {
         emailId: email,
         mobileNo: '917779797977',
       };
-      // dispatch(verifyUserDataAction(email));
-      // // console.log("hello",payload)
       if (!userData?.success) {
         dispatch(googleLogin(payload));
       }
@@ -89,7 +97,7 @@ const Hero = () => {
 
   return (
     <section>
-      <BackgroundAnimation className="opacity-70">
+      <BackgroundAnimation>
         <div className="flex flex-col items-center px-5 pt-6">
           <div className="shrink-0 mt-6 max-w-full" />
           <h1 className="mt-4 text-6xl font-black text-center text-gray-100 max-md:text-4xl">
