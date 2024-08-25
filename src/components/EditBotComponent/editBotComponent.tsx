@@ -110,7 +110,6 @@ const EditBotComponent: React.FC = () => {
   const [textVal, setTextVal] = useState('');
   const [filename, setFileName] = useState('');
   const [fileType, setFileType] = useState('');
-  const [knowledgeBaseIdDoc, setknowledgeBaseIdDoc] = useState<string>('');
   const [botImageS3Urldata, setbotImageS3Url] = useState<string>('');
   const [botIconType, setBotIconType] = useState('second');
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
@@ -158,7 +157,7 @@ const EditBotComponent: React.FC = () => {
       );
       if (botToEdit) {
         setFileType(botToEdit.docType);
-        setknowledgeBaseIdDoc(botToEdit._id);
+        setKnowledgeBaseId(botToEdit._id);
         setbotImageS3Url(botToEdit.botURL);
       }
     }
@@ -591,7 +590,7 @@ const EditBotComponent: React.FC = () => {
           <div>
             <button
               onClick={step === 2 ? handleSave : handleContinue}
-              className="bg-[#3F2181] w-[Hug (287px)px] rounded-[99px] text-white px-6 py-2 "
+               className="flex gap-2 justify-center px-14 py-3 text-xl font-medium text-gray-100 bg-[#3F2181] rounded-[60px]"
             >
               {step === 2 ? 'Save' : 'Continue'}
             </button>
