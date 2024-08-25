@@ -128,8 +128,8 @@ const KnowledgeBase: React.FC = () => {
         <button className="flex gap-2 justify-center px-14 py-3 text-xl font-medium text-gray-100 bg-[#3F2181] rounded-[60px]">
           <Link href="/createknowledgebase" className="flex px-8 py-1 gap-2">
             <span>Create Knowledge Base</span>
+            <FontAwesomeIcon icon={faPlus} className="w-[25px] h-[25px]" />
           </Link>
-          <FontAwesomeIcon icon={faPlus} className="w-[25px] h-[25px]" />
         </button>
       </header>
       <section className="mt-12 px-10">
