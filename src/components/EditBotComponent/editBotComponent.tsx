@@ -110,7 +110,6 @@ const EditBotComponent: React.FC = () => {
   const [textVal, setTextVal] = useState('');
   const [filename, setFileName] = useState('');
   const [fileType, setFileType] = useState('');
-  const [knowledgeBaseIdDoc, setknowledgeBaseIdDoc] = useState<string>('');
   const [botImageS3Urldata, setbotImageS3Url] = useState<string>('');
   const [botIconType, setBotIconType] = useState('second');
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
@@ -158,7 +157,7 @@ const EditBotComponent: React.FC = () => {
       );
       if (botToEdit) {
         setFileType(botToEdit.docType);
-        setknowledgeBaseIdDoc(botToEdit._id);
+        setKnowledgeBaseId(botToEdit._id);
         setbotImageS3Url(botToEdit.botURL);
       }
     }
