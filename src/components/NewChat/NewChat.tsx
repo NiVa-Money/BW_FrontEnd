@@ -268,29 +268,30 @@ const NewChatComponent: React.FC = () => {
           <div className="flex flex-col self-stretch relative w-full md:w-auto">
             <div
               className="flex gap-2.5 justify-center p-2.5 text-xl font-medium text-white rounded-t-lg cursor-pointer"
-              // onClick={toggleBotProfile}
             >
-              <div>Bot Profile</div>
+          <div onClick={toggleBotProfile} className="cursor-pointer flex items-center">Bot Profile</div>
               <img
                 src="https://cdn.builder.io/api/v1/image/assets/TEMP/ecfab022e56ef6ff0a58045a291327eda3e871d2c6c2576eee117363bc12ecf0?apiKey=555c811dd3f44fc79b6b2689129389e8&"
-                className={`shrink-0 aspect-square w-[30px] transition-transform duration-300 ${
-                  isBotProfileOpen ? 'rotate-180' : ''
-                }`}
+                className={`shrink-0 aspect-square w-[30px] transition-transform duration-300 ${isBotProfileOpen ? 'rotate-180' : ''
+                  }`}
                 alt="Bot Profile"
-                onClick={toggleBotProfile}
+                
               />
             </div>
-            <div className="flex h-[60px] justify-center items-center py-2.5 bg-[#1E1533] overflow-y-scroll rounded p-1 border-gray-500 border-solid">
-              <div>{selectedBotName}</div>
-            </div>
+            {/* selection box */}
+            {selectedBotName && (
+              <div className="flex h-[60px] justify-center items-center py-2.5 bg-[#1E1533] overflow-y-scroll rounded p-1 border-gray-500 border-solid">
+                <div>{selectedBotName}</div>
+              </div>
+            )}
+            {/* selection box ends */}
             {isBotProfileOpen && (
-              <div className="flex mt-2 h-[25vh] overflow-y-auto flex-col py-2 text-base tracking-wide leading-6 bg-[#1E1533] rounded-b-lg shadow absolute top-full left-0 right-0 z-10">
+              <div className="flex mt-2 overflow-y-auto flex-col py-2 text-base tracking-wide leading-6 bg-[#1E1533] rounded-b-lg shadow absolute top-8 left-0 right-0 z-10">
                 {botProfiles?.botProfiles?.data?.map((bot: any, index: any) => (
                   <div
                     key={index}
-                    className={`mb-2 flex justify-center items-center cursor-pointer ${
-                      activeBotIndex === index ? 'bg-[#3E3556]' : ''
-                    }`}
+                    className={`mb-2 flex justify-center items-center cursor-pointer ${activeBotIndex === index ? 'bg-[#3E3556]' : ''
+                      }`}
                     onClick={() => handleBotClick(index, bot._id, bot.botName)}
                   >
                     <div className="flex justify-center items-center px-2 py-2 text-white">
@@ -335,32 +336,28 @@ const NewChatComponent: React.FC = () => {
             return (
               <div className="flex w-full" key={index}>
                 <div
-                  className={`flex ${
-                    message?.sender === 'user' ? 'justify-end' : 'justify-start'
-                  } w-full`}
+                  className={`flex ${message?.sender === 'user' ? 'justify-end' : 'justify-start'
+                    } w-full`}
                 >
                   <div
-                    className={`${
-                      message?.sender === 'user'
+                    className={`${message?.sender === 'user'
                         ? 'text-right ml-auto'
                         : 'text-left mr-auto'
-                    } max-md:w-full`}
+                      } max-md:w-full`}
                   >
                     <div
-                      className={`${
-                        message?.sender === 'user'
+                      className={`${message?.sender === 'user'
                           ? 'text-xl font-medium text-white'
                           : 'grow text-xl font-medium text-white max-md:mt-10'
-                      }`}
+                        }`}
                     >
                       {message?.sender !== 'user' ? (
                         <div
                           id="typewriter-gpt-2"
-                          className={`${
-                            message?.sender === 'user'
+                          className={`${message?.sender === 'user'
                               ? 'p-2.5 bg-[#5D39AD] rounded-xl'
                               : 'p-2.5 bg-[#2D2640] rounded-xl chat-box-size'
-                          }`}
+                            }`}
                         >
                           <ReactTyped
                             strings={[formattedText]}
@@ -371,11 +368,10 @@ const NewChatComponent: React.FC = () => {
                         </div>
                       ) : (
                         <div
-                          className={`${
-                            message?.sender === 'user'
+                          className={`${message?.sender === 'user'
                               ? 'p-2.5 bg-[#5D39AD] rounded-xl'
                               : 'p-2.5 bg-[#2D2640] rounded-xl chat-box-size'
-                          }`}
+                            }`}
                           dangerouslySetInnerHTML={{ __html: formattedText }}
                         />
                       )}
@@ -407,8 +403,8 @@ const NewChatComponent: React.FC = () => {
               lastMessageFrom == undefined
                 ? false
                 : lastMessageFrom == 'receiver'
-                ? false
-                : true
+                  ? false
+                  : true
             }
           />
           <button
