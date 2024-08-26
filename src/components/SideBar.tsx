@@ -237,13 +237,13 @@ const MenuItem: React.FC<MenuItemProps> = ({ item, onClick, collapsed, setIsColl
     }));
   };
 
-  const botSession = (botId: any, userId: any) => {
+  const botSession = (botId: any, userId: any, botName:any) => {
     const data = {
       botId,
       userId,
     };
     dispatch(botSessionId(data));
-    router.push('/botsession');
+    router.push(`/botsession?botName=${encodeURIComponent(botName)}`);
   };
 
   useEffect(() => {}, [botSessionaa]);
@@ -282,7 +282,7 @@ const MenuItem: React.FC<MenuItemProps> = ({ item, onClick, collapsed, setIsColl
                         : subItem.title === 'Reports (coming soon)'
                         ? undefined
                         : subItem.title === 'My Chatbots'
-                        ? botSession(botProfiles?.bot_profiles[0]?.id, botProfiles?.bot_profiles[0]?.user_id)
+                        ? botSession(botProfiles?.bot_profiles[0]?.id, botProfiles?.bot_profiles[0]?.user_id, botProfiles?.bot_profiles[0]?.name)
                         : onClick && onClick()
                     }
                     className="flex items-center space-x-2 py-2 px-3 text-gray-300 hover:bg-white hover:bg-opacity-10 rounded-full cursor-pointer"

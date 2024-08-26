@@ -5,7 +5,7 @@ import LoginModal from '../loginModal/loginModal';
 import {
   verifyUserDataAction,
   loginRequest,
-  signUpDataAction,
+  
   googleLogin,
 } from '@/redux/actions/authActions';
 import { useDispatch, useSelector } from 'react-redux';
@@ -115,13 +115,13 @@ const Hero = () => {
               alt="Google logo"
               className="shrink-0 self-start aspect-square w-[35px]"
             />
-            <span>Sign in with Google</span>
+            <span className="text-[#EEEEF0]">Sign in with Google</span>
           </button>
           <button
             className="flex gap-4 justify-center px-6 py-4 mt-4 text-2xl  text-white rounded-[99px] max-md:px-5"
             onClick={handleButtonClick}
           >
-            <span>Sign Up With Your Email</span>
+            <span className=" text-[#EEEEF0]">Sign Up With Your Email</span>
           </button>
 
           {isModalOpen && (
@@ -129,7 +129,7 @@ const Hero = () => {
           )}
 
           <button
-            className="flex gap-4 justify-center px-3 py-2  text-2xl text-pink-200 rounded-[99px] max-md:px-5"
+            className="flex gap-4 justify-center px-3 py-2 text-4xl text-white rounded-[99px] max-md:px-5"
             onClick={handleLoginButtonClick}
           >
             <span className="text-sm">
