@@ -268,8 +268,9 @@ const NewChatComponent: React.FC = () => {
           <div className="flex flex-col self-stretch relative w-full md:w-auto">
             <div
               className="flex gap-2.5 justify-center p-2.5 text-xl font-medium text-white rounded-t-lg cursor-pointer"
+              onClick={toggleBotProfile}
             >
-          <div onClick={toggleBotProfile} className="cursor-pointer flex items-center">Bot Profile</div>
+          <div>Bot Profile</div>
               <img
                 src="https://cdn.builder.io/api/v1/image/assets/TEMP/ecfab022e56ef6ff0a58045a291327eda3e871d2c6c2576eee117363bc12ecf0?apiKey=555c811dd3f44fc79b6b2689129389e8&"
                 className={`shrink-0 aspect-square w-[30px] transition-transform duration-300 ${isBotProfileOpen ? 'rotate-180' : ''
