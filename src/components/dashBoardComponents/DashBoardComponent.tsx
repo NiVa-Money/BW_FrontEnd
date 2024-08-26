@@ -138,14 +138,14 @@ const DashBoardComponent: React.FC = () => {
             <div className="text-3xl font-bold">{metricData?.sessionTotal}</div>
           </div>
         </div>
-        <div className="bg-[#1c1638] w-full md:w-[31%] rounded-2xl p-2 m-1 flex flex-col items-center justify-between">
+        <div className="bg-[#1E1935] w-full md:w-[31%] rounded-2xl p-4 m-1 flex flex-col items-center justify-between">
           <div className={styles.textSize}>Total Bots Created</div>
           <div className={`${styles.textSize} font-bold mt-1`}>
             {metricData?.activeBots}
           </div>
           <button className="flex justify-center items-center text-xl font-medium text-gray-100 bg-[#3F2181] rounded-[60px] mt-2 md:mt-0 p-2 w-full max-w-[80%]">
             <Link href="/createbot" className="flex items-center justify-center gap-2">
-              <span>Create Bot</span> 
+              <span>Create Bot</span>
               <FontAwesomeIcon icon={faPlus} className="w-[25px] h-[25px]" />
             </Link>
           </button>

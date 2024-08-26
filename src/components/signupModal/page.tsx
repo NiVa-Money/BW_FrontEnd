@@ -123,7 +123,8 @@ const Modal: React.FC<ModalProps> = ({ closeModal, handleSignUp }) => {
 
   return (
     <>
-        <div className="fixed h-[100vh] bg-[#0B031E] inset-0 z-50 flex items-center ">
+      <div className='bg-opacity-35'>
+        <div className="fixed inset-0 flex items-center justify-center bg-black">
           <div className="p-6 rounded-lg max-w-lg mx-auto relative">
             <div className="flex justify-end">
               <button
@@ -244,6 +245,7 @@ const Modal: React.FC<ModalProps> = ({ closeModal, handleSignUp }) => {
             )}
           </div>
         </div>
+      </div>
     </>
   );
 };
