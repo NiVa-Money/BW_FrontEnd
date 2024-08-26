@@ -20,7 +20,7 @@ const ModalDialog: React.FC<ModalDialogProps> = ({ open, onClose }) => {
           width: '70%',
           height: '70vh',
           borderRadius: '0.5rem',
-          backgroundColor: '#1E1E2D',
+          backgroundColor: '#0B031E',
         },
       }}
     >
@@ -31,9 +31,10 @@ const ModalDialog: React.FC<ModalDialogProps> = ({ open, onClose }) => {
               href="https://www.installonair.com/app-download-link/PKtMr3"
               target="_blank"
               rel="noopener noreferrer"
-              className= "rounded-lg p-2 mb-2 text-white text-2xl font-semibold text-center"
+              className="rounded-lg p-2 mb-2 text-white text-2xl font-semibold text-center"
             >
-              Available on <br/>Android Devices
+              Available on <br />
+              Android Devices
             </a>
             <div className="bg-white p-4 rounded-lg">
               <Image

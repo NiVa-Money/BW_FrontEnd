@@ -1,5 +1,5 @@
 import React from 'react';
-
+import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 type PricingTierProps = {
   title: string;
   price: string;
@@ -32,11 +32,11 @@ const PricingTier: React.FC<PricingTierProps> = ({
     <ul className="flex flex-col items-center justify-center flex-1 text-base">
       {features.map((feature, index) => (
         <li key={index} className="flex gap-2 mt-2 first:mt-0 w-full">
-          <img
-            src="https://cdn.builder.io/api/v1/image/assets/TEMP/1a967d6b262918ca21f2212dc4e36c3bbc1cb3a100ce53d260188117cc5ebf09?apiKey=555c811dd3f44fc79b6b2689129389e8&"
-            alt=""
+          <CheckCircleOutlineIcon
+            style={{ color: '#f2f2f2' }}
             className="w-5 h-5"
           />
+
           <span className="flex-1">{feature}</span>
         </li>
       ))}

@@ -491,6 +491,7 @@ const BotSessionComponent: React.FC = () => {
           style={{ width: `${leftWidth}%`, height: '100%' }}
         >
           <div className="flex  justify-center items-center gap-1 h-[125px] max-md:flex-wrap max-md:max-w-full mb-5">
+
             <div className="flex flex-col self-stretch relative">
               {/* <div
             className="flex gap-2.5 justify-center p-2.5 text-xl font-medium bg-[#2D2640] text-white rounded-t-lg cursor-pointer"
@@ -525,6 +526,7 @@ const BotSessionComponent: React.FC = () => {
             </div>
           )} */}
             </div>
+
             <div className="flex gap-3 flex-1 justify-center items-center">
               <div className="flex flex-col self-stretch relative">
                 <div
