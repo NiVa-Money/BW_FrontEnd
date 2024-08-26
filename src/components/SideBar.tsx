@@ -1,5 +1,5 @@
 'use client';
-import React, { useEffect, useReducer, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import '@fortawesome/fontawesome-free/css/all.min.css';
@@ -16,7 +16,6 @@ import {
 } from '@/redux/actions/BotProfileActions';
 import { logoutUser } from '@/redux/actions/authActions';
 import { botSessionId } from '@/redux/actions/userChatAction';
-import { BackgroundCss } from './BackgroundAnimation/backgroundCss';
 import { Modal } from '@mui/material';
 import ModalDialog from './ModalDialog';
 
@@ -69,7 +68,6 @@ const initialSIDENAV_ITEMS: SidebarItemProps[] = [
 
 const SIDENAV_ITEMS2: SidebarItemProps[] = [
   { icon: 'fa-user', text: 'Profile', path: '/profile' },
-  // { icon: 'fa-trash', text: 'Clear Conversations', onClick: undefined },
   { icon: 'fa-crown', text: 'Membership', path: '/membership' },
   { icon: 'fa-question-circle', text: 'Help Center', path: '/faq' },
   { icon: 'fa-sign-out-alt', text: 'Log Out', path: '/' },
@@ -80,8 +78,13 @@ const SideBar: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [SIDENAV_ITEMS, setSIDENAV_ITEMS] =
     useState<SidebarItemProps[]>(initialSIDENAV_ITEMS);
+  const [isCollapsed, setIsCollapsed] = useState(false); // New state for collapsing sidebar
   const userData = useSelector((state: RootState) => state?.root.userData);
   const botProfiles = useSelector((state: RootState) => state.botProfile);
+
+  const toggleCollapse = () => {
+    setIsCollapsed(!isCollapsed);
+  };
 
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
@@ -112,64 +115,92 @@ const SideBar: React.FC = () => {
   }, [userData?.user_id]);
 
   useEffect(() => {}, [botProfiles]);
+
   return (
-    <div className="w-64 p-4 bg-[#0B031E] flex flex-col h-screen relative">
-      {/* <BackgroundCss/> */}
-      <Link
-        href={'/dashboard'}
-        className="flex justify-center w-full mt-[10px] mb-[20px]"
+    <div className='flex items-center justify-between h-screen '>
+      <div
+        className={`flex flex-col h-screen bg-[#0B031E] p-4 transition-all duration-500 ${
+          isCollapsed ? 'w-30 bg-[#1E1935] rounded-xl p-2 m-3 duration-500  h-[85vh]' : 'w-64'
+        }`}
       >
-        <Image src={mainLogo.src} alt="logo" width={90} height={80} />
-      </Link>
-      <button
-        onClick={getUserBotProfiles}
-        className="bg-[#1E1E2E] text-white rounded-full py-4 px-4 mb-8 flex items-center space-x-4 justify-center"
-      >
-        <i className="fas fa-plus"></i>
-        <Link href={`/newchat`}>
-          <span>Test your Bot</span>
+        <button onClick={toggleCollapse} className=" flex item-center justify-center text-white mb-4">
+          <Icon icon="mdi:menu" width="24" height="24" />
+        </button>
+
+        <Link
+          href={'/dashboard'}
+          className={`flex  justify-center w-full mt-[10px] ${isCollapsed && 'hidden'} mb-[20px]`}
+        >
+          <Image
+            src={mainLogo.src}
+            alt="logo"
+            width={isCollapsed ? 50 : 90}
+            height={80}
+          />
         </Link>
-      </button>{' '}
-      <MenuItem item={DashboardItem} key={DashboardItem?.text} />
-      <div className="flex flex-col h-[100%] justify-between overflow-y-scroll">
-        <div className="flex flex-col space-y-2">
-          {SIDENAV_ITEMS.map((item, idx) => (
-            <MenuItem key={idx} item={item} />
-          ))}
+
+        <button
+          onClick={getUserBotProfiles}
+          className="bg-[#1E1E2E] text-white rounded-full py-4 px-4 mb-8 flex items-center space-x-4 justify-center"
+        >
+          <i className="fas fa-plus"></i>
+          {!isCollapsed && (
+            <Link href={`/newchat`}>
+              <span>Test your Bot</span>
+            </Link>
+          )}
+        </button>
+
+        <MenuItem
+          item={DashboardItem}
+          key={DashboardItem?.text}
+          collapsed={isCollapsed}
+          setIsCollapsed={setIsCollapsed}
+        />
+
+        <div className="flex flex-col h-[100%] justify-between overflow-y-scroll">
+          <div className="flex flex-col space-y-2">
+            {SIDENAV_ITEMS.map((item, idx) => (
+              <MenuItem key={idx} item={item} collapsed={isCollapsed} setIsCollapsed={setIsCollapsed} />
+            ))}
+          </div>
+
+          <div className="flex flex-col space-y-2 mt-2">
+            <button
+              className="text-white rounded-full py-2 px-2 flex items-center space-x-4 justify-start"
+              onClick={handleClickOpen}
+            >
+              <div className={`flex justify-start space-x-3 ${isCollapsed && 'hidden'} items-center`}>
+                <Image
+                  src="/images/mobile.svg"
+                  width={20}
+                  height={30}
+                  alt="mobile"
+                />
+                {!isCollapsed && <span>Available on Android</span>}
+              </div>
+            </button>
+            {SIDENAV_ITEMS2.map((item, idx) => (
+              <MenuItem
+                key={idx}
+                item={item}
+                onClick={
+                  item.text === 'Clear Conversations'
+                    ? openModal
+                    : item.text === 'Log Out'
+                    ? LogoutButton
+                    : undefined
+                }
+                collapsed={isCollapsed}
+                setIsCollapsed={setIsCollapsed}
+              />
+            ))}
+          </div>
         </div>
 
-        <div className="flex flex-col space-y-2 mt-2">
-          <button
-            className="text-white rounded-full py-2 px-2  flex items-center space-x-4 justify-start"
-            onClick={handleClickOpen}
-          >
-            <div className="flex justify-start space-x-3 items-center">
-              <Image
-                src="/images/mobile.svg"
-                width={20}
-                height={30}
-                alt="mobile"
-              />
-              <span>Available on Android</span>
-            </div>
-          </button>
-          {SIDENAV_ITEMS2.map((item, idx) => (
-            <MenuItem
-              key={idx}
-              item={item}
-              onClick={
-                item.text === 'Clear Conversations'
-                  ? openModal
-                  : item.text === 'Log Out'
-                  ? LogoutButton
-                  : undefined
-              }
-            />
-          ))}
-        </div>
+        {isModalOpen && <ClearConversation closeModal={closeModal} />}
+        <ModalDialog open={open} onClose={handleClose} />
       </div>
-      {isModalOpen && <ClearConversation closeModal={closeModal} />}
-      <ModalDialog open={open} onClose={handleClose} />
     </div>
   );
 };
@@ -177,8 +208,11 @@ const SideBar: React.FC = () => {
 interface MenuItemProps {
   item: SidebarItemProps;
   onClick?: () => void;
+  collapsed?: boolean; 
+  setIsCollapsed?: (value: boolean) => void;
 }
-const MenuItem: React.FC<MenuItemProps> = ({ item, onClick }) => {
+
+const MenuItem: React.FC<MenuItemProps> = ({ item, onClick, collapsed, setIsCollapsed }) => {
   const router = useRouter();
   const pathname = usePathname();
   const [subMenuOpen, setSubMenuOpen] = useState(false);
@@ -188,7 +222,14 @@ const MenuItem: React.FC<MenuItemProps> = ({ item, onClick }) => {
   const botProfiles = useSelector((state: RootState) => state.botProfile);
   const botSessionaa = useSelector((state: RootState) => state.userChat);
   const dispatch = useDispatch();
-  const toggleSubMenu = () => setSubMenuOpen(!subMenuOpen);
+
+  const toggleSubMenu = () => {
+    if (collapsed && !subMenuOpen) {
+      setIsCollapsed!(false);  // Expand the sidebar if it's collapsed and a submenu is being opened
+    }
+    setSubMenuOpen(!subMenuOpen);
+  };
+
   const toggleSubMenuChild = (idx: number) => {
     setSubMenuChildOpen((prevState) => ({
       ...prevState,
@@ -219,90 +260,54 @@ const MenuItem: React.FC<MenuItemProps> = ({ item, onClick }) => {
                 : ''
             }`}
           >
-            <i className={`fas ${item.icon}`}></i>
-            <span>{item.text}</span>
-            <div className={`${subMenuOpen ? 'rotate-180' : ''} ml-auto`}>
-              <Icon icon="lucide:chevron-down" width="24" height="24" />
-            </div>
+            <i className={`fas ${item.icon}`} />
+            {!collapsed && <span>{item.text}</span>}
+            {!collapsed && (
+              <i
+                className={`fas fa-chevron-right transform transition-transform duration-200 ${
+                  subMenuOpen ? 'rotate-90' : ''
+                }`}
+              />
+            )}
           </button>
+
           {subMenuOpen && (
-            <div className="ml-4">
+            <div className={`flex flex-col mt-2 space-y-1 ${collapsed && 'hidden'}`}>
               {item.subMenuItems?.map((subItem, idx) => (
-                <div key={idx}>
-                  {subItem.path ? (
-                    <Link
-                      href={subItem.path}
-                      className="text-gray-300 hover:bg-white hover:bg-opacity-10 rounded-full cursor-pointer"
-                      onClick={onClick}
-                    >
-                      <div
-                        className={`flex items-center space-x-3 py-2 px-3 ${
-                          subItem.path === pathname ? 'font-bold' : ''
+                <div key={idx} className="ml-8">
+                  <button
+                    onClick={() =>
+                      subItem.hasDropdown
+                        ? toggleSubMenuChild(idx)
+                        : subItem.title === 'Reports (coming soon)'
+                        ? undefined
+                        : subItem.title === 'My Chatbots'
+                        ? botSession(botProfiles?.bot_profiles[0]?.id, botProfiles?.bot_profiles[0]?.user_id, botProfiles?.bot_profiles[0]?.name)
+                        : onClick && onClick()
+                    }
+                    className="flex items-center space-x-2 py-2 px-3 text-gray-300 hover:bg-white hover:bg-opacity-10 rounded-full cursor-pointer"
+                  >
+                    {/* <i className={`fas ${subItem.icon}`} /> */}
+                    <span>{subItem.title}</span>
+                    {subItem.hasDropdown && (
+                      <i
+                        className={`fas fa-chevron-right transform transition-transform duration-200 ${
+                          subMenuChildOpen[idx] ? 'rotate-90' : ''
                         }`}
-                      >
-                        <div>{subItem.title}</div>
-                        {subItem.hasDropdown && (
-                          <div
-                            className={`${
-                              subMenuChildOpen[idx] ? 'rotate-180' : ''
-                            } ml-auto`}
-                          >
-                            <Icon
-                              icon="lucide:chevron-down"
-                              width="24"
-                              height="24"
-                            />
-                          </div>
-                        )}
-                      </div>
-                    </Link>
-                  ) : (
-                    <button
-                      onClick={() => toggleSubMenuChild(idx)}
-                      className="text-gray-300 hover:bg-white hover:bg-opacity-10 rounded-full cursor-pointer"
-                    >
-                      <div
-                        className={`flex items-center space-x-3 py-2 px-3 ${
-                          subItem.path === pathname ? 'font-bold' : ''
-                        }`}
-                      >
-                        <div>{subItem.title}</div>
-                        {subItem.hasDropdown && (
-                          <div
-                            className={`${
-                              subMenuChildOpen[idx] ? 'rotate-180' : ''
-                            } ml-auto`}
-                          >
-                            <Icon
-                              icon="lucide:chevron-down"
-                              width="24"
-                              height="24"
-                            />
-                          </div>
-                        )}
-                      </div>
-                    </button>
-                  )}
-                  {subItem.hasDropdown && subMenuChildOpen[idx] && (
-                    <div className="ml-4">
-                      {botProfiles &&
-                        botProfiles?.botProfiles?.data?.map(
-                          (bot: any, childIdx: any) => (
-                            <div key={childIdx}>
-                              <div
-                                className={`text-gray-300 hover:bg-white hover:bg-opacity-10 rounded-full cursor-pointer`}
-                                onClick={() => botSession(bot._id, bot.userId,bot.botName)}
-                              >
-                                <button
-                                  // onClick={() => botSession(bot._id, bot.userId)}
-                                  className="flex items-center space-x-3 py-2 px-3"
-                                >
-                                  <span>{bot.botName}</span>
-                                </button>
-                              </div>
-                            </div>
-                          )
-                        )}
+                      />
+                    )}
+                  </button>
+
+                  {subMenuChildOpen[idx] && (
+                    <div className="flex flex-col mt-2 space-y-1 ml-4">
+                      {subItem.subChildItems?.map((subChildItem:any, subChildIdx:any) => (
+                        <Link href={subChildItem.path!} key={subChildIdx}>
+                          <button className="flex items-center space-x-2 py-2 px-3 text-gray-300 hover:bg-white hover:bg-opacity-10 rounded-full cursor-pointer">
+                            <i className={`fas ${subChildItem.icon}`} />
+                            <span>{subChildItem.title}</span>
+                          </button>
+                        </Link>
+                      ))}
                     </div>
                   )}
                 </div>
@@ -311,18 +316,20 @@ const MenuItem: React.FC<MenuItemProps> = ({ item, onClick }) => {
           )}
         </>
       ) : (
-        <Link
-          href={item.path ?? ''}
-          className={`flex items-center space-x-3 py-2 px-3 text-gray-300 hover:bg-white hover:bg-opacity-10 rounded-full cursor-pointer ${
-            item.path === pathname ? 'bg-white bg-opacity-10' : ''
-          }`}
-          onClick={onClick}
-        >
-          <i className={`fas ${item.icon}`}></i>
-          <span>{item.text}</span>
+        <Link href={item.path!}>
+          <button
+            onClick={onClick}
+            className={`flex items-center space-x-3 py-2 px-3 text-gray-300 hover:bg-white hover:bg-opacity-10 rounded-full cursor-pointer ${
+              pathname === item.path ? 'bg-white bg-opacity-10' : ''
+            }`}
+          >
+            <i className={`fas ${item.icon}`} />
+            {!collapsed && <span>{item.text}</span>}
+          </button>
         </Link>
       )}
     </div>
   );
 };
+
 export default SideBar;
