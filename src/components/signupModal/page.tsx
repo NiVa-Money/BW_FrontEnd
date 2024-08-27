@@ -11,6 +11,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from '@/redux/configureStore';
 import SignUpModalOtp from '../signupModal/signUpOtpModal';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
+import BackgroundAnimation from '../BackgroundAnimation/backgroundAnimation';
 
 interface ModalProps {
   closeModal: () => void;
@@ -123,7 +124,8 @@ const Modal: React.FC<ModalProps> = ({ closeModal, handleSignUp }) => {
 
   return (
     <>
-      <div className='bg-opacity-35'>
+      <div className=''>
+        <BackgroundAnimation>
         <div className="fixed inset-0 flex items-center justify-center bg-black">
           <div className="p-6 rounded-lg max-w-lg mx-auto relative">
             <div className="flex justify-end">
@@ -245,6 +247,7 @@ const Modal: React.FC<ModalProps> = ({ closeModal, handleSignUp }) => {
             )}
           </div>
         </div>
+        </BackgroundAnimation> 
       </div>
     </>
   );

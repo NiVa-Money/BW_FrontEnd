@@ -7,7 +7,6 @@ import LoginModal from '../loginModal/loginModal';
 import {
   verifyUserDataAction,
   loginRequest,
-  
   googleLogin,
 } from '@/redux/actions/authActions';
 import { useDispatch, useSelector } from 'react-redux';
@@ -52,10 +51,23 @@ const Hero = () => {
   const closeLoginModal = () => {
     setIsLoginModalOpen(false);
   };
+
   useEffect(() => {
-    // console.log('googleVerifyRedux', googleVerifyRedux);
+    // Disable scroll when modal is open
+    if (isModalOpen || isLoginModalOpen) {
+      document.body.classList.add('no-scroll');
+    } else {
+      document.body.classList.remove('no-scroll');
+    }
+
+    // Cleanup the effect
+    return () => {
+      document.body.classList.remove('no-scroll');
+    };
+  }, [isModalOpen, isLoginModalOpen]);
+
+  useEffect(() => {
     if (googleVerifyRedux) {
-      // console.log('userRedux', userRedux);
       const [firstName, lastName] = userRedux?.displayName.split(' ');
       const email = userRedux?.email;
       const payload = {
@@ -70,7 +82,6 @@ const Hero = () => {
 
   useEffect(() => {
     if (googleVerifyRedux) {
-      // console.log('userRedux', userRedux);
       const [firstName, lastName] = userRedux?.displayName.split(' ');
       const email = userRedux?.email;
       const payload = {
