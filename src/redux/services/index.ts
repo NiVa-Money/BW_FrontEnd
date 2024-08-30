@@ -272,6 +272,17 @@ export const getUserAllSessionService = async (payload: any) => {
     throw new Error('Error: Getting user all session');
   }
 };
+export const deleteUserService = async (payload: any) => {
+  try {
+    // console.log('get user getsession', payload);
+    const response = await axiosInstance.delete(`user/${payload}`);
+    // // console.log("res all session",response)
+    return response.data;
+  } catch (error) {
+    console.error('Error Deleting user:', error);
+    throw new Error('Error Deleting user');
+  }
+};
 
 export const getAdvanceFeatureService = async (payload: any) => {
   try {
