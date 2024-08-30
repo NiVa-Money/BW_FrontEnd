@@ -57,7 +57,7 @@ const LandingPage: React.FC = () => {
           firstName: firstName,
           lastName: lastName,
           emailId: email,
-          mobileNo: '7779797977',
+          mobileNo: '',
           password: 'password',
         };
         dispatch(signUpDataAction(payload));

@@ -74,7 +74,7 @@ const Hero = () => {
         firstName: firstName,
         lastName: lastName ? lastName : '',
         emailId: email,
-        mobileNo: '917779797977',
+        mobileNo: '',
       };
       dispatch(verifyUserDataAction(email));
     }
@@ -88,7 +88,7 @@ const Hero = () => {
         firstName: firstName,
         lastName: lastName ? lastName : '',
         emailId: email,
-        mobileNo: '917779797977',
+        mobileNo: '',
       };
       if (!userData?.success) {
         dispatch(googleLogin(payload));
