@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Modal from 'react-modal';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCopy } from '@fortawesome/free-solid-svg-icons';
+import axios from 'axios';
 
 interface ExportModalProps {
   isOpen: boolean;
@@ -16,14 +17,40 @@ const ExportModal: React.FC<ExportModalProps> = ({ isOpen, onClose, exportRespon
     if (exportResponse && exportResponse.url) {
       navigator.clipboard.writeText(`<script src="${exportResponse.url}"></script>`)
         .then(() => setCopySuccess('Copied to clipboard!'))
-        .catch(err => setCopySuccess('Failed to copy.'));
+        .catch(() => setCopySuccess('Failed to copy.'));
     }
   };
+
+  const saveUrlToFile = () => {
+    if (exportResponse && exportResponse.url) {
+
+      // Correct API route
+      axios.post('/api/save', { url: `<script src="${exportResponse?.url}"></script>` })
+
+
+        .then(response => {
+
+        })
+        .catch(error => {
+          console.error('There was an error saving the URL:', error); 
+          console.error('Error details:', error.response ? error.response.data : error.message); 
+        });
+    } else {
+      console.warn('exportResponse or exportResponse.url is missing'); 
+    }
+  };
+  
 
   const handleClose = () => {
     setCopySuccess('');  // Reset the copy success message when closing the modal
     onClose();           // Call the onClose function passed as a prop
   };
+
+  useEffect(() => {
+    if (exportResponse && exportResponse.success) {
+      saveUrlToFile();
+    }
+  }, [exportResponse]);
 
   return (
     <Modal
