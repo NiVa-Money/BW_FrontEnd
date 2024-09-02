@@ -23,8 +23,8 @@ const PricingCard = () => {
   }, []);
 
   const showFreeTrialButton = pathname
-      ? ['/home', '/pricing'].includes(pathname)
-      : false;
+    ? ['/home', '/pricing'].includes(pathname)
+    : false;
   const handlePaymentSuccess = () => {
     setIsPaymentSuccessful(true);
     setModalMessage('Payment successful! Your plan has been activated.');
@@ -126,9 +126,10 @@ const PricingCard = () => {
                 ) : showFreeTrialButton && tier.title !== 'Basic' ? (
                   <button
                     className="py-2 px-6 text-base font-medium bg-gray-100 rounded-lg text-slate-950 w-full"
-                    onClick={() =>
-                      window.scrollTo({ top: 0, behavior: 'smooth' })
-                    }
+                    onClick={() => {
+                      window.scrollTo({ top: 0, behavior: 'smooth' });
+                      setIsModalOpen(true);
+                    }}
                   >
                     Start For Free
                   </button>
