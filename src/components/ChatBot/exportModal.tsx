@@ -12,9 +12,15 @@ interface ExportModalProps {
 const ExportModal: React.FC<ExportModalProps> = ({ isOpen, onClose, exportResponse }) => {
   const [copySuccess, setCopySuccess] = useState('');
 
+  const transformUrl = (url: string) => {
+    return url.replace('https://messages-dump.s3.ap-south-1.amazonaws.com/', `${window.location.origin}/`);
+  };
+  
+
   const handleCopy = () => {
     if (exportResponse && exportResponse.url) {
-      navigator.clipboard.writeText(`<script src="${exportResponse.url}"></script>`)
+      const transformedUrl = transformUrl(exportResponse.url);
+      navigator.clipboard.writeText(`<script src="${transformedUrl}"></script>`)
         .then(() => setCopySuccess('Copied to clipboard!'))
         .catch(err => setCopySuccess('Failed to copy.'));
     }
@@ -24,11 +30,11 @@ const ExportModal: React.FC<ExportModalProps> = ({ isOpen, onClose, exportRespon
     setCopySuccess('');  // Reset the copy success message when closing the modal
     onClose();           // Call the onClose function passed as a prop
   };
-
+  
   return (
     <Modal
       isOpen={isOpen}
-      onRequestClose={handleClose}  // Use the updated handleClose function
+      onRequestClose={handleClose}
       className="fixed inset-0 flex items-center justify-center"
       overlayClassName="fixed inset-0 bg-black bg-opacity-75"
     >
@@ -49,9 +55,8 @@ const ExportModal: React.FC<ExportModalProps> = ({ isOpen, onClose, exportRespon
               {copySuccess && <p className="text-green-400 ml-4">{copySuccess}</p>}
             </div>
             <pre className="bg-gray-900 p-2 rounded whitespace-pre-wrap break-words">
-              <code>{`<script src="${exportResponse.url}"></script>`}</code>
+              <code>{`<script src="${transformUrl(exportResponse.url)}"></script>`}</code>
             </pre>
-          
           </div>
         ) : (
           <p className="text-red-400">Failed to export bot profile.</p>

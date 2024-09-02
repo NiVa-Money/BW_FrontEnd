@@ -16,7 +16,7 @@ import ConfirmModal from './modalDelete';
 import { useRouter } from 'next/navigation';
 import withAuth from '../withAuth';
 import ExportModal from './exportModal';
-
+import { downloadAndSaveFile } from '@/utils/server';
 interface ChatBot {
   botId?: any;
   botName: string;
@@ -69,7 +69,7 @@ const ChatBotList: React.FC = () => {
   };
 
   // Function to handle export action
-  const handleExport = (botId: string) => {
+  const handleExport = async (botId: string) => {
     const botToExport = chatBotList.find((bot) => bot._id === botId);
     if (botToExport && userId) {
       setIsExportModalOpen(true); // Open the export modal
@@ -79,6 +79,23 @@ const ChatBotList: React.FC = () => {
       console.error(`Bot with ID ${botId} not found or userId is undefined`);
     }
   };
+
+  // Use useEffect to handle the download once exportResponse is updated
+  useEffect(() => {
+    const downloadFile = async () => {
+      if (exportResponse?.url) {
+        const result = await downloadAndSaveFile(exportResponse.url);
+        console.log("downloadAndSaveFile(exportResponse.url);",downloadAndSaveFile(exportResponse.url))
+        if (result.success) {
+          console.log('File saved successfully!');
+        } else {
+          console.error('Failed to save file:', result.error);
+        }
+      }
+    };
+  
+    downloadFile();
+  }, [exportResponse?.url]);
 
   // Function to handle delete action
   const handleDelete = (botId: string) => {
