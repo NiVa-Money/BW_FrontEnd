@@ -9,6 +9,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Link from 'next/link';
 import DescriptionIcon from '@mui/icons-material/Description';
 import { formatedDate } from '@/utils/commonFunctions';
+import Image from 'next/image';
 
 interface ChatBot {
   botId?: string;
@@ -59,11 +60,15 @@ const ChatBotCard: React.FC<ChatBotCardProps> = ({ bot, actions, botCard }) => {
       <div className="flex flex-col max-md:max-w-full">
         <div className="flex gap-2.5 self-start">
           {botCard ? (
-            <img
-              src={bot.botURL}
-              alt={`${bot.botName} icon`}
-              className="shrink-0 w-[35%]"
-            />
+            <div className="w-[75px] h-[75px] relative overflow-hidden">
+              <Image
+                src={bot.botURL}
+                alt={`${bot.botName} icon`}
+                className="shrink-0 w-[35%]"
+                layout="fill"
+                objectFit="contain"
+              />
+            </div>
           ) : null}
 
           <div className="flex flex-col">

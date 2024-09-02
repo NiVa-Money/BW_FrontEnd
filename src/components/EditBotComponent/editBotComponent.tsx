@@ -162,7 +162,6 @@ const EditBotComponent: React.FC = () => {
       }
     }
   }, [botDataRedux, botId]);
-  
 
   const handleBotSampleClick = async (item: any) => {
     setImageSrc(item?.imageUrl);
@@ -244,7 +243,6 @@ const EditBotComponent: React.FC = () => {
     }
   };
 
-
   const handleSave = async () => {
     if (botId && userId) {
       const formData = new FormData();
@@ -262,8 +260,8 @@ const EditBotComponent: React.FC = () => {
       formData.append('supportEmail', supportEmail);
       formData.append('wordLimitPerMessage', botLimit);
       formData.append('docName', docName);
-      formData.append('docType',  docType);
-      formData.append('docId',  knowledgeBaseId);
+      formData.append('docType', docType);
+      formData.append('docId', knowledgeBaseId);
       formData.append('userId', userId);
 
       dispatch(editBotProfileAction(formData));
@@ -364,14 +362,19 @@ const EditBotComponent: React.FC = () => {
         <div className="grid grid-cols-5 gap-2">
           {/* Add bot profile images here */}
           {botSamples.map((item, idx) => (
-            <img
+            <div
               key={idx}
-              src={item.imageUrl}
-              alt="logo"
-              width={90}
-              height={80}
-              onClick={() => handleBotSampleClick(item)}
-            />
+              className="mr-2 mt-10 w-[90px] h-[80px] relative overflow-hidden"
+            >
+              <Image
+               
+                src={item.imageUrl}
+                alt="logo"
+                layout="fill"
+                objectFit="contain"
+                onClick={() => handleBotSampleClick(item)}
+              />
+            </div>
           ))}
         </div>
       </div>
@@ -590,7 +593,7 @@ const EditBotComponent: React.FC = () => {
           <div>
             <button
               onClick={step === 2 ? handleSave : handleContinue}
-               className="flex gap-2 justify-center px-14 py-3 text-xl font-medium text-gray-100 bg-[#3F2181] rounded-[60px]"
+              className="flex gap-2 justify-center px-14 py-3 text-xl font-medium text-gray-100 bg-[#3F2181] rounded-[60px]"
             >
               {step === 2 ? 'Save' : 'Continue'}
             </button>
