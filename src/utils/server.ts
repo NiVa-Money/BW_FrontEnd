@@ -5,15 +5,15 @@ import path from 'path';
 
 /**
  * 
- * @param url - The URL of the file to download.
- * @returns An object with the success status and any error message.
+ * @param url 
+ * @returns 
  */
 export const downloadAndSaveFile = async (url: string): Promise<{ success: boolean; error?: string }> => {
   try {
     // Extract the file name and directory from the URL
     const urlParts = new URL(url).pathname.split('/');
-    const fileName = urlParts.pop(); // Extract the file name
-    const directoryName = urlParts.join('/'); // Join remaining parts to form the directory path
+    const fileName = urlParts.pop(); 
+    const directoryName = urlParts.join('/'); 
 
     if (!fileName) {
       throw new Error('Invalid URL: Unable to extract file name');
