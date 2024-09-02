@@ -543,10 +543,10 @@ const BotSessionComponent: React.FC = () => {
                   /> */}
                 </div>
                 <div
-                  className="flex w-[8.5vw] h-[60px] flex justify-center items-center py-2.5 bg-[#1E1533] overflow-y-scroll  rounded p-1 border-gray-500 border-solid"
+                  className="flex w-[8.5vw] h-[60px] flex justify-center items-center py-2.5 bg-[#1E1533] overflow-y-scroll  rounded p-1 border-gray-500 border-solid text-white"
                   // onClick={toggleBotProfile}
                 >
-                  <div>{botNameDropDown}</div>
+                  <div >{botNameDropDown}</div>
                 </div>
                 {isBotProfileOpen && (
                   <div >
@@ -705,12 +705,12 @@ const BotSessionComponent: React.FC = () => {
         >
           <div className="w-[65%] h-[87%] adv-border-radius bg-[#FFFFFF] bg-opacity-10">
             {/* title */}
-            <div className="mt-4">
+            <div className="mt-4 ">
               <h4 className="text-center custom-purple">Chat Analysis</h4>
             </div>
             {/* description */}
-            <div className="p-5">
-              <p className="text-center">
+            <div className="p-5 ">
+              <p className="text-center text-white">
                 Instantly sort your chats into positive, negative, or neutral
                 vibes—discover the tone of your interactions with ease!
               </p>
@@ -724,7 +724,7 @@ const BotSessionComponent: React.FC = () => {
                 Reason & Details
               </button>
               {reasonDetails ? (
-                <div className="w-[80%] flex justify-center items-center mt-2 border-4 border-[#DB88DB] py-4 px-10 text-base">
+                <div className="w-[80%] flex justify-center items-center mt-2 border-4 border-[#DB88DB] py-4 px-10 text-base  text-white">
                   {reasonDetails}
                 </div>
               ) : (
@@ -737,7 +737,7 @@ const BotSessionComponent: React.FC = () => {
                 Summary
               </button>
               {summary ? (
-                <div className="w-[80%] flex justify-center items-center mt-2 border-4 border-[#DB88DB] py-4 px-10 text-base">
+                <div className="w-[80%] flex justify-center items-center mt-2 border-4 border-[#DB88DB] py-4 px-10 text-base  text-white">
                   {summary}
                 </div>
               ) : (
@@ -776,7 +776,7 @@ const BotSessionComponent: React.FC = () => {
               </button>
               {nextSteps ? (
                 <div
-                  className="w-[80%] flex justify-center items-center mt-2 border-4 border-[#DB88DB] py-4 px-10 text-base"
+                  className="w-[80%] flex justify-center items-center mt-2 border-4 border-[#DB88DB] py-4 px-10 text-base text-white"
                   dangerouslySetInnerHTML={{
                     __html: nextSteps,
                   }}
