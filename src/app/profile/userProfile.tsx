@@ -33,6 +33,16 @@ const ProfileComponent: React.FC = () => {
     }
   }, []);
 
+  // const handleDeleteProfile = () => {
+  //   console.log('Button Clicked'); // This should log to the console
+  //   if (userEmail) {
+  //     alert(`User ${userEmail} deleted`); // This should pop up a dialog box
+  //     console.log(`User ${userEmail} deleted`); // This should log to the console
+  //   } else {
+  //     console.log('No user email found');
+  //   }
+  // };  
+
   return (
     <div className="flex flex-col w-[90%] p-6 bg-[#0B031E] text-white">
       <div className="flex justify-start gap-[8px] items-center mb-10 mt-[60px]">
@@ -49,6 +59,15 @@ const ProfileComponent: React.FC = () => {
         {/* <ProfileField label="Country" value="United states" /> */}
         <ProfileField label="Phone number" value={`${profileData?.mobileNo}`} />
       </div>
+
+      {/* <div className="mt-10">
+        <button
+          onClick={handleDeleteProfile}
+          className="bg-slate-700 text-white font-bold py-2 px-4 rounded-3xl"
+        >
+          Delete Profile
+        </button>
+      </div> */}
     </div>
   );
 };

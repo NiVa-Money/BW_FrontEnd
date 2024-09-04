@@ -67,7 +67,7 @@ const CreateBotComponent: React.FC = () => {
   const handleFileUpload = (event: any) => {
     const file = event.target.files[0];
     const imagePath = URL.createObjectURL(file);
-    setImageSrc(imagePath)
+    setImageSrc(imagePath);
     setImageName(file.name);
     if (file && file.size <= 10 * 1024 * 1024) {
       setBase64Image(file);
@@ -189,7 +189,7 @@ const CreateBotComponent: React.FC = () => {
       formData.append('file', selectedFile);
     }
     dispatch(createBotProfileAction(formData));
-   
+
     // dispatch(getUserBotProfileAction(userId));
     router.push('/mychatbots');
   };
@@ -494,13 +494,15 @@ const CreateBotComponent: React.FC = () => {
                   <h2 className="my-auto p-5 text-white">Preview</h2>
                 </div>
                 {imageSrc ? (
-                  <Image
-                    width={200}
-                    height={200}
-                    src={imageSrc}
-                    alt="Uploaded"
-                    className="mr-2 h-200 w-200 rounded-full"
-                  />
+                  <div className="mr-2 mt-10 w-[200px] h-[200px] relative overflow-hidden">
+                    <Image
+                     
+                      src={imageSrc}
+                      alt="Uploaded"
+                      layout="fill"
+                      objectFit="contain"
+                    />
+                  </div>
                 ) : (
                   <span className="mr-2 mt-4">Choose Profile</span>
                 )}{' '}

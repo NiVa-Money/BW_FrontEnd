@@ -2,6 +2,7 @@ import React from 'react';
 import Card from '@mui/material/Card';
 import Typography from '@mui/material/Typography';
 import CardContent from '@mui/material/CardContent';
+import BackgroundAnimation from '@/components/BackgroundAnimation/backgroundAnimation';
 
 interface ContentCardPropsType {
   img: string;
@@ -12,8 +13,12 @@ interface ContentCardPropsType {
 function ContentCard({ img, title, desc }: ContentCardPropsType) {
   return (
     <Card
-      className="relative grid min-h-[30rem] items-end overflow-hidden rounded-xl"
+      className="relative grid min-h-[20rem] items-end overflow-hidden rounded-xl mx-auto"
       color="transparent"
+      sx={{
+        maxWidth: '30rem',
+        width: '100%',
+      }}
     >
       <img
         src={img}
@@ -33,6 +38,7 @@ function ContentCard({ img, title, desc }: ContentCardPropsType) {
   );
 }
 
+
 const contents = [
   {
     img: "/images/blog1.png",
@@ -49,29 +55,43 @@ const contents = [
     title: "The Benefits of AI Chatbots for Businesses",
     desc: "Harness BotWot.io's no-code platform for revolutionizing customer service with 24/7 chatbot support, driving sales through engaging customer interactions, and optimizing operations for enhanced efficiency and cost savings.",
   },
+  {
+    img: "/images/blog3.png",
+    title: "The Benefits of AI Chatbots for Businesses",
+    desc: "Harness BotWot.io's no-code platform for revolutionizing customer service with 24/7 chatbot support, driving sales through engaging customer interactions, and optimizing operations for enhanced efficiency and cost savings.",
+  },
 ];
 
 const Blog = () => {
   return (
     <div>
-      <section className="container mx-auto px-8 py-10 lg:py-28">
-        <Typography
-          variant="h2"
-          color="blue-gray"
-          className="!text-2xl !leading-snug lg:!text-3xl"
-        >
-          Build something great With BotWot !
-        </Typography>
-        <Typography className="mt-2 max-w-lg !font-normal !text-gray-500">
-          To democratize AI-powered customer engagement by providing an intuitive, no-code platform that enables businesses of all sizes to create, deploy, and evolve intelligent chatbots.
-        </Typography>
+     
+      <section className="container mx-auto px-4 py-16">
+        
+        <div className="flex flex-col items-center justify-center text-center">
+          <div
+            className=" lg:!text-6xl font-black  !leading-tight lg:!leading-tight"
+          >
+            Build something great With BotWot!
+          </div>
+          <div className="mt-4 max-w-4xl font-normal">
+            To democratize AI-powered customer engagement by providing an intuitive, no-code platform that <br /> enables businesses of all sizes to create, deploy, and evolve intelligent chatbots.
+          </div>
 
-        <div className="mt-10 grid grid-cols-1 gap-10 lg:grid-cols-3">
-          {contents.map(({ img, title, desc }) => (
-            <ContentCard key={title} img={img} title={title} desc={desc} />
-          ))}
+          <div className="mt-12 grid grid-cols-1 gap-8 lg:grid-cols-2">
+            {contents.map(({ img, title, desc }) => (
+              <ContentCard key={title} img={img} title={title} desc={desc} />
+            ))}
+          </div>
+
+
         </div>
+
+
       </section>
+
+
+
     </div>
   );
 };

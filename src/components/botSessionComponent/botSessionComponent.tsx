@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import icon from '../../public/assets/chatBotSymbol.svg';
 import mainLogo from '@/public/assets/mainLogo.svg';
 import './botSession.css';
-
+import { useSearchParams } from 'next/navigation';
 import '../NewChat/newchat.css';
 import {
   filteredSession,
@@ -19,6 +19,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { BarChart } from '@tremor/react';
 import withAuth from '../withAuth';
+import { useEffect } from 'react';
 
 const BotSessionComponent: React.FC = () => {
   const dispatch = useDispatch();
@@ -43,6 +44,7 @@ const BotSessionComponent: React.FC = () => {
   });
   const [newMessage, setNewMessage] = React.useState<any>('');
   const [messages, setMessages] = React.useState<any>([]);
+  const [botNameDropDown, setBotNameDropDown] = React.useState<string | null>(null);
   const pathName = useSelector((state: RootState) => state.root?.pathName);
 
   const botProfiles = useSelector((state: RootState) => state.botProfile);
@@ -52,7 +54,7 @@ const BotSessionComponent: React.FC = () => {
   const userChatSessionsRedux = useSelector(
     (state: RootState) => state.userChat?.allSession?.data?.sessions
   );
-
+// console.log("userChatSessionsRedux",userChatSessionsRedux)
   const [botIdLocal, setBotIdLocal] = React.useState<any>('');
   const userId: any = useSelector(
     (state: RootState) => state?.root?.userData?.user_id
@@ -86,6 +88,28 @@ const BotSessionComponent: React.FC = () => {
       'Customer Sentiment': 0,
     },
   ]);
+ 
+
+
+  const searchParams = useSearchParams() as URLSearchParams;
+  useEffect(() => {
+    const name = searchParams.get('botName');
+
+    if (name) {
+      const decodedName = decodeURIComponent(name);
+      setBotNameDropDown(decodedName);  
+      console.log(decodedName);
+    } else {
+      console.log('botName is not available in the URL.');
+    }
+  }, [searchParams]);
+
+  console.log("botNameDropDown",botNameDropDown)
+
+
+
+
+
 
   React.useEffect(() => {
     if (chatContainerRef.current) {
@@ -126,6 +150,8 @@ const BotSessionComponent: React.FC = () => {
       setContinueAdv(true);
     }
   };
+
+
 
   const sendMessage = (event: any) => {
     event.preventDefault();
@@ -465,6 +491,7 @@ const BotSessionComponent: React.FC = () => {
           style={{ width: `${leftWidth}%`, height: '100%' }}
         >
           <div className="flex  justify-center items-center gap-1 h-[125px] max-md:flex-wrap max-md:max-w-full mb-5">
+
             <div className="flex flex-col self-stretch relative">
               {/* <div
             className="flex gap-2.5 justify-center p-2.5 text-xl font-medium bg-[#2D2640] text-white rounded-t-lg cursor-pointer"
@@ -473,7 +500,7 @@ const BotSessionComponent: React.FC = () => {
             <div>
               <button onClick={getChatHistory}>Chat History</button>
             </div>
-            <img
+            <imgBot Profile
               loading="lazy"
               src="https://cdn.builder.io/api/v1/image/assets/TEMP/ecfab022e56ef6ff0a58045a291327eda3e871d2c6c2576eee117363bc12ecf0?apiKey=555c811dd3f44fc79b6b2689129389e8&"
               className={`shrink-0 aspect-square w-[30px] transition-transform duration-300 ${
@@ -499,6 +526,7 @@ const BotSessionComponent: React.FC = () => {
             </div>
           )} */}
             </div>
+
             <div className="flex gap-3 flex-1 justify-center items-center">
               <div className="flex flex-col self-stretch relative">
                 <div
@@ -506,22 +534,22 @@ const BotSessionComponent: React.FC = () => {
                   onClick={toggleBotProfile}
                 >
                   <div>Bot Profile</div>
-                  <img
+                  {/* <img
                     src="https://cdn.builder.io/api/v1/image/assets/TEMP/ecfab022e56ef6ff0a58045a291327eda3e871d2c6c2576eee117363bc12ecf0?apiKey=555c811dd3f44fc79b6b2689129389e8&"
                     className={`shrink-0 aspect-square w-[30px] transition-transform duration-300 ${
                       isBotProfileOpen ? 'rotate-180' : ''
                     }`}
                     alt="Bot Profile"
-                  />
+                  /> */}
                 </div>
                 <div
-                  className="flex w-[8.5vw] h-[60px] flex justify-center items-center py-2.5 bg-[#1E1533] overflow-y-scroll  rounded p-1 border-gray-500 border-solid"
+                  className="flex w-[8.5vw] h-[60px] flex justify-center items-center py-2.5 bg-[#1E1533] overflow-y-scroll  rounded p-1 border-gray-500 border-solid text-white"
                   // onClick={toggleBotProfile}
                 >
-                  <div>{selectedBotName}</div>
+                  <div >{botNameDropDown}</div>
                 </div>
                 {isBotProfileOpen && (
-                  <div className="flex mt-2 w-[8.5vw] h-[25vh] overflow-y-auto flex-col py-2 text-base tracking-wide leading-6 bg-[#1E1533] rounded-b-lg shadow max-w-[280px] absolute top-full left-0 right-0 z-10">
+                  <div >
                     {botProfiles?.botProfiles?.data?.map(
                       (bot: any, index: any) => (
                         <div
@@ -533,9 +561,9 @@ const BotSessionComponent: React.FC = () => {
                             handleBotClick(index, bot._id, bot.botName)
                           }
                         >
-                          <div className="flex justify-center items-center px-2 py-2 text-white">
+                          {/* <div className="flex justify-center items-center px-2 py-2 text-white">
                             {bot.botName}
-                          </div>
+                          </div> */}
                           {/* <div className="mt-2 px-3 text-gray-400">MarketBot</div> */}
                         </div>
                       )
@@ -677,12 +705,12 @@ const BotSessionComponent: React.FC = () => {
         >
           <div className="w-[65%] h-[87%] adv-border-radius bg-[#FFFFFF] bg-opacity-10">
             {/* title */}
-            <div className="mt-4">
+            <div className="mt-4 ">
               <h4 className="text-center custom-purple">Chat Analysis</h4>
             </div>
             {/* description */}
-            <div className="p-5">
-              <p className="text-center">
+            <div className="p-5 ">
+              <p className="text-center text-white">
                 Instantly sort your chats into positive, negative, or neutral
                 vibes—discover the tone of your interactions with ease!
               </p>
@@ -696,7 +724,7 @@ const BotSessionComponent: React.FC = () => {
                 Reason & Details
               </button>
               {reasonDetails ? (
-                <div className="w-[80%] flex justify-center items-center mt-2 border-4 border-[#DB88DB] py-4 px-10 text-base">
+                <div className="w-[80%] flex justify-center items-center mt-2 border-4 border-[#DB88DB] py-4 px-10 text-base  text-white">
                   {reasonDetails}
                 </div>
               ) : (
@@ -709,7 +737,7 @@ const BotSessionComponent: React.FC = () => {
                 Summary
               </button>
               {summary ? (
-                <div className="w-[80%] flex justify-center items-center mt-2 border-4 border-[#DB88DB] py-4 px-10 text-base">
+                <div className="w-[80%] flex justify-center items-center mt-2 border-4 border-[#DB88DB] py-4 px-10 text-base  text-white">
                   {summary}
                 </div>
               ) : (
@@ -748,7 +776,7 @@ const BotSessionComponent: React.FC = () => {
               </button>
               {nextSteps ? (
                 <div
-                  className="w-[80%] flex justify-center items-center mt-2 border-4 border-[#DB88DB] py-4 px-10 text-base"
+                  className="w-[80%] flex justify-center items-center mt-2 border-4 border-[#DB88DB] py-4 px-10 text-base text-white"
                   dangerouslySetInnerHTML={{
                     __html: nextSteps,
                   }}
