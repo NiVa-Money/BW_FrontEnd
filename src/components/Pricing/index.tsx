@@ -3,7 +3,6 @@ import React, { useState, useEffect } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
 import PricingTier from './Tier';
 import PayPalButton from './PayPalButton';
-import PlanModal from './basicPlanModal';
 
 const PricingCard = () => {
   const [isPaymentSuccessful, setIsPaymentSuccessful] = useState(false);
@@ -81,13 +80,6 @@ const PricingCard = () => {
     },
   ];
 
-  const handleBasicFreeTrial = () => {
-    if (pathname === '/membership') {
-      setModalMessage('Free trial is started. Make some creative chatbots!');
-      setIsModalOpen(true);
-    }
-  };
-
   const handleContactSales = () => {
     alert('Contact sales via this mail: botwot@gmail.com');
   };
@@ -128,7 +120,6 @@ const PricingCard = () => {
                     className="py-2 px-6 text-base font-medium bg-gray-100 rounded-lg text-slate-950 w-full"
                     onClick={() => {
                       window.scrollTo({ top: 0, behavior: 'smooth' });
-                      setIsModalOpen(true);
                     }}
                   >
                     Start For Free
@@ -147,12 +138,6 @@ const PricingCard = () => {
             />
           ))}
         </div>
-        <PlanModal
-          isOpen={isModalOpen}
-          onClose={closeModal}
-          title="Congratulations"
-          message={modalMessage}
-        />
       </div>
     </div>
   );

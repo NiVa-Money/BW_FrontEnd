@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import PlanModal from './basicPlanModal';
+import { usePathname } from 'next/navigation';
 type PricingTierProps = {
   title: string;
   price: string;
@@ -21,6 +22,15 @@ const PricingTier: React.FC<PricingTierProps> = ({
   paypalButton,
 }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const pathname = usePathname();
+
+
+  const handleFreeTrialClick = () => {
+    if (pathname === '/membership') {
+      setIsModalOpen(true);
+    }
+  };
+
   const closeModal = () => {
     setIsModalOpen(false);
     // If payment was successful, you might want to redirect or update UI
@@ -55,9 +65,9 @@ const PricingTier: React.FC<PricingTierProps> = ({
           ) : (
             <button
               className="py-2 px-6 text-base font-medium bg-gray-100 rounded-lg text-slate-950 w-full"
-              onClick={() => setIsModalOpen(true)}
+              onClick={handleFreeTrialClick}
             >
-              Start For Frees
+              Start For Free
             </button>
           )}
         </div>
@@ -67,7 +77,7 @@ const PricingTier: React.FC<PricingTierProps> = ({
         onClose={closeModal}
         title="Congratulations"
         message={
-          'Congratulations !! Start your free trial today and\n begin creating powerful bots with ease!'
+          'Start your free trial today and\n begin creating powerful bots with ease!'
         }
       />
     </>
