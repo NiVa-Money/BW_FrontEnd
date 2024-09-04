@@ -86,9 +86,9 @@ const Modal: React.FC<ModalProps> = ({ closeModal, handleSignUp }) => {
       newErrors.password =
         'Password should be at least 8 characters long and include one uppercase letter, one lowercase letter, one number, and one special character.';
     }
-    if (!mobilePattern.test(mobileNo)) {
-      newErrors.mobileNo = 'Mobile number should be exactly 10 digits.';
-    }
+    // if (!mobilePattern.test(mobileNo)) {
+    //   newErrors.mobileNo = 'Mobile number should be exactly 10 digits.';
+    // }
 
     return newErrors;
   };
