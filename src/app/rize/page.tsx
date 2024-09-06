@@ -66,10 +66,20 @@ import Link from 'next/link';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 
 const RizePayment: React.FC = () => {
+  // function redirectToPayPal(): void {
+  //   window.location.href = 'https://www.paypal.com/webapps/billing/plans/subscribe?plan_id=P-3NP028129S240753FM3MBLWQ';
+  // }
   function redirectToPayPal(): void {
-    window.location.href = 'https://www.paypal.com/webapps/billing/plans/subscribe?plan_id=P-3NP028129S240753FM3MBLWQ';
+    const baseUrl = window.location.origin; // Gets the current domain (localhost, UAT, production)
+    
+    const returnUrl = `${baseUrl}/membership-success`;
+    const cancelUrl = `${baseUrl}/membership-failure`;
+  
+    // PayPal plan URL with dynamic return and cancel URLs
+    window.location.href = `https://www.paypal.com/webapps/billing/plans/subscribe?plan_id=P-3NP028129S240753FM3MBLWQ&return_url=${returnUrl}&cancel_url=${cancelUrl}`;
   }
 
+  
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-[#0B031E] text-white text-center p-4">
       <h1 className="text-5xl font-bold mb-8">Exclusive for<br />Razorpay Rize Members</h1>
