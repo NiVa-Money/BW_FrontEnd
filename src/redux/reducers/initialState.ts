@@ -5,7 +5,7 @@ const initialState: any = {
     error: null,
     googleLogin: false,
     userData: null,
-
+    pageLoader: false,
     userVerify: false,
     userMetric: {
       data: {},
@@ -73,7 +73,7 @@ const initialState: any = {
       data: [],
       sessionId: null,
       loader: false,
-      lastMessageFrom:'receiver'
+      lastMessageFrom: 'receiver',
     },
     advanceFeature: {
       data: {},
