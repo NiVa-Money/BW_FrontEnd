@@ -27,6 +27,9 @@ const DashBoardComponent: React.FC = () => {
   const userMetricData = useSelector(
     (state: RootState) => state?.root?.userMetric?.data
   );
+  const userMetricDataLoader = useSelector(
+    (state: RootState) => state?.root?.userMetric?.loader
+  );
   const [metricData, setMetricData] = useState(userMetricData);
 
   const [profileData, setProfileData] = React.useState<any>(userDataRedux);
@@ -101,16 +104,34 @@ const DashBoardComponent: React.FC = () => {
   }, []);
 
   useEffect(() => {
+    // if (verifyVal || pathName === '/dashboard') {
+    //   dispatch(fetchMetricsAction(userId));
+    // }
+    let interval: NodeJS.Timeout | null = null;
+
     if (verifyVal || pathName === '/dashboard') {
+      // Dispatch action immediately
       dispatch(fetchMetricsAction(userId));
+
+      // Set up interval polling
+      interval = setInterval(() => {
+        dispatch(fetchMetricsAction(userId));
+      }, 5000); // 5000ms = 5 seconds
     }
-  }, [verifyVal]);
+
+    // Clear the interval on cleanup
+    return () => {
+      if (interval) {
+        clearInterval(interval);
+      }
+    };
+  }, [verifyVal, pathName]);
 
   useEffect(() => {
     if (userMetricData && Object?.keys(userMetricData).length > 0) {
       setMetricData(userMetricData);
     }
-  }, [userMetricData]);
+  }, [userMetricData, userMetricDataLoader]);
 
   return (
     <div className="w-full h-full flex flex-col p-4 md:p-8 bg-[#0B031E] text-white">
@@ -155,7 +176,7 @@ const DashBoardComponent: React.FC = () => {
         <div className="bg-[#1E1935] w-full md:w-[100%] rounded-2xl p-4 m-1">
           <div className={`${styles.textSize} mb-4 `}>Total no. of Users</div>
           <div className={`${styles.textSize} relative w-full h-full mx-auto`}>
-            <SqureCardOne sessionTotal={20} sessionLeft={11} />
+            <SqureCardOne sessionTotal={0} sessionLeft={0} />
           </div>
         </div>
         <div className="relative bg-[#1E1935] w-full md:w-[40%] rounded-2xl p-4 m-1 ">

@@ -5,6 +5,9 @@ import { RootState } from '@/redux/configureStore';
 import * as React from 'react';
 import PersonIcon from '@mui/icons-material/Person';
 import { useDispatch, useSelector } from 'react-redux';
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import Link from 'next/link';
 
 const ProfileComponent: React.FC = () => {
   const userEmail = useSelector(
@@ -33,15 +36,15 @@ const ProfileComponent: React.FC = () => {
     }
   }, []);
 
-  // const handleDeleteProfile = () => {
-  //   console.log('Button Clicked'); // This should log to the console
-  //   if (userEmail) {
-  //     alert(`User ${userEmail} deleted`); // This should pop up a dialog box
-  //     console.log(`User ${userEmail} deleted`); // This should log to the console
-  //   } else {
-  //     console.log('No user email found');
-  //   }
-  // };  
+  const handleDeleteProfile = () => {
+    console.log('Button Clicked'); // This should log to the console
+    if (userEmail) {
+      alert(`User Subscription Plan  cancelled`); // This should pop up a dialog box
+      console.log(`User Subscription Plan  cancelled`); // This should log to the console
+    } else {
+      console.log('No plan found');
+    }
+  };  
 
   return (
     <div className="flex flex-col w-[90%] p-6 bg-[#0B031E] text-white">
@@ -58,16 +61,18 @@ const ProfileComponent: React.FC = () => {
         <ProfileField label="Email" value={`${profileData?.emailId}`} />
         {/* <ProfileField label="Country" value="United states" /> */}
         <ProfileField label="Phone number" value={`${profileData?.mobileNo}`} />
+        <ProfileField label="Subscription Plan" value={`BotWot Starter`} />
       </div>
 
-      {/* <div className="mt-10">
+      <div className="mt-10">
         <button
-          onClick={handleDeleteProfile}
-          className="bg-slate-700 text-white font-bold py-2 px-4 rounded-3xl"
-        >
-          Delete Profile
+            onClick={handleDeleteProfile} 
+            className="flex  justify-center  text-xl font-medium text-gray-100 bg-[#3F2181] rounded-[60px]">
+          <Link href="/membership" className="flex px-14 py-3 gap-2">
+            <span>Cancel Subscription Plan</span>
+          </Link>
         </button>
-      </div> */}
+      </div>
     </div>
   );
 };
