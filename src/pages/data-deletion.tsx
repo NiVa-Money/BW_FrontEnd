@@ -1,6 +1,5 @@
 'use client';
 import React, { useState } from 'react';
-
 interface FormData {
   reason: string;
   email: string;
@@ -8,7 +7,7 @@ interface FormData {
   phoneNumber: string;
 }
 
-const AccountDeletionForm: React.FC = () => {
+const DataDeletionPage: React.FC = () => {
   const [step, setStep] = useState(1);
   const [formData, setFormData] = useState<FormData>({
     reason: '',
@@ -98,15 +97,21 @@ const AccountDeletionForm: React.FC = () => {
             >
               Reason
             </label>
-            <input
-              type="text"
+            <select
               id="reason"
               name="reason"
               value={formData.reason}
-              onChange={handleInputChange}
+              // onChange={(e) => handleInputChange(e)}
               className="w-full px-3 py-2 bg-gray-800 text-white rounded-md"
-              placeholder="johndoe@email.com"
-            />
+            >
+              <option value="">Select a reason</option>
+              <option value="privacy concerns">
+                <div className="flex flex-col">
+                  <span>Privacy Concerns</span>
+                  <span>I’m worried about how my data is used</span>
+                </div>
+              </option>
+            </select>
           </>
         );
       default:
@@ -161,4 +166,4 @@ const AccountDeletionForm: React.FC = () => {
   );
 };
 
-export default AccountDeletionForm;
+export default DataDeletionPage;
