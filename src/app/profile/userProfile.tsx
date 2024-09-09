@@ -60,7 +60,7 @@ const ProfileComponent: React.FC = () => {
         />
         <ProfileField label="Email" value={`${profileData?.emailId}`} />
         {/* <ProfileField label="Country" value="United states" /> */}
-        <ProfileField label="Phone number" value={`${profileData?.mobileNo}`} />
+        {/* <ProfileField label="Phone number" value={`${profileData?.mobileNo}`} /> */}
         <ProfileField label="Subscription Plan" value={`BotWot Starter`} />
       </div>
 

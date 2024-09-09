@@ -20,6 +20,7 @@ import Link from 'next/link';
 import { BarChart } from '@tremor/react';
 import withAuth from '../withAuth';
 import { useEffect } from 'react';
+import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
 
 const BotSessionComponent: React.FC = () => {
   const dispatch = useDispatch();
@@ -44,7 +45,9 @@ const BotSessionComponent: React.FC = () => {
   });
   const [newMessage, setNewMessage] = React.useState<any>('');
   const [messages, setMessages] = React.useState<any>([]);
-  const [botNameDropDown, setBotNameDropDown] = React.useState<string | null>(null);
+  const [botNameDropDown, setBotNameDropDown] = React.useState<string | null>(
+    null
+  );
   const pathName = useSelector((state: RootState) => state.root?.pathName);
 
   const botProfiles = useSelector((state: RootState) => state.botProfile);
@@ -54,7 +57,8 @@ const BotSessionComponent: React.FC = () => {
   const userChatSessionsRedux = useSelector(
     (state: RootState) => state.userChat?.allSession?.data?.sessions
   );
-// console.log("userChatSessionsRedux",userChatSessionsRedux)
+  console.log('user', userChatSessionsRedux);
+  // console.log("userChatSessionsRedux",userChatSessionsRedux)
   const [botIdLocal, setBotIdLocal] = React.useState<any>('');
   const userId: any = useSelector(
     (state: RootState) => state?.root?.userData?.user_id
@@ -88,8 +92,6 @@ const BotSessionComponent: React.FC = () => {
       'Customer Sentiment': 0,
     },
   ]);
- 
-
 
   const searchParams = useSearchParams() as URLSearchParams;
   useEffect(() => {
@@ -97,19 +99,14 @@ const BotSessionComponent: React.FC = () => {
 
     if (name) {
       const decodedName = decodeURIComponent(name);
-      setBotNameDropDown(decodedName);  
+      setBotNameDropDown(decodedName);
       console.log(decodedName);
     } else {
       console.log('botName is not available in the URL.');
     }
   }, [searchParams]);
 
-  console.log("botNameDropDown",botNameDropDown)
-
-
-
-
-
+  console.log('botNameDropDown', botNameDropDown);
 
   React.useEffect(() => {
     if (chatContainerRef.current) {
@@ -150,8 +147,6 @@ const BotSessionComponent: React.FC = () => {
       setContinueAdv(true);
     }
   };
-
-
 
   const sendMessage = (event: any) => {
     event.preventDefault();
@@ -337,10 +332,20 @@ const BotSessionComponent: React.FC = () => {
   React.useEffect(() => {
     if (userChatSessionsRedux?.length) {
       const tempArray = userChatSessionsRedux;
+      tempArray.forEach((sessionData: any) => {
+        let totalMessages = 0;
+
+        sessionData.sessions.forEach((session: any) => {
+          if (session.question) totalMessages++;
+          if (session.answer) totalMessages++;
+        });
+
+        sessionData.totalMessages = totalMessages;
+      });
+
       setBotSessionsList(tempArray);
     }
   }, [userChatSessionsRedux]);
-  // console.log('botSessionsList', sessionId);
 
   React.useEffect(() => {
     if (isDragging) {
@@ -359,12 +364,12 @@ const BotSessionComponent: React.FC = () => {
 
   return (
     <div className="flex h-screen">
-      <div className="w-64 h-[100%] flex flex-col">
+      <div className="w-80 h-[100%] flex flex-col">
         <div className="w-full mt-8 flex justify-center items-center">
           {' '}
           <Image src={mainLogo.src} alt="logo" width={90} height={80} />
         </div>
-        <div className="text-white mt-[54px]">
+        <div className="text-white mt-[54px] mx-3">
           <Link
             href={'/dashboard'}
             className={`flex items-center space-x-3 py-2 px-3 text-gray-300 hover:bg-white' 
@@ -378,28 +383,35 @@ const BotSessionComponent: React.FC = () => {
             </span>
           </Link>
         </div>
-        <div className="text-white mt-[8px] px-3">
+        <div className="text-white mt-[8px] flex justify-center items-center">
           {/* <i className={`fas ${item.icon}`}></i> */}
-          <span>
-            {' '}
-            <i className="fas fa-comment  mr-3" />
-            Sessions
-          </span>
+          <span className="text-[#6C6779]">Sessions History</span>
         </div>
-        <div className="text-white mt-[8px] w-full h-full px-3 overflow-scroll">
+        <div className="text-white m-auto w-full h-full mx-3 my-3 overflow-scroll m-auto flex flex-col">
           {botSessionsList?.map((item: any, id: any) => (
-            <div
-              key={id}
-              className="flex flex-col mt-[22px]"
-              onClick={() => {
-                setSessionId(item._id);
-              }}
-            >
-              <span className="cursor-pointer">Session {id + 1}</span>
-              <span className="w-[100%] left-[43px] cursor-pointer ">
-                {item.sessions[item.sessions.length - 1]?.question}
-              </span>
-            </div>
+            <>
+              <div
+                key={id}
+                className="flex flex-col px-3 py-3 bg-[#141218] w-[90%] "
+                onClick={() => {
+                  setSessionId(item._id);
+                }}
+              >
+                <div className="flex justify-between items-center">
+                  <span className="cursor-pointer"> {id + 1}.Session</span>
+                  <div className="relative">
+                    <ChatBubbleOutlineIcon />
+                    <span className="absolute left-[15px] bg-[#141118] rounded-[100%] p-[4px] -top-[10px]">
+                      {item.totalMessages}
+                    </span>
+                  </div>
+                </div>
+                <span className="w-[100%] left-[43px] cursor-pointer ">
+                  {item.sessions[item.sessions.length - 1]?.question}
+                </span>
+              </div>
+              <div className="w-[90%] bg-[#ffffffb3] h-[2px]"></div>
+            </>
           ))}
         </div>
       </div>
@@ -491,7 +503,6 @@ const BotSessionComponent: React.FC = () => {
           style={{ width: `${leftWidth}%`, height: '100%' }}
         >
           <div className="flex  justify-center items-center gap-1 h-[125px] max-md:flex-wrap max-md:max-w-full mb-5">
-
             <div className="flex flex-col self-stretch relative">
               {/* <div
             className="flex gap-2.5 justify-center p-2.5 text-xl font-medium bg-[#2D2640] text-white rounded-t-lg cursor-pointer"
@@ -546,10 +557,10 @@ const BotSessionComponent: React.FC = () => {
                   className="flex w-[8.5vw] h-[60px] flex justify-center items-center py-2.5 bg-[#1E1533] overflow-y-scroll  rounded p-1 border-gray-500 border-solid text-white"
                   // onClick={toggleBotProfile}
                 >
-                  <div >{botNameDropDown}</div>
+                  <div>{botNameDropDown}</div>
                 </div>
                 {isBotProfileOpen && (
-                  <div >
+                  <div>
                     {botProfiles?.botProfiles?.data?.map(
                       (bot: any, index: any) => (
                         <div

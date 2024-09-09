@@ -223,6 +223,10 @@ const DashBoardComponent: React.FC = () => {
             <div>User ID </div>
             <div>{profileData?.emailId}</div>
           </div>
+          <div className={`${styles.textSize} gap-[8px] flex text-gray-400`}>
+            <div>Membership Plan </div>
+           
+          </div>
         </div>
         <div className="bg-[#1E1935] w-full md:w-[70%] rounded-2xl p-4 m-1">
           <div className={`${styles.textSize}`}>Bot Usage</div>
