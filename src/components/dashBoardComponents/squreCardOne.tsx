@@ -83,6 +83,7 @@ export function SqureCardOne({ sessionTotal, sessionLeft }: SqureCardOneProps) {
     : [];
   let colorIndex = 0;
 
+  
   return iteratorData?.length ? (
     <div className="flex">
       <DonutChart
@@ -90,13 +91,12 @@ export function SqureCardOne({ sessionTotal, sessionLeft }: SqureCardOneProps) {
         category="value"
         index="name"
 
-        colors={[ "red", "orange", "amber", "yellow", "lime", "green", "emerald", "teal", "cyan", "sky", "blue", "indigo", "violet", "purple", "fuchsia", "pink", "rose"]}
+        colors={[ "violet", "purple", "fuchsia", "teal", "cyan", "sky", "blue", "indigo", "pink", "rose","red", "orange", "amber", "yellow", "lime", "green", "emerald"]}
         className="w-80"
       />
       <Legend
         categories={iteratorData.map((item: { name: string }) => item.name)}
-        colors={[ "red", "orange", "amber", "yellow", "lime", "green", "emerald", "teal", "cyan", "sky", "blue", "indigo", "violet", "purple", "fuchsia", "pink", "rose"]}
-      />
+        colors={[ "violet", "purple", "fuchsia", "teal", "cyan", "sky", "blue", "indigo", "pink", "rose","red", "orange", "amber", "yellow", "lime", "green", "emerald"]}      />
     </div>
   ) : null;
 }
