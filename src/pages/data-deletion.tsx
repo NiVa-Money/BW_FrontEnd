@@ -10,6 +10,7 @@ interface FormData {
   email: string;
   otp: string;
   phoneNumber: string;
+  userId:string
 }
 
 const DataDeletionPage: React.FC = () => {
@@ -20,6 +21,7 @@ const DataDeletionPage: React.FC = () => {
     email: '',
     otp: '',
     phoneNumber: '',
+    userId:''
   });
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
@@ -59,6 +61,17 @@ const DataDeletionPage: React.FC = () => {
       const response = await axiosInstance.post('/user/data-deletion/otpVerify', {
         emailId: formData.email,
         otp: formData.otp,
+      });
+      console.log('Response:', response.data);
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  };
+  const deleteUser = async () => {
+    try {
+      const response = await axiosInstance.post(`/user/deleteUser/${formData.userId}`, {
+        reason: formData.reason,
+        otp: formData.reason==='Other'?formData.customReason:formData.reason,
       });
       console.log('Response:', response.data);
     } catch (error) {
