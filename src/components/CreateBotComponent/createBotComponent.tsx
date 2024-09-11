@@ -164,10 +164,10 @@ const CreateBotComponent: React.FC = () => {
       setError('Please enter a valid email address.');
       return;
     }
-    if (!validatePhoneNumber(supportPhone)) {
-      setError('Please enter a valid phone number with 10 digits.');
-      return;
-    }
+    // if (!validatePhoneNumber(supportPhone)) {
+    //   setError('Please enter a valid phone number with 10 digits.');
+    //   return;
+    // }
 
     const formData = new FormData();
     const imageFile: any = base64Image ? base64Image : selectedFileImage;
