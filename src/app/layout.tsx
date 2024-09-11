@@ -47,6 +47,7 @@ export default function RootLayout({
     '/botsession',
     '/faq/questionsAns',
     '/faq/docs',
+    '/data-deletion'
   ];
   const routeWithoutFooter: string[] = [
     '/mychatbots',
@@ -68,6 +69,8 @@ export default function RootLayout({
     '/faq/docs',
     '/privacy',
     '/terms',
+    '/data-deletion'
+
   ];
   const routeWithoutSidebar: string[] = [
     '/createbot',
@@ -84,6 +87,8 @@ export default function RootLayout({
     '/botsession',
     '/privacy',
     '/terms',
+    '/data-deletion'
+
   ];
   const knownRoutes: string[] = [
     ...routeWithoutSidebar,
