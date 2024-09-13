@@ -1,5 +1,5 @@
 'use client';
-import Toast, { notifySuccess } from '@/components/Toaster/toast';
+import { notifySuccess } from '@/components/Toaster/toast';
 import axiosInstance from '@/utils/axiosConfig';
 import React, { useState } from 'react';
 

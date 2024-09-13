@@ -25,10 +25,7 @@ function AboutSection() {
               <div className="flex flex-col text-lg items-start  whitespace-nowrap text-[color:var(--sds-color-text-brand-on-brand)] w-[207px]">
                 <Link href="/faq">
                   <div className="flex border-1  overflow-hidden gap-2 justify-center items-center px-3 py-3.5 rounded-lg min-h-[68px]">
-                    <ArrowBackIosIcon
-                      style={{ color: 'white' }}
-                      className="object-contain self-stretch my-auto w-6 aspect-square fill-[white]"
-                    />
+                    <ArrowBackIosIcon className="object-contain self-stretch my-auto w-6 aspect-square fill-[white] text-[white]" />
 
                     <span className="self-stretch my-auto text-white">
                       Back
@@ -52,10 +49,7 @@ function AboutSection() {
                   </span>
                 </Link>
                 <div className="flex gap-2.5 items-center self-stretch p-2.5 my-auto w-11 h-11 rounded-xl bg-slate-500 bg-opacity-20">
-                  <HelpOutlineIcon
-                    style={{ color: 'white' }}
-                    className="object-contain self-stretch my-auto w-6 aspect-square"
-                  />
+                  <HelpOutlineIcon className="object-contain self-stretch my-auto w-6 aspect-square text-[white]" />
                 </div>
               </div>
               <div className="flex overflow-hidden  flex-1 shrink gap-2 justify-center items-center p-3 rounded-lg basis-0 bg-white bg-opacity-10">
@@ -215,10 +209,7 @@ function AboutSection() {
             {isExpanded ? 'View Less' : 'View More'}
           </span>
 
-          <KeyboardArrowDownIcon
-            style={{ color: 'white' }}
-            className="object-contain mb-1 ml-4 aspect-[1.05] w-[70px]"
-          />
+          <KeyboardArrowDownIcon className="object-contain mb-1 ml-4 aspect-[1.05] w-[70px] text-[white]" />
         </div>
       </div>
     </div>

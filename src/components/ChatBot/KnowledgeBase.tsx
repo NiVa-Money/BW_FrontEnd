@@ -9,7 +9,10 @@ import { RootState } from '@/redux/configureStore';
 import { useDispatch, useSelector } from 'react-redux';
 
 import ConfirmModal from './modalDelete';
-import { deleteUserKnowledgeBaseAction, getUserKnowledgeBaseAction } from '@/redux/actions/knowledgeBaseActions';
+import {
+  deleteUserKnowledgeBaseAction,
+  getUserKnowledgeBaseAction,
+} from '@/redux/actions/knowledgeBaseActions';
 import withAuth from '../withAuth';
 
 interface KnowledgeBaseCardProps {
@@ -33,7 +36,6 @@ const KnowledgeBase: React.FC = () => {
   const knowledgeBaseData = useSelector(
     (state: RootState) => state.KnowledgeBase?.user?.data
   );
-  // console.log('knowledgeBaseData', knowledgeBaseData);
   const [knowledgebase, setKnowledgebase] = useState<KnowledgeBaseCardProps[]>(
     []
   );
@@ -55,7 +57,7 @@ const KnowledgeBase: React.FC = () => {
   );
 
   const [userIdLocal, setUserIdLocal] = useState(userId);
-  
+
   useEffect(() => {
     if (userId?.length) {
       setUserIdLocal(userId);

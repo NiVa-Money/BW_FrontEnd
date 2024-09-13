@@ -1,7 +1,10 @@
 import { CREATE_PAYMENT_REQUEST, CAPTURE_PAYMENT_REQUEST, CREATE_PAYMENT_SUCCESS, CAPTURE_PAYMENT_SUCCESS, CREATE_PAYMENT_FAILURE, CAPTURE_PAYMENT_FAILURE, FETCH_PLANS, FETCH_PLANS_FAILURE, FETCH_PLANS_SUCCESS } from "../actions/actionTypes";
 import initialState from "./initialState";
 
-export default function paymentReducer(state = initialState.payment, action: any) {
+export default function paymentReducer(
+  state = initialState.payment,
+  action: any
+) {
   switch (action.type) {
     case FETCH_PLANS:
       return { ...state, loading: true };
@@ -17,16 +20,14 @@ export default function paymentReducer(state = initialState.payment, action: any
         error: null,
       };
     case CREATE_PAYMENT_SUCCESS:
-      // console.log('Create Payment Success Payload:', action.payload);
       return {
         ...state,
         loading: false,
         paymentData: action.payload,
-        paypalUrl: action.payload.paypalUrl, 
+        paypalUrl: action.payload.paypalUrl,
         error: null,
       };
     case CAPTURE_PAYMENT_SUCCESS:
-      // console.log('Capture Payment Success Payload:', action.payload);
       return {
         ...state,
         loading: false,

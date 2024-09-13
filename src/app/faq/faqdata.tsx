@@ -1,13 +1,9 @@
-// components/FAQ.tsx
-import React, { useState } from 'react';
-import FAQbody from './page';
+import React from 'react';
 import HelpCenter from './page';
 const FAQ = () => {
-  const [expandedPanel, setExpandedPanel] = useState<string | false>('panel1');
   return (
     <>
-      {/* <FAQbody /> */}
-      <HelpCenter/>
+      <HelpCenter />
     </>
   );
 };

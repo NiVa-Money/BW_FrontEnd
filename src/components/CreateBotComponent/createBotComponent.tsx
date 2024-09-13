@@ -79,8 +79,6 @@ const CreateBotComponent: React.FC = () => {
   const handleBotSampleClick = async (item: any) => {
     setImageSrc(item?.imageUrl);
 
-    // console.log("ImagesCustom",item.imageUrl)
-
     const response = await fetch(item?.imageUrl);
     const blob = await response.blob();
     const file = new File([blob], 'image.jpg', { type: blob.type });
@@ -496,7 +494,6 @@ const CreateBotComponent: React.FC = () => {
                 {imageSrc ? (
                   <div className="mr-2 mt-10 w-[200px] h-[200px] relative overflow-hidden">
                     <Image
-                     
                       src={imageSrc}
                       alt="Uploaded"
                       layout="fill"

@@ -1,7 +1,13 @@
 'use client';
 
 import { auth, provider } from '@/auth/firebase';
-import { User, onAuthStateChanged, signInWithPopup, createUserWithEmailAndPassword,signInWithEmailAndPassword } from 'firebase/auth';
+import {
+  User,
+  onAuthStateChanged,
+  signInWithPopup,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+} from 'firebase/auth';
 import React, { PropsWithChildren, useLayoutEffect, useState } from 'react';
 
 type SharedContext = {
@@ -28,18 +34,19 @@ const AuthContextProvider = ({ children }: PropsWithChildren) => {
     try {
       const result = await signInWithPopup(auth, provider);
       setUser(result.user);
-    } catch (error) {
-      // console.log(error);
-    }
+    } catch (error) {}
   };
 
   const signUpWithEmail = async (email: string, password: string) => {
     try {
-      const result = await createUserWithEmailAndPassword(auth, email, password);
+      const result = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
       setUser(result.user);
       return result.user;
     } catch (error) {
-      // console.log(error);
       return null;
     }
   };
@@ -48,7 +55,6 @@ const AuthContextProvider = ({ children }: PropsWithChildren) => {
       const result = await signInWithEmailAndPassword(auth, email, password);
       setUser(result.user);
     } catch (error) {
-      // console.log(error);
       throw new Error('Failed to log in');
     }
   };
@@ -65,7 +71,14 @@ const AuthContextProvider = ({ children }: PropsWithChildren) => {
 
   return (
     <AuthContext.Provider
-      value={{ user, setUser, handleSignIn, handleSignOut, signUpWithEmail,handleSignInWithEmail  }}
+      value={{
+        user,
+        setUser,
+        handleSignIn,
+        handleSignOut,
+        signUpWithEmail,
+        handleSignInWithEmail,
+      }}
     >
       {loading ? (
         <div className="fixed inset-0 flex items-center justify-center">

@@ -8,7 +8,6 @@ export default function PathnameHandler() {
   const pathname = usePathname();
   const dispatch: AppDispatch = useDispatch();
   useEffect(() => {
-    console.log(pathname);
     dispatch(setPathNameAction(pathname));
   }, [pathname]);
 
