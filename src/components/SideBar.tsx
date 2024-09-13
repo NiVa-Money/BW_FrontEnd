@@ -54,6 +54,7 @@ const initialSIDENAV_ITEMS: SidebarItemProps[] = [
         subChildItems: [{ title: 'hey', path: '/mychatbots' }],
       },
       { title: 'Reports (coming soon)' },
+      { title: 'Live Chat', path:'/livechat' },
     ],
   },
   {

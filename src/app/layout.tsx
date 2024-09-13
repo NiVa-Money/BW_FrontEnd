@@ -47,7 +47,8 @@ export default function RootLayout({
     '/botsession',
     '/faq/questionsAns',
     '/faq/docs',
-    '/data-deletion'
+    '/data-deletion',
+    '/livechat'
   ];
   const routeWithoutFooter: string[] = [
     '/mychatbots',
@@ -69,7 +70,8 @@ export default function RootLayout({
     '/faq/docs',
     '/privacy',
     '/terms',
-    '/data-deletion'
+    '/data-deletion',
+    '/livechat'
 
   ];
   const routeWithoutSidebar: string[] = [
@@ -87,7 +89,8 @@ export default function RootLayout({
     '/botsession',
     '/privacy',
     '/terms',
-    '/data-deletion'
+    '/data-deletion',
+    '/livechat'
 
   ];
   const knownRoutes: string[] = [
@@ -110,6 +113,7 @@ export default function RootLayout({
     '/home',
     '/privacy',
     '/terms',
+    
   ];
 
   const [isSidebarVisible, setIsSidebarVisible] = React.useState(true);
