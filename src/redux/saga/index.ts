@@ -62,6 +62,7 @@ import {
   SET_PATHNAME_SUCCESS,
   SET_PATHNAME_FAILURE,
   SET_PATHNAME,
+  FETCH_PLANS,
 } from '../actions/actionTypes';
 
 import {
@@ -85,12 +86,15 @@ import {
   processPayPalPaymentService,
   verifyOtpUserData,
   capturePaymentService,
+  fetchPlansApi,
 } from '../services';
 import { notifyError, notifySuccess } from '@/components/Toaster/toast';
 import {
   capturePaymentFailure,
   capturePaymentRequest,
   capturePaymentSuccess,
+  fetchPlansFailure,
+  fetchPlansSuccess,
 } from '../actions/paymentActions';
 interface BotData {
   userChat: any;
@@ -569,6 +573,20 @@ export function* getAdvanceFeatureSaga({
   }
 }
 
+function* fetchPlansSaga(): Generator<any> {
+  try {
+    const response: any = yield call(fetchPlansApi); // Call the API function
+    const data = yield response.json();
+    const filteredData = data.map((plan: { name: any; price: any; }) => ({
+      name: plan.name,
+      price: plan.price,
+    }));
+    yield put(fetchPlansSuccess(filteredData)); // Dispatch success action
+  } catch (error) {
+    yield put(fetchPlansFailure('Plans fetch failed')); // Dispatch failure action 
+  }
+}
+
 export function* payPalPaymentSaga({
   payload,
 }: {
@@ -649,6 +667,7 @@ export default function* rootSaga() {
   yield takeEvery(VERIFY_USER_OTP, verifyOtpUserSaga);
   yield takeEvery(GOOGLE_LOGIN, signUpGoogleUserSagaData);
   yield takeEvery(PASSWORD_LOGIN, passwordLoginSaga);
+  yield takeEvery(FETCH_PLANS, fetchPlansSaga);
   yield takeEvery(CREATE_PAYMENT_REQUEST, payPalPaymentSaga);
   yield takeLatest(CAPTURE_PAYMENT_REQUEST, capturePaymentSaga);
   yield takeLatest(SET_PATHNAME, pathnameSaga);

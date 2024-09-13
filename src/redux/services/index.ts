@@ -286,6 +286,15 @@ export const getAdvanceFeatureService = async (payload: any) => {
   }
 };
 
+export const fetchPlansApi = async () => {
+  try {
+    const response = await axiosInstance.get('/payment/plans');
+    return response.data;  // Returns the array of plans
+  } catch (error) {
+    throw new Error('Payment Plans fetching failed');
+  }
+};
+
 export const processPayPalPaymentService = async (payload: any) => {
   try {
     const response = await axiosInstance.post(`/payment/create`, payload);
