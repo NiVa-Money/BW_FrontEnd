@@ -19,8 +19,6 @@ export const LoginUserData = async (payload: any) => {
     const response = await axiosInstance.post('/user/login', payload);
     return response.data;
   } catch (error: any) {
-    console.error('Error signing up user:', error);
-
     throw new Error(`${error?.response?.data?.error}`);
   }
 };
@@ -30,8 +28,6 @@ export const signUpGoogleUserData = async (payload: any) => {
     const response = await axiosInstance.post('/user/signup', payload);
     return response.data;
   } catch (error) {
-    console.error('Error signing up user:', error);
-
     throw new Error('Error signing up user');
   }
 };
@@ -44,8 +40,6 @@ export const verifyOtpUserData = async (payload: any) => {
     );
     return response.data;
   } catch (error) {
-    console.error('Error signing up user:', error);
-
     throw new Error('Error in verifying otp');
   }
 };
@@ -59,15 +53,8 @@ export const fetchUserData = async (userEmail: string) => {
     const { user_id, token } = response.data;
     localStorage.setItem('user_id', user_id);
     localStorage.setItem('token', token);
-    // Logging to confirm they are set
-    // console.log('user_id saved:', localStorage.getItem('user_id'));
-    // console.log('token saved:', localStorage.getItem('token'));
     return response.data;
   } catch (error: any) {
-    console.error(
-      'Error response:',
-      error.response ? error.response.data : error.message
-    );
     throw new Error('Error fetching user data');
   }
 };
@@ -75,10 +62,7 @@ export const fetchUserData = async (userEmail: string) => {
 //for fetching data
 export const fetchUserMetrics = async (payload: any) => {
   try {
-    const user_id = localStorage.getItem('user_id');
-    // console.log('user_id', payload);
     const response = await axiosInstance.get(`user/metrics/${payload}`, {});
-    // console.log('User metrics:', response.data);
     return response.data;
   } catch (error: any) {
     console.error(
@@ -94,13 +78,8 @@ export const getUserProfileService = async (payload: any) => {
       `user/getUserProfile?emailId=${payload}`,
       {}
     );
-    // console.log('User profile:', response.data);
     return response.data;
   } catch (error: any) {
-    console.error(
-      'Error fetching user profile:',
-      error.response ? error.response.data : error.message
-    );
     throw new Error('Error fetching user profile');
   }
 };
@@ -110,10 +89,6 @@ export const createUserBotProfileService = async (payload: any) => {
     const response = await axiosInstance.post('user/createBotProfile', payload);
     return response.data;
   } catch (error: any) {
-    console.error(
-      'Error response:',
-      error.response ? error.response.data : error.message
-    );
     throw new Error('Error fetching user bot profile data');
   }
 };
@@ -123,10 +98,6 @@ export const editUserBotProfileService = async (payload: any) => {
     const response = await axiosInstance.post('user/editBotProfile', payload);
     return response.data;
   } catch (error: any) {
-    console.error(
-      'Error response:',
-      error.response ? error.response.data : error.message
-    );
     throw new Error('Error occurred in updating bot profile');
   }
 };
@@ -141,10 +112,6 @@ export const getUserBotProfileService = async (payload: any) => {
 
     return response.data;
   } catch (error: any) {
-    console.error(
-      'Error fetching user Bot profile:',
-      error.response ? error.response.data : error.message
-    );
     throw new Error('Error fetching user Bot profile');
   }
 };
@@ -158,10 +125,6 @@ export const deleteBotProfileService = async (payload: any) => {
     );
     return response.data;
   } catch (error: any) {
-    console.error(
-      'Error fetching user Bot profile:',
-      error.response ? error.response.data : error.message
-    );
     throw new Error('Error occurred in deleting bot profile data');
   }
 };
@@ -174,10 +137,6 @@ export const exportBotProfileService = async (payload: any) => {
     });
     return response.data;
   } catch (error: any) {
-    console.error(
-      'Error exporting bot:',
-      error.response ? error.response.data : error.message
-    );
     throw new Error('Error exporting bot');
   }
 };
@@ -192,7 +151,6 @@ export const createKnowledgeBaseService = async (payload: any) => {
     );
     return response.data;
   } catch (error) {
-    console.error('Error creating knowledge base:', error);
     throw new Error('Error creating knowledge base');
   }
 };
@@ -206,10 +164,6 @@ export const getUserKnowledgeBaseService = async (payload: any) => {
     );
     return response.data;
   } catch (error: any) {
-    console.error(
-      'Error fetching user Bot profile:',
-      error.response ? error.response.data : error.message
-    );
     throw new Error('Error: get User Knowledge Base');
   }
 };
@@ -217,16 +171,11 @@ export const getUserKnowledgeBaseService = async (payload: any) => {
 //delete knowledge base
 export const deleteUserKnowledgeBaseService = async (payload: any) => {
   try {
-    // console.log('del', payload);
     const response = await axiosInstance.put(
       `user/deleteUserKnowledgeBase?docId=${payload.docId}&userId=${payload?.userId}`
     );
     return response.data;
   } catch (error: any) {
-    console.error(
-      'Error fetching user Bot profile:',
-      error.response ? error.response.data : error.message
-    );
     throw new Error('Error: delete User Knowledge Base');
   }
 };
@@ -254,34 +203,24 @@ export const getUserChatService = async (payload: any) => {
     const response = await axiosInstance.post('user/sessionChat', payload);
     return response.data;
   } catch (error: any) {
-    console.error('Error signing up user:', error.response.data.error);
-    // 2;
     throw new Error(`${error?.response?.data?.error}`);
   }
 };
 
 export const getUserAllSessionService = async (payload: any) => {
   try {
-    // console.log('get user getsession', payload);
     const response = await axiosInstance.post(`user/getSession`, payload);
-    // // console.log("res all session",response)
     return response.data;
   } catch (error) {
-    console.error('Error signing up user:', error);
-    2;
     throw new Error('Error: Getting user all session');
   }
 };
 
 export const getAdvanceFeatureService = async (payload: any) => {
   try {
-    // // console.log("get user getsession",payload)
     const response = await axiosInstance.post(`user/chat-analysis`, payload);
-    // // console.log("res all session",response)
     return response.data;
   } catch (error) {
-    console.error('Error signing up user:', error);
-    2;
     throw new Error('Error: Getting Advance Feature');
   }
 };
@@ -289,7 +228,6 @@ export const getAdvanceFeatureService = async (payload: any) => {
 export const processPayPalPaymentService = async (payload: any) => {
   try {
     const response = await axiosInstance.post(`/payment/create`, payload);
-    // console.log('response of payment', response.data);
     return response.data;
   } catch (error) {
     throw new Error('Payment processing failed');
@@ -297,8 +235,6 @@ export const processPayPalPaymentService = async (payload: any) => {
 };
 
 export const capturePaymentService = async (_id: string) => {
-  // console.log('response of capture', _id);
   const response = await axiosInstance.post(`/payment/capture/${_id}`);
-  // console.log('response of capture', response.data);
   return response.data;
 };

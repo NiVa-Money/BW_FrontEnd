@@ -5,8 +5,6 @@ import { RootState } from '@/redux/configureStore';
 import * as React from 'react';
 import PersonIcon from '@mui/icons-material/Person';
 import { useDispatch, useSelector } from 'react-redux';
-import { faPlus } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Link from 'next/link';
 
 const ProfileComponent: React.FC = () => {
@@ -37,14 +35,12 @@ const ProfileComponent: React.FC = () => {
   }, []);
 
   const handleDeleteProfile = () => {
-    console.log('Button Clicked'); // This should log to the console
     if (userEmail) {
       alert(`User Subscription Plan  cancelled`); // This should pop up a dialog box
-      console.log(`User Subscription Plan  cancelled`); // This should log to the console
     } else {
       console.log('No plan found');
     }
-  };  
+  };
 
   return (
     <div className="flex flex-col w-[90%] p-6 bg-[#0B031E] text-white">
@@ -66,8 +62,9 @@ const ProfileComponent: React.FC = () => {
 
       <div className="mt-10">
         <button
-            onClick={handleDeleteProfile} 
-            className="flex  justify-center  text-xl font-medium text-gray-100 bg-[#3F2181] rounded-[60px]">
+          onClick={handleDeleteProfile}
+          className="flex  justify-center  text-xl font-medium text-gray-100 bg-[#3F2181] rounded-[60px]"
+        >
           <Link href="/membership" className="flex px-14 py-3 gap-2">
             <span>Cancel Subscription Plan</span>
           </Link>

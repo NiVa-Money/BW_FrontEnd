@@ -56,34 +56,27 @@ const NewChatComponent: React.FC = () => {
   const handleBotClick = (index: any, botId: any, botName: any) => {
     setSelectedBotName(botName);
     setActiveBotIndex(index);
-    // console.log('allSession', allSession.data.sessions);
     const data = {
       filteredSessions: [],
       sessionId: null,
     };
     dispatch(filteredSession(data));
-    // console.log('Selected Bot ID:', botId);
     setBotId(botId);
     setIsBotProfileOpen(!isBotProfileOpen);
   };
 
   const getChatHistory = () => {
-    // console.log('userId', userId);
     dispatch(getAllSession(userId));
   };
 
   const sendMessage = (event: any) => {
     setIsAutoScrollEnabled(true);
     event.preventDefault();
-    // console.log('botProfiles', newMessage);
     if (newMessage.trim() !== '') {
-      // console.log('botProfiles', newMessage);
-
       setQuestion(newMessage);
       setMessages([...messages, { text: newMessage, sender: 'user' }]);
       dispatch(sendUserQuestionOnly({ text: newMessage, sender: 'user' }));
       setNewMessage('');
-      // console.log("sessionId",sessionId)
       const data = {
         userId: userId,
         sessionId: sessionId,
@@ -91,8 +84,6 @@ const NewChatComponent: React.FC = () => {
         subscriptionPlanId: 'subscriptionPlanId1',
         botId: botId,
       };
-      // console.log('data user chat', data);
-      // sendDataToBackend(data);
       dispatch(sendUserQuestion(data));
     }
   };
@@ -108,11 +99,9 @@ const NewChatComponent: React.FC = () => {
   };
 
   const getSession = (sessionId: any) => {
-    // setSessionId(sessionId)
     const filteredSessions = allSession?.data?.sessions?.filter(
       (session: any) => session._id === sessionId
     );
-    // console.log("filterSession",filteredSessions[0].sessions)
     const data = {
       filteredSessions,
       sessionId,
@@ -136,12 +125,6 @@ const NewChatComponent: React.FC = () => {
   };
 
   React.useEffect(() => {
-    // console.log('allSession', allSession.data.sessions);
-  }, [allSession]);
-
-  React.useEffect(() => {
-    // console.log('messagesLeft', messagesLeft);
-    // console.log('allSession', allSession.data.sessions);
     const data = {
       filteredSessions: [],
       sessionId: null,
@@ -150,15 +133,8 @@ const NewChatComponent: React.FC = () => {
   }, []);
 
   React.useEffect(() => {
-    // console.log('sessionId useEffect', sessionId);
-  }, [sessionId]);
-
-  React.useEffect(() => {
-    // console.log('userChatMessagesRes', userChatMessagesRes);
     setSessionId(userChatMessagesRes?.sessionId);
     scrollToBottom();
-    // console.log('newMessage', newMessage);
-    // console.log('botProfiles', botProfiles);
   }, [userChatMessagesRes]);
 
   const scrollToBottom = () => {
@@ -179,7 +155,6 @@ const NewChatComponent: React.FC = () => {
   }, [isAutoScrollEnabled]);
 
   const handleTypingComplete = () => {
-    // console.log("Typing complete");
     setIsAutoScrollEnabled(false);
   };
 
@@ -270,13 +245,13 @@ const NewChatComponent: React.FC = () => {
               className="flex gap-2.5 justify-center p-2.5 text-xl font-medium text-white rounded-t-lg cursor-pointer"
               onClick={toggleBotProfile}
             >
-          <div>Bot Profile</div>
+              <div>Bot Profile</div>
               <img
                 src="https://cdn.builder.io/api/v1/image/assets/TEMP/ecfab022e56ef6ff0a58045a291327eda3e871d2c6c2576eee117363bc12ecf0?apiKey=555c811dd3f44fc79b6b2689129389e8&"
-                className={`shrink-0 aspect-square w-[30px] transition-transform duration-300 ${isBotProfileOpen ? 'rotate-180' : ''
-                  }`}
+                className={`shrink-0 aspect-square w-[30px] transition-transform duration-300 ${
+                  isBotProfileOpen ? 'rotate-180' : ''
+                }`}
                 alt="Bot Profile"
-                
               />
             </div>
             {/* selection box */}
@@ -291,8 +266,9 @@ const NewChatComponent: React.FC = () => {
                 {botProfiles?.botProfiles?.data?.map((bot: any, index: any) => (
                   <div
                     key={index}
-                    className={`mb-2 flex justify-center items-center cursor-pointer ${activeBotIndex === index ? 'bg-[#3E3556]' : ''
-                      }`}
+                    className={`mb-2 flex justify-center items-center cursor-pointer ${
+                      activeBotIndex === index ? 'bg-[#3E3556]' : ''
+                    }`}
                     onClick={() => handleBotClick(index, bot._id, bot.botName)}
                   >
                     <div className="flex justify-center items-center px-2 py-2 text-white">
@@ -337,28 +313,32 @@ const NewChatComponent: React.FC = () => {
             return (
               <div className="flex w-full" key={index}>
                 <div
-                  className={`flex ${message?.sender === 'user' ? 'justify-end' : 'justify-start'
-                    } w-full`}
+                  className={`flex ${
+                    message?.sender === 'user' ? 'justify-end' : 'justify-start'
+                  } w-full`}
                 >
                   <div
-                    className={`${message?.sender === 'user'
+                    className={`${
+                      message?.sender === 'user'
                         ? 'text-right ml-auto'
                         : 'text-left mr-auto'
-                      } max-md:w-full`}
+                    } max-md:w-full`}
                   >
                     <div
-                      className={`${message?.sender === 'user'
+                      className={`${
+                        message?.sender === 'user'
                           ? 'text-xl font-medium text-white'
                           : 'grow text-xl font-medium text-white max-md:mt-10'
-                        }`}
+                      }`}
                     >
                       {message?.sender !== 'user' ? (
                         <div
                           id="typewriter-gpt-2"
-                          className={`${message?.sender === 'user'
+                          className={`${
+                            message?.sender === 'user'
                               ? 'p-2.5 bg-[#5D39AD] rounded-xl'
                               : 'p-2.5 bg-[#2D2640] rounded-xl chat-box-size'
-                            }`}
+                          }`}
                         >
                           <ReactTyped
                             strings={[formattedText]}
@@ -369,10 +349,11 @@ const NewChatComponent: React.FC = () => {
                         </div>
                       ) : (
                         <div
-                          className={`${message?.sender === 'user'
+                          className={`${
+                            message?.sender === 'user'
                               ? 'p-2.5 bg-[#5D39AD] rounded-xl'
                               : 'p-2.5 bg-[#2D2640] rounded-xl chat-box-size'
-                            }`}
+                          }`}
                           dangerouslySetInnerHTML={{ __html: formattedText }}
                         />
                       )}
@@ -404,8 +385,8 @@ const NewChatComponent: React.FC = () => {
               lastMessageFrom == undefined
                 ? false
                 : lastMessageFrom == 'receiver'
-                  ? false
-                  : true
+                ? false
+                : true
             }
           />
           <button

@@ -1,13 +1,9 @@
 'use client';
 
 import React, { useState, useEffect, useRef } from 'react';
-import {
-  editBotProfileAction,
-  getUserBotProfileAction,
-} from '../../redux/actions/BotProfileActions';
+import { editBotProfileAction } from '../../redux/actions/BotProfileActions';
 import Image from 'next/image';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
-import FileUploadIcon from '@mui/icons-material/FileUpload';
 import ZoomOutMapIcon from '@mui/icons-material/ZoomOutMap';
 import Link from 'next/link';
 import { RootState } from '@/redux/configureStore';
@@ -56,12 +52,9 @@ const EditBotComponent: React.FC = () => {
       const id = searchParams.get('id');
       if (id) {
         setBotId(id);
-        // // console.log('Bot ID from URL:', id);
       } else {
-        // // console.log('ID not found in search params');
       }
     } else {
-      // // console.log('SearchParams is null');
     }
   }, [searchParams]);
 
@@ -76,8 +69,6 @@ const EditBotComponent: React.FC = () => {
   const knowledgeBaseData = useSelector(
     (state: RootState) => state.KnowledgeBase?.user?.data
   );
-
-  // // console.log('knowledgeBaseData', knowledgeBaseData);
 
   const dispatch = useDispatch();
   const [step, setStep] = useState(1);
@@ -267,8 +258,6 @@ const EditBotComponent: React.FC = () => {
       dispatch(editBotProfileAction(formData));
 
       router.push('/mychatbots');
-    } else {
-      console.error('Bot ID is not available.');
     }
   };
 
@@ -277,12 +266,7 @@ const EditBotComponent: React.FC = () => {
       const id = searchParams.get('id');
       if (id) {
         setBotId(id);
-        // console.log('Bot ID from URL:', id);
-      } else {
-        // console.log('ID not found in search params');
       }
-    } else {
-      // console.log('SearchParams is null');
     }
   }, [searchParams]);
 
@@ -321,7 +305,6 @@ const EditBotComponent: React.FC = () => {
           value={botName}
           onChange={(e) => {
             setBotName(e.target.value);
-            // console.log(e.target.value);
           }}
           className="w-full bg-[#171029] text-white p-2 rounded-[12px]"
         />
@@ -367,7 +350,6 @@ const EditBotComponent: React.FC = () => {
               className="mr-2 mt-10 w-[90px] h-[80px] relative overflow-hidden"
             >
               <Image
-               
                 src={item.imageUrl}
                 alt="logo"
                 layout="fill"

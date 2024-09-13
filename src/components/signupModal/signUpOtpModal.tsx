@@ -12,7 +12,7 @@ interface OtpModalProps {
 }
 
 const SignUpModalOtp: React.FC<OtpModalProps> = ({ viewOtp, setViewOtp }) => {
-  const [otp, setOtp] = useState(new Array(4).fill("")); // Assuming a 6-digit OTP
+  const [otp, setOtp] = useState(new Array(4).fill('')); // Assuming a 6-digit OTP
   const dispatch = useDispatch();
   const router = useRouter();
   const inputRefs = useRef<any>([]);
@@ -22,31 +22,23 @@ const SignUpModalOtp: React.FC<OtpModalProps> = ({ viewOtp, setViewOtp }) => {
   const resOtp = useSelector((state: RootState) => state?.root?.otp);
 
   useEffect(() => {
-    // console.log('resOtp', resOtp);
     localStorage.setItem('user_id', resOtp?.data?.user_id);
     localStorage.setItem('token', resOtp?.data?.token);
-    if(resOtp?.data?.success){
-      router.push('/dashboard')
+    if (resOtp?.data?.success) {
+      router.push('/dashboard');
     }
   }, [resOtp]);
-
-  useEffect(() => {
-    // console.log('emailId', emailId);
-  }, [emailId]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     const otpValue = otp.join('');
     if (otpValue.length === 3 || otpValue.length === 4) {
-      // console.log('submit otp', otpValue, emailId);
       const data = {
         emailId: emailId,
         otp: otpValue,
       };
-      // Handle OTP verification logic
       dispatch(verifyOtp(data));
       router.push('/login');
-      // console.log('OTP submitted:', otpValue);
     } else {
       console.error('OTP must be 3 or 4 digits');
     }
@@ -56,7 +48,7 @@ const SignUpModalOtp: React.FC<OtpModalProps> = ({ viewOtp, setViewOtp }) => {
     dispatch(removeModalOtp());
   };
 
-  const handleChange = (index:any, value:any) => {
+  const handleChange = (index: any, value: any) => {
     if (!/^\d*$/.test(value)) return; // Only allow digits
     const newOtp = [...otp];
     newOtp[index] = value;
@@ -67,8 +59,8 @@ const SignUpModalOtp: React.FC<OtpModalProps> = ({ viewOtp, setViewOtp }) => {
     }
   };
 
-  const handleBackspace = (index:any, e:any) => {
-    if (e.key === "Backspace" && index > 0 && otp[index] === "") {
+  const handleBackspace = (index: any, e: any) => {
+    if (e.key === 'Backspace' && index > 0 && otp[index] === '') {
       inputRefs.current[index - 1].focus(); // Move to the previous input on Backspace
     }
   };
