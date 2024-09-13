@@ -7,11 +7,27 @@ export default function paymentReducer(
 ) {
   switch (action.type) {
     case FETCH_PLANS:
-      return { ...state, loading: true };
+      return { ...state, 
+        plans: {
+        ...state.plans,
+        loading: true,
+      },};
     case FETCH_PLANS_SUCCESS:
-      return { ...state, loading: false, plans: action.payload };
+      return { ...state, 
+        plans: {
+          ...state.plans,
+          loading: false,
+          plans: action.payload,  // Update the `plans` array
+        },
+      };
     case FETCH_PLANS_FAILURE:
-      return { ...state, loading: false, error: action.payload };
+      return { ...state, 
+        plans: {
+          ...state.plans,
+          loading: false,
+          error: action.payload,
+        },
+       };
     case CREATE_PAYMENT_REQUEST:
     case CAPTURE_PAYMENT_REQUEST:
       return {

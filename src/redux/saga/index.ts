@@ -548,14 +548,24 @@ export function* getAdvanceFeatureSaga({
 
 function* fetchPlansSaga(): Generator<any> {
   try {
-    const response: any = yield call(fetchPlansApi); // Call the API function
-    const data = yield response.json();
-    const filteredData = data.map((plan: { name: any; price: any; }) => ({
+    const response: Response = yield call(fetchPlansApi); // Call the API function
+      // Ensure response is an array and not empty
+      if (!Array.isArray(response) || response.length === 0) {
+        throw new Error('No plans found or invalid data format');
+      }
+    // const data = yield response.json();
+    console.log('API response data:', response);
+    
+    // Process data if needed
+    const filteredData = response.map((plan: { name: any; price: any; }) => ({
       name: plan.name,
       price: plan.price,
     }));
+    console.log('Filtered data:', filteredData);
+
     yield put(fetchPlansSuccess(filteredData)); // Dispatch success action
   } catch (error) {
+    console.error('Fetch plans failed with error:', error);
     yield put(fetchPlansFailure('Plans fetch failed')); // Dispatch failure action 
   }
 }

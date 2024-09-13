@@ -174,11 +174,13 @@ const PricingCard = () => {
   const pathname = usePathname();
   const dispatch = useDispatch();
 
-  const { plans, loading, error } = useSelector((state: RootState) => state.payment.plans);
+  const { plans } = useSelector((state: RootState) => state.payment.plans);
+  console.log('plans',plans);
+
 
   useEffect(() => {
     dispatch(fetchPlans());
-  }, [dispatch]);
+  } , []);
 
   useEffect(() => {
     // Check if returning from PayPal
@@ -255,34 +257,13 @@ const PricingCard = () => {
     },
   ];
 
-  // Replace name and price of 'Basic', 'Starter', 'Pro' tiers with API data
-  // const updatedTiers = pricingTiers.map((tier) => {
-  //   const apiPlan = plans?.find(
-  //     (plan: { name: string; }) =>
-  //       (plan.name.toLowerCase() === 'basic' && tier.title === 'Basic') ||
-  //       (plan.name.toLowerCase() === 'starter' && tier.title === 'BotWot Starter') ||
-  //       (plan.name.toLowerCase() === 'pro' && tier.title === 'BotWot Pro')
-  //   );
-  
-  //   if (apiPlan) {
-  //     return {
-  //       ...tier,
-  //       title: apiPlan.name.charAt(0).toUpperCase() + apiPlan.name.slice(1), // Capitalize title
-  //       price: apiPlan.price.toString(), // Use the price from the API
-  //       sessions: `${apiPlan.meta.sessionLimit} Messages`, // Use the session limit from the API
-  //     };
-  //   }
-  //   return tier; // Return the default tier if no match is found
-  // });
-
   const updatedTiers = pricingTiers.map((tier) => {
     if (tier.title !== 'Custom') {
-      const apiPlan = getPlanDetails(tier.title);
+      const apiPlan = plans?.find((plan: any) => plan.name.toLowerCase() === tier.title.toLowerCase());
       if (apiPlan) {
         return {
           ...tier,
           price: apiPlan.price.toFixed(2),
-          sessions: `${apiPlan.meta.sessionLimit.toLocaleString()} Messages`,
         };
       }
     }
