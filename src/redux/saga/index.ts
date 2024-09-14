@@ -91,6 +91,8 @@ import { notifyError, notifySuccess } from '@/components/Toaster/toast';
 import {
   capturePaymentFailure,
   capturePaymentSuccess,
+  createPaymentFailure,
+  createPaymentSuccess,
   fetchPlansFailure,
   fetchPlansSuccess,
 } from '../actions/paymentActions';
@@ -563,33 +565,22 @@ function* fetchPlansSaga(): Generator<any> {
     }));
     console.log('Filtered data:', filteredData);
 
-    yield put(fetchPlansSuccess(filteredData)); // Dispatch success action
+    yield put(fetchPlansSuccess(filteredData )); // Dispatch success action
   } catch (error) {
     console.error('Fetch plans failed with error:', error);
     yield put(fetchPlansFailure('Plans fetch failed')); // Dispatch failure action 
   }
 }
 
-export function* payPalPaymentSaga({
-  payload,
-}: {
-  type: string;
-  payload: any;
-}): Generator<any> {
+export function* payPalPaymentSaga({ payload }: { type: string; payload: { planId: string; data: any } }): Generator<any> {
   try {
-    const response: any = yield call(processPayPalPaymentService, payload);
-    yield put({
-      type: CREATE_PAYMENT_SUCCESS,
-      payload: response,
-      paypalUrl: response.paypalUrl,
-    });
-
+    const { planId, data } = payload;
+    const response: any = yield call(processPayPalPaymentService, planId, data);
+    
+    yield put(createPaymentSuccess(response));
     notifySuccess('Payment processed successfully');
   } catch (error: any) {
-    yield put({
-      type: CREATE_PAYMENT_FAILURE,
-      payload: error.message,
-    });
+    yield put(createPaymentFailure(error.message));
     notifyError('Payment processing failed');
   }
 }
@@ -602,7 +593,7 @@ export function* capturePaymentSaga({
 }): Generator<any> {
   try {
     const response = yield call(capturePaymentService, payload);
-    const paymentId = (response as { _id: string })._id;
+    const subscriptionId = (response as { _id: string })._id;
     // // Save the captured payment response in Redux
     yield put(capturePaymentSuccess(response));
     notifySuccess('Payment captured successfully');

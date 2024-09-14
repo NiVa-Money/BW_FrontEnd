@@ -211,35 +211,35 @@ const PricingCard = () => {
     {
       title: 'Basic', // This will be replaced by API data
       price: '0.00', // This will be replaced by API data
-      sessions: '100 Messages',
+      sessions: '10,000 Messages',
       features: [
         'Access to essential features for creating your AI chatbot.',
-        'Suitable for up to 100 chat messages.',
-        'Manage 1 Bot Profile with 1 Knowledge Base.',
+        'Suitable for up to 10,000 chat messages.',
+        'Manage 2 Bot Profile with 2 Knowledge Base.',
         'Text uploads allowed for content.',
       ],
       backgroundColor: 'bg-pink-400',
     },
     {
-      title: 'BotWot Starter', // This will be replaced by API data
+      title: 'Starter', // This will be replaced by API data
       price: '29.99', // This will be replaced by API data
-      sessions: '10,000 Messages',
+      sessions: '20,000 Messages',
       features: [
         'Advanced tools to create and manage your chatbot, featuring AI-generated responses.',
-        'Suitable for up to 10,000 chat messages.',
-        'Manage 2 Bot Profiles with 2 Knowledge Bases.',
+        'Suitable for up to 20,000 chat messages.',
+        'Manage 3 Bot Profiles with 4 Knowledge Bases.',
         'Text, PNG, JPEG uploads allowed for content.',
       ],
       backgroundColor: 'bg-indigo-500',
     },
     {
-      title: 'BotWot Pro', // This will be replaced by API data
+      title: 'Pro', // This will be replaced by API data
       price: '59.99', // This will be replaced by API data
-      sessions: '20,000 Messages',
+      sessions: '50,000 Messages',
       features: [
         'Enhanced features for extensive chatbot needs with AI-generated responses.',
-        'Suitable for up to 20,000 chat messages.',
-        'Manage 4 Bot Profiles with 4 Knowledge Bases.',
+        'Suitable for up to 50,000 chat messages.',
+        'Manage 5 Bot Profiles with 6 Knowledge Bases.',
         'Text, PNG, JPEG, PDF, Excel, and Word uploads allowed.',
       ],
       backgroundColor: 'bg-fuchsia-950',
@@ -316,14 +316,12 @@ const PricingCard = () => {
                     Start For Free
                   </button>
                 ) : (
-                  tier.title !== 'Basic' && (
                     <PayPalButton
                       planName={tier.title}
                       price={tier.price}
                       userId={'userId'}
                       onPaymentSuccess={handlePaymentSuccess}
                     />
-                  )
                 )
               }
             />

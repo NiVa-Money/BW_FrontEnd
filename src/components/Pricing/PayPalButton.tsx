@@ -22,6 +22,7 @@ const PayPalButton: React.FC<PayPalButtonProps> = ({
   const userId = useSelector(
     (state: RootState) => state.root?.userData?.user_id
   );
+  const planId = useSelector((state: RootState) => state.payment?._id);
   const planName = useSelector((state: RootState) => state.payment?.planName);
   const paypalUrl = useSelector((state: RootState) => state.payment?.paypalUrl);
   const paypalCreateLoader = useSelector(
@@ -63,11 +64,7 @@ const PayPalButton: React.FC<PayPalButtonProps> = ({
       setIsPaymentInitiated(true);
       dispatch(
         createPaymentRequest({
-          userId,
-          amount: Number(price),
-          currency: 'USD',
-          paymentGateway: 'paypal',
-          planName,
+          planId,
         })
       );
     } catch (error) {
