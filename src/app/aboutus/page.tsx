@@ -2,7 +2,7 @@ import React from 'react';
 
 const AboutUs = () => {
   return (
-    <div>
+    <>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="shadow-xl rounded-2xl p-8 bg-[linear-gradient(180deg,_#2B243C_0%,_#0B031E_100%)] border-[2px] border-[solid] border-[#2B243C]">
           <h1 className="text-4xl font-bold mb-6 text-white">
@@ -125,7 +125,7 @@ const AboutUs = () => {
           </p>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

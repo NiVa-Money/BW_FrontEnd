@@ -3,9 +3,9 @@ import React from 'react';
 
 const BotSession = () => {
   return (
-    <div>
+    <>
       <BotSessionComponent />
-    </div>
+    </>
   );
 };
 

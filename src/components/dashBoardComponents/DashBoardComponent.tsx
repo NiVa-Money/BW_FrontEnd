@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { SqureCardOne } from '@/components/dashBoardComponents/squreCardOne';
 import { SqureCardTwo } from '@/components/dashBoardComponents/squreCardTwo';
-import { CardHeader1 } from '@/components/dashBoardComponents/headerCard';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '@/redux/configureStore';
 import { useEffect, useState } from 'react';
@@ -12,6 +11,7 @@ import { getUserProfileAction } from '@/redux/actions/authActions';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import withAuth from '../withAuth';
+import CardHeaderOne from './CardHeaderOne';
 
 const DashBoardComponent: React.FC = () => {
   const userEmail = useSelector((state: RootState) => state.root?.user?.email);
@@ -91,6 +91,9 @@ const DashBoardComponent: React.FC = () => {
       dispatch(getUserProfileAction(userEmail));
     }
   }, []);
+  const memoizedCardHeaderOne = React.useMemo(() => {
+    return <CardHeaderOne userMetricData={userMetricData} />;
+  }, [userMetricData]);
 
   useEffect(() => {
     const savedMetrics = localStorage.getItem('metricsData');
@@ -181,7 +184,7 @@ const DashBoardComponent: React.FC = () => {
         </div>
         <div className="relative bg-[#1E1935] w-full md:w-[40%] rounded-2xl p-4 m-1 ">
           <div className={`${styles.textSize} mb-8`}>Resolved/UnResolved</div>
-          <CardHeader1 />
+          {memoizedCardHeaderOne}
         </div>
 
         <div className="flex w-full md:w-[20%] h-[40vh] md:h-[98%] flex-col gap-4 m-1">
@@ -225,7 +228,6 @@ const DashBoardComponent: React.FC = () => {
           </div>
           <div className={`${styles.textSize} gap-[8px] flex text-gray-400`}>
             <div>Membership Plan </div>
-           
           </div>
         </div>
         <div className="bg-[#1E1935] w-full md:w-[70%] rounded-2xl p-4 m-1">
