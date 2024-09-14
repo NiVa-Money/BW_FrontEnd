@@ -559,9 +559,10 @@ function* fetchPlansSaga(): Generator<any> {
     console.log('API response data:', response);
     
     // Process data if needed
-    const filteredData = response.map((plan: { name: any; price: any; }) => ({
+    const filteredData = response.map((plan: { name: any; price: any; _id: any;}) => ({
       name: plan.name,
       price: plan.price,
+      planId : plan._id,
     }));
     console.log('Filtered data:', filteredData);
 

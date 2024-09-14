@@ -237,6 +237,7 @@ export const fetchPlansApi = async () => {
 export const processPayPalPaymentService = async (planId: string , payload: any) => {
   try {
     const response = await axiosInstance.post(`/payment/subscription/${planId}`, payload);
+    console.log('response', response);
     return response.data;
   } catch (error) {
     throw new Error('Payment processing failed');

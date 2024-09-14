@@ -209,11 +209,6 @@ const PricingCard = () => {
   };
 
   // Default pricing tiers with placeholders for API data
-  const getPlanDetails = (planName: string) => {
-    return plans?.find((plan: any) => plan.name.toLowerCase() === planName.toLowerCase());
-  };
-
-  // Default pricing tiers with placeholders for API data
   const pricingTiers = [
     {
       title: 'Basic', // This will be replaced by API data
@@ -271,6 +266,7 @@ const PricingCard = () => {
         return {
           ...tier,
           price: apiPlan.price.toFixed(2),
+          planId: apiPlan.planId
         };
       }
     }
