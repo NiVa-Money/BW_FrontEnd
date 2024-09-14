@@ -54,7 +54,6 @@ const PayPalButton: React.FC<PayPalButtonProps> = ({
         throw new Error('Payment capture failed');
       }
     } catch (error) {
-      console.error('Transaction failed:', error);
       window.location.href = '/membership-failure'; // Redirect to failure page
     }
   };

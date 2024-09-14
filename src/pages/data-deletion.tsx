@@ -1,5 +1,5 @@
 'use client';
-import Toast, { notifySuccess } from '@/components/Toaster/toast';
+import { notifyError, notifySuccess } from '@/components/Toaster/toast';
 import axiosInstance from '@/utils/axiosConfig';
 import React, { useState } from 'react';
 
@@ -55,8 +55,8 @@ const DataDeletionPage: React.FC = () => {
       );
       setStep((prevStep) => prevStep + 1);
       notifySuccess('OTP sent on registered email');
-    } catch (error) {
-      console.error('Error:', error);
+    } catch (error: any) {
+      notifyError(`${error.response.data.message}`);
     }
   };
 
@@ -75,8 +75,9 @@ const DataDeletionPage: React.FC = () => {
         ...prevData,
         userId: response.data.user_id,
       }));
-    } catch (error) {
-      console.error('Error:', error);
+      notifySuccess('OTP has been verified successfully.');
+    } catch (error: any) {
+      notifyError(`${error.response.data.message}`);
     }
   };
   const deleteUser = async () => {
@@ -92,6 +93,7 @@ const DataDeletionPage: React.FC = () => {
         }
       );
       setDeletedSuccess(true);
+      notifySuccess('Your account has been deleted successfully.');
     } catch (error) {
       console.error('Error:', error);
     }
@@ -210,7 +212,7 @@ const DataDeletionPage: React.FC = () => {
   return (
     <div className="flex items-center justify-center min-h-screen">
       <div className="w-full max-w-md bg-black p-8 rounded-lg shadow-lg">
-        {!deletedSuccess ? (
+        {deletedSuccess ? (
           <>
             <h2 className="text-2xl font-bold text-white mb-6">
               Account Deletion Form
@@ -255,8 +257,11 @@ const DataDeletionPage: React.FC = () => {
             </form>
           </>
         ) : (
-          <div className="text-2xl font-bold text-white">
-            Your account has been deleted successfully.
+          <div className="text-2xl font-bold text-white flex flex-col">
+            <span>
+              Please be advised that if you do not retrieve your account within
+              90 days, it will be permanently deleted.
+            </span>
           </div>
         )}
       </div>

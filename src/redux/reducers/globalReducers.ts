@@ -96,7 +96,6 @@ export default function globalReducers(state = initialState.root, action: any) {
       };
 
     case LOGIN_SUCCESS:
-      // console.log("LOGIN_SUCCESS",LOGIN_SUCCESS)
       return {
         ...state,
         user: action.payload,
@@ -126,7 +125,6 @@ export default function globalReducers(state = initialState.root, action: any) {
         error: null,
       };
     case PASSWORD_LOGIN_FAILURE:
-      // console.log('PASSWORD_LOGIN_FAILURE' , action.payload)
       return {
         ...state,
         userData: action.payload,

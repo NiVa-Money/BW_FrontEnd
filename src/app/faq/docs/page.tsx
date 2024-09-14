@@ -3,9 +3,9 @@ import AboutSection from '../AboutSection'
 
 const Docs = () => {
   return (
-    <div>
+    <>
       <AboutSection />
-    </div>
+    </>
   )
 }
 

@@ -4,7 +4,6 @@ import TutorialCard from './TutorialCard';
 import SectionHeader from './SectionHeader';
 import Divider from './Divider';
 import Link from 'next/link';
-// Resources data
 
 const resources = [
   {
@@ -69,7 +68,6 @@ const basicTutorials = [
   },
 ];
 const HelpCenter: React.FC = () => {
-  console.log('basicTutorials',basicTutorials)
   return (
     <main className="flex flex-col px-12 py-20 max-md:px-5">
       <h1 className="mt-5 text-5xl font-bold tracking-tighter text-white leading-[58px] max-md:max-w-full max-md:text-4xl max-md:leading-[54px]">
@@ -117,14 +115,14 @@ const HelpCenter: React.FC = () => {
               key={index}
               className="flex flex-col w-[33%] max-md:ml-0 max-md:w-full"
             >
-            <video
-              className="grow w-full rounded-xl border border-solid aspect-[1.52] border-neutral-700 max-md:mt-5"
-              loop
-              controls
-              muted
-            >
-              <source src={tutorial.imageSrc} type="video/mp4"/>
-            </video>
+              <video
+                className="grow w-full rounded-xl border border-solid aspect-[1.52] border-neutral-700 max-md:mt-5"
+                loop
+                controls
+                muted
+              >
+                <source src={tutorial.imageSrc} type="video/mp4" />
+              </video>
             </div>
           ))}
         </div>

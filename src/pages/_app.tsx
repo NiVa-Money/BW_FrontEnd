@@ -9,6 +9,7 @@ import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 import Image from 'next/image';
 import Head from 'next/head';
+import Toast from '@/components/Toaster/toast';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -43,6 +44,7 @@ function MyApp({ Component, pageProps }: AppProps) {
           <Footer />
         </div>
       </PersistGate>
+      <Toast />
     </Provider>
   );
 }
