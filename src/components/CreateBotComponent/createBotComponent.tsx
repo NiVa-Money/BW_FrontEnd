@@ -11,7 +11,6 @@ import { RootState } from '@/redux/configureStore';
 import { createBotProfileAction } from '@/redux/actions/BotProfileActions';
 import Switch from '@mui/material/Switch';
 import { HexColorPicker } from 'react-colorful';
-import { BackgroundCss } from '../BackgroundAnimation/backgroundCss';
 import withAuth from '../withAuth';
 const CreateBotComponent: React.FC = () => {
   const [step, setStep] = useState(1);
@@ -34,24 +33,16 @@ const CreateBotComponent: React.FC = () => {
   const [greetingMessage, setGreetingMessage] = useState(
     'Hi, How can I assist you today?'
   );
-  const questionsSamples = [
-    'What subscription plans do you offer?',
-    'How do I upgrade or downgrade my subscription?',
-    'How do I cancel my subscription?',
-  ];
+
   const [imageSrc, setImageSrc] = useState('');
   const [imageName, setImageName] = useState('');
   const [filename, setFileName] = useState('');
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [selectedFileImage, setSelectedFileImage] = useState<File | null>(null);
   const dispatch = useDispatch();
-  const [textVal, setTextVal] = useState('');
   const [error, setError] = useState('');
   const [base64Image, setBase64Image] = useState('');
-
   const router = useRouter();
-  // Function to handle file upload
-
   const handleFileChange = async (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
@@ -78,19 +69,16 @@ const CreateBotComponent: React.FC = () => {
 
   const handleBotSampleClick = async (item: any) => {
     setImageSrc(item?.imageUrl);
-
     const response = await fetch(item?.imageUrl);
     const blob = await response.blob();
     const file = new File([blob], 'image.jpg', { type: blob.type });
     setSelectedFileImage(file);
   };
-
   const validateStep1 = () => {
     if (!botName) {
       setError('Please enter a bot name.');
       return false;
     }
-
     if (!imageSrc && !base64Image) {
       setError('Please select a bot icon or upload a custom bot icon.');
       return false;
@@ -100,7 +88,6 @@ const CreateBotComponent: React.FC = () => {
       setError('Please enter a valid greeting message.');
       return false;
     }
-
     setError('');
     return true;
   };
@@ -113,10 +100,6 @@ const CreateBotComponent: React.FC = () => {
     if (validateStep1()) {
       setStep(step + 1);
     }
-  };
-
-  const handleDivClick = (text: any) => {
-    setTextVal(text);
   };
 
   const handleBack = () => {
@@ -148,11 +131,6 @@ const CreateBotComponent: React.FC = () => {
       return;
     }
 
-    // if (!imageSrc) {
-    //   setError('Please select a icon.');
-    //   return;
-    // }
-
     if (!selectedFile) {
       setError('please select pdf file');
       return;
@@ -162,10 +140,6 @@ const CreateBotComponent: React.FC = () => {
       setError('Please enter a valid email address.');
       return;
     }
-    // if (!validatePhoneNumber(supportPhone)) {
-    //   setError('Please enter a valid phone number with 10 digits.');
-    //   return;
-    // }
 
     const formData = new FormData();
     const imageFile: any = base64Image ? base64Image : selectedFileImage;
@@ -182,13 +156,11 @@ const CreateBotComponent: React.FC = () => {
     formData.append('docType', knowledgeBase.length > 0 ? 'pdf' : '');
     formData.append('customBotImage', imageFile);
     formData.append('userId', userId);
-    // formData.append('botURL', imageSrc);
     if (selectedFile) {
       formData.append('file', selectedFile);
     }
     dispatch(createBotProfileAction(formData));
 
-    // dispatch(getUserBotProfileAction(userId));
     router.push('/mychatbots');
   };
 
@@ -513,7 +485,6 @@ const CreateBotComponent: React.FC = () => {
                 <input
                   type="text"
                   value={greetingMessage}
-                  onChange={(e) => setTextVal(e.target.value)}
                   className="w-full bg-[#171029] text-white p-2 rounded"
                 />
               </div>

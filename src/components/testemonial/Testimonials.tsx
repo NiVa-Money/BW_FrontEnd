@@ -11,23 +11,26 @@ interface Testimonial {
 
 const testimonials: Testimonial[] = [
   {
-    "name": "Deepika Manhari",
-    "text": "\"Conversational Alchemy\": Transform inquiries into magic with BotWot Chatbot Builder. 🚀🤖",
-    "quote": "\"BotWot turned our customer interactions into unforgettable experiences. The intuitive interface and powerful AI have our chatbots engaging users like never before.\"",
-    "img": "https://cdn.builder.io/api/v1/image/assets/TEMP/b7ad23889c1acca2a12804f00c11b12980fc398725762c81489fd00c54554c07?apiKey=555c811dd3f44fc79b6b2689129389e8&"
+    name: 'Deepika Manhari',
+    text: '"Conversational Alchemy": Transform inquiries into magic with BotWot Chatbot Builder. 🚀🤖',
+    quote:
+      '"BotWot turned our customer interactions into unforgettable experiences. The intuitive interface and powerful AI have our chatbots engaging users like never before."',
+    img: 'https://cdn.builder.io/api/v1/image/assets/TEMP/b7ad23889c1acca2a12804f00c11b12980fc398725762c81489fd00c54554c07?apiKey=555c811dd3f44fc79b6b2689129389e8&',
   },
   {
-    "name": "Gati Savarkar",
-    "text": "\"Always-On Assistants: Meet your new round-the-clock team members. BotWot chatbots never take a coffee break—they’re always there to assist.\"",
-    "quote": "\"BotWot’s chatbots are our 24/7 virtual assistants. They efficiently handle queries, gather leads, and even share a laugh. Truly dependable team members!\"",
-    "img": "/images/testPhoto.jpg"
+    name: 'Gati Savarkar',
+    text: '"Always-On Assistants: Meet your new round-the-clock team members. BotWot chatbots never take a coffee break—they’re always there to assist."',
+    quote:
+      '"BotWot’s chatbots are our 24/7 virtual assistants. They efficiently handle queries, gather leads, and even share a laugh. Truly dependable team members!"',
+    img: '/images/testPhoto.jpg',
   },
   {
-    "name": "Faizal Ameer",
-    "text": "\"Discover the secret sauce behind successful e-commerce: BotWot chatbots. They guide users through the buying journey, turning clicks into sales.\"",
-    "quote": "\"BotWot revolutionized our e-commerce strategy. Their chatbots engage customers, recommend products, and drive conversions. Our sales process has never been this seamless.\"",
-    "img": "/images/testPhoto2.jpg"
-  } 
+    name: 'Faizal Ameer',
+    text: '"Discover the secret sauce behind successful e-commerce: BotWot chatbots. They guide users through the buying journey, turning clicks into sales."',
+    quote:
+      '"BotWot revolutionized our e-commerce strategy. Their chatbots engage customers, recommend products, and drive conversions. Our sales process has never been this seamless."',
+    img: '/images/testPhoto2.jpg',
+  },
 ];
 
 const Testimonials: React.FC = () => {
@@ -36,13 +39,8 @@ const Testimonials: React.FC = () => {
   const nextTestimonial = () => {
     setCurrentIndex((prevIndex) => (prevIndex + 1) % testimonials.length);
   };
-
-  const prevTestimonial = () => {
-    setCurrentIndex((prevIndex) => (prevIndex - 1 + testimonials.length) % testimonials.length);
-  };
-
   useEffect(() => {
-    const interval = setInterval(nextTestimonial, 5000); 
+    const interval = setInterval(nextTestimonial, 5000);
     return () => clearInterval(interval);
   }, []);
 
@@ -56,8 +54,8 @@ const Testimonials: React.FC = () => {
       </p>
       <div className="mt-12 w-full max-w-3xl mx-auto relative">
         <div className="overflow-hidden">
-          <div 
-            className="flex transition-transform duration-300 ease-in-out" 
+          <div
+            className="flex transition-transform duration-300 ease-in-out"
             style={{ transform: `translateX(-${currentIndex * 100}%)` }}
           >
             {testimonials.map((testimonial, index) => (
@@ -68,8 +66,12 @@ const Testimonials: React.FC = () => {
                     className="w-16 h-16 rounded-full mb-4"
                     alt={`${testimonial.name}'s avatar`}
                   />
-                  <p className="text-fuchsia-700 font-semibold mb-2">{testimonial.name}</p>
-                  <p className="text-gray-400 text-center text-sm mb-4">{testimonial.text}</p>
+                  <p className="text-fuchsia-700 font-semibold mb-2">
+                    {testimonial.name}
+                  </p>
+                  <p className="text-gray-400 text-center text-sm mb-4">
+                    {testimonial.text}
+                  </p>
                   <blockquote className="text-xl text-gray-100 text-center font-semibold">
                     {testimonial.quote}
                   </blockquote>
@@ -85,7 +87,9 @@ const Testimonials: React.FC = () => {
               className={`h-2 w-2 rounded-full mx-1 ${
                 dotIndex === currentIndex % 3 ? 'bg-white' : 'bg-gray-500'
               }`}
-              onClick={() => setCurrentIndex(dotIndex + Math.floor(currentIndex / 3) * 3)}
+              onClick={() =>
+                setCurrentIndex(dotIndex + Math.floor(currentIndex / 3) * 3)
+              }
             ></button>
           ))}
         </div>

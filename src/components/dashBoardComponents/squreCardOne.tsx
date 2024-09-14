@@ -5,7 +5,6 @@ import { DonutChart, Legend } from '@tremor/react';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-
 interface SqureCardOneProps {
   sessionTotal: number;
   sessionLeft: number;
@@ -26,22 +25,6 @@ export function SqureCardOne({ sessionTotal, sessionLeft }: SqureCardOneProps) {
   const pathName = useSelector((state: RootState) => state.root?.pathName);
   const metrics = useSelector((state: RootState) => state.root.userMetric.data);
 
-  const [metricData, setMetricData] = useState({
-    sessionTotal: 0,
-    sessionLeft: 0,
-  });
-  
-  useEffect(() => {
-    const savedMetrics = localStorage.getItem('metricsData');
-    if (savedMetrics) {
-      try {
-        setMetricData(JSON.parse(savedMetrics));
-      } catch (error) {
-        console.error('Failed to parse metrics data from local storage', error);
-      }
-    }
-  }, []);
-
   useEffect(() => {
     if (verifyVal || pathName === '/dashboard') {
       dispatch(fetchMetricsAction(userId));
@@ -55,7 +38,6 @@ export function SqureCardOne({ sessionTotal, sessionLeft }: SqureCardOneProps) {
         sessionLeft = 0,
         botSessionMapping = [],
       } = metrics;
-      setMetricData({ sessionTotal, sessionLeft });
       try {
         localStorage.setItem(
           'metricsData',
@@ -71,32 +53,64 @@ export function SqureCardOne({ sessionTotal, sessionLeft }: SqureCardOneProps) {
 
   const mappingData = metrics?.botSessionMapping?.length
     ? metrics?.botSessionMapping.map((item: any) => {
-
         const obj: any = {
           name: item[0],
           value: item[1][0],
           status: item[1][1],
         };
         iteratorData.push(obj);
-
       })
     : [];
-  let colorIndex = 0;
 
-  
   return iteratorData?.length ? (
     <div className="flex">
       <DonutChart
         data={iteratorData}
         category="value"
         index="name"
-
-        colors={[ "violet", "purple", "fuchsia", "teal", "cyan", "sky", "blue", "indigo", "pink", "rose","red", "orange", "amber", "yellow", "lime", "green", "emerald"]}
+        colors={[
+          'violet',
+          'purple',
+          'fuchsia',
+          'teal',
+          'cyan',
+          'sky',
+          'blue',
+          'indigo',
+          'pink',
+          'rose',
+          'red',
+          'orange',
+          'amber',
+          'yellow',
+          'lime',
+          'green',
+          'emerald',
+        ]}
         className="w-80"
       />
       <Legend
         categories={iteratorData.map((item: { name: string }) => item.name)}
-        colors={[ "violet", "purple", "fuchsia", "teal", "cyan", "sky", "blue", "indigo", "pink", "rose","red", "orange", "amber", "yellow", "lime", "green", "emerald"]}      />
+        colors={[
+          'violet',
+          'purple',
+          'fuchsia',
+          'teal',
+          'cyan',
+          'sky',
+          'blue',
+          'indigo',
+          'pink',
+          'rose',
+          'red',
+          'orange',
+          'amber',
+          'yellow',
+          'lime',
+          'green',
+          'emerald',
+        ]}
+      />
     </div>
   ) : null;
 }

@@ -5,7 +5,6 @@ import {
   capturePaymentRequest,
 } from '@/redux/actions/paymentActions';
 import { RootState } from '@/redux/configureStore';
-import { useRouter } from 'next/navigation';
 
 type PayPalButtonProps = {
   planName: string;

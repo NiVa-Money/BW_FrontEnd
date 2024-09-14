@@ -56,7 +56,6 @@ const CancellationComponent: React.FC = () => {
               className="flex justify-between items-center text-xl font-semibold cursor-pointer mb-2"
             >
               <span>
-                {' '}
                 {expanded === index ? (
                   <ArrowDropUpIcon />
                 ) : (
