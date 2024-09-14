@@ -14,10 +14,11 @@ const PricingCard = () => {
   const pathname = usePathname();
   const dispatch = useDispatch();
 
-  const { plans, loading, error } = useSelector(
-    (state: RootState) => state.payment.plans
+  //remove the check after paymet is fixed  || {}
+  const { plans = [], loading, error } = useSelector(
+    (state: RootState) => state.payment.plans || {}
   );
-
+  
   // useEffect(() => {
   //   dispatch(fetchPlans());
   // }, [dispatch]);
