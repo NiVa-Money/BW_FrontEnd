@@ -247,7 +247,7 @@ const PricingCard = () => {
       backgroundColor: 'bg-fuchsia-950',
     },
     {
-      title: 'Enterprise',
+      title: 'Custom',
       price: 'Contact Sales',
       sessions: 'Tailored Solutions',
       features: [
@@ -302,7 +302,7 @@ const PricingCard = () => {
               key={index}
               {...tier}
               paypalButton={
-                tier.title === 'Enterprise' ? (
+                tier.title === 'Custom' ? (
                   <button
                     className="py-2 px-6 text-base font-medium bg-gray-100 rounded-lg text-slate-950 w-full"
                     onClick={handleContactSales}
