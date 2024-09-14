@@ -112,15 +112,12 @@ const PayPalButton: React.FC<PayPalButtonProps> = ({
   const [isPaymentInitiated, setIsPaymentInitiated] = useState(false);
 
   console.log('Available plans:', plans);
-  console.log('Received props:', { planName, price });
 
   // Find the correct plan based on name and price
   const selectedPlan = plans.find((plan: { name: string; price: string; }) => 
     plan.name.toLowerCase() === planName.toLowerCase() 
   );
-  console.log('Selected plan:', selectedPlan);
   const planId = selectedPlan?.planId;
-  console.log('Plan Id:', planId);
 
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
