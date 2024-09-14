@@ -3,6 +3,8 @@ import React, { useState, useEffect } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
 import PricingTier from './Tier';
 import PayPalButton from './PayPalButton';
+import { RootState } from '@/redux/configureStore';
+import { useSelector, useDispatch } from 'react-redux';
 
 const PricingCard = () => {
   const [isPaymentSuccessful, setIsPaymentSuccessful] = useState(false);
@@ -10,6 +12,15 @@ const PricingCard = () => {
   const [modalMessage, setModalMessage] = useState('');
   const router = useRouter();
   const pathname = usePathname();
+  const dispatch = useDispatch();
+
+  const { plans, loading, error } = useSelector(
+    (state: RootState) => state.payment.plans
+  );
+
+  // useEffect(() => {
+  //   dispatch(fetchPlans());
+  // }, [dispatch]);
 
   useEffect(() => {
     // Check if returning from PayPal
@@ -24,16 +35,24 @@ const PricingCard = () => {
   const showFreeTrialButton = pathname
     ? ['/home', '/pricing'].includes(pathname)
     : false;
+
   const handlePaymentSuccess = () => {
     setIsPaymentSuccessful(true);
     setModalMessage('Payment successful! Your plan has been activated.');
     setIsModalOpen(true);
   };
 
+  const getPlanDetails = (planName: string) => {
+    return plans?.find(
+      (plan: any) => plan.name.toLowerCase() === planName.toLowerCase()
+    );
+  };
+
+  // Default pricing tiers with placeholders for API data
   const pricingTiers = [
     {
-      title: 'Basic',
-      price: '0.00',
+      title: 'Basic', // This will be replaced by API data
+      price: '0.00', // This will be replaced by API data
       sessions: '100 Messages',
       features: [
         'Access to essential features for creating your AI chatbot.',
@@ -44,11 +63,11 @@ const PricingCard = () => {
       backgroundColor: 'bg-pink-400',
     },
     {
-      title: 'BotWot Starter',
-      price: '29.99',
+      title: 'BotWot Starter', // This will be replaced by API data
+      price: '29.99', // This will be replaced by API data
       sessions: '10,000 Messages',
       features: [
-        'Advanced tools to create and manage your chatbot, featuring AI-generated responses',
+        'Advanced tools to create and manage your chatbot, featuring AI-generated responses.',
         'Suitable for up to 10,000 chat messages.',
         'Manage 2 Bot Profiles with 2 Knowledge Bases.',
         'Text, PNG, JPEG uploads allowed for content.',
@@ -56,8 +75,8 @@ const PricingCard = () => {
       backgroundColor: 'bg-indigo-500',
     },
     {
-      title: 'BotWot Pro',
-      price: '59.99',
+      title: 'BotWot Pro', // This will be replaced by API data
+      price: '59.99', // This will be replaced by API data
       sessions: '20,000 Messages',
       features: [
         'Enhanced features for extensive chatbot needs with AI-generated responses.',
@@ -79,6 +98,40 @@ const PricingCard = () => {
       backgroundColor: 'bg-[#261065]',
     },
   ];
+
+  // Replace name and price of 'Basic', 'Starter', 'Pro' tiers with API data
+  // const updatedTiers = pricingTiers.map((tier) => {
+  //   const apiPlan = plans?.find(
+  //     (plan: { name: string; }) =>
+  //       (plan.name.toLowerCase() === 'basic' && tier.title === 'Basic') ||
+  //       (plan.name.toLowerCase() === 'starter' && tier.title === 'BotWot Starter') ||
+  //       (plan.name.toLowerCase() === 'pro' && tier.title === 'BotWot Pro')
+  //   );
+
+  //   if (apiPlan) {
+  //     return {
+  //       ...tier,
+  //       title: apiPlan.name.charAt(0).toUpperCase() + apiPlan.name.slice(1), // Capitalize title
+  //       price: apiPlan.price.toString(), // Use the price from the API
+  //       sessions: `${apiPlan.meta.sessionLimit} Messages`, // Use the session limit from the API
+  //     };
+  //   }
+  //   return tier; // Return the default tier if no match is found
+  // });
+
+  const updatedTiers = pricingTiers.map((tier) => {
+    if (tier.title !== 'Custom') {
+      const apiPlan = getPlanDetails(tier.title);
+      if (apiPlan) {
+        return {
+          ...tier,
+          price: apiPlan.price.toFixed(2),
+          sessions: `${apiPlan.meta.sessionLimit.toLocaleString()} Messages`,
+        };
+      }
+    }
+    return tier;
+  });
 
   const handleContactSales = () => {
     alert('Contact sales via this mail: botwot@gmail.com');
@@ -102,7 +155,7 @@ const PricingCard = () => {
           </p>
         </div>
         <div className="flex gap-5 justify-center py-6 mt-8 max-w-[1200px] mx-auto">
-          {pricingTiers.map((tier, index) => (
+          {updatedTiers.map((tier, index) => (
             <PricingTier
               userId={''}
               key={index}

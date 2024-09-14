@@ -85,8 +85,7 @@ const DataDeletionPage: React.FC = () => {
       const response = await axiosInstance.post(
         `/user/deleteUser/${formData.userId}`,
         {
-          reason: formData.reason,
-          otp:
+          reason:
             formData.reason === 'Other'
               ? formData.customReason
               : formData.reason,

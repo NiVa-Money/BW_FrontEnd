@@ -1,15 +1,10 @@
 'use client';
-
 import React from 'react';
-import { useRouter } from 'next/navigation';
-
 interface ModalProps {
   closeModal: () => void;
 }
 
 const ClearConversation: React.FC<ModalProps> = ({ closeModal }) => {
-  const router = useRouter();
-
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
       <div className="bg-black p-6 rounded-lg max-w-md mx-auto">
@@ -21,7 +16,9 @@ const ClearConversation: React.FC<ModalProps> = ({ closeModal }) => {
             &times;
           </button>
         </div>
-        <h2 className="text-2xl mb-4">Please Confirm Do you want to delete it or Not!</h2>
+        <h2 className="text-2xl mb-4">
+          Please Confirm Do you want to delete it or Not!
+        </h2>
         <div className="flex justify-between">
           <button
             onClick={closeModal}

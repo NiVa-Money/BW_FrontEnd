@@ -24,7 +24,6 @@ const PricingTier: React.FC<PricingTierProps> = ({
   const [isModalOpen, setIsModalOpen] = useState(false);
   const pathname = usePathname();
 
-
   const handleFreeTrialClick = () => {
     if (pathname === '/membership') {
       setIsModalOpen(true);
@@ -33,7 +32,6 @@ const PricingTier: React.FC<PricingTierProps> = ({
 
   const closeModal = () => {
     setIsModalOpen(false);
-    // If payment was successful, you might want to redirect or update UI
   };
   return (
     <>
