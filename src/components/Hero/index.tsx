@@ -53,14 +53,12 @@ const Hero = () => {
   };
 
   useEffect(() => {
-    // Disable scroll when modal is open
     if (isModalOpen || isLoginModalOpen) {
       document.body.classList.add('no-scroll');
     } else {
       document.body.classList.remove('no-scroll');
     }
 
-    // Cleanup the effect
     return () => {
       document.body.classList.remove('no-scroll');
     };
@@ -68,14 +66,7 @@ const Hero = () => {
 
   useEffect(() => {
     if (googleVerifyRedux) {
-      const [firstName, lastName] = userRedux?.displayName.split(' ');
       const email = userRedux?.email;
-      const payload = {
-        firstName: firstName,
-        lastName: lastName ? lastName : '',
-        emailId: email,
-        mobileNo: '',
-      };
       dispatch(verifyUserDataAction(email));
     }
   }, [googleVerifyRedux]);
@@ -134,7 +125,6 @@ const Hero = () => {
             onClick={handleLoginButtonClick}
           >
             <span className="text-sm">
-              {' '}
               Already have an account? <span className="underline">Log in</span>
             </span>
           </button>

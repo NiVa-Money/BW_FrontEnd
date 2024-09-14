@@ -107,22 +107,16 @@ const DashBoardComponent: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    // if (verifyVal || pathName === '/dashboard') {
-    //   dispatch(fetchMetricsAction(userId));
-    // }
     let interval: NodeJS.Timeout | null = null;
 
     if (verifyVal || pathName === '/dashboard') {
-      // Dispatch action immediately
       dispatch(fetchMetricsAction(userId));
 
-      // Set up interval polling
       interval = setInterval(() => {
         dispatch(fetchMetricsAction(userId));
       }, 5000); // 5000ms = 5 seconds
     }
 
-    // Clear the interval on cleanup
     return () => {
       if (interval) {
         clearInterval(interval);

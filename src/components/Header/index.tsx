@@ -35,26 +35,40 @@ const Header: React.FC = () => {
         <Link className={`link ${pathname === '/'}`} href="/">
           <div className="flex gap-2 justify-center px-1.5 py-2 my-auto text-2xl font-bold tracking-widest whitespace-nowrap">
             <Image src={mainLogo.src} alt="logo" width={90} height={80} />
-            {/* <h2 className="my-auto">BotWot</h2>     */}
           </div>
         </Link>
         <nav className="flex gap-5 justify-between items-center py-2 pl-3 text-sm leading-5 max-md:flex-wrap ">
           <ul className="flex gap-10">
-          <Link className={`link ${pathname === '/home' ? 'active' : ''}`} href="/home">
-            Home
-          </Link>
-          <Link className={`link ${pathname === '/aboutus' ? 'active' : ''}`} href="/aboutus">
-          About Us
-          </Link>
-          <Link className={`link ${pathname === '/pricing' ? 'active' : ''}`} href="/pricing">
-          Pricing
-          </Link>
-          <Link className={`link ${pathname === '/blog' ? 'active' : ''}`} href="/blog">
-            Blog
-          </Link>
-          <Link className={`link ${pathname === '/contactus' ? 'active' : ''}`} href="/contactus">
-            Contact Us
-          </Link>
+            <Link
+              className={`link ${pathname === '/home' ? 'active' : ''}`}
+              href="/home"
+            >
+              Home
+            </Link>
+            <Link
+              className={`link ${pathname === '/aboutus' ? 'active' : ''}`}
+              href="/aboutus"
+            >
+              About Us
+            </Link>
+            <Link
+              className={`link ${pathname === '/pricing' ? 'active' : ''}`}
+              href="/pricing"
+            >
+              Pricing
+            </Link>
+            <Link
+              className={`link ${pathname === '/blog' ? 'active' : ''}`}
+              href="/blog"
+            >
+              Blog
+            </Link>
+            <Link
+              className={`link ${pathname === '/contactus' ? 'active' : ''}`}
+              href="/contactus"
+            >
+              Contact Us
+            </Link>
           </ul>
         </nav>
       </div>
