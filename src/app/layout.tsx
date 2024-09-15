@@ -47,7 +47,8 @@ export default function RootLayout({
     '/botsession',
     '/faq/questionsAns',
     '/faq/docs',
-    '/data-deletion'
+    '/data-deletion',
+    '/integration'
   ];
   const routeWithoutFooter: string[] = [
     '/mychatbots',
@@ -69,7 +70,8 @@ export default function RootLayout({
     '/faq/docs',
     '/privacy',
     '/terms',
-    '/data-deletion'
+    '/data-deletion',
+    '/integration'
 
   ];
   const routeWithoutSidebar: string[] = [
