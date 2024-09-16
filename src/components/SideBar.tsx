@@ -65,6 +65,11 @@ const initialSIDENAV_ITEMS: SidebarItemProps[] = [
       { path: '/knowledgebase', title: 'Knowledge Base' },
     ],
   },
+  {
+    icon: 'fa-window-restore',
+    text: 'Integration',
+    path: '/integration'
+  },
 ];
 
 const SIDENAV_ITEMS2: SidebarItemProps[] = [

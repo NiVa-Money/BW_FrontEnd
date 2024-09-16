@@ -32,39 +32,52 @@ interface Metrics {
 }
 
 export function SqureCardTwo() {
-  const metrics = useSelector((state: RootState) => state.root?.userMetric?.data);
+  const metrics = useSelector(
+    (state: RootState) => state.root?.userMetric?.data
+  );
 
   // Create a mapping from botId to botName
   const botNameMap: { [key: string]: string[] } = {};
 
-  metrics?.results?.forEach((result: { botId: { botId: any; botName: any; }; }) => {
-    const botId = result?.botId?.botId;
-    const botName = result?.botId?.botName;
+  metrics?.results?.forEach(
+    (result: { botId: { botId: any; botName: any } }) => {
+      const botId = result?.botId?.botId;
+      const botName = result?.botId?.botName;
 
-    if (!botNameMap[botId] && botName?.length > 0) {
-      botNameMap[botId] = botName;
+      if (!botNameMap[botId] && botName?.length > 0) {
+        botNameMap[botId] = botName;
+      }
     }
-  });
+  );
 
   // Group the results by botName and formatted date
   const groupedData: { [key: string]: { [key: string]: number } } = {};
 
-  metrics?.results?.forEach((result: { botId: { createdAt: string | number | Date; botId: string | number; }; messageCount: number; }) => {
-    const formattedDate = format(new Date(result?.botId?.createdAt), 'MMM dd');
-    const botNames = botNameMap[result?.botId?.botId] || [`Unknown (${result.botId.botId})`];
+  metrics?.results?.forEach(
+    (result: {
+      botId: { createdAt: string | number | Date; botId: string | number };
+      messageCount: number;
+    }) => {
+      const formattedDate = format(
+        new Date(result?.botId?.createdAt),
+        'MMM dd'
+      );
+      const botNames = botNameMap[result?.botId?.botId] || [
+        `Unknown (${result.botId.botId})`,
+      ];
 
-    botNames.forEach((botName) => {
-      if (!groupedData[formattedDate]) {
-        groupedData[formattedDate] = {};
-      }
+      botNames.forEach((botName) => {
+        if (!groupedData[formattedDate]) {
+          groupedData[formattedDate] = {};
+        }
 
-      if (!groupedData[formattedDate][botName]) {
-        groupedData[formattedDate][botName] = 0;
-      }
-
-      groupedData[formattedDate][botName] += result.messageCount;
-    });
-  });
+        if (!groupedData[formattedDate][botName]) {
+          groupedData[formattedDate][botName] = 0;
+        }
+        groupedData[formattedDate][botName] += result.messageCount;
+      });
+    }
+  );
 
   const chartdata = Object.keys(groupedData).map((date) => ({
     date,
@@ -72,7 +85,12 @@ export function SqureCardTwo() {
   }));
 
   const categories: string[] = Array.from(
-    new Set(metrics?.results?.flatMap((result: { botId: { botId: string | number; }; }) => botNameMap[result?.botId?.botId] || []))
+    new Set(
+      metrics?.results?.flatMap(
+        (result: { botId: { botId: string | number } }) =>
+          botNameMap[result?.botId?.botId] || []
+      )
+    )
   );
 
   return (

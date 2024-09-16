@@ -16,6 +16,7 @@ import ConfirmModal from './modalDelete';
 import { useRouter } from 'next/navigation';
 import withAuth from '../withAuth';
 import ExportModal from './exportModal';
+import { notifyError } from '@/components/Toaster/toast';
 
 interface ChatBot {
   botId?: any;
@@ -63,12 +64,10 @@ const ChatBotList: React.FC = () => {
     (state: RootState) => state?.botProfile?.edit?.loader
   );
 
-  // Function to handle edit action
   const handleEdit = (botId: string) => {
     router.push(`/editbot?id=${botId}`);
   };
 
-  // Function to handle export action
   const handleExport = (botId: string) => {
     const botToExport = chatBotList.find((bot) => bot._id === botId);
     if (botToExport && userId) {
@@ -76,29 +75,23 @@ const ChatBotList: React.FC = () => {
       const payload = { botId: botToExport._id, userId };
       dispatch(exportBotProfileServiceAction(payload));
     } else {
-      console.error(`Bot with ID ${botId} not found or userId is undefined`);
+      notifyError(`Bot with ID ${botId} not found or userId is undefined`);
     }
   };
 
-  // Function to handle delete action
   const handleDelete = (botId: string) => {
     setBotIdToDelete(botId);
     setIsModalOpen(true);
   };
-
-  // Confirm deletion
 
   const confirmDelete = () => {
     if (userId && botIdToDelete) {
       dispatch(
         deleteBotProfileServiceAction({ botId: botIdToDelete, userId: userId })
       );
-
       setChatBotList((prevList) =>
         prevList.filter((bot) => bot._id !== botIdToDelete)
       );
-
-      // Close the modal
       setIsModalOpen(false);
       setBotIdToDelete(null);
     }

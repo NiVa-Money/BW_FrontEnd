@@ -3,7 +3,6 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useDispatch } from 'react-redux'; // Import useDispatch
-import { useAuthContext } from '@/context/AuthContext';
 import { passwordLoginAction } from '@/redux/actions/authActions';
 
 interface ModalProps {
@@ -14,7 +13,6 @@ const LoginModal: React.FC<ModalProps> = ({ closeModal }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
-  const { handleSignInWithEmail } = useAuthContext();
   const router = useRouter();
   const dispatch = useDispatch(); // Use useDispatch
 
@@ -34,7 +32,6 @@ const LoginModal: React.FC<ModalProps> = ({ closeModal }) => {
 
   return (
     <div className="fixed h-[100vh] bg-[#0B031E] inset-0 z-50 flex items-center ">
-      {/* <BackgroundAnimation className="z-3"> */}
       <div className="  p-6 rounded-lg  w-1/2 max-w-md mx-auto">
         <div className="flex justify-end">
           <button
@@ -79,7 +76,6 @@ const LoginModal: React.FC<ModalProps> = ({ closeModal }) => {
           </button>
         </form>
       </div>
-      {/* </BackgroundAnimation> */}
     </div>
   );
 };

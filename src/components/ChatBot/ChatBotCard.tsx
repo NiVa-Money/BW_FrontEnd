@@ -7,7 +7,6 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Link from 'next/link';
-import DescriptionIcon from '@mui/icons-material/Description';
 import { formatedDate } from '@/utils/commonFunctions';
 import Image from 'next/image';
 
@@ -84,16 +83,6 @@ const ChatBotCard: React.FC<ChatBotCardProps> = ({ bot, actions, botCard }) => {
           } mt-6 max-md:flex-wrap max-md:px-5`}
         >
           <div className="flex gap-5 justify-between pt-2.5 pr-2.5">
-            <div className="flex flex-col whitespace-nowrap">
-              {/* <div className="flex gap-5 justify-between text-base text-neutral-400">
-                <span>Icon</span>
-                <span>Name</span>
-              </div> */}
-              <div className="flex gap-5 justify-between mt-7 text-sm leading-5 text-gray-100">
-                {/* <img loading="lazy" src={bot.icon} alt={`${bot.botName} small icon`} className="shrink-0 aspect-[0.97] w-[35px]" /> */}
-                {/* <span className="my-auto">{bot.botName}</span> */}
-              </div>
-            </div>
             {botCard ? (
               <div className="flex flex-col justify-between text-neutral-400">
                 <span className="self-start ml-3 text-base max-md:ml-2.5">
@@ -110,7 +99,6 @@ const ChatBotCard: React.FC<ChatBotCardProps> = ({ bot, actions, botCard }) => {
             <span className="self-start ml-3 text-base max-md:ml-2.5">
               File
             </span>
-            {/* <span className="self-start ml-2.5 text-base">File</span> */}
 
             <div className="flex gap-2.5 p-2.5 mt-4 text-sm leading-5 text-center rounded-xl">
               <img

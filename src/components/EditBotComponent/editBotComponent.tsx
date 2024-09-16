@@ -76,39 +76,23 @@ const EditBotComponent: React.FC = () => {
   const [botTone, setBotTone] = useState('Formal Tone');
   const [botLimit, setBotLimit] = useState<any>();
   const [botSmartnessVal, setbotSmartnessVal] = useState<any>(false);
-  const [systemPrompt, setSystemPrompt] = useState(
-    `You're a helpful customer support chatbot with excellent product
-    knowledge. You assist customers with inquiries about our products,
-    including offers app functionality troubleshooting account management
-    and more.`
-  );
   const [supportEmail, setSupportEmail] = useState('');
   const [supportPhone, setSupportPhone] = useState('');
-  const [knowledgeBase, setKnowledgeBase] = useState(['Assistant.pdf']);
   const [greetingMessage, setGreetingMessage] = useState(
     'Hi, How can I assist you today?'
   );
-  const questionsSamples = [
-    'What subscription plans do you offer?',
-    'How do I upgrade or downgrade my subscription?',
-    'How do I cancel my subscription?',
-  ];
   const [botIdentity, setBotIdentity] = useState(
     "You're a helpful customer support chatbot with excellent product knowledge. You assist customers with inquiries about our products, including offers app functionality troubleshooting account management and more."
   );
   const [imageSrc, setImageSrc] = useState('');
   const [imageName, setImageName] = useState('');
-  const [textVal, setTextVal] = useState('');
-  const [filename, setFileName] = useState('');
-  const [fileType, setFileType] = useState('');
+  const [, setTextVal] = useState('');
+  const [, setFileName] = useState('');
+  const [, setFileType] = useState('');
   const [botImageS3Urldata, setbotImageS3Url] = useState<string>('');
-  const [botIconType, setBotIconType] = useState('second');
-  const [selectedFile, setSelectedFile] = useState<File | null>(null);
-  const viewerRef = useRef(null);
+  const [botIconType] = useState('second');
   const [error, setError] = useState('');
   const [showColorPicker, setShowColorPicker] = useState<any>(false);
-  const [colorPicker, setColorPicker] = useState<any>(false);
-  const [botIdToEdit, setBotIdToEdit] = useState<string | null>(null);
   const router = useRouter();
   const [chatColor, setChatColor] = useState('#3B82F6');
   const [base64Image, setBase64Image] = useState('');
@@ -172,27 +156,14 @@ const EditBotComponent: React.FC = () => {
       alert('File must be less than 10MB');
     }
   };
-
-  const handleDocumentUpload = (event: any) => {
-    const file = event.target.files[0];
-    setFileName(file.name);
-  };
-
   const handleContinue = () => {
     if (step < 2) setStep(step + 1);
   };
 
-  const handleDivClick = (text: any) => {
-    setTextVal(text);
-  };
-
   const handleColorClick = (color: any) => {
     if (color === 'rainbow') {
-      setColorPicker(true);
-      // setChatColor(color);
       setShowColorPicker(true);
     } else {
-      setColorPicker(false);
       setChatColor(color);
       setShowColorPicker(false);
     }
@@ -200,23 +171,6 @@ const EditBotComponent: React.FC = () => {
 
   const handleBack = () => {
     if (step > 1) setStep(step - 1);
-  };
-
-  const handleFileChange = async (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    const file = event.target.files?.[0];
-    if (
-      file &&
-      file.size <= 2 * 1024 * 1024 &&
-      file.type === 'application/pdf'
-    ) {
-      setSelectedFile(file);
-      setFileName(file.name);
-      // await handleSave()
-    } else {
-      alert('File must be a PDF and less than 10MB');
-    }
   };
 
   const selectedKnowledgeBase = (
@@ -431,25 +385,6 @@ const EditBotComponent: React.FC = () => {
         />
       </div>
       <div className="flex flex-col mb-4">
-        {/* <label className="block text-gray-200 mb-2">
-          Select Knowledge Base
-        </label>
-        <div className="relative mb-4">
-          <select
-            className="block appearance-none w-full bg-gray-800 text-white p-2 rounded-[12px] focus:outline-none focus:ring-2 focus:ring-blue-500"
-            defaultValue=""
-          >
-            <option value="" disabled>
-              Select a file
-            </option>
-            {knowledgeBaseData &&
-              knowledgeBaseData.map((file: KnowledgeBaseFile) => (
-                <option key={file._id} value={file.fileLocationS3}>
-                  {file.docName}
-                </option>
-              ))}
-          </select>
-        </div> */}
         <label className="block text-gray-200 mb-2">
           Select Knowledge Base
         </label>
