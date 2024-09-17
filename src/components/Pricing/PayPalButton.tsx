@@ -19,7 +19,7 @@ const PayPalButton: React.FC<PayPalButtonProps> = ({
   onPaymentSuccess,
 }) => {
   const dispatch = useDispatch();
-  const plans = useSelector((state: RootState) => state.payment.plans.plans);
+  const plans = useSelector((state: RootState) => state.payment?.plans?.plans);
   const approvalUrl = useSelector((state: RootState) => state.payment?.approvalUrl);
   const paypalCreateLoader = useSelector((state: RootState) => state.payment?.loading);
   const [isPaymentInitiated, setIsPaymentInitiated] = useState(false);
