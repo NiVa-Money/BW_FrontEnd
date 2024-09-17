@@ -27,7 +27,7 @@ const PayPalButton: React.FC<PayPalButtonProps> = ({
   console.log('Available plans:', plans);
 
   // Find the correct plan based on name and price
-  const selectedPlan = plans.find((plan: { name: string; price: string; }) => 
+  const selectedPlan = plans?.find((plan: { name: string; price: string; }) => 
     plan.name.toLowerCase() === planName.toLowerCase() 
   );
   const planId = selectedPlan?.planId;
