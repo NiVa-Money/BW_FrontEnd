@@ -40,7 +40,7 @@ export default function paymentReducer(
         ...state,
         loading: false,
         paymentData: action.payload,
-        paypalUrl: action.payload.paypalUrl,
+        approvalUrl: action.payload.approvalUrl,
         error: null,
       };
     case CAPTURE_PAYMENT_SUCCESS:
