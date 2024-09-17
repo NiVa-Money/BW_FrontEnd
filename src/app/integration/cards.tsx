@@ -28,15 +28,19 @@ const Card: React.FC<CardProps> = ({ image, title, subTitle, description }) => {
             <p className="text-sm text-gray-300">{description}</p>
             <div className="flex justify-between mt-4">
                 <button
-                    className="text-white px-4 py-2 md:px-6 md:py-3 rounded-full border-2 border-white bg-transparent"
+                    className="text-white text-sm px-3 py-1.5 md:px-4 md:py-2 rounded-full border-2 border-white bg-transparent"
                 >
                     Contact support
                 </button>
 
-                <button className="text-white px-4 py-2 md:px-6 md:py-3 rounded-full" style={{ backgroundColor: '#3F2181' }}>
+                <button
+                    className="text-white text-sm px-3 py-1.5 md:px-4 md:py-2 rounded-full"
+                    style={{ backgroundColor: '#3F2181' }}
+                >
                     Contact support
                 </button>
             </div>
+
         </div>
     );
 };
