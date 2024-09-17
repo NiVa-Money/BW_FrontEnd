@@ -1,5 +1,20 @@
 import { CREATE_PAYMENT_REQUEST, CREATE_PAYMENT_SUCCESS, CREATE_PAYMENT_FAILURE, CAPTURE_PAYMENT_REQUEST, CAPTURE_PAYMENT_SUCCESS, CAPTURE_PAYMENT_FAILURE } from "../actionTypes";
 
+export const fetchPlans = () => ({
+  type: 'FETCH_PLANS'
+});
+
+export const fetchPlansSuccess = (plans : any) => ({
+  type: 'FETCH_PLANS_SUCCESS',
+  payload: plans
+});
+
+export const fetchPlansFailure = (error : any) => ({
+  type: 'FETCH_PLANS_FAILURE',
+  payload: error
+});
+
+
 export const createPaymentRequest = (paymentData: any) => ({
   type: CREATE_PAYMENT_REQUEST,
   payload: paymentData,
