@@ -174,7 +174,8 @@ const PricingCard = () => {
   const pathname = usePathname();
   const dispatch = useDispatch();
 
-  const { plans } = useSelector((state: RootState) => state.payment.plans);
+  const { plans = [] } = useSelector((state: RootState) => state.payment.plans || {});
+
   console.log('plans',plans);
 
   useEffect(() => {
