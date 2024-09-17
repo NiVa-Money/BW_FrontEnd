@@ -2,6 +2,36 @@ import React from 'react';
 import Card from './cards';
 
 const Integration = () => {
+    const cardGroups = [
+        [
+            {
+                image: "/images/whatsappimg.png",
+                title: "Whatsapp",
+                subTitle: "Integration",
+                description: "Seamlessly integrate WhatsApp to stay connected with your customers in real-time, facilitating communication and enhancing user experience."
+            },
+            {
+                image: "/images/slack.png",
+                title: "Slack",
+                subTitle: "Integration",
+                description: "Integrate your calendar to streamline scheduling, manage appointments, and never miss an important event or meeting."
+            }
+        ],
+        [
+            {
+                image: "/images/celanderImg.png",
+                title: "Calendar",
+                subTitle: "Integration",
+                description: "Integrate your Slack to streamline scheduling, manage appointments, and never miss an important event or meeting."
+            },
+            {
+                image: "/images/shopify.jpg",
+                title: "Shopify",
+                subTitle: "Integration",
+                description: "Integrate your Shopify to streamline scheduling, manage appointments, and never miss an important event or meeting."
+            }
+        ]
+    ];
     return (
         <>
             <div className="flex flex-col justify-center items-left mt-10">
@@ -14,21 +44,22 @@ const Integration = () => {
                 </h2>
             </div>
 
-            <div className="flex justify-center gap-32 mt-10">
-                <Card
-                    image="/images/whatsappimg.png"
-                    title="Whatsapp"
-                    subTitle="Integration"
-                    description="Seamlessly integrate WhatsApp to stay connected with your customers in real-time, facilitating communication and enhancing user experience."
-                />
-                <Card
-                    image="/images/celanderImg.png"
-                    title="Calendar"
-                    subTitle="Integration"
-                    description="Integrate your calendar to streamline scheduling, manage appointments, and never miss an important event or meeting."
-                />
-
+            <div className="flex flex-col md:flex-row gap-24 mt-10 justify-center">
+                {cardGroups.map((group, groupIndex) => (
+                    <div key={groupIndex} className="grid grid-cols-1 gap-y-9">
+                        {group.map((card, cardIndex) => (
+                            <Card
+                                key={cardIndex}
+                                image={card.image}
+                                title={card.title}
+                                subTitle={card.subTitle}
+                                description={card.description}
+                            />
+                        ))}
+                    </div>
+                ))}
             </div>
+
         </>
     )
 }
