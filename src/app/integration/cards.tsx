@@ -30,7 +30,7 @@ const Card: React.FC<CardProps> = ({ image, title, subTitle, description }) => {
                 <button
                     className="text-white px-4 py-2 md:px-6 md:py-3 rounded-full border-2 border-white bg-transparent"
                 >
-                    Export
+                    Contact support
                 </button>
 
                 <button className="text-white px-4 py-2 md:px-6 md:py-3 rounded-full" style={{ backgroundColor: '#3F2181' }}>
