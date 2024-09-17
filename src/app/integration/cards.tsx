@@ -37,7 +37,7 @@ const Card: React.FC<CardProps> = ({ image, title, subTitle, description }) => {
                     className="text-white text-sm px-3 py-1.5 md:px-4 md:py-2 rounded-full"
                     style={{ backgroundColor: '#3F2181' }}
                 >
-                    Contact support
+                    Export
                 </button>
             </div>
 
