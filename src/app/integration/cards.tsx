@@ -1,3 +1,4 @@
+"use client";
 import React from 'react';
 
 interface CardProps {
@@ -8,6 +9,10 @@ interface CardProps {
 }
 
 const Card: React.FC<CardProps> = ({ image, title, subTitle, description }) => {
+    const handleContactSupport = () => {
+        window.location.href = 'mailto:support@botwot.io'; 
+    };
+
     return (
         <div className="bg-black text-white rounded-lg p-6 md:p-8 w-full sm:w-80 md:w-96 shadow-lg border border-gray-500 mx-auto my-4">
             <div className="flex items-center mb-4">
@@ -26,16 +31,24 @@ const Card: React.FC<CardProps> = ({ image, title, subTitle, description }) => {
             </div>
 
             <p className="text-sm text-gray-300">{description}</p>
+            
+            {/* Support Information */}
+            <p className="text-sm text-gray-300 mt-4">
+                For support, call us at <span className="font-semibold">+91 95824 74246</span>
+            </p>
+
             <div className="flex justify-between mt-4">
                 <button
                     className="text-white text-sm px-3 py-1.5 md:px-4 md:py-2 rounded-full border-2 border-white bg-transparent"
+                    onClick={handleContactSupport}
                 >
                     Contact support
                 </button>
 
+                {/* Export button greyed out */}
                 <button
-                    className="text-white text-sm px-3 py-1.5 md:px-4 md:py-2 rounded-full"
-                    style={{ backgroundColor: '#3F2181' }}
+                    className="text-gray-400 text-sm px-3 py-1.5 md:px-4 md:py-2 rounded-full bg-gray-700 cursor-not-allowed"
+                    disabled
                 >
                     Export
                 </button>
