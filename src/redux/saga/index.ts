@@ -595,16 +595,17 @@ export function* capturePaymentSaga({
   payload: string;
 }): Generator<any> {
   try {
-    const response = yield call(capturePaymentService, payload);
-    const subscriptionId = (response as { _id: string })._id;
-    // // Save the captured payment response in Redux
-    yield put(capturePaymentSuccess(response));
+    const response = yield call(capturePaymentService, payload); 
+    const subscriptionId = (response as { _id: string })._id; 
+    // Save the captured payment response in Redux
+    yield put(capturePaymentSuccess(subscriptionId, response));
     notifySuccess('Payment captured successfully');
   } catch (error: any) {
     yield put(capturePaymentFailure(error.message));
     notifyError('Payment capture failed');
   }
 }
+
 export function* pathnameSaga({
   payload,
 }: {
