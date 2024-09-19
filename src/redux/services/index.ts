@@ -234,15 +234,18 @@ export const fetchPlansApi = async () => {
   }
 };
 
-export const processPayPalPaymentService = async (planId: string , payload: any) => {
+export const processPayPalPaymentService = async (planId: string, payload: any) => {
+  console.log('processPayPalPaymentService called with planId:', planId, 'and payload:', payload);
   try {
     const response = await axiosInstance.post(`/payment/subscription/${planId}`, payload);
-    console.log('response', response);
+    console.log('API response:', response);
     return response.data;
   } catch (error) {
+    console.error('Error in processPayPalPaymentService:', error);
     throw new Error('Payment processing failed');
   }
 };
+
 export const capturePaymentService = async (subscriptionId: string) => {
   try {
     const response = await axiosInstance.post(`/payment/capture-subscription/${subscriptionId}`);

@@ -15,9 +15,9 @@ export const fetchPlansFailure = (error : any) => ({
 });
 
 
-export const createPaymentRequest = (paymentData: any) => ({
-  type: CREATE_PAYMENT_REQUEST,
-  payload: paymentData,
+export const createPaymentRequest = (payload: { planId: string; data: any }) => ({
+  type: 'CREATE_PAYMENT_REQUEST',
+  payload
 });
 
 export const createPaymentSuccess = (response: any) => ({
