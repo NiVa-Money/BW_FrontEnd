@@ -311,9 +311,7 @@ const MenuItem: React.FC<MenuItemProps> = ({ item, onClick }) => {
                                   botSession(bot._id, bot.userId, bot.botName)
                                 }
                               >
-                                <button
-                                  className="flex items-center space-x-3 py-2 px-3"
-                                >
+                                <button className="flex items-center space-x-3 py-2 px-3">
                                   <span>{bot.botName}</span>
                                 </button>
                               </div>
