@@ -48,7 +48,7 @@ const PayPalButton: React.FC<PayPalButtonProps> = ({
 
   const handlePayPalReturn = async (token: string) => {
     try {
-      const result = await dispatch(capturePaymentRequest(token));
+      const result = dispatch(capturePaymentRequest(token));
       if (result.type === 'CAPTURE_PAYMENT_SUCCESS') {
         onPaymentSuccess();
         window.location.href = '/membership-success';
@@ -67,7 +67,8 @@ const PayPalButton: React.FC<PayPalButtonProps> = ({
         return;
       }
       setIsPaymentInitiated(true);
-      dispatch(createPaymentRequest({ planId, approvalUrl }));
+      console.log('Creating payment with Plan ID:', planId);
+      dispatch(createPaymentRequest({ planId }));
     } catch (error) {
       console.error('Failed to create order:', error);
     }
