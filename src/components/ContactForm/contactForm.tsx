@@ -1,14 +1,15 @@
 'use client';
 import React, { useState } from 'react';
-import axios from 'axios';
 import { toast, ToastContainer } from 'react-toastify';
+import axiosInstance from '@/utils/axiosConfig';
 import 'react-toastify/dist/ReactToastify.css';
 
 const ContactForm: React.FC = () => {
   const [formData, setFormData] = useState({
-    name: '',
+    firstName: '',
     lastName: '',
     email: '',
+    phone: '',
     message: '',
   });
 
@@ -26,24 +27,23 @@ const ContactForm: React.FC = () => {
     e.preventDefault();
 
     try {
-      const response = await axios.post(
-        'http://13.235.189.116:8000/user/contactus',
-        {
-          firstName: formData.name,
-          lastName: formData.lastName,
-          emailId: formData.email,
-          question: formData.message,
-        }
-      );
+      const response = await axiosInstance.post('/user/contactus', {
+        firstName: formData.firstName,
+        lastName: formData.lastName,
+        emailId: formData.email,
+        phoneNumber: formData.phone, // Added phone number here
+        question: formData.message,
+      });
 
       // Show success toast
       toast.success('Form submitted successfully!', {});
 
       // Clear form fields after submission
       setFormData({
-        name: '',
+        firstName: '',
         lastName: '',
         email: '',
+        phone: '',
         message: '',
       });
     } catch (error) {
