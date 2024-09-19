@@ -41,7 +41,7 @@ const PricingTier: React.FC<PricingTierProps> = ({
         <div className="flex flex-col items-center pb-4">
           <h3 className="text-2xl font-bold">{title}</h3>
           <p className="mt-2 text-4xl font-black text-center">
-            {price === 'Contact Sales' ? price : `$${price}`}
+            {price === 'Contact Sales' ? price : `$${price}/M`}
           </p>
           {sessions && <p className="mt-2 text-xl">{sessions}</p>}
         </div>
