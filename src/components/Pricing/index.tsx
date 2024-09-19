@@ -273,17 +273,8 @@ const PricingCard = () => {
     return tier;
   });
   
-
   const handleContactSales = () => {
     alert('Contact sales via this mail: botwot@gmail.com');
-  };
-
-  const closeModal = () => {
-    setIsModalOpen(false);
-    // If payment was successful, you might want to redirect or update UI
-    if (isPaymentSuccessful) {
-      // Example: router.push('/dashboard');
-    }
   };
 
   return (
