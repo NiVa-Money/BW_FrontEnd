@@ -60,6 +60,7 @@ const initialSIDENAV_ITEMS: SidebarItemProps[] = [
       },
       { title: 'Reports (coming soon)' },
     ],
+    
   },
   {
     icon: 'fa-robot',
@@ -312,6 +313,7 @@ const MenuItem: React.FC<MenuItemProps> = ({ item, onClick }) => {
                                 className={`text-gray-300 hover:bg-white hover:bg-opacity-10 rounded-full cursor-pointer`}
                                 onClick={() => botSessionLive(bot._id, bot.userId,bot.botName)}
                               >
+                              
                                 <button
                                   // onClick={() => botSession(bot._id, bot.userId)}
                                   className="flex items-center space-x-3 py-2 px-3"
