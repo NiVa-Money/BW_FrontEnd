@@ -49,7 +49,8 @@ export default function RootLayout({
     '/faq/docs',
     '/data-deletion',
 
-    '/integration'
+    '/integration',
+    "/livechat"
 
   ];
   const routeWithoutFooter: string[] = [
@@ -74,7 +75,9 @@ export default function RootLayout({
     '/terms',
     '/data-deletion',
 
-    '/integration'
+    '/integration',
+    "/livechat"
+
 
 
   ];
@@ -94,6 +97,8 @@ export default function RootLayout({
     '/privacy',
     '/terms',
     '/data-deletion',
+    "/livechat"
+
   ];
   const knownRoutes: string[] = [
     ...routeWithoutSidebar,
