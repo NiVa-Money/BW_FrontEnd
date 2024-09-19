@@ -578,66 +578,31 @@ function* fetchPlansSaga(): Generator<any, void, any> {
   }
 }
 
-// export function* payPalPaymentSaga({ payload }: { type: string; payload: { planId: string; data: any } }): Generator<any> {
-//   try {
-//     const { planId, data } = payload;
-//     const response: any = yield call(processPayPalPaymentService, planId, data);
-//     console.log('create response', response);
-//     yield put(createPaymentSuccess(response));
-//     notifySuccess('Payment processed successfully');
-//   } catch (error: any) {
-//     yield put(createPaymentFailure(error.message));
-//     notifyError('Payment processing failed');
-//   }
-// }
-
-export function* payPalPaymentSaga({
-  payload,
-}: {
-  type: string;
-  payload: { planId: string; data?: any };
-}): Generator<any> {
+export function* payPalPaymentSaga({ payload }: { type: string; payload: { planId: string; data: any } }): Generator<any> {
   try {
     const { planId, data } = payload;
-
-    if (!planId) {
-      throw new Error('Plan ID is missing');
-    }
-
-    // Call the service to process the PayPal payment
     const response: any = yield call(processPayPalPaymentService, planId, data);
-
-    // Log the response for debugging purposes
     console.log('PayPal payment creation response:', response);
-
-    // Assuming response contains an approvalUrl and other relevant data
-    if (response?.approvalUrl) {
-      // Dispatch success action and pass approvalUrl to the store
-      yield put(createPaymentSuccess(response));
-
-      // Notify user of successful initiation of payment
-      notifySuccess('Payment processed successfully, redirecting to PayPal...');
+    const approvalUrl = response?.approvalUrl;  
+    const subscriptionId = response?._id;
+    if (approvalUrl) {
+      // Dispatch success action to store approvalUrl
+      yield put(createPaymentSuccess({ approvalUrl , subscriptionId,  planId ,  data }));
     } else {
-      throw new Error('Approval URL missing in response');
+      throw new Error('Approval URL not found in the response');
     }
+    notifySuccess('Payment processed successfully');
   } catch (error: any) {
-    // Dispatch failure action and notify the user
-    console.error('Payment processing error:', error);
-    yield put(createPaymentFailure(error.message || 'Payment failed'));
-
-    // Notify user of the error
-    notifyError('Payment processing failed. Please try again.');
+    console.error('Error in payPalPaymentSaga:', error);
+    yield put(createPaymentFailure(error.message));
+    notifyError('Payment processing failed');
   }
 }
 
-export function* capturePaymentSaga({
-  payload,
-}: {
-  type: string;
-  payload: string;
-}): Generator<any> {
+export function* capturePaymentSaga({ payload }: { type: string; payload: { subscriptionId: string } }): Generator<any> {
   try {
-    const response = yield call(capturePaymentService, payload);
+    const response = yield call(capturePaymentService, payload.subscriptionId);
+    console.log('Capture payment response:', response);
     const subscriptionId = (response as { _id: string })._id;
     console.log('subscription', subscriptionId);
     // Save the captured payment response in Redux

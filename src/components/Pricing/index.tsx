@@ -195,18 +195,6 @@ const PricingCard = () => {
   const showFreeTrialButton = pathname
     ? ['/home', '/pricing'].includes(pathname)
     : false;
-    
-  const handlePaymentSuccess = () => {
-    setIsPaymentSuccessful(true);
-    setModalMessage('Payment successful! Your plan has been activated.');
-    setIsModalOpen(true);
-  };
-
-  const getPlanDetails = (planName: string) => {
-    return plans?.find(
-      (plan: any) => plan.name.toLowerCase() === planName.toLowerCase()
-    );
-  };
 
   // Default pricing tiers with placeholders for API data
   const pricingTiers = [
@@ -314,7 +302,6 @@ const PricingCard = () => {
                       planName={tier.title}
                       price={tier.price}
                       userId={'userId'}
-                      onPaymentSuccess={handlePaymentSuccess}
                     />
                 )
               }
