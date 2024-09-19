@@ -309,7 +309,7 @@ const PricingCard = () => {
                   >
                     Contact Sales
                   </button>
-                ) : showFreeTrialButton && tier.title !== 'Basic' ? (
+                ) : showFreeTrialButton  ? (
                   <button
                     className="py-2 px-6 text-base font-medium bg-gray-100 rounded-lg text-slate-950 w-full"
                     onClick={() => {

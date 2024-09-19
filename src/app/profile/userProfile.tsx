@@ -36,7 +36,7 @@ const ProfileComponent: React.FC = () => {
 
   const handleDeleteProfile = () => {
     if (userEmail) {
-      alert(`User Subscription Plan  cancelled`); // This should pop up a dialog box
+      alert(`User Membership Plan cancelled`); // This should pop up a dialog box
     } else {
       console.log('No plan found');
     }
@@ -57,7 +57,7 @@ const ProfileComponent: React.FC = () => {
         <ProfileField label="Email" value={`${profileData?.emailId}`} />
         {/* <ProfileField label="Country" value="United states" /> */}
         {/* <ProfileField label="Phone number" value={`${profileData?.mobileNo}`} /> */}
-        <ProfileField label="Subscription Plan" value={`BotWot Starter`} />
+        <ProfileField label="Membership Plan" value={`BotWot Starter`} />
       </div>
 
       <div className="mt-10">
@@ -66,7 +66,7 @@ const ProfileComponent: React.FC = () => {
           className="flex  justify-center  text-xl font-medium text-gray-100 bg-[#3F2181] rounded-[60px]"
         >
           <Link href="/membership" className="flex px-14 py-3 gap-2">
-            <span>Cancel Subscription Plan</span>
+            <span>Cancel Membership Plan</span>
           </Link>
         </button>
       </div>
