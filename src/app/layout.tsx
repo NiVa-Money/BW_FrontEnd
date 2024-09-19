@@ -49,7 +49,8 @@ export default function RootLayout({
     '/faq/docs',
     '/data-deletion',
 
-    '/integration'
+    '/integration',
+    "/livetest"
 
   ];
   const routeWithoutFooter: string[] = [
@@ -74,7 +75,8 @@ export default function RootLayout({
     '/terms',
     '/data-deletion',
 
-    '/integration'
+    '/integration',
+    "/livetest"
 
 
   ];
@@ -115,6 +117,7 @@ export default function RootLayout({
     '/home',
     '/privacy',
     '/terms',
+    "/livetest"
   ];
 
   const [isSidebarVisible, setIsSidebarVisible] = React.useState(true);
