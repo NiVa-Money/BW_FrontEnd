@@ -252,16 +252,16 @@ const BotSessionComponent: React.FC = () => {
   React.useEffect(() => {
     if (userChatSessionsRedux?.length) {
       const tempArray = userChatSessionsRedux;
-      tempArray.forEach((sessionData: any) => {
-        let totalMessages = 0;
+      // tempArray.forEach((sessionData: any) => {
+      //   let totalMessages = 0;
 
-        sessionData.sessions.forEach((session: any) => {
-          if (session.question) totalMessages++;
-          if (session.answer) totalMessages++;
-        });
+      //   sessionData.sessions.forEach((session: any) => {
+      //     if (session.question) totalMessages++;
+      //     if (session.answer) totalMessages++;
+      //   });
 
-        sessionData.totalMessages = totalMessages;
-      });
+      //   sessionData.totalMessages = totalMessages;
+      // });
 
       setBotSessionsList(tempArray);
     }
