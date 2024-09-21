@@ -211,7 +211,7 @@ const DataDeletionPage: React.FC = () => {
   return (
     <div className="flex items-center justify-center min-h-screen">
       <div className="w-full max-w-md bg-black p-8 rounded-lg shadow-lg">
-        {deletedSuccess ? (
+        {!deletedSuccess ? (
           <>
             <h2 className="text-2xl font-bold text-white mb-6">
               Account Deletion Form
