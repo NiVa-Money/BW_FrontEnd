@@ -14,6 +14,7 @@ import { botImageBaseUrl } from '@/utils/constant';
 import { HexColorPicker } from 'react-colorful';
 import { useSearchParams } from 'next/navigation';
 import withAuth from '../withAuth';
+import { Tooltip } from '@mui/material';
 
 interface BotData {
   botId?: string;
@@ -76,6 +77,8 @@ const EditBotComponent: React.FC = () => {
   const [botTone, setBotTone] = useState('Formal Tone');
   const [botLimit, setBotLimit] = useState<any>();
   const [botSmartnessVal, setbotSmartnessVal] = useState<any>(false);
+  const [voiceSmartnessVal, setvoiceSmartnessVal] = useState<any>(false);
+  const [imageSmartnessVal, setimageSmartnessVal] = useState<any>(false);
   const [supportEmail, setSupportEmail] = useState('');
   const [supportPhone, setSupportPhone] = useState('');
   const [greetingMessage, setGreetingMessage] = useState(
@@ -564,6 +567,72 @@ const EditBotComponent: React.FC = () => {
                 />
               </div>
             </aside>
+            <div className="flex flex-col ml-5 items-end w-3/5 self-end">
+              <div className="flex justify-between w-full items-center border-b-[1px] w-full h-[75px]">
+                <label className="block text-white mr-2">Smart Bot</label>
+                <Switch
+                  checked={Boolean(botSmartnessVal)}
+                  onChange={() => setbotSmartnessVal(!botSmartnessVal)}
+                  className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors duration-200 ease-in-out border-b-[1px] bg-[#36333b]`}
+                  sx={{
+                    '& .MuiSwitch-track': {
+                      backgroundColor: 'transparent',
+                    },
+                    '& .Mui-checked .MuiSwitch-track': {
+                      backgroundColor: '#0b031e !important',
+                    },
+                    '& .Mui-checked .MuiSwitch-thumb': {
+                      backgroundColor: 'white',
+                    },
+                  }}
+                />
+              </div>
+              <div className="flex justify-between w-full items-center border-b-[1px] w-full h-[75px]">
+                <Tooltip title="hi">
+                  <label className="block text-white mr-2">
+                    Voice Recognition
+                  </label>
+                </Tooltip>
+                <Switch
+                  checked={Boolean(voiceSmartnessVal)}
+                  onChange={() => setvoiceSmartnessVal(!voiceSmartnessVal)}
+                  className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors duration-200 ease-in-out border-b-[1px] bg-[#36333b]`}
+                  sx={{
+                    '& .MuiSwitch-track': {
+                      backgroundColor: 'transparent',
+                    },
+                    '& .Mui-checked .MuiSwitch-track': {
+                      backgroundColor: '#0b031e',
+                    },
+                    '& .Mui-checked .MuiSwitch-thumb': {
+                      backgroundColor: 'white',
+                    },
+                  }}
+                />
+              </div>
+              <div
+                className="flex w-full justify-between items-center border-b-[1px] w-full
+               h-[75px] "
+              >
+                <label className="block text-white mr-2">Image Analysis</label>
+                <Switch
+                  checked={Boolean(imageSmartnessVal)}
+                  onChange={() => setimageSmartnessVal(!imageSmartnessVal)}
+                  className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors duration-200 ease-in-out border-b-[1px] bg-[#36333b]`}
+                  sx={{
+                    '& .MuiSwitch-track': {
+                      backgroundColor: 'transparent',
+                    },
+                    '& .Mui-checked .MuiSwitch-track': {
+                      backgroundColor: 'purple',
+                    },
+                    '& .Mui-checked .MuiSwitch-thumb': {
+                      backgroundColor: 'white',
+                    },
+                  }}
+                />
+              </div>
+            </div>
           </div>
         </div>
       </div>
