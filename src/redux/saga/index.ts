@@ -513,11 +513,13 @@ export function* getUserAllSessionSaga({
 }): Generator<any> {
   try {
     const userChat = yield call(getUserAllSessionService, payload);
+    console.log('userChat', userChat);
     yield put({
       type: GET_USER_All_SESSION_SUCCESS,
       payload: userChat,
     });
   } catch (error: any) {
+    console.log('err', error);
     yield put({
       type: GET_USER_All_SESSION_FAILURE,
     });
@@ -548,38 +550,46 @@ export function* getAdvanceFeatureSaga({
   }
 }
 
-
 function* fetchPlansSaga(): Generator<any, void, any> {
   try {
-    const response: { name: string, price: number, _id: string }[] = yield call(fetchPlansApi); // Call the API function
-    
+    const response: { name: string; price: number; _id: string }[] = yield call(
+      fetchPlansApi
+    ); // Call the API function
+
     // Ensure response is an array and not empty
     if (!Array.isArray(response) || response.length === 0) {
       throw new Error('No plans found or invalid data format');
     }
 
     console.log('API response data:', response);
-    
+
     // Process data
-    const filteredData = response.map((plan: { name: string; price: number; _id: string }) => ({
-      name: plan.name,
-      price: plan.price,
-      planId: plan._id,
-    }));
+    const filteredData = response.map(
+      (plan: { name: string; price: number; _id: string }) => ({
+        name: plan.name,
+        price: plan.price,
+        planId: plan._id,
+      })
+    );
     console.log('Filtered data:', filteredData);
 
     yield put(fetchPlansSuccess(filteredData)); // Dispatch success action
   } catch (error) {
     console.error('Fetch plans failed with error:', error);
-    yield put(fetchPlansFailure('Plans fetch failed')); // Dispatch failure action 
+    yield put(fetchPlansFailure('Plans fetch failed')); // Dispatch failure action
   }
 }
 
-export function* payPalPaymentSaga({ payload }: { type: string; payload: { planId: string; data: any } }): Generator<any> {
+export function* payPalPaymentSaga({
+  payload,
+}: {
+  type: string;
+  payload: { planId: string; data: any };
+}): Generator<any> {
   try {
     const { planId, data } = payload;
     const response: any = yield call(processPayPalPaymentService, planId, data);
-    
+
     yield put(createPaymentSuccess(response));
     notifySuccess('Payment processed successfully');
   } catch (error: any) {

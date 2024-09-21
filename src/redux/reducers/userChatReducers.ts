@@ -77,6 +77,17 @@ export default function userChatReducers(
         allSession: { data: action.payload, loader: false },
       };
     case GET_USER_All_SESSION_SUCCESS:
+      // const tempArray = action?.payload?.sessions;
+      // tempArray?.forEach((sessionData: any) => {
+      //   let totalMessages = 0;
+
+      //   sessionData?.sessions?.forEach((session: any) => {
+      //     if (session.question) totalMessages++;
+      //     if (session.answer) totalMessages++;
+      //   });
+
+      //   sessionData.totalMessages = totalMessages;
+      // });
       return {
         ...state,
         allSession: { data: action.payload, loader: true },

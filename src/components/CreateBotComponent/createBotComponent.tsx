@@ -12,6 +12,7 @@ import { createBotProfileAction } from '@/redux/actions/BotProfileActions';
 import Switch from '@mui/material/Switch';
 import { HexColorPicker } from 'react-colorful';
 import withAuth from '../withAuth';
+import { Tooltip } from '@mui/material';
 const CreateBotComponent: React.FC = () => {
   const [step, setStep] = useState(1);
   const [botName, setBotName] = useState('');
@@ -26,6 +27,8 @@ const CreateBotComponent: React.FC = () => {
   const [knowledgeBase] = useState(['Assistant.pdf']);
   const [botLimit, setBotLimit] = useState<any>(200);
   const [botSmartnessVal, setbotSmartnessVal] = useState<any>(false);
+  const [voiceSmartnessVal, setvoiceSmartnessVal] = useState<any>(false);
+  const [imageSmartnessVal, setimageSmartnessVal] = useState<any>(false);
   const [showColorPicker, setShowColorPicker] = useState<any>(false);
   const [colorPicker, setColorPicker] = useState<any>(false);
   const [supportEmail, setSupportEmail] = useState('');
@@ -357,20 +360,19 @@ const CreateBotComponent: React.FC = () => {
               className="absolute top-[0] opacity-0 -[12px] cursor-pointer"
             />
           </div>
-       
         </div>
         {error.includes('pdf') && (
           <div className="relative mt-5 z-10 text-red-500">{error}</div>
         )}
-           <p className="text-sm text-grey-500 mt-3">*Only PDF is allowed</p>
+        <p className="text-sm text-grey-500 mt-3">*Only PDF is allowed</p>
         <div className="flex items-center space-x-4 mt-5">
-          <div className="flex items-center">
+          {/* <div className="flex items-center">
             <label className="block text-white mr-2">Enable Smartness</label>
             <Switch
               checked={Boolean(botSmartnessVal)}
               onChange={() => setbotSmartnessVal(!botSmartnessVal)}
             />
-          </div>
+          </div> */}
         </div>
       </div>
       <div className="mb-4">
@@ -449,7 +451,7 @@ const CreateBotComponent: React.FC = () => {
           <div className="w-3/5">
             {step === 1 ? renderStep1() : renderStep2()}
           </div>
-          <div className="w-2/5">
+          <div className="w-2/5  flex flex-col">
             <aside
               className={`flex w-full flex-col ml-5 max-md:ml-0 max-md:w-full`}
             >
@@ -491,6 +493,72 @@ const CreateBotComponent: React.FC = () => {
                 />
               </div>
             </aside>
+            <div className="flex flex-col ml-5 items-end w-3/5 self-end">
+              <div className="flex justify-between w-full items-center border-b-[1px] w-full h-[75px]">
+                <label className="block text-white mr-2">Smart Bot</label>
+                <Switch
+                  checked={Boolean(botSmartnessVal)}
+                  onChange={() => setbotSmartnessVal(!botSmartnessVal)}
+                  className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors duration-200 ease-in-out border-b-[1px] bg-[#36333b]`}
+                  sx={{
+                    '& .MuiSwitch-track': {
+                      backgroundColor: 'transparent',
+                    },
+                    '& .Mui-checked .MuiSwitch-track': {
+                      backgroundColor: '#0b031e !important',
+                    },
+                    '& .Mui-checked .MuiSwitch-thumb': {
+                      backgroundColor: 'white',
+                    },
+                  }}
+                />
+              </div>
+              <div className="flex justify-between w-full items-center border-b-[1px] w-full h-[75px]">
+                <Tooltip title="hi">
+                  <label className="block text-white mr-2">
+                    Voice Recognition
+                  </label>
+                </Tooltip>
+                <Switch
+                  checked={Boolean(voiceSmartnessVal)}
+                  onChange={() => setvoiceSmartnessVal(!voiceSmartnessVal)}
+                  className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors duration-200 ease-in-out border-b-[1px] bg-[#36333b]`}
+                  sx={{
+                    '& .MuiSwitch-track': {
+                      backgroundColor: 'transparent',
+                    },
+                    '& .Mui-checked .MuiSwitch-track': {
+                      backgroundColor: '#0b031e',
+                    },
+                    '& .Mui-checked .MuiSwitch-thumb': {
+                      backgroundColor: 'white',
+                    },
+                  }}
+                />
+              </div>
+              <div
+                className="flex w-full justify-between items-center border-b-[1px] w-full
+               h-[75px] "
+              >
+                <label className="block text-white mr-2">Image Analysis</label>
+                <Switch
+                  checked={Boolean(imageSmartnessVal)}
+                  onChange={() => setimageSmartnessVal(!imageSmartnessVal)}
+                  className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors duration-200 ease-in-out border-b-[1px] bg-[#36333b]`}
+                  sx={{
+                    '& .MuiSwitch-track': {
+                      backgroundColor: 'transparent',
+                    },
+                    '& .Mui-checked .MuiSwitch-track': {
+                      backgroundColor: 'purple',
+                    },
+                    '& .Mui-checked .MuiSwitch-thumb': {
+                      backgroundColor: 'white',
+                    },
+                  }}
+                />
+              </div>
+            </div>
           </div>
         </div>
       </div>
