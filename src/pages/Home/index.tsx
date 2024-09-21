@@ -76,7 +76,7 @@ const LandingPage: React.FC = () => {
   return (
     <>
       {pathname === '/home' && (
-        <Script src="https://messages-dump.s3.ap-south-1.amazonaws.com/widget/66c6d234aeb7f7e5ce833007/66e70d9b6c5a322e5496bdb5.js" />
+        <Script src="https://messages-dump.s3.ap-south-1.amazonaws.com/widget/66cf26cda51861b4b167422c/66ec1e16a0ffb67f4eb2cce3.js" />
       )}
       <main>
         <Hero />
