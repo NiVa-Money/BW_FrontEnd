@@ -68,7 +68,7 @@ const initialSIDENAV_ITEMS: SidebarItemProps[] = [
   {
     icon: 'fa-window-restore',
     text: 'Integration',
-    path: '/integration'
+    path: '/integration',
   },
 ];
 
@@ -77,7 +77,7 @@ const SIDENAV_ITEMS2: SidebarItemProps[] = [
   // { icon: 'fa-trash', text: 'Clear Conversations', onClick: undefined },
   { icon: 'fa-crown', text: 'Membership', path: '/membership' },
   { icon: 'fa-question-circle', text: 'Help Center', path: '/faq' },
-  { icon: 'fa-sign-out-alt', text: 'Log Out', path: '/' },
+  { icon: 'fa-sign-out-alt', text: 'Log Out', path: '' },
 ];
 
 const SideBar: React.FC = () => {
@@ -201,7 +201,7 @@ const MenuItem: React.FC<MenuItemProps> = ({ item, onClick }) => {
     }));
   };
 
-  const botSession = (botId: any, userId: any, botName:any) => {
+  const botSession = (botId: any, userId: any, botName: any) => {
     const data = {
       botId,
       userId,
@@ -296,7 +296,9 @@ const MenuItem: React.FC<MenuItemProps> = ({ item, onClick }) => {
                             <div key={childIdx}>
                               <div
                                 className={`text-gray-300 hover:bg-white hover:bg-opacity-10 rounded-full cursor-pointer`}
-                                onClick={() => botSession(bot._id, bot.userId,bot.botName)}
+                                onClick={() =>
+                                  botSession(bot._id, bot.userId, bot.botName)
+                                }
                               >
                                 <button
                                   // onClick={() => botSession(bot._id, bot.userId)}

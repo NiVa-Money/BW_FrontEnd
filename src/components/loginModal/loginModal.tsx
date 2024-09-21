@@ -41,10 +41,10 @@ const LoginModal: React.FC<ModalProps> = ({ closeModal }) => {
             &times;
           </button>
         </div>
-        <h2 className="text-2xl mb-4">Log in</h2>
+        <h2 className="text-2xl mb-4 text-white">Log in</h2>
         <form onSubmit={handleSubmit}>
           {error && <p className="text-red-500 mb-4">{error}</p>}
-          <label className="block mb-2">
+          <label className="block mb-2 text-white">
             Email:
             <input
               type="email"

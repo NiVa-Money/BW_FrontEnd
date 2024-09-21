@@ -49,8 +49,7 @@ export default function RootLayout({
     '/faq/docs',
     '/data-deletion',
 
-    '/integration'
-
+    '/integration',
   ];
   const routeWithoutFooter: string[] = [
     '/mychatbots',
@@ -74,9 +73,7 @@ export default function RootLayout({
     '/terms',
     '/data-deletion',
 
-    '/integration'
-
-
+    '/integration',
   ];
   const routeWithoutSidebar: string[] = [
     '/createbot',
@@ -89,7 +86,6 @@ export default function RootLayout({
     '/membership-failure',
     '/membership-success',
     '/login',
-    '/home',
     '/botsession',
     '/privacy',
     '/terms',
@@ -112,7 +108,6 @@ export default function RootLayout({
     '/blog',
     '/rize',
     '/contactus',
-    '/home',
     '/privacy',
     '/terms',
   ];
@@ -123,54 +118,56 @@ export default function RootLayout({
     <html lang="en">
       <body className="flex flex-col min-h-screen">
         {knownRoutes.includes(pathnameBrowser) ? (
-          <Provider store={store}>
-            <PersistGate
-              loading={
-                <div className="h-screen w-screen flex justify-center items-center">
-                  <Image
-                    src="/images/bot-loader.gif"
-                    alt="BotWot"
-                    width={500}
-                    height={300}
-                  />
-                </div>
-              }
-              persistor={persistor}
-            >
-              <PathnameHandler />
-              <ConditionalHeader routeWithoutHeader={routeWithoutHeader} />
-              <div className="flex flex-grow relative">
-                <div className="h-screen">
-                  <SidebarToggleButton
-                    isVisible={isSidebarVisible}
-                    onClick={() => setIsSidebarVisible(!isSidebarVisible)}
-                    routeWithoutSidebar={routeWithoutSidebar}
-                  />
-                  <div
-                    className={`relative transition-transform duration-800 ease-in ${
-                      isSidebarVisible ? 'translate-x-0' : '-translate-x-full'
-                    }`}
-                  >
-                    {isSidebarVisible && (
-                      <ConditionalSideBar
-                        routeWithoutSidebar={routeWithoutSidebar}
-                      />
-                    )}
-                  </div>
-                </div>
-                <main
-                  className={`flex-grow ${
-                    isSidebarVisible && 'h-screen overflow-y-scroll'
+          // <Provider store={store}>
+          //   <PersistGate
+          //     loading={
+          //       <div className="h-screen w-screen flex justify-center items-center">
+          //         <Image
+          //           src="/images/bot-loader.gif"
+          //           alt="BotWot"
+          //           width={500}
+          //           height={300}
+          //         />
+          //       </div>
+          //     }
+          //     persistor={persistor}
+          //   >
+          <>
+            <PathnameHandler />
+            <ConditionalHeader routeWithoutHeader={routeWithoutHeader} />
+            <div className="flex flex-grow relative">
+              <div className="h-screen">
+                <SidebarToggleButton
+                  isVisible={isSidebarVisible}
+                  onClick={() => setIsSidebarVisible(!isSidebarVisible)}
+                  routeWithoutSidebar={routeWithoutSidebar}
+                />
+                <div
+                  className={`relative transition-transform duration-800 ease-in ${
+                    isSidebarVisible ? 'translate-x-0' : '-translate-x-full'
                   }`}
                 >
-                  {children}
-                </main>
+                  {isSidebarVisible && (
+                    <ConditionalSideBar
+                      routeWithoutSidebar={routeWithoutSidebar}
+                    />
+                  )}
+                </div>
               </div>
-              <ConditionalFooter routeWithoutFooter={routeWithoutFooter} />
-            </PersistGate>
+              <main
+                className={`flex-grow ${
+                  isSidebarVisible && 'h-screen overflow-y-scroll'
+                }`}
+              >
+                {children}
+              </main>
+            </div>
+            <ConditionalFooter routeWithoutFooter={routeWithoutFooter} />
             <Toast />
-          </Provider>
+          </>
         ) : (
+          // </PersistGate>
+          // </Provider>
           <NotFound />
         )}
       </body>

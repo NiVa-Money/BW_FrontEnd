@@ -10,42 +10,19 @@ import { PersistGate } from 'redux-persist/integration/react';
 import Image from 'next/image';
 import Head from 'next/head';
 import Toast from '@/components/Toaster/toast';
+import RootLayout from '@/app/layout';
 
 const inter = Inter({ subsets: ['latin'] });
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
-    <Provider store={store}>
-      <PersistGate
-        loading={
-          <div className="h-screen w-screen flex justify-center items-center">
-            <Image
-              src="/images/bot-loader.gif"
-              alt="BotWot"
-              width={500}
-              height={300}
-            />
-          </div>
-        }
-        persistor={persistor}
-      >
-        <Head>
-          <link
-            rel="icon"
-            type="image/svg"
-            href="@/public/assets/mainLogo.svg"
-          />
-        </Head>
-        <div className={`${inter.className} flex flex-col min-h-screen`}>
-          <Header />
-          <main className="flex-grow">
-            <Component {...pageProps} />
-          </main>
-          <Footer />
-        </div>
-      </PersistGate>
-      <Toast />
-    </Provider>
+    <>
+      {/* <Provider store={store}>
+        <RootLayout> */}
+      <Component {...pageProps} />
+      {/* </RootLayout>
+      </Provider> */}
+    </>
   );
 }
 

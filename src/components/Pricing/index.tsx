@@ -15,10 +15,12 @@ const PricingCard = () => {
   const dispatch = useDispatch();
 
   //remove the check after paymet is fixed  || {}
-  const { plans = [], loading, error } = useSelector(
-    (state: RootState) => state.payment.plans || {}
-  );
-  
+  const {
+    plans = [],
+    loading,
+    error,
+  } = useSelector((state: RootState) => state.payment.plans || {});
+
   // useEffect(() => {
   //   dispatch(fetchPlans());
   // }, [dispatch]);
@@ -34,7 +36,7 @@ const PricingCard = () => {
   }, []);
 
   const showFreeTrialButton = pathname
-    ? ['/home', '/pricing'].includes(pathname)
+    ? ['', '/pricing'].includes(pathname)
     : false;
 
   const handlePaymentSuccess = () => {
