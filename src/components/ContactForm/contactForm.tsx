@@ -1,14 +1,15 @@
 'use client';
 import React, { useState } from 'react';
-import axios from 'axios';
 import { toast, ToastContainer } from 'react-toastify';
+import axiosInstance from '@/utils/axiosConfig';
 import 'react-toastify/dist/ReactToastify.css';
 
 const ContactForm: React.FC = () => {
   const [formData, setFormData] = useState({
-    name: '',
+    firstName: '',
     lastName: '',
     email: '',
+    phone: '',
     message: '',
   });
 
@@ -26,24 +27,23 @@ const ContactForm: React.FC = () => {
     e.preventDefault();
 
     try {
-      const response = await axios.post(
-        'http://13.235.189.116:8000/user/contactus',
-        {
-          firstName: formData.name,
-          lastName: formData.lastName,
-          emailId: formData.email,
-          question: formData.message,
-        }
-      );
+      const response = await axiosInstance.post('/user/contactus', {
+        firstName: formData.firstName,
+        lastName: formData.lastName,
+        emailId: formData.email,
+        phoneNumber: formData.phone,
+        question: formData.message,
+      });
 
       // Show success toast
       toast.success('Form submitted successfully!', {});
 
       // Clear form fields after submission
       setFormData({
-        name: '',
+        firstName: '',
         lastName: '',
         email: '',
+        phone: '',
         message: '',
       });
     } catch (error) {
@@ -74,6 +74,7 @@ const ContactForm: React.FC = () => {
                   type="text"
                   name="firstName"
                   placeholder="First Name"
+                  value={formData.firstName} // Bind value to formData
                   className="bg-black bg-opacity-30 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-[#C00DC8]"
                   onChange={handleChange}
                   required
@@ -82,6 +83,7 @@ const ContactForm: React.FC = () => {
                   type="text"
                   name="lastName"
                   placeholder="Last Name"
+                  value={formData.lastName} // Bind value to formData
                   className="bg-black bg-opacity-30 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-[#C00DC8]"
                   onChange={handleChange}
                   required
@@ -91,6 +93,7 @@ const ContactForm: React.FC = () => {
                 type="email"
                 name="email"
                 placeholder="Email"
+                value={formData.email} // Bind value to formData
                 className="w-full bg-black bg-opacity-30 rounded-md p-2 mb-4 focus:outline-none focus:ring-2 focus:ring-[#C00DC8]"
                 onChange={handleChange}
                 required
@@ -99,6 +102,7 @@ const ContactForm: React.FC = () => {
                 type="tel"
                 name="phone"
                 placeholder="Phone no"
+                value={formData.phone} // Bind value to formData
                 className="w-full bg-black bg-opacity-30 rounded-md p-2 mb-4 focus:outline-none focus:ring-2 focus:ring-[#C00DC8]"
                 onChange={handleChange}
                 required
@@ -106,6 +110,7 @@ const ContactForm: React.FC = () => {
               <textarea
                 name="message"
                 placeholder="Your Message"
+                value={formData.message} // Bind value to formData
                 rows={4}
                 className="w-full bg-black bg-opacity-30 rounded-md p-2 mb-4 focus:outline-none focus:ring-2 focus:ring-[#C00DC8]"
                 onChange={handleChange}
