@@ -110,11 +110,12 @@ const PayPalButton: React.FC<PayPalButtonProps> = ({
   const approvalUrl = useSelector(
     (state: RootState) => state.payment?.approvalUrl
   );
-  const subscriptionId = useSelector((state: RootState) => state.payment?._id);
+  const subscriptionId = useSelector((state: RootState) => state.payment?.plans?._id);
   const paypalCreateLoader = useSelector(
     (state: RootState) => state.payment?.loading
   );
   const [isPaymentInitiated, setIsPaymentInitiated] = useState(false);
+  const captureStatus = useSelector((state: RootState) => state.payment?.plans?.status);
   const router = useRouter();
 
   console.log('Available plans:', plans);
@@ -143,17 +144,20 @@ const PayPalButton: React.FC<PayPalButtonProps> = ({
 
   const handlePayPalReturn = async (subscriptionId: string) => {
     try {
-      // Dispatch the capture payment action with subscriptionId as a string
-      const resultAction = dispatch(capturePaymentRequest(subscriptionId));
-      const result = resultAction.payload;
-      console.log('Capture payment result:', result);
-
-      if (result === 'CAPTURE_PAYMENT_SUCCESS') {
+      // Dispatch the capture payment action
+      dispatch(capturePaymentRequest(subscriptionId));
+  
+      // Use a simple timeout to wait for the action to complete
+      await new Promise((resolve) => setTimeout(resolve, 1000)); // Adjust delay as necessary
+  
+      if (captureStatus === 'CAPTURE_PAYMENT_SUCCESS') {
         console.log('Payment captured successfully');
         // Redirect to success page
         router.push('/membership-success');
       } else {
-        throw new Error('Payment capture failed');
+        console.error('Payment capture failed');
+        // Redirect to failure page
+        router.push('/membership-failure');
       }
     } catch (error) {
       console.error('Error during payment capture:', error);
