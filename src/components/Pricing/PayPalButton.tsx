@@ -127,19 +127,19 @@ const PayPalButton: React.FC<PayPalButtonProps> = ({
   const planId = selectedPlan?.planId;
 
   useEffect(() => {
-    const urlParams = new URLSearchParams(window.location.search);
-    const subscriptionIdFromUrl = urlParams.get('subscriptionId');
-    if (subscriptionIdFromUrl) {
-      handlePayPalReturn(subscriptionIdFromUrl); // Pass subscriptionId directly as a string
-    }
-  }, []);
-
-  useEffect(() => {
     if (isPaymentInitiated && approvalUrl?.length && !paypalCreateLoader) {
       console.log('Redirecting to PayPal approval URL:', approvalUrl);
       router.replace(approvalUrl);
     }
   }, [approvalUrl, paypalCreateLoader, isPaymentInitiated]);
+
+  useEffect(() => {
+    
+    if (subscriptionId) {
+      console.log('SubscriptionID:', subscriptionId); 
+      handlePayPalReturn(subscriptionId);
+    }
+  }, []);
 
   const handlePayPalReturn = async (subscriptionId: string) => {
     try {
@@ -161,7 +161,6 @@ const PayPalButton: React.FC<PayPalButtonProps> = ({
       router.push('/membership-failure');
     }
   };
-
 
   const createOrder = async () => {
     console.log('Creating order');
