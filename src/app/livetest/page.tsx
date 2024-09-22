@@ -59,10 +59,10 @@ const AdminChat: React.FC = () => {
         id="message"
         value={message}
         onChange={(e) => setMessage(e.target.value)}
-        style={{ color: 'black' }} 
+        style={{ color: 'grey' }} 
         autoComplete="off"
       />
-      <button onClick={sendMessage}>Send</button>
+      <button className='text-white' onClick={sendMessage}>Send</button>
     </div>
   );
 }

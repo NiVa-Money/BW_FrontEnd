@@ -328,6 +328,7 @@ const MenuItem: React.FC<MenuItemProps> = ({ item, onClick }) => {
         </Link>
       )}
     </div>
+  
   );
 };
 export default SideBar;
