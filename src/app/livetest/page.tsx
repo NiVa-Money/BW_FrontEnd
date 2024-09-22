@@ -52,17 +52,17 @@ const AdminChat: React.FC = () => {
       <h1>Chat as Admin</h1>
       <ul id="messages">
         {messages.map((msg, index) => (
-          <li key={index}>{msg}</li>
+          <li className='text-white' key={index}>{msg}</li>
         ))}
       </ul>
       <input
         id="message"
         value={message}
         onChange={(e) => setMessage(e.target.value)}
-        style={{ color: 'grey' }} 
+        style={{ color: 'black' }} 
         autoComplete="off"
       />
-      <button className='text-white' onClick={sendMessage}>Send</button>
+      <button onClick={sendMessage}>Send</button>
     </div>
   );
 }
