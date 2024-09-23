@@ -246,9 +246,9 @@ export const processPayPalPaymentService = async (planId: string, payload: any) 
   }
 };
 
-export const capturePaymentService = async (subscriptionId: string) => {
+export const capturePaymentService = async (id: string) => {
   try {
-    const response = await axiosInstance.post(`/payment/capture-subscription/${subscriptionId}`);
+    const response = await axiosInstance.post(`/payment/capture-subscription/${id}`);
     return response.data;
   } catch (error) {
     throw new Error('Payment capture failed');

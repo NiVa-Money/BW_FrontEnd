@@ -30,11 +30,11 @@ export const createPaymentFailure = (error: any) => ({
   payload: error,
 });
 
-export const capturePaymentRequest = (subscriptionId: string) => ({
+export const capturePaymentRequest = (_id: string) => ({
+  
   type: CAPTURE_PAYMENT_REQUEST,
-  payload: subscriptionId,
+  payload: _id,
 });
-
 export const capturePaymentSuccess = (data: any, response: any) => ({
   type: CAPTURE_PAYMENT_SUCCESS,
   payload: data,

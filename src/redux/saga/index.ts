@@ -585,6 +585,7 @@ export function* payPalPaymentSaga({ payload }: { type: string; payload: { planI
     console.log('PayPal payment creation response:', response);
     const approvalUrl = response?.approvalUrl;  
     const subscriptionId = response?._id;
+    console.log('PayPal subscriptionId' , subscriptionId);
     if (approvalUrl) {
       // Dispatch success action to store approvalUrl
       yield put(createPaymentSuccess({ approvalUrl , subscriptionId,  planId ,  data }));
@@ -599,10 +600,9 @@ export function* payPalPaymentSaga({ payload }: { type: string; payload: { planI
   }
 }
 
-export function* capturePaymentSaga({ payload }: { type: string; payload: { subscriptionId: string } }): Generator<any> {
+export function* capturePaymentSaga({ payload }: { type: string; payload: { _id: string } }): Generator<any> {
   try {
-    const response = yield call(capturePaymentService, payload.subscriptionId);
-    console.log('Capture payment response:', response);
+    const response = yield call(capturePaymentService, payload._id);
     const subscriptionId = (response as { _id: string })._id;
     console.log('subscription', subscriptionId);
     // Save the captured payment response in Redux
