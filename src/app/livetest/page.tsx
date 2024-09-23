@@ -49,7 +49,7 @@ const AdminChat: React.FC = () => {
 
   return (
     <div>
-      <h1>Chat as Admin</h1>
+      <h1 className='text-white'>Chat as Admin</h1>
       <ul id="messages">
         {messages.map((msg, index) => (
           <li className='text-white' key={index}>{msg}</li>
