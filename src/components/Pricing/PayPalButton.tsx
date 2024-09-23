@@ -86,14 +86,118 @@
 
 // export default PayPalButton;
 
-import React, { useEffect, useState } from 'react';
+// import React, { useEffect, useState } from 'react';
+// import { useDispatch, useSelector } from 'react-redux';
+// import {
+//   createPaymentRequest,
+//   capturePaymentRequest,
+// } from '@/redux/actions/paymentActions';
+// import { RootState } from '@/redux/configureStore';
+// import { usePathname, useRouter } from 'next/navigation';
+
+// type PayPalButtonProps = {
+//   planName: string;
+//   price: number;
+//   userId: string;
+// };
+
+// const PayPalButton: React.FC<PayPalButtonProps> = ({
+//   planName,
+//   price,
+// }) => {
+//   const dispatch = useDispatch();
+//   const pathname = usePathname(); 
+//   const plans = useSelector((state: RootState) => state.payment?.plans?.plans);
+//   const approvalUrl = useSelector(
+//     (state: RootState) => state.payment?.approvalUrl
+//   );
+//   const subscriptionId = useSelector((state: RootState) => state.payment?.subscriptionId);
+//   const paypalCreateLoader = useSelector(
+//     (state: RootState) => state.payment?.loading
+//   );
+//   const [isPaymentInitiated, setIsPaymentInitiated] = useState(false);
+//   const router = useRouter();
+
+//   console.log('Available plans:', plans);
+//   console.log('subscriptionId:', subscriptionId);
+
+//   // Find the correct plan based on name and price
+//   const selectedPlan = plans?.find(
+//     (plan: { name: string; price: string }) =>
+//       plan.name.toLowerCase() === planName.toLowerCase()
+//   );
+//   const planId = selectedPlan?.planId;
+
+//   useEffect(() => {
+//     if (isPaymentInitiated && approvalUrl?.length && !paypalCreateLoader) {
+//       console.log('Redirecting to PayPal approval URL:', approvalUrl);
+//       router.replace(approvalUrl);
+//     }
+//   }, [approvalUrl]);
+
+//   useEffect(() => {
+//     console.log('Current pathname:', pathname);
+//     console.log('Current subscriptionId:', subscriptionId);
+//     if (subscriptionId && (pathname === '/membership-success' || pathname === '/membership-failure')) {
+//       console.log('Conditions met, calling handlePayPalReturn');
+//       handlePayPalReturn(subscriptionId);
+//     } else {
+//       console.log('Conditions not met for handlePayPalReturn');
+//     }
+//   }, [pathname, subscriptionId]);
+
+//   const handlePayPalReturn = async (subscriptionId: string) => {
+//     try {
+//       console.log('Capturing payment for subscriptionId:', subscriptionId);
+//       // Dispatch the capture payment action with subscriptionId as payload
+//       dispatch(capturePaymentRequest( subscriptionId ));
+//     } catch (error) {
+//       console.error('Error during payment capture:', error);
+//     }
+//   };
+
+//   const createOrder = async () => {
+//     console.log('Creating order');
+//     try {
+//       if (!planId) {
+//         console.error('Plan ID is not set. Selected plan:', selectedPlan);
+//         return;
+//       }
+//       setIsPaymentInitiated(true);
+//       console.log('Creating payment with Plan ID:', planId);
+//       const paymentData = {
+//         planId: planId,
+//         amount: price,
+//         planName: planName,
+//       };
+//       const action = createPaymentRequest({ planId, data: paymentData });
+//       console.log('Dispatching action:', action);
+//       dispatch(action);
+//     } catch (error) {
+//       console.error('Failed to create order:', error);
+//     }
+//   };
+
+//   return (
+//     <button
+//       onClick={createOrder}
+//       className="py-2 px-6 text-base font-medium bg-white rounded-lg text-black w-full"
+//     >
+//       Pay with PayPal
+//     </button>
+//   );
+// };
+
+// export default PayPalButton;
+
+import React, { useEffect, useState, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   createPaymentRequest,
   capturePaymentRequest,
 } from '@/redux/actions/paymentActions';
 import { RootState } from '@/redux/configureStore';
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 
 type PayPalButtonProps = {
   planName: string;
@@ -106,21 +210,16 @@ const PayPalButton: React.FC<PayPalButtonProps> = ({
   price,
 }) => {
   const dispatch = useDispatch();
-  const plans = useSelector((state: RootState) => state.payment?.plans?.plans);
-  const approvalUrl = useSelector(
-    (state: RootState) => state.payment?.approvalUrl
-  );
-  const subscriptionId = useSelector((state: RootState) => state.payment?.plans?._id);
-  const paypalCreateLoader = useSelector(
-    (state: RootState) => state.payment?.loading
-  );
-  const [isPaymentInitiated, setIsPaymentInitiated] = useState(false);
-  const captureStatus = useSelector((state: RootState) => state.payment?.plans?.status);
+  const pathname = usePathname();
   const router = useRouter();
+  
+  const plans = useSelector((state: RootState) => state.payment?.plans?.plans);
+  const approvalUrl = useSelector((state: RootState) => state.payment?.approvalUrl);
+  const subscriptionId = useSelector((state: RootState) => state.payment?.subscriptionId);
+  const paypalCreateLoader = useSelector((state: RootState) => state.payment?.loading);
+  
+  const [isPaymentInitiated, setIsPaymentInitiated] = useState(false);
 
-  console.log('Available plans:', plans);
-
-  // Find the correct plan based on name and price
   const selectedPlan = plans?.find(
     (plan: { name: string; price: string }) =>
       plan.name.toLowerCase() === planName.toLowerCase()
@@ -128,43 +227,37 @@ const PayPalButton: React.FC<PayPalButtonProps> = ({
   const planId = selectedPlan?.planId;
 
   useEffect(() => {
+    console.log('Component rendered. Pathname:', pathname, 'SubscriptionId:', subscriptionId);
+  }, [pathname, subscriptionId]);
+
+  useEffect(() => {
     if (isPaymentInitiated && approvalUrl?.length && !paypalCreateLoader) {
       console.log('Redirecting to PayPal approval URL:', approvalUrl);
       router.replace(approvalUrl);
     }
-  }, [approvalUrl, paypalCreateLoader, isPaymentInitiated]);
+  }, [isPaymentInitiated, approvalUrl, paypalCreateLoader, router]);
 
-  useEffect(() => {
-    
-    if (subscriptionId) {
-      console.log('SubscriptionID:', subscriptionId); 
-      handlePayPalReturn(subscriptionId);
-    }
-  }, []);
-
-  const handlePayPalReturn = async (subscriptionId: string) => {
+  const handlePayPalReturn = useCallback(async (subscriptionId: string) => {
     try {
-      // Dispatch the capture payment action
+      console.log('Capturing payment for subscriptionId:', subscriptionId);
       dispatch(capturePaymentRequest(subscriptionId));
-  
-      // Use a simple timeout to wait for the action to complete
-      await new Promise((resolve) => setTimeout(resolve, 1000)); // Adjust delay as necessary
-  
-      if (captureStatus === 'CAPTURE_PAYMENT_SUCCESS') {
-        console.log('Payment captured successfully');
-        // Redirect to success page
-        router.push('/membership-success');
-      } else {
-        console.error('Payment capture failed');
-        // Redirect to failure page
-        router.push('/membership-failure');
-      }
     } catch (error) {
       console.error('Error during payment capture:', error);
-      // Redirect to failure page
-      router.push('/membership-failure');
     }
-  };
+  }, [dispatch]);
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const subscriptionIdFromParams = params.get('subscriptionId');
+    
+    const isSuccessOrFailurePage = pathname === '/membership-success' || pathname === '/membership-failure';
+    console.log('Checking conditions:', isSuccessOrFailurePage, subscriptionIdFromParams);
+    
+    if (subscriptionIdFromParams && isSuccessOrFailurePage) {
+      console.log('Conditions met, calling handlePayPalReturn');
+      handlePayPalReturn(subscriptionIdFromParams);
+    }
+  }, [pathname, handlePayPalReturn]);
 
   const createOrder = async () => {
     console.log('Creating order');
@@ -180,9 +273,7 @@ const PayPalButton: React.FC<PayPalButtonProps> = ({
         amount: price,
         planName: planName,
       };
-      const action = createPaymentRequest({ planId, data: paymentData });
-      console.log('Dispatching action:', action);
-      dispatch(action);
+      dispatch(createPaymentRequest({ planId, data: paymentData }));
     } catch (error) {
       console.error('Failed to create order:', error);
     }
