@@ -62,7 +62,7 @@ const AdminChat: React.FC = () => {
         style={{ color: 'black' }} 
         autoComplete="off"
       />
-      <button onClick={sendMessage}>Send</button>
+      <button className='text-white' onClick={sendMessage}>Send</button>
     </div>
   );
 }
