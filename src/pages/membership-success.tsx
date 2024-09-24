@@ -68,7 +68,6 @@
 
 
 
-import BackgroundAnimation from '@/components/BackgroundAnimation/backgroundAnimation';
 import { capturePaymentRequest } from '@/redux/actions/paymentActions';
 import { RootState } from '@/redux/configureStore';
 import { useRouter } from 'next/router'; // Correct use of Next.js router
@@ -88,7 +87,8 @@ const PaymentSuccess: React.FC = () => {
     async (subscriptionId: string) => {
       try {
         console.log('Capturing payment for subscriptionId:', subscriptionId);
-        dispatch(capturePaymentRequest(subscriptionId)); // Dispatching the action correctly
+        dispatch(capturePaymentRequest({ subscriptionId })); // Pass as an object
+
       } catch (error) {
         console.error('Error during payment capture:', error);
       }
