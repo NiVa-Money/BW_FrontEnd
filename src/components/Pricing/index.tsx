@@ -195,18 +195,6 @@ const PricingCard = () => {
   const showFreeTrialButton = pathname
     ? ['/home', '/pricing'].includes(pathname)
     : false;
-    
-  const handlePaymentSuccess = () => {
-    setIsPaymentSuccessful(true);
-    setModalMessage('Payment successful! Your plan has been activated.');
-    setIsModalOpen(true);
-  };
-
-  const getPlanDetails = (planName: string) => {
-    return plans?.find(
-      (plan: any) => plan.name.toLowerCase() === planName.toLowerCase()
-    );
-  };
 
   // Default pricing tiers with placeholders for API data
   const pricingTiers = [
@@ -273,17 +261,8 @@ const PricingCard = () => {
     return tier;
   });
   
-
   const handleContactSales = () => {
     alert('Contact sales via this mail: botwot@gmail.com');
-  };
-
-  const closeModal = () => {
-    setIsModalOpen(false);
-    // If payment was successful, you might want to redirect or update UI
-    if (isPaymentSuccessful) {
-      // Example: router.push('/dashboard');
-    }
   };
 
   return (
@@ -309,7 +288,7 @@ const PricingCard = () => {
                   >
                     Contact Sales
                   </button>
-                ) : showFreeTrialButton && tier.title !== 'Basic' ? (
+                ) : showFreeTrialButton  ? (
                   <button
                     className="py-2 px-6 text-base font-medium bg-gray-100 rounded-lg text-slate-950 w-full"
                     onClick={() => {
@@ -323,7 +302,6 @@ const PricingCard = () => {
                       planName={tier.title}
                       price={tier.price}
                       userId={'userId'}
-                      onPaymentSuccess={handlePaymentSuccess}
                     />
                 )
               }

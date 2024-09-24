@@ -41,6 +41,8 @@ export default function paymentReducer(
         loading: false,
         paymentData: action.payload,
         approvalUrl: action.payload.approvalUrl,
+        subscriptionId: action.payload.subscriptionId,
+        data: action.payload.data,
         error: null,
       };
     case CAPTURE_PAYMENT_SUCCESS:
