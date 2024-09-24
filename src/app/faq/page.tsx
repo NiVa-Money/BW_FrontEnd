@@ -78,7 +78,7 @@ const HelpCenter: React.FC = () => {
       </h2>
       <section className="flex gap-5 py-2.5 mt-4 w-full max-md:flex-wrap max-md:max-w-full">
         {resources.map((resource, index) => (
-          <Link key={index} href={resource.link} className="flex w-full">
+          <Link key={index} href={resource.link} className="flex w-full  text-white">
             <div className="w-full">
               <ResourceCard
                 key={index}
@@ -88,7 +88,7 @@ const HelpCenter: React.FC = () => {
               />
               {resource.available == false && (
                 <div
-                  className={`my-auto.ml-1 mt-1 text-center opacity-70 text-xs text-[color:var(--sds-color-text-brand-on-brand)]`}
+                  className={`my-auto.ml-1 mt-1 text-center opacity-70 text-xs text-white`}
                 >
                   Coming Soon
                 </div>

@@ -362,7 +362,7 @@ const CreateBotComponent: React.FC = () => {
         {error.includes('pdf') && (
           <div className="relative mt-5 z-10 text-red-500">{error}</div>
         )}
-           <p className="text-sm text-grey-500 mt-3">*Only PDF is allowed</p>
+           <p className="text-sm text-grey-500 mt-3">*Only PDF is allowed (up to 10MB)</p>
         <div className="flex items-center space-x-4 mt-5">
           <div className="flex items-center">
             <label className="block text-white mr-2">Enable Smartness</label>

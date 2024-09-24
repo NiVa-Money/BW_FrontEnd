@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
 import PricingTier from './Tier';
 import PayPalButton from './PayPalButton';
+
 import { RootState } from '@/redux/configureStore';
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchPlans } from '@/redux/actions/paymentActions';
@@ -13,6 +14,7 @@ const PricingCard = () => {
   const [modalMessage, setModalMessage] = useState('');
   const router = useRouter();
   const pathname = usePathname();
+
   const dispatch = useDispatch();
 
   const { plans = [] } = useSelector((state: RootState) => state.payment.plans || {});
@@ -22,6 +24,7 @@ const PricingCard = () => {
   useEffect(() => {
     dispatch(fetchPlans());
   } , []);
+
 
   useEffect(() => {
     // Check if returning from PayPal
@@ -36,6 +39,7 @@ const PricingCard = () => {
   const showFreeTrialButton = pathname
     ? ['/home', '/pricing'].includes(pathname)
     : false;
+
 
   // Default pricing tiers with placeholders for API data
   const pricingTiers = [
@@ -52,6 +56,7 @@ const PricingCard = () => {
       backgroundColor: 'bg-pink-400',
     },
     {
+
       title: 'Starter', // This will be replaced by API data
       price: '29.99', // This will be replaced by API data
       sessions: '20,000 Messages',
@@ -59,14 +64,17 @@ const PricingCard = () => {
         'Advanced tools to create and manage your chatbot, featuring AI-generated responses.',
         'Suitable for up to 20,000 chat messages.',
         'Manage 3 Bot Profiles with 4 Knowledge Bases.',
+
         'Text, PNG, JPEG uploads allowed for content.',
       ],
       backgroundColor: 'bg-indigo-500',
     },
     {
+
       title: 'Pro', // This will be replaced by API data
       price: '59.99', // This will be replaced by API data
       sessions: '50,000 Messages',
+
       features: [
         'Enhanced features for extensive chatbot needs with AI-generated responses.',
         'Suitable for up to 50,000 chat messages.',
@@ -76,7 +84,9 @@ const PricingCard = () => {
       backgroundColor: 'bg-fuchsia-950',
     },
     {
+
       title: 'Enterprise', // This will be replaced by API data
+
       price: 'Contact Sales',
       sessions: 'Tailored Solutions',
       features: [
@@ -87,6 +97,7 @@ const PricingCard = () => {
       backgroundColor: 'bg-[#261065]',
     },
   ];
+
 
   const updatedTiers = pricingTiers.map((tier) => {
     if (tier.title !== 'Custom') {
@@ -102,6 +113,7 @@ const PricingCard = () => {
     return tier;
   });
   
+
   const handleContactSales = () => {
     alert('Contact sales via this mail: botwot@gmail.com');
   };
@@ -116,7 +128,7 @@ const PricingCard = () => {
           </p>
         </div>
         <div className="flex gap-5 justify-center py-6 mt-8 max-w-[1200px] mx-auto">
-          {updatedTiers.map((tier, index) => (
+          {pricingTiers.map((tier, index) => (
             <PricingTier
               userId={''}
               key={index}
