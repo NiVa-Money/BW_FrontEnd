@@ -225,16 +225,38 @@ export const getAdvanceFeatureService = async (payload: any) => {
   }
 };
 
-export const processPayPalPaymentService = async (payload: any) => {
+export const fetchPlansApi = async () => {
   try {
-    const response = await axiosInstance.post(`/payment/create`, payload);
+    const response = await axiosInstance.get('/payment/plans');
+    return response.data;  // Returns the array of plans
+  } catch (error) {
+    throw new Error('Payment Plans fetching failed');
+  }
+};
+
+export const processPayPalPaymentService = async (planId: string, payload: any) => {
+  console.log('processPayPalPaymentService called with planId:', planId, 'and payload:', payload);
+  try {
+    const response = await axiosInstance.post(`/payment/subscription/${planId}`, payload);
+    console.log('API response:', response);
     return response.data;
   } catch (error) {
+    console.error('Error in processPayPalPaymentService:', error);
     throw new Error('Payment processing failed');
   }
 };
 
-export const capturePaymentService = async (_id: string) => {
-  const response = await axiosInstance.post(`/payment/capture/${_id}`);
-  return response.data;
+export const capturePaymentService = async (id: string) => {
+  try {
+    const response = await axiosInstance.post(`/payment/capture-subscription/${id}`);
+    return response.data;
+  } catch (error) {
+    throw new Error('Payment capture failed');
+  }
 };
+
+export const getMembershipPlan = async () => {
+  const response = await axiosInstance.get('/payment/user-subscription');
+  return response.data.planName;
+};
+

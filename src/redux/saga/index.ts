@@ -61,6 +61,8 @@ import {
   SET_PATHNAME_SUCCESS,
   SET_PATHNAME_FAILURE,
   SET_PATHNAME,
+  FETCH_PLANS,
+  FETCH_MEMBERSHIP_PLAN_REQUEST,
 } from '../actions/actionTypes';
 
 import {
@@ -84,11 +86,19 @@ import {
   processPayPalPaymentService,
   verifyOtpUserData,
   capturePaymentService,
+  fetchPlansApi,
+  getMembershipPlan,
 } from '../services';
 import { notifyError, notifySuccess } from '@/components/Toaster/toast';
 import {
   capturePaymentFailure,
   capturePaymentSuccess,
+  createPaymentFailure,
+  createPaymentSuccess,
+  fetchMembershipPlanFailure,
+  fetchMembershipPlanSuccess,
+  fetchPlansFailure,
+  fetchPlansSuccess,
 } from '../actions/paymentActions';
 interface BotData {
   userChat: any;
@@ -542,47 +552,92 @@ export function* getAdvanceFeatureSaga({
   }
 }
 
-export function* payPalPaymentSaga({
-  payload,
-}: {
-  type: string;
-  payload: any;
-}): Generator<any> {
+function* fetchPlansSaga(): Generator<any, void, any> {
   try {
-    const response: any = yield call(processPayPalPaymentService, payload);
-    yield put({
-      type: CREATE_PAYMENT_SUCCESS,
-      payload: response,
-      paypalUrl: response.paypalUrl,
-    });
+    const response: { name: string; price: number; _id: string }[] = yield call(
+      fetchPlansApi
+    ); // Call the API function
 
+    // Ensure response is an array and not empty
+    if (!Array.isArray(response) || response.length === 0) {
+      throw new Error('No plans found or invalid data format');
+    }
+
+    console.log('API response data:', response);
+
+    // Process data
+    const filteredData = response.map(
+      (plan: { name: string; price: number; _id: string }) => ({
+        name: plan.name,
+        price: plan.price,
+        planId: plan._id,
+      })
+    );
+    console.log('Filtered data:', filteredData);
+
+    yield put(fetchPlansSuccess(filteredData)); // Dispatch success action
+  } catch (error) {
+    console.error('Fetch plans failed with error:', error);
+    yield put(fetchPlansFailure('Plans fetch failed')); // Dispatch failure action
+  }
+}
+
+export function* payPalPaymentSaga({ payload }: { type: string; payload: { planId: string; data: any } }): Generator<any> {
+  try {
+    const { planId, data } = payload;
+    const response: any = yield call(processPayPalPaymentService, planId, data);
+    console.log('PayPal payment creation response:', response);
+    const approvalUrl = response?.approvalUrl;  
+    const subscriptionId = response?._id;
+    console.log('PayPal subscriptionId' , subscriptionId);
+    if (approvalUrl) {
+      // Dispatch success action to store approvalUrl
+      yield put(createPaymentSuccess({ approvalUrl , subscriptionId,  planId ,  data }));
+    } else {
+      throw new Error('Approval URL not found in the response');
+    }
     notifySuccess('Payment processed successfully');
   } catch (error: any) {
-    yield put({
-      type: CREATE_PAYMENT_FAILURE,
-      payload: error.message,
-    });
+    console.error('Error in payPalPaymentSaga:', error);
+    yield put(createPaymentFailure(error.message));
     notifyError('Payment processing failed');
   }
 }
 
-export function* capturePaymentSaga({
-  payload,
-}: {
-  type: string;
-  payload: string;
-}): Generator<any> {
+export function* capturePaymentSaga({ payload }: { type: string; payload: { subscriptionId: string } }): Generator<any> {
   try {
-    const response = yield call(capturePaymentService, payload);
-    const paymentId = (response as { _id: string })._id;
-    // // Save the captured payment response in Redux
-    yield put(capturePaymentSuccess(response));
+    // Call the capture payment service with subscriptionId
+    const response = yield call(capturePaymentService, payload.subscriptionId);
+
+    // Log the full response for debugging
+    console.log('Full response:', response);
+    const subscriptionId = (response as { _id: string })._id;
+
+    // Dispatch success action with subscriptionId and response
+    yield put(capturePaymentSuccess(subscriptionId, response));
+
+    // Notify success
     notifySuccess('Payment captured successfully');
   } catch (error: any) {
+    // Log error and dispatch failure action
+    console.error('Payment capture failed:', error);
     yield put(capturePaymentFailure(error.message));
+
+    // Notify error
     notifyError('Payment capture failed');
   }
 }
+
+export function* fetchMembershipPlanSaga(): Generator<any, void, string> {
+  try {
+    const planName: string = yield call(getMembershipPlan);
+    yield put(fetchMembershipPlanSuccess(planName));
+  } catch (error: any) {
+    yield put(fetchMembershipPlanFailure(error.message));
+  }
+}
+
+
 export function* pathnameSaga({
   payload,
 }: {
@@ -616,7 +671,9 @@ export default function* rootSaga() {
   yield takeEvery(VERIFY_USER_OTP, verifyOtpUserSaga);
   yield takeEvery(GOOGLE_LOGIN, signUpGoogleUserSagaData);
   yield takeEvery(PASSWORD_LOGIN, passwordLoginSaga);
+  yield takeEvery(FETCH_PLANS, fetchPlansSaga);
   yield takeEvery(CREATE_PAYMENT_REQUEST, payPalPaymentSaga);
   yield takeLatest(CAPTURE_PAYMENT_REQUEST, capturePaymentSaga);
+  yield takeLatest(FETCH_MEMBERSHIP_PLAN_REQUEST, fetchMembershipPlanSaga);
   yield takeLatest(SET_PATHNAME, pathnameSaga);
 }

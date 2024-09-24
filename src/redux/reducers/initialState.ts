@@ -84,10 +84,16 @@ const initialState: any = {
       loader: false,
     },
   },
+  
   payment: {
     loading: false,
     paymentData: null,
     error: null,
+    plans: {  
+      plans: [],
+      loading: false,
+      error: null,
+    },
   },
 };
 
