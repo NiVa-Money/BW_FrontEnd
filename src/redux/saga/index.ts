@@ -62,6 +62,7 @@ import {
   SET_PATHNAME_FAILURE,
   SET_PATHNAME,
   FETCH_PLANS,
+  FETCH_MEMBERSHIP_PLAN_REQUEST,
 } from '../actions/actionTypes';
 
 import {
@@ -86,6 +87,7 @@ import {
   verifyOtpUserData,
   capturePaymentService,
   fetchPlansApi,
+  getMembershipPlan,
 } from '../services';
 import { notifyError, notifySuccess } from '@/components/Toaster/toast';
 import {
@@ -93,6 +95,8 @@ import {
   capturePaymentSuccess,
   createPaymentFailure,
   createPaymentSuccess,
+  fetchMembershipPlanFailure,
+  fetchMembershipPlanSuccess,
   fetchPlansFailure,
   fetchPlansSuccess,
 } from '../actions/paymentActions';
@@ -624,6 +628,15 @@ export function* capturePaymentSaga({ payload }: { type: string; payload: { subs
   }
 }
 
+export function* fetchMembershipPlanSaga(): Generator<any, void, string> {
+  try {
+    const planName: string = yield call(getMembershipPlan);
+    yield put(fetchMembershipPlanSuccess(planName));
+  } catch (error: any) {
+    yield put(fetchMembershipPlanFailure(error.message));
+  }
+}
+
 
 export function* pathnameSaga({
   payload,
@@ -661,5 +674,6 @@ export default function* rootSaga() {
   yield takeEvery(FETCH_PLANS, fetchPlansSaga);
   yield takeEvery(CREATE_PAYMENT_REQUEST, payPalPaymentSaga);
   yield takeLatest(CAPTURE_PAYMENT_REQUEST, capturePaymentSaga);
+  yield takeLatest(FETCH_MEMBERSHIP_PLAN_REQUEST, fetchMembershipPlanSaga);
   yield takeLatest(SET_PATHNAME, pathnameSaga);
 }

@@ -6,6 +6,7 @@ import * as React from 'react';
 import PersonIcon from '@mui/icons-material/Person';
 import { useDispatch, useSelector } from 'react-redux';
 import Link from 'next/link';
+import { fetchMembershipPlanRequest } from '@/redux/actions/paymentActions';
 
 const ProfileComponent: React.FC = () => {
   const userEmail = useSelector(
@@ -17,6 +18,7 @@ const ProfileComponent: React.FC = () => {
   const pathName = useSelector((state: RootState) => state.root?.pathName);
   const [profileData, setProfileData] = React.useState<any>(userDataRedux);
   const dispatch = useDispatch();
+  const { planName } = useSelector((state: RootState) => state.payment);
 
   React.useEffect(() => {
     setProfileData(userDataRedux);
@@ -33,6 +35,13 @@ const ProfileComponent: React.FC = () => {
       dispatch(getUserProfileAction(userEmail));
     }
   }, []);
+
+  React.useEffect(() => {
+    // Fetch membership plan on component mount
+    dispatch(fetchMembershipPlanRequest());
+  }, [dispatch]);
+
+  const formattedPlanName = planName ? planName.charAt(0).toUpperCase() + planName.slice(1) : '';
 
   const handleDeleteProfile = () => {
     if (userEmail) {
@@ -57,10 +66,10 @@ const ProfileComponent: React.FC = () => {
         <ProfileField label="Email" value={`${profileData?.emailId}`} />
         {/* <ProfileField label="Country" value="United states" /> */}
         {/* <ProfileField label="Phone number" value={`${profileData?.mobileNo}`} /> */}
-        <ProfileField label="Membership Plan" value={`BotWot Starter`} />
+        <ProfileField label="Membership Plan" value={formattedPlanName} />
       </div>
 
-      <div className="mt-10">
+      {/* <div className="mt-10">
         <button
           onClick={handleDeleteProfile}
           className="flex  justify-center  text-xl font-medium text-gray-100 bg-[#3F2181] rounded-[60px]"
@@ -69,7 +78,7 @@ const ProfileComponent: React.FC = () => {
             <span>Cancel Membership Plan</span>
           </Link>
         </button>
-      </div>
+      </div> */}
     </div>
   );
 };
