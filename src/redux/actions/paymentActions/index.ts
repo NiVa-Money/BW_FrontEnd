@@ -31,7 +31,6 @@ export const createPaymentFailure = (error: any) => ({
 });
 
 export const capturePaymentRequest = (_id: string) => ({
-  
   type: CAPTURE_PAYMENT_REQUEST,
   payload: _id,
 });
