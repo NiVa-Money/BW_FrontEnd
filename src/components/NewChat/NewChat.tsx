@@ -13,6 +13,7 @@ import {
   sendUserQuestionOnly,
 } from '@/redux/actions/userChatAction';
 import withAuth from '../withAuth';
+import { fetchMembershipPlanRequest } from '@/redux/actions/paymentActions';
 
 const NewChatComponent: React.FC = () => {
   const dispatch = useDispatch();
@@ -34,6 +35,7 @@ const NewChatComponent: React.FC = () => {
   const [selectedBotName, setSelectedBotName] = React.useState<any>('');
 
   const botProfiles = useSelector((state: RootState) => state.botProfile);
+  const { planName } = useSelector((state: RootState) => state.payment);
   const userId = useSelector(
     (state: RootState) => state?.root?.userData?.user_id
   );
@@ -131,6 +133,13 @@ const NewChatComponent: React.FC = () => {
     };
     dispatch(filteredSession(data));
   }, []);
+
+  React.useEffect(() => {
+    // Fetch membership plan on component mount
+    dispatch(fetchMembershipPlanRequest());
+  }, [dispatch]);
+
+  const formattedPlanName = planName ? planName.charAt(0).toUpperCase() + planName.slice(1) : '';
 
   React.useEffect(() => {
     setSessionId(userChatMessagesRes?.sessionId);
@@ -294,7 +303,7 @@ const NewChatComponent: React.FC = () => {
           <div className="flex w-full md:w-[10vw] text-center flex-col py-2.5 bg-transparent px-1 whitespace-nowrap rounded-xl border border-white border-solid">
             <div className="text-base text-gray-300">Membership:</div>
             <div className="flex items-center justify-center mt-2.5 text-3xl font-semibold text-white">
-              Basic
+               {formattedPlanName}
             </div>
           </div>
         </div>

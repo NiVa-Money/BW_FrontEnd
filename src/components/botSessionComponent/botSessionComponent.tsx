@@ -21,6 +21,7 @@ import { BarChart } from '@tremor/react';
 import withAuth from '../withAuth';
 import { useEffect } from 'react';
 import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
+import { fetchMembershipPlanRequest } from '@/redux/actions/paymentActions';
 
 const BotSessionComponent: React.FC = () => {
   const dispatch = useDispatch();
@@ -45,6 +46,7 @@ const BotSessionComponent: React.FC = () => {
   const pathName = useSelector((state: RootState) => state.root?.pathName);
 
   const botProfiles = useSelector((state: RootState) => state.botProfile);
+  const { planName } = useSelector((state: RootState) => state.payment);
   const botIdRedux = useSelector(
     (state: RootState) => state.userChat?.botProfileSelect?.data
   );
@@ -183,6 +185,13 @@ const BotSessionComponent: React.FC = () => {
       setLeftWidth(newLeftWidth);
     }
   };
+
+  React.useEffect(() => {
+    // Fetch membership plan on component mount
+    dispatch(fetchMembershipPlanRequest());
+  }, [dispatch]);
+
+  const formattedPlanName = planName ? planName.charAt(0).toUpperCase() + planName.slice(1) : '';
 
   React.useEffect(() => {
     if (sentimentAnalysis) {
@@ -465,7 +474,7 @@ const BotSessionComponent: React.FC = () => {
               <div className="flex w-full md:w-[10vw] text-center flex-col py-2.5 bg-transparent px-1 whitespace-nowrap rounded-xl border border-white border-solid">
                 <div className="text-base text-gray-300">Membership:</div>
                 <div className="flex items-center justify-center mt-2.5 text-3xl font-semibold text-white">
-                  Basic
+                  {formattedPlanName}
                 </div>
               </div>
             </div>

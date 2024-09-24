@@ -255,3 +255,8 @@ export const capturePaymentService = async (id: string) => {
   }
 };
 
+export const getMembershipPlan = async () => {
+  const response = await axiosInstance.get('/payment/user-subscription');
+  return response.data.planName;
+};
+
