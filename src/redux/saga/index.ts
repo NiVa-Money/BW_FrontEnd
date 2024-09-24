@@ -607,9 +607,7 @@ export function* capturePaymentSaga({ payload }: { type: string; payload: { subs
 
     // Log the full response for debugging
     console.log('Full response:', response);
-
-    // Extract the subscriptionId from the response (assuming it's _id)
-    const subscriptionId = response._id;
+    const subscriptionId = (response as { _id: string })._id;
 
     // Dispatch success action with subscriptionId and response
     yield put(capturePaymentSuccess(subscriptionId, response));
