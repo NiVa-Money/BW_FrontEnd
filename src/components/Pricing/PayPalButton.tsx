@@ -227,37 +227,13 @@ const PayPalButton: React.FC<PayPalButtonProps> = ({
   const planId = selectedPlan?.planId;
 
   useEffect(() => {
-    console.log('Component rendered. Pathname:', pathname, 'SubscriptionId:', subscriptionId);
-  }, [pathname, subscriptionId]);
-
-  useEffect(() => {
     if (isPaymentInitiated && approvalUrl?.length && !paypalCreateLoader) {
       console.log('Redirecting to PayPal approval URL:', approvalUrl);
       router.replace(approvalUrl);
     }
   }, [isPaymentInitiated, approvalUrl, paypalCreateLoader, router]);
 
-  const handlePayPalReturn = useCallback(async (subscriptionId: string) => {
-    try {
-      console.log('Capturing payment for subscriptionId:', subscriptionId);
-      dispatch(capturePaymentRequest(subscriptionId));
-    } catch (error) {
-      console.error('Error during payment capture:', error);
-    }
-  }, [dispatch]);
-
-  useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
-    const subscriptionIdFromParams = params.get('subscriptionId');
-    
-    const isSuccessOrFailurePage = pathname === '/membership-success' || pathname === '/membership-failure';
-    console.log('Checking conditions:', isSuccessOrFailurePage, subscriptionIdFromParams);
-    
-    if (subscriptionIdFromParams && isSuccessOrFailurePage) {
-      console.log('Conditions met, calling handlePayPalReturn');
-      handlePayPalReturn(subscriptionIdFromParams);
-    }
-  }, [pathname, handlePayPalReturn]);
+ 
 
   const createOrder = async () => {
     console.log('Creating order');

@@ -600,19 +600,32 @@ export function* payPalPaymentSaga({ payload }: { type: string; payload: { planI
   }
 }
 
-export function* capturePaymentSaga({ payload }: { type: string; payload: { _id: string } }): Generator<any> {
+export function* capturePaymentSaga({ payload }: { type: string; payload: { subscriptionId: string } }): Generator<any> {
   try {
-    const response = yield call(capturePaymentService, payload._id);
-    const subscriptionId = (response as { _id: string })._id;
-    console.log('subscription', subscriptionId);
-    // Save the captured payment response in Redux
+    // Call the capture payment service with subscriptionId
+    const response = yield call(capturePaymentService, payload.subscriptionId);
+
+    // Log the full response for debugging
+    console.log('Full response:', response);
+
+    // Extract the subscriptionId from the response (assuming it's _id)
+    const subscriptionId = response._id;
+
+    // Dispatch success action with subscriptionId and response
     yield put(capturePaymentSuccess(subscriptionId, response));
+
+    // Notify success
     notifySuccess('Payment captured successfully');
   } catch (error: any) {
+    // Log error and dispatch failure action
+    console.error('Payment capture failed:', error);
     yield put(capturePaymentFailure(error.message));
+
+    // Notify error
     notifyError('Payment capture failed');
   }
 }
+
 
 export function* pathnameSaga({
   payload,
