@@ -15,13 +15,13 @@ const PricingCard = () => {
   const pathname = usePathname();
   const dispatch = useDispatch();
 
-  const { plans = [] } = useSelector((state: RootState) => state.payment.plans || {});
-
-  console.log('plans',plans);
+  const { plans = [] } = useSelector(
+    (state: RootState) => state.payment.plans || {}
+  );
 
   useEffect(() => {
     dispatch(fetchPlans());
-  } , []);
+  }, []);
 
   useEffect(() => {
     // Check if returning from PayPal
@@ -90,18 +90,19 @@ const PricingCard = () => {
 
   const updatedTiers = pricingTiers.map((tier) => {
     if (tier.title !== 'Custom') {
-      const apiPlan = plans?.find((plan: any) => plan.name.toLowerCase() === tier.title.toLowerCase());
+      const apiPlan = plans?.find(
+        (plan: any) => plan.name.toLowerCase() === tier.title.toLowerCase()
+      );
       if (apiPlan) {
         return {
           ...tier,
           price: apiPlan.price.toFixed(2),
-          planId: apiPlan.planId
+          planId: apiPlan.planId,
         };
       }
     }
     return tier;
   });
-  
   const handleContactSales = () => {
     alert('Contact sales via this mail: botwot@gmail.com');
   };
@@ -129,7 +130,7 @@ const PricingCard = () => {
                   >
                     Contact Sales
                   </button>
-                ) : showFreeTrialButton  ? (
+                ) : showFreeTrialButton ? (
                   <button
                     className="py-2 px-6 text-base font-medium bg-gray-100 rounded-lg text-slate-950 w-full"
                     onClick={() => {
@@ -139,11 +140,11 @@ const PricingCard = () => {
                     Start For Free
                   </button>
                 ) : (
-                    <PayPalButton
-                      planName={tier.title}
-                      price={tier.price}
-                      userId={'userId'}
-                    />
+                  <PayPalButton
+                    planName={tier.title}
+                    price={tier.price}
+                    userId={'userId'}
+                  />
                 )
               }
             />

@@ -13,7 +13,7 @@ interface ContentCardPropsType {
 function ContentCard({ img, title, description, readTime }: ContentCardPropsType) {
   return (
     <Card
-      className="relative grid h-full overflow-hidden rounded-xl"
+      className="relative grid h-full rounded-xl"
       sx={{
         width: '100%',
         maxWidth: '30rem',
