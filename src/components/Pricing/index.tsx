@@ -94,7 +94,7 @@ const PricingCard = () => {
           </p>
         </div>
         <div className="flex gap-5 justify-center py-6 mt-8 max-w-[1200px] mx-auto">
-          {pricingTiers.map((tier, index) => (
+          {updatedTiers.map((tier, index) => (
             <PricingTier
               userId={''}
               key={index}
@@ -107,7 +107,7 @@ const PricingCard = () => {
                   >
                     Contact Sales
                   </button>
-                ) : showFreeTrialButton  ? (
+                ) : showFreeTrialButton ? (
                   <button
                     className="py-2 px-6 text-base font-medium bg-gray-100 rounded-lg text-slate-950 w-full"
                     onClick={() => {
@@ -117,11 +117,11 @@ const PricingCard = () => {
                     Start For Free
                   </button>
                 ) : (
-                    <PayPalButton
-                      planName={tier.title}
-                      price={tier.price}
-                      userId={'userId'}
-                    />
+                  <PayPalButton
+                    planName={tier.title}
+                    price={tier.price}
+                    userId={'userId'}
+                  />
                 )
               }
             />
