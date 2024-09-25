@@ -5,7 +5,6 @@ const axiosInstance = axios.create({
   baseURL: process.env.NEXT_PUBLIC_BASE_URL,
 
 });
-console.log('axios file');
 axiosInstance.interceptors.request.use(
   (config: any) => {
     const token = localStorage.getItem('token');
