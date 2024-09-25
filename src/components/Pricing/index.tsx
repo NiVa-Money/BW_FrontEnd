@@ -103,7 +103,6 @@ const PricingCard = () => {
     }
     return tier;
   });
-
   const handleContactSales = () => {
     alert('Contact sales via this mail: botwot@gmail.com');
   };
