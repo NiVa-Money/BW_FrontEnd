@@ -141,7 +141,7 @@ const ChatBotList: React.FC = () => {
   }, [exportS]);
 
   return (
-    <main className="flex flex-col mt-5">
+    <div className="flex flex-col mt-5">
       <header className="flex gap-2.5 px-5 max-md:flex-wrap">
         <h1 className="flex-1 my-auto text-3xl font-bold px-10 leading-6 text-white">
           My ChatBots
@@ -180,7 +180,7 @@ const ChatBotList: React.FC = () => {
         onClose={closeExportModal}
         exportResponse={exportResponse}
       />
-    </main>
+    </div>
   );
 };
 
