@@ -1,12 +1,18 @@
 'use client';
 import * as React from 'react';
 import Link from 'next/link';
+import PlayCircleOutlineIcon from '@mui/icons-material/PlayCircleOutline';
+import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
+import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
+import MenuBookIcon from '@mui/icons-material/MenuBook';
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 function AboutSection() {
   const [isExpanded, setIsExpanded] = React.useState(false);
 
   function toggleViewMore() {
     setIsExpanded(!isExpanded);
   }
+
   return (
     <div className="h-max-100vh relative w-max-100vw">
       <div className="flex  overflow-hidden flex-col px-12 py-24 max-md:px-5">
@@ -19,38 +25,31 @@ function AboutSection() {
               <div className="flex flex-col text-lg items-start  whitespace-nowrap text-[color:var(--sds-color-text-brand-on-brand)] w-[207px]">
                 <Link href="/faq">
                   <div className="flex border-1  overflow-hidden gap-2 justify-center items-center px-3 py-3.5 rounded-lg min-h-[68px]">
-                    <img
-                      src="https://cdn.builder.io/api/v1/image/assets/TEMP/e278a7f82980de7cf346817ac32e91fce1b62f93dbc5402d6e159520d7a5c8ef?apiKey=555c811dd3f44fc79b6b2689129389e8&&apiKey=555c811dd3f44fc79b6b2689129389e8"
-                      className="object-contain shrink-0 self-stretch my-auto w-10 aspect-square"
-                    />
+                    <ArrowBackIosIcon className="object-contain self-stretch my-auto w-6 aspect-square fill-[white] text-[white]" />
 
-                    <div className="self-stretch my-auto">Back</div>
+                    <span className="self-stretch my-auto text-white">
+                      Back
+                    </span>
                   </div>
                 </Link>
               </div>
               <div className="flex overflow-hidden flex-1 shrink gap-2 justify-center items-center p-3 rounded-lg basis-0 bg-white bg-opacity-10">
-                <div className="self-stretch opacity-30 my-auto text-2xl text-[color:var(--sds-color-text-brand-on-brand)]">
+                <span className="self-stretch opacity-30 my-auto text-white text-2xl text-[color:var(--sds-color-text-brand-on-brand)]">
                   Demos
-                </div>
+                </span>
                 <div className="flex opacity-30 gap-2.5 items-center self-stretch p-2.5 my-auto w-11 h-11 rounded-xl bg-slate-500 bg-opacity-20">
-                  <img
-                    src="https://cdn.builder.io/api/v1/image/assets/TEMP/80236ed57e710888f8dae2e4b9cb53f6eeade73363ca4f47a390dc3a06405d4e?apiKey=555c811dd3f44fc79b6b2689129389e8&&apiKey=555c811dd3f44fc79b6b2689129389e8"
-                    className="object-contain self-stretch my-auto w-6 aspect-square"
-                  />
+                  <PlayCircleOutlineIcon className="object-contain self-stretch my-auto w-6 aspect-square" />
                 </div>
               </div>
 
               <div className="flex overflow-hidden flex-1 shrink gap-2 justify-center items-center p-3 rounded-lg basis-0 bg-white bg-opacity-10">
                 <Link href="/faq/questionsAns">
-                  <div className="self-stretch my-auto text-2xl text-[color:var(--sds-color-text-brand-on-brand)]">
+                  <span className="self-stretch text-white my-auto text-2xl text-[color:var(--sds-color-text-brand-on-brand)]">
                     FAQs
-                  </div>
+                  </span>
                 </Link>
                 <div className="flex gap-2.5 items-center self-stretch p-2.5 my-auto w-11 h-11 rounded-xl bg-slate-500 bg-opacity-20">
-                  <img
-                    src="https://cdn.builder.io/api/v1/image/assets/TEMP/97d871d37e1997609d8de575111205fd492ac4e2186c9a8b1711df133cc3e624?apiKey=555c811dd3f44fc79b6b2689129389e8&&apiKey=555c811dd3f44fc79b6b2689129389e8"
-                    className="object-contain self-stretch my-auto w-6 aspect-square"
-                  />
+                  <HelpOutlineIcon className="object-contain self-stretch my-auto w-6 aspect-square text-[white]" />
                 </div>
               </div>
               <div className="flex overflow-hidden  flex-1 shrink gap-2 justify-center items-center p-3 rounded-lg basis-0 bg-white bg-opacity-10">
@@ -58,10 +57,7 @@ function AboutSection() {
                   Tutorials
                 </div>
                 <div className="flex gap-2.5 opacity-30 items-center self-stretch p-2.5 my-auto w-11 h-11 rounded-xl bg-slate-500 bg-opacity-20">
-                  <img
-                    src="https://cdn.builder.io/api/v1/image/assets/TEMP/b9ebbcabf4b486023303abbbf7526a7d1eaf5aed60cdf73b27fa4622274d9197?apiKey=555c811dd3f44fc79b6b2689129389e8&&apiKey=555c811dd3f44fc79b6b2689129389e8"
-                    className="object-contain self-stretch my-auto w-19 aspect-square"
-                  />
+                  <MenuBookIcon className="object-contain self-stretch my-auto w-19 aspect-square" />
                 </div>
               </div>
             </div>
@@ -209,13 +205,11 @@ function AboutSection() {
         onClick={toggleViewMore}
       >
         <div className="flex items-center justify-center">
-          <div className="text-lg">
+          <span className="text-lg text-white">
             {isExpanded ? 'View Less' : 'View More'}
-          </div>
-          <img
-            src="https://cdn.builder.io/api/v1/image/assets/TEMP/8af6e72c4afd34b9a0eebc6e34b6b2b9dd8327d61d939073261537dc65dca77f?apiKey=555c811dd3f44fc79b6b2689129389e8&&apiKey=555c811dd3f44fc79b6b2689129389e8"
-            className="object-contain mb-1 ml-4 aspect-[1.05] w-[50px]"
-          />
+          </span>
+
+          <KeyboardArrowDownIcon className="object-contain mb-1 ml-4 aspect-[1.05] w-[70px] text-[white]" />
         </div>
       </div>
     </div>

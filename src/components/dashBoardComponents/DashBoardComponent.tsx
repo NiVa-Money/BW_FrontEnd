@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { SqureCardOne } from '@/components/dashBoardComponents/squreCardOne';
 import { SqureCardTwo } from '@/components/dashBoardComponents/squreCardTwo';
-import { CardHeader1 } from '@/components/dashBoardComponents/headerCard';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '@/redux/configureStore';
 import { useEffect, useState } from 'react';
@@ -12,6 +11,8 @@ import { getUserProfileAction } from '@/redux/actions/authActions';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import withAuth from '../withAuth';
+import CardHeaderOne from './CardHeaderOne';
+import { fetchMembershipPlanRequest } from '@/redux/actions/paymentActions';
 
 const DashBoardComponent: React.FC = () => {
   const userEmail = useSelector((state: RootState) => state.root?.user?.email);
@@ -24,15 +25,18 @@ const DashBoardComponent: React.FC = () => {
     (state: RootState) => state.root?.userData?.user_id
   );
 
-  React.useEffect(() => {}, [userId]);
-
   const userMetricData = useSelector(
     (state: RootState) => state?.root?.userMetric?.data
+  );
+  const userMetricDataLoader = useSelector(
+    (state: RootState) => state?.root?.userMetric?.loader
   );
   const [metricData, setMetricData] = useState(userMetricData);
 
   const [profileData, setProfileData] = React.useState<any>(userDataRedux);
+  
   const dispatch = useDispatch();
+  const { planName } = useSelector((state: RootState) => state.payment);
   const totalSatisfaction =
     metricData?.userSatisfaction?.good +
     metricData?.userSatisfaction?.bad +
@@ -74,7 +78,6 @@ const DashBoardComponent: React.FC = () => {
   const meterHeight = '90%';
   const emojiPosition =
     (displayPercentage / 100) * parseFloat(meterHeight.replace('%', '')) + '%';
-  React.useEffect(() => {}, [userId]);
 
   React.useEffect(() => {
     setProfileData(userDataRedux);
@@ -91,6 +94,9 @@ const DashBoardComponent: React.FC = () => {
       dispatch(getUserProfileAction(userEmail));
     }
   }, []);
+  const memoizedCardHeaderOne = React.useMemo(() => {
+    return <CardHeaderOne userMetricData={userMetricData} />;
+  }, [userMetricData]);
 
   useEffect(() => {
     const savedMetrics = localStorage.getItem('metricsData');
@@ -104,16 +110,36 @@ const DashBoardComponent: React.FC = () => {
   }, []);
 
   useEffect(() => {
+    // Fetch membership plan on component mount
+    dispatch(fetchMembershipPlanRequest());
+  }, [dispatch]);
+
+  const formattedPlanName = planName ? planName.charAt(0).toUpperCase() + planName.slice(1) : '';
+
+
+  useEffect(() => {
+    let interval: NodeJS.Timeout | null = null;
+
     if (verifyVal || pathName === '/dashboard') {
       dispatch(fetchMetricsAction(userId));
+
+      interval = setInterval(() => {
+        dispatch(fetchMetricsAction(userId));
+      }, 5000); // 5000ms = 5 seconds
     }
-  }, [verifyVal]);
+
+    return () => {
+      if (interval) {
+        clearInterval(interval);
+      }
+    };
+  }, [verifyVal, pathName]);
 
   useEffect(() => {
     if (userMetricData && Object?.keys(userMetricData).length > 0) {
       setMetricData(userMetricData);
     }
-  }, [userMetricData]);
+  }, [userMetricData, userMetricDataLoader]);
 
   return (
     <div className="w-full h-full flex flex-col p-4 md:p-8 bg-[#0B031E] text-white">
@@ -144,7 +170,10 @@ const DashBoardComponent: React.FC = () => {
             {metricData?.activeBots}
           </div>
           <button className="flex justify-center items-center text-xl font-medium text-gray-100 bg-[#3F2181] rounded-[60px] mt-2 md:mt-0 p-2 w-full max-w-[80%]">
-            <Link href="/createbot" className="flex items-center justify-center gap-2">
+            <Link
+              href="/createbot"
+              className="flex items-center justify-center gap-2"
+            >
               <span>Create Bot</span>
               <FontAwesomeIcon icon={faPlus} className="w-[25px] h-[25px]" />
             </Link>
@@ -153,16 +182,14 @@ const DashBoardComponent: React.FC = () => {
       </div>
       <div className="w-full flex flex-col md:flex-row h-auto md:h-[45%] gap-4 mt-4">
         <div className="bg-[#1E1935] w-full md:w-[100%] rounded-2xl p-4 m-1">
-          <div className={`${styles.textSize} mb-4 `}>
-            Total no. of Users
-          </div>
+          <div className={`${styles.textSize} mb-4 `}>Total no. of Users</div>
           <div className={`${styles.textSize} relative w-full h-full mx-auto`}>
-            <SqureCardOne sessionTotal={20} sessionLeft={11} />
+            <SqureCardOne sessionTotal={0} sessionLeft={0} />
           </div>
         </div>
         <div className="relative bg-[#1E1935] w-full md:w-[40%] rounded-2xl p-4 m-1 ">
-        <div className={`${styles.textSize} mb-8`}>Resolved/UnResolved</div>
-          <CardHeader1 />
+          <div className={`${styles.textSize} mb-8`}>Resolved/UnResolved</div>
+          {memoizedCardHeaderOne}
         </div>
 
         <div className="flex w-full md:w-[20%] h-[40vh] md:h-[98%] flex-col gap-4 m-1">
@@ -197,12 +224,16 @@ const DashBoardComponent: React.FC = () => {
             <div className={styles.textSize}>User Profile</div>
           </div>
           <div className={`${styles.textSize} gap-[8px] flex text-gray-400`}>
-            <div>Name</div>
+            <div>Name:</div>
             <div> {profileData?.firstName}</div>
           </div>
           <div className={`${styles.textSize} gap-[8px] flex text-gray-400`}>
-            <div>User ID </div>
+            <div>User ID: </div>
             <div>{profileData?.emailId}</div>
+          </div>
+          <div className={`${styles.textSize} gap-[8px] flex text-gray-400`}>
+            <div>Membership Plan: </div>
+            <div>{formattedPlanName}</div>
           </div>
         </div>
         <div className="bg-[#1E1935] w-full md:w-[70%] rounded-2xl p-4 m-1">

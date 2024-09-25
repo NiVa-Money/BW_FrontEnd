@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import icon from '../../public/assets/chatBotSymbol.svg';
 import mainLogo from '@/public/assets/mainLogo.svg';
 import './botSession.css';
-
+import { useSearchParams } from 'next/navigation';
 import '../NewChat/newchat.css';
 import {
   filteredSession,
@@ -19,17 +19,17 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { BarChart } from '@tremor/react';
 import withAuth from '../withAuth';
+import { useEffect } from 'react';
+import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
+import { fetchMembershipPlanRequest } from '@/redux/actions/paymentActions';
 
 const BotSessionComponent: React.FC = () => {
   const dispatch = useDispatch();
   const [isBotProfileOpen, setIsBotProfileOpen] = React.useState(false);
-  const [isChatHistoryOpen, setIsChatHistoryOpen] = React.useState(false);
   const [showPopup, setShowPopup] = React.useState<any>(false);
   const [isPopupOpen, setIsPopupOpen] = React.useState<any>(false);
   const [activeBotIndex, setActiveBotIndex] = React.useState(null);
   const [botSessionsList, setBotSessionsList] = React.useState<any>([]);
-
-  // const [sessionId, setSessionId] = React.useState<any>('');
   const [botId, setBotId] = React.useState<any>(null);
   const chatContainerRef = React.useRef<any>(null);
   const [sessionId, setSessionId] = React.useState<string>('');
@@ -38,21 +38,21 @@ const BotSessionComponent: React.FC = () => {
   const [continueAdv, setContinueAdv] = React.useState<any>(false);
   const [sentimentAnalysis, setSentimentAnalysis] = React.useState<any>({});
   const [nextSteps, setNextSteps] = React.useState<string>('');
-  const [question, setQuestion] = React.useState<any>({
-    text: 'tell me about this pdf',
-  });
   const [newMessage, setNewMessage] = React.useState<any>('');
   const [messages, setMessages] = React.useState<any>([]);
+  const [botNameDropDown, setBotNameDropDown] = React.useState<string | null>(
+    null
+  );
   const pathName = useSelector((state: RootState) => state.root?.pathName);
 
   const botProfiles = useSelector((state: RootState) => state.botProfile);
+  const { planName } = useSelector((state: RootState) => state.payment);
   const botIdRedux = useSelector(
     (state: RootState) => state.userChat?.botProfileSelect?.data
   );
   const userChatSessionsRedux = useSelector(
     (state: RootState) => state.userChat?.allSession?.data?.sessions
   );
-
   const [botIdLocal, setBotIdLocal] = React.useState<any>('');
   const userId: any = useSelector(
     (state: RootState) => state?.root?.userData?.user_id
@@ -71,7 +71,6 @@ const BotSessionComponent: React.FC = () => {
     (state: RootState) => state?.userChat?.advanceFeature
   );
   const [chatsData, setchatsData] = React.useState<any>([]);
-  const [selectedBotName, setSelectedBotName] = React.useState<any>('');
   const [chartData, setChartData] = React.useState([
     {
       name: 'Negative',
@@ -87,6 +86,16 @@ const BotSessionComponent: React.FC = () => {
     },
   ]);
 
+  const searchParams = useSearchParams() as URLSearchParams;
+  useEffect(() => {
+    const name = searchParams.get('botName');
+
+    if (name) {
+      const decodedName = decodeURIComponent(name);
+      setBotNameDropDown(decodedName);
+    }
+  }, [searchParams]);
+
   React.useEffect(() => {
     if (chatContainerRef.current) {
       chatContainerRef.current.scrollTop =
@@ -96,20 +105,16 @@ const BotSessionComponent: React.FC = () => {
 
   const handleBotClick = (index: any, botId: any, botName: any) => {
     setActiveBotIndex(index);
-    setSelectedBotName(botName);
-    // console.log('allSession', allSession.data.sessions);
     const data = {
       filteredSessions: [],
       sessionId: null,
     };
     dispatch(filteredSession(data));
-    // console.log('Selected Bot ID:', botId);
     setBotId(botId);
     setIsBotProfileOpen(!isBotProfileOpen);
   };
 
   const getChatHistory = () => {
-    console.log('fun');
     const data = {
       userId: userId,
       botId: botIdLocal,
@@ -129,15 +134,10 @@ const BotSessionComponent: React.FC = () => {
 
   const sendMessage = (event: any) => {
     event.preventDefault();
-    // console.log('botProfiles', newMessage);
     if (newMessage.trim() !== '') {
-      // console.log('botProfiles', newMessage);
-
-      setQuestion(newMessage);
       setMessages([...messages, { text: newMessage, sender: 'user' }]);
       dispatch(sendUserQuestionOnly({ text: newMessage, sender: 'user' }));
       setNewMessage('');
-      // console.log("sessionId",sessionId)
       const data = {
         userId: userId,
         sessionId: sessionId,
@@ -145,8 +145,6 @@ const BotSessionComponent: React.FC = () => {
         subscriptionPlanId: 'subscriptionPlanId1',
         botId: botId,
       };
-      // console.log('data user chat', data);
-      // sendDataToBackend(data);
       dispatch(sendUserQuestion(data));
     }
   };
@@ -155,28 +153,7 @@ const BotSessionComponent: React.FC = () => {
     setIsBotProfileOpen(!isBotProfileOpen);
     setShowPopup(false);
   };
-
-  const toggleChatHistory = () => {
-    setIsChatHistoryOpen(!isChatHistoryOpen);
-    setShowPopup(false);
-  };
-
-  const getSession = (sessionId: any) => {
-    // setSessionId(sessionId)
-    const filteredSessions = allSession?.data?.sessions?.filter(
-      (session: any) => session._id === sessionId
-    );
-    // console.log("filterSession",filteredSessions[0].sessions)
-    const data = {
-      filteredSessions,
-      sessionId,
-    };
-    dispatch(filteredSession(data));
-  };
-
   const openPopup = () => setIsPopupOpen(true);
-  const closePopup = () => setIsPopupOpen(false);
-
   const handleSubmit = (e: any) => {
     e.preventDefault();
     if (!botId) {
@@ -185,9 +162,7 @@ const BotSessionComponent: React.FC = () => {
       sendMessage(e);
     }
   };
-
   const [leftWidth, setLeftWidth] = React.useState(71); // Initial width of left div in percentage
-  const [rightWidth, setRightWidth] = React.useState(29); // Initial width of right div in percentage
   const [isDragging, setIsDragging] = React.useState(false);
   const containerRef = React.useRef(null);
 
@@ -195,11 +170,9 @@ const BotSessionComponent: React.FC = () => {
     e.preventDefault();
     setIsDragging(true);
   };
-
   const handleMouseUp = () => {
     setIsDragging(false);
   };
-
   const handleMouseMove = (e: any) => {
     if (!isDragging) return;
 
@@ -209,29 +182,19 @@ const BotSessionComponent: React.FC = () => {
       ((e.clientX - containerRect.left) / containerRect.width) * 100;
 
     if (newLeftWidth >= 50 && newLeftWidth <= 70) {
-      // Ensure minimum (10%) and maximum (90%) width limits
       setLeftWidth(newLeftWidth);
     }
   };
 
-  // const chartdata = [
-  //   {
-  //     name: 'Negative',
-  //     'Chats per day': 0,
-  //   },
-  //   {
-  //     name: 'Positive',
-  //     'Chats per day': 100,
-  //   },
-  //   {
-  //     name: 'Neutral',
-  //     'Chats per day': 0,
-  //   },
-  // ];
+  React.useEffect(() => {
+    // Fetch membership plan on component mount
+    dispatch(fetchMembershipPlanRequest());
+  }, [dispatch]);
+
+  const formattedPlanName = planName ? planName.charAt(0).toUpperCase() + planName.slice(1) : '';
 
   React.useEffect(() => {
     if (sentimentAnalysis) {
-      // console.log('sentimentAnalysis', sentimentAnalysis);
       const parseValue = (value: any) => {
         return value ? parseFloat(value.replace('%', '')) : 0;
       };
@@ -258,15 +221,9 @@ const BotSessionComponent: React.FC = () => {
     if (botIdRedux.botId?.length) {
       setBotIdLocal(botIdRedux?.botId);
     }
-    // console.log('allSession', allSession.data.sessions);
   }, [botIdRedux?.botId]);
-  React.useEffect(() => {
-    // console.log('allSession', allSession.data.sessions);
-  }, [allSession]);
 
   React.useEffect(() => {
-    // console.log('messagesLeft', messagesLeft);
-    // console.log('allSession', allSession.data.sessions);
     const data = {
       filteredSessions: [],
       sessionId: null,
@@ -285,7 +242,6 @@ const BotSessionComponent: React.FC = () => {
       setchatsData(filteredList);
     }
   }, [userChatMessagesRes, sessionId]);
-  // console.log('chat', chatsData, userChatMessagesRes);
   React.useEffect(() => {
     setReasonDetails(advanceFeature?.data?.data?.cause);
     setSummary(advanceFeature?.data?.data?.summary);
@@ -297,12 +253,6 @@ const BotSessionComponent: React.FC = () => {
     setNextSteps(formattedNextSteps);
   }, [advanceFeature]);
 
-  // React.useEffect(() => {
-  //   // console.log('userChatMessagesRes', userChatMessagesRes);
-  //   setSessionId(userChatMessagesRes?.sessionId);
-  //   // console.log('newMessage', newMessage);
-  //   // console.log('botProfiles', botProfiles);
-  // }, [userChatMessagesRes]);
   React.useEffect(() => {
     if (botIdLocal?.length || pathName === '/botsession') {
       getChatHistory();
@@ -311,10 +261,20 @@ const BotSessionComponent: React.FC = () => {
   React.useEffect(() => {
     if (userChatSessionsRedux?.length) {
       const tempArray = userChatSessionsRedux;
+      // tempArray.forEach((sessionData: any) => {
+      //   let totalMessages = 0;
+
+      //   sessionData.sessions.forEach((session: any) => {
+      //     if (session.question) totalMessages++;
+      //     if (session.answer) totalMessages++;
+      //   });
+
+      //   sessionData.totalMessages = totalMessages;
+      // });
+
       setBotSessionsList(tempArray);
     }
   }, [userChatSessionsRedux]);
-  // console.log('botSessionsList', sessionId);
 
   React.useEffect(() => {
     if (isDragging) {
@@ -333,47 +293,50 @@ const BotSessionComponent: React.FC = () => {
 
   return (
     <div className="flex h-screen">
-      <div className="w-64 h-[100%] flex flex-col">
+      <div className="w-80 h-[100%] flex flex-col">
         <div className="w-full mt-8 flex justify-center items-center">
-          {' '}
           <Image src={mainLogo.src} alt="logo" width={90} height={80} />
         </div>
-        <div className="text-white mt-[54px]">
+        <div className="text-white mt-[54px] mx-3">
           <Link
             href={'/dashboard'}
             className={`flex items-center space-x-3 py-2 px-3 text-gray-300 hover:bg-white' 
           }`}
           >
-            {/* <i className={`fas ${item.icon}`}></i> */}
             <span>
-              {' '}
               <i className="fas fa-gauge-high mr-3" />
               Dashboard
             </span>
           </Link>
         </div>
-        <div className="text-white mt-[8px] px-3">
-          {/* <i className={`fas ${item.icon}`}></i> */}
-          <span>
-            {' '}
-            <i className="fas fa-comment  mr-3" />
-            Sessions
-          </span>
+        <div className="text-white mt-[8px] flex justify-center items-center">
+          <span className="text-[#6C6779]">Sessions History</span>
         </div>
-        <div className="text-white mt-[8px] w-full h-full px-3 overflow-scroll">
+        <div className="text-white m-auto w-full h-full mx-3 my-3 overflow-scroll m-auto flex flex-col">
           {botSessionsList?.map((item: any, id: any) => (
-            <div
-              key={id}
-              className="flex flex-col mt-[22px]"
-              onClick={() => {
-                setSessionId(item._id);
-              }}
-            >
-              <span className="cursor-pointer">Session {id + 1}</span>
-              <span className="w-[100%] left-[43px] cursor-pointer ">
-                {item.sessions[item.sessions.length - 1]?.question}
-              </span>
-            </div>
+            <>
+              <div
+                key={id}
+                className="flex flex-col px-3 py-3 bg-[#141218] w-[90%] "
+                onClick={() => {
+                  setSessionId(item._id);
+                }}
+              >
+                <div className="flex justify-between items-center">
+                  <span className="cursor-pointer"> {id + 1}.Session</span>
+                  <div className="relative">
+                    <ChatBubbleOutlineIcon />
+                    <span className="absolute left-[15px] bg-[#141118] rounded-[100%] p-[4px] -top-[10px]">
+                      {item.totalMessages}
+                    </span>
+                  </div>
+                </div>
+                <span className="w-[100%] left-[43px] cursor-pointer ">
+                  {item.sessions[item.sessions.length - 1]?.question}
+                </span>
+              </div>
+              <div className="w-[90%] bg-[#ffffffb3] h-[2px]"></div>
+            </>
           ))}
         </div>
       </div>
@@ -465,40 +428,8 @@ const BotSessionComponent: React.FC = () => {
           style={{ width: `${leftWidth}%`, height: '100%' }}
         >
           <div className="flex  justify-center items-center gap-1 h-[125px] max-md:flex-wrap max-md:max-w-full mb-5">
-            <div className="flex flex-col self-stretch relative">
-              {/* <div
-            className="flex gap-2.5 justify-center p-2.5 text-xl font-medium bg-[#2D2640] text-white rounded-t-lg cursor-pointer"
-            onClick={toggleChatHistory}
-          >
-            <div>
-              <button onClick={getChatHistory}>Chat History</button>
-            </div>
-            <img
-              loading="lazy"
-              src="https://cdn.builder.io/api/v1/image/assets/TEMP/ecfab022e56ef6ff0a58045a291327eda3e871d2c6c2576eee117363bc12ecf0?apiKey=555c811dd3f44fc79b6b2689129389e8&"
-              className={`shrink-0 aspect-square w-[30px] transition-transform duration-300 ${
-                isChatHistoryOpen ? 'rotate-180' : ''
-              }`}
-              alt="Chat History"
-            />
-          </div>
-          {isChatHistoryOpen && (
-            <div className="flex w-full">
-              <div className="flex flex-col py-2 text-base tracking-wide leading-6 bg-[#1E1533] rounded-b-lg shadow max-w-[280px] absolute top-full left-0 right-0 z-10">
-                {allSession?.data?.sessions?.map(
-                  (session: any, index: number) => (
-                    <div className="px-3 py-2 text-white" key={index}>
-                      <div><button onClick={()=>{
-                        getSession(session._id)
-                        setSessionId(session._id)
-                      }}>session Chat {index+1}</button></div>
-                    </div>
-                  )
-                )}
-              </div>
-            </div>
-          )} */}
-            </div>
+            <div className="flex flex-col self-stretch relative"></div>
+
             <div className="flex gap-3 flex-1 justify-center items-center">
               <div className="flex flex-col self-stretch relative">
                 <div
@@ -506,22 +437,12 @@ const BotSessionComponent: React.FC = () => {
                   onClick={toggleBotProfile}
                 >
                   <div>Bot Profile</div>
-                  <img
-                    src="https://cdn.builder.io/api/v1/image/assets/TEMP/ecfab022e56ef6ff0a58045a291327eda3e871d2c6c2576eee117363bc12ecf0?apiKey=555c811dd3f44fc79b6b2689129389e8&"
-                    className={`shrink-0 aspect-square w-[30px] transition-transform duration-300 ${
-                      isBotProfileOpen ? 'rotate-180' : ''
-                    }`}
-                    alt="Bot Profile"
-                  />
                 </div>
-                <div
-                  className="flex w-[8.5vw] h-[60px] flex justify-center items-center py-2.5 bg-[#1E1533] overflow-y-scroll  rounded p-1 border-gray-500 border-solid"
-                  // onClick={toggleBotProfile}
-                >
-                  <div>{selectedBotName}</div>
+                <div className="flex w-[8.5vw] h-[60px] flex justify-center items-center py-2.5 bg-[#1E1533] overflow-y-scroll  rounded p-1 border-gray-500 border-solid text-white">
+                  <div>{botNameDropDown}</div>
                 </div>
                 {isBotProfileOpen && (
-                  <div className="flex mt-2 w-[8.5vw] h-[25vh] overflow-y-auto flex-col py-2 text-base tracking-wide leading-6 bg-[#1E1533] rounded-b-lg shadow max-w-[280px] absolute top-full left-0 right-0 z-10">
+                  <div>
                     {botProfiles?.botProfiles?.data?.map(
                       (bot: any, index: any) => (
                         <div
@@ -532,12 +453,7 @@ const BotSessionComponent: React.FC = () => {
                           onClick={() =>
                             handleBotClick(index, bot._id, bot.botName)
                           }
-                        >
-                          <div className="flex justify-center items-center px-2 py-2 text-white">
-                            {bot.botName}
-                          </div>
-                          {/* <div className="mt-2 px-3 text-gray-400">MarketBot</div> */}
-                        </div>
+                        ></div>
                       )
                     )}
                   </div>
@@ -558,36 +474,11 @@ const BotSessionComponent: React.FC = () => {
               <div className="flex w-full md:w-[10vw] text-center flex-col py-2.5 bg-transparent px-1 whitespace-nowrap rounded-xl border border-white border-solid">
                 <div className="text-base text-gray-300">Membership:</div>
                 <div className="flex items-center justify-center mt-2.5 text-3xl font-semibold text-white">
-                  Basic
+                  {formattedPlanName}
                 </div>
               </div>
             </div>
           </div>
-          {/* <div className="mt-80 w-full max-w-[930px] max-md:mt-10 max-md:max-w-full">
-        <div className="flex gap-5 max-md:flex-col max-md:gap-0">
-          <div className="flex flex-col w-6/12 max-md:ml-0 max-md:w-full">
-            <div className="flex flex-col grow mt-24 text-xl font-medium text-white max-md:mt-10 max-md:max-w-full">
-              <div className="justify-center p-2.5 bg-[#2D2640] rounded-xl max-md:max-w-full">
-                Because it couldn't find the right "match"!
-              </div>
-              <div className="justify-center p-2.5 mt-32 bg-[#2D2640] rounded-xl max-md:mt-10 max-md:max-w-full">
-                To optimize its path-finding algorithm! 🤖🚗
-              </div>
-            </div>
-          </div>
-          <div className="flex flex-col ml-5 w-6/12 max-md:ml-0 max-md:w-full">
-            <div className="flex flex-col text-xl font-medium text-white max-md:max-w-full">
-              <div className="justify-center p-2.5 bg-[#5D39AD] rounded-xl max-md:max-w-full">
-                Hey Botwot, why did the chatbot break up with its algorithm?
-              </div>
-              <div className="justify-center self-end p-2.5 mt-24 max-w-full bg-[#5D39AD] rounded-xl w-[446px] max-md:mt-10 max-md:max-w-full">
-                Haha, good one! But seriously, why did the chatbot cross the
-                road?
-              </div>
-            </div>
-          </div>
-        </div>
-      </div> */}
           <div className="mt-5 w-full max-w-[930px] max-md:mt-10 max-md:max-w-full h-[61vh] rounded-lg relative">
             <div
               ref={chatContainerRef}
@@ -605,9 +496,7 @@ const BotSessionComponent: React.FC = () => {
                               ?.replace(/\n/g, '<br />')
                               .replace(/\*(.*?)\*/g, '<b>$1</b>'),
                           }}
-                        >
-                          {/* {message?.question}message?.question?.replace(/\n/g, '<br />'); */}
-                        </span>
+                        ></span>
                       </div>
                       <div className="w-full py-2 gap-2 rounded text-white text-left">
                         <span
@@ -617,9 +506,7 @@ const BotSessionComponent: React.FC = () => {
                               ?.replace(/\n/g, '<br />')
                               .replace(/\*(.*?)\*/g, '<b>$1</b>'),
                           }}
-                        >
-                          {/* {message?.answer} */}
-                        </span>
+                        ></span>
                       </div>
                     </div>
                   </div>
@@ -630,7 +517,6 @@ const BotSessionComponent: React.FC = () => {
           {showPopup && (
             <div className="popup z-10">
               <p>Please select a bot profile</p>
-              {/* Add more bot options as needed */}
             </div>
           )}
           <div className="flex gap-2.5 z-10 px-8 py-5 mt-2.5 w-[98%] h-[69px] text-base whitespace-nowrap bg-[#2D2640] rounded-xl max-w-[930px] text-gray-300 max-md:flex-wrap max-md:px-5 max-md:max-w-full">
@@ -676,18 +562,15 @@ const BotSessionComponent: React.FC = () => {
           style={{ width: `${100 - leftWidth}%`, height: '100%' }}
         >
           <div className="w-[65%] h-[87%] adv-border-radius bg-[#FFFFFF] bg-opacity-10">
-            {/* title */}
-            <div className="mt-4">
+            <div className="mt-4 ">
               <h4 className="text-center custom-purple">Chat Analysis</h4>
             </div>
-            {/* description */}
-            <div className="p-5">
-              <p className="text-center">
+            <div className="p-5 ">
+              <p className="text-center text-white">
                 Instantly sort your chats into positive, negative, or neutral
                 vibes—discover the tone of your interactions with ease!
               </p>
             </div>
-            {/* buttons */}
             <div className="button-container">
               <button
                 className="custom-button bg-[#FFFFFF] bg-opacity-10"
@@ -696,7 +579,7 @@ const BotSessionComponent: React.FC = () => {
                 Reason & Details
               </button>
               {reasonDetails ? (
-                <div className="w-[80%] flex justify-center items-center mt-2 border-4 border-[#DB88DB] py-4 px-10 text-base">
+                <div className="w-[80%] flex justify-center items-center mt-2 border-4 border-[#DB88DB] py-4 px-10 text-base  text-white">
                   {reasonDetails}
                 </div>
               ) : (
@@ -709,7 +592,7 @@ const BotSessionComponent: React.FC = () => {
                 Summary
               </button>
               {summary ? (
-                <div className="w-[80%] flex justify-center items-center mt-2 border-4 border-[#DB88DB] py-4 px-10 text-base">
+                <div className="w-[80%] flex justify-center items-center mt-2 border-4 border-[#DB88DB] py-4 px-10 text-base  text-white">
                   {summary}
                 </div>
               ) : (
@@ -723,9 +606,6 @@ const BotSessionComponent: React.FC = () => {
               </button>
               {sentimentAnalysis ? (
                 <div className="w-[80%] flex justify-center items-center mt-2 border-4 border-[#DB88DB] text-base">
-                  {/* <div>negative: {sentimentAnalysis?.negative} </div>
-                  <div>neutral: {sentimentAnalysis?.neutral} </div>
-                  <div>positive: {sentimentAnalysis?.positive} </div> */}
                   <BarChart
                     className="h-[150px] custom-bar-chart"
                     data={chartData}
@@ -734,7 +614,6 @@ const BotSessionComponent: React.FC = () => {
                     colors={['blue']}
                     valueFormatter={dataFormatter}
                     yAxisWidth={48}
-                    // onValueChange={(v) => console.log(v)}
                   />
                 </div>
               ) : (
@@ -748,7 +627,7 @@ const BotSessionComponent: React.FC = () => {
               </button>
               {nextSteps ? (
                 <div
-                  className="w-[80%] flex justify-center items-center mt-2 border-4 border-[#DB88DB] py-4 px-10 text-base"
+                  className="w-[80%] flex justify-center items-center mt-2 border-4 border-[#DB88DB] py-4 px-10 text-base text-white"
                   dangerouslySetInnerHTML={{
                     __html: nextSteps,
                   }}
@@ -757,11 +636,9 @@ const BotSessionComponent: React.FC = () => {
                 ''
               )}
             </div>
-            {/* image */}
             <div className="flex justify-center items-center mt-6 mb-3">
               <div>
                 <Image src={icon} alt="logo" width={170} height={170} />
-                {/* <Icon/> */}
               </div>
             </div>
           </div>

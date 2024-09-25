@@ -6,27 +6,46 @@ import CardContent from '@mui/material/CardContent';
 interface ContentCardPropsType {
   img: string;
   title: string;
-  desc: string;
+  description: string;
+  readTime: string;
 }
 
-function ContentCard({ img, title, desc }: ContentCardPropsType) {
+function ContentCard({ img, title, description, readTime }: ContentCardPropsType) {
   return (
     <Card
-      className="relative grid min-h-[30rem] items-end overflow-hidden rounded-xl"
-      color="transparent"
+      className="relative grid h-full overflow-hidden rounded-xl"
+      sx={{
+        width: '100%',
+        maxWidth: '30rem',
+        borderRadius: '1rem',
+        boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)',
+        backgroundColor: 'black',
+        border: '1px solid rgba(255, 255, 255, 0.3)', 
+      }}
     >
       <img
         src={img}
-        alt="bg"
-        className="absolute inset-0 h-full w-full object-cover object-center"
+        alt={title}
+        className="h-50 w-full object-cover"
       />
-      <div className="absolute inset-0 bg-black/70" />
-      <CardContent className="relative flex flex-col justify-end">
-        <Typography variant="h4" color="white">
+      <CardContent className="flex flex-col p-4 justify-start items-start">
+        <Typography
+          variant="body2"
+          className="text-gray-400 mb-2"
+        >
+          {readTime} min read
+        </Typography>
+        <Typography
+          variant="h6"
+          className="font-bold mb-4 text-white"
+        >
           {title}
         </Typography>
-        <Typography color="white" className="my-2 font-normal">
-          {desc}
+        <Typography
+          variant="body2"
+         className="text-gray-400 mt-4"
+        >
+          {description}
         </Typography>
       </CardContent>
     </Card>
@@ -35,41 +54,54 @@ function ContentCard({ img, title, desc }: ContentCardPropsType) {
 
 const contents = [
   {
-    img: "/images/blog1.png",
-    title: "What is a Knowledge Base",
-    desc: "A knowledge base is a central repository for BotWot chatbot, offering FAQs, product information, company policies, and pre-written scripts, ensuring efficient and accurate responses to customer inquiries, enhancing the overall customer support experience.",
+    img: "/images/blog1.jpg",
+    title: "Making AI Accessible with BotWot",
+    description: "In the rapidly evolving landscape of artificial intelligence, one challenge has remained persistent: making AI technology accessible to businesses of all sizes",
+    readTime: "2",
   },
   {
-    img: "/images/blog2.png",
-    title: " Enhance E-commerce Customer Service with a 24/7 Support Bot",
-    desc: "Integrate a 24/7 BotWot chatbot into your e-commerce site to manage high volumes of customer inquiries. It handles order tracking, product recommendations, returns, and FAQs, improving customer satisfaction, increasing sales, and reducing operational costs.",
+    img: "/images/blog2.jpg",
+    title: "No-Code Revolution in Customer Engagement",
+    description: "In the digital age, customer engagement is the lifeblood of business success. As consumer expectations evolve, companies are increasingly turning to AI-powered chatbots to meet these demands.",
+    readTime: "5",
   },
   {
-    img: "/images/blog3.png",
-    title: "The Benefits of AI Chatbots for Businesses",
-    desc: "Harness BotWot.io's no-code platform for revolutionizing customer service with 24/7 chatbot support, driving sales through engaging customer interactions, and optimizing operations for enhanced efficiency and cost savings.",
+    img: "/images/blog3.jpg",
+    title: "Breaking Language Barriers with BotWot",
+    description: "In our increasingly globalized world, businesses face a growing challenge: providing seamless customer service across multiple languages.",
+    readTime: "3",
+  },
+  {
+    img: "/images/blog4.jpg",
+    title: "Affordable AI: BotWot's Cost-Effective Approach",
+    description: "In the rapidly evolving landscape of artificial intelligence, one of the most significant barriers to adoption has been the cost.",
+    readTime: "5",
   },
 ];
 
 const Blog = () => {
   return (
-    <div>
-      <section className="container mx-auto px-8 py-10 lg:py-28">
-        <Typography
-          variant="h2"
-          color="blue-gray"
-          className="!text-2xl !leading-snug lg:!text-3xl"
-        >
-          Build something great With BotWot !
-        </Typography>
-        <Typography className="mt-2 max-w-lg !font-normal !text-gray-500">
-          To democratize AI-powered customer engagement by providing an intuitive, no-code platform that enables businesses of all sizes to create, deploy, and evolve intelligent chatbots.
-        </Typography>
+    <div className="py-16">
+      <section className="container mx-auto px-4">
+        <div className="flex flex-col items-center ">
+          <Typography
+            variant="h3"
+            className="text-white font-extrabold mb-8 text-center"
+          >
+            Build something great With BotWot!
+          </Typography>
+          <Typography
+            variant="body1"
+            className="text-gray-400 max-w-2xl mb-14 text-center"
+          >
+            To democratize AI-powered customer engagement by providing an intuitive, no-code platform that enables businesses of all sizes to create, deploy, and evolve intelligent chatbots.
+          </Typography>
 
-        <div className="mt-10 grid grid-cols-1 gap-10 lg:grid-cols-3">
-          {contents.map(({ img, title, desc }) => (
-            <ContentCard key={title} img={img} title={title} desc={desc} />
-          ))}
+          <div className="mt-10 grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-2">
+            {contents.map((content, index) => (
+              <ContentCard key={index} {...content} />
+            ))}
+          </div>
         </div>
       </section>
     </div>
@@ -77,3 +109,4 @@ const Blog = () => {
 };
 
 export default Blog;
+

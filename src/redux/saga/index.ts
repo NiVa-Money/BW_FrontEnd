@@ -10,7 +10,6 @@ import {
   FETCH_USER_METRICTS_SUCCESS,
   GET_USER_PROFILE_FAILURE,
   GET_USER_PROFILE_SUCCESS,
-  SIGN_IN_REQUEST,
   SIGN_UP_DATA,
   SIGN_UP_DATA_FAILURE,
   SIGN_UP_DATA_SUCCESS,
@@ -59,6 +58,11 @@ import {
   CREATE_PAYMENT_SUCCESS,
   CREATE_PAYMENT_FAILURE,
   CAPTURE_PAYMENT_REQUEST,
+  SET_PATHNAME_SUCCESS,
+  SET_PATHNAME_FAILURE,
+  SET_PATHNAME,
+  FETCH_PLANS,
+  FETCH_MEMBERSHIP_PLAN_REQUEST,
 } from '../actions/actionTypes';
 
 import {
@@ -82,9 +86,20 @@ import {
   processPayPalPaymentService,
   verifyOtpUserData,
   capturePaymentService,
+  fetchPlansApi,
+  getMembershipPlan,
 } from '../services';
 import { notifyError, notifySuccess } from '@/components/Toaster/toast';
-import {capturePaymentFailure, capturePaymentRequest, capturePaymentSuccess } from '../actions/paymentActions';
+import {
+  capturePaymentFailure,
+  capturePaymentSuccess,
+  createPaymentFailure,
+  createPaymentSuccess,
+  fetchMembershipPlanFailure,
+  fetchMembershipPlanSuccess,
+  fetchPlansFailure,
+  fetchPlansSuccess,
+} from '../actions/paymentActions';
 interface BotData {
   userChat: any;
 }
@@ -102,13 +117,11 @@ export function* verifyUserSaga({
       type: VERIFY_USER_DATA_SUCCESS,
       payload: verifyUser,
     });
-    // notifySuccess('API call successful fetchUserData');
   } catch (error: any) {
     yield put({
       type: VERIFY_USER_DATA_FAILURE,
       payload: false,
     });
-    // notifyError(`${error}`);
   }
 }
 
@@ -122,25 +135,22 @@ export function* verifyOtpUserSaga({
   try {
     // Api call
     const verifyUser = yield call(verifyOtpUserData, payload);
-    notifySuccess("login Successful")
+    notifySuccess('login Successful');
     yield put({
       type: VERIFY_USER_OTP_SUCCESS,
       payload: verifyUser,
     });
 
     const userProfileData = yield call(getUserProfileService, payload?.emailId);
-    // notifySuccess('successfully getting userProfileData');
     yield put({
       type: GET_USER_PROFILE_SUCCESS,
       payload: userProfileData,
     });
-    // notifySuccess('API call successful fetchUserData');
   } catch (error: any) {
     yield put({
       type: VERIFY_USER_OTP_FAILURE,
       payload: false,
     });
-    // notifyError(`${error}`);
   }
 }
 
@@ -152,21 +162,17 @@ export function* signUpGoogleUserSagaData({
   payload: any;
 }): Generator<any> {
   try {
-    // Api call
-    // console.log("api calling google login gggg")
     const verifyUser = yield call(signUpGoogleUserData, payload);
-    notifySuccess("login Successful")
+    notifySuccess('login Successful');
     yield put({
       type: GOOGLE_LOGIN_SUCCESS,
       payload: verifyUser,
     });
-    // notifySuccess('API call successful fetchUserData');
   } catch (error: any) {
     yield put({
       type: GOOGLE_LOGIN_FAILURE,
       payload: false,
     });
-    // notifyError(`${error}`);
   }
 }
 
@@ -183,14 +189,12 @@ export function* signUpUserSaga({
       type: SIGN_UP_DATA_SUCCESS,
       payload: signUpUser,
     });
-    // notifySuccess('signUp successful');
   } catch (error: any) {
     yield put({
       type: SIGN_UP_DATA_FAILURE,
     });
     notifyError(`${error}`);
-  } 
-
+  }
 }
 export function* fetchuserMetricSaga({
   payload,
@@ -205,28 +209,23 @@ export function* fetchuserMetricSaga({
       type: FETCH_USER_METRICTS_SUCCESS,
       payload: fetchuserMetricData,
     });
-    // notifySuccess('api successful for getting UserMetrics');
   } catch (error: any) {
     yield put({
       type: FETCH_USER_METRICTS_FAILURE,
     });
-    // notifyError(`${error}`);
   }
 }
 function* loginSaga({ payload }: any) {
   try {
-    // const result: UserCredential = yield call(signInWithPopup, auth, provider);
-     const result: UserCredential = yield call(signInWithPopup, auth, provider);
-    // console.log('re', result);
+    const result: UserCredential = yield call(signInWithPopup, auth, provider);
     const resObject: any = {
       displayName: result?.user?.displayName,
       email: result?.user?.email,
     };
-    // notifySuccess('login successful');
     yield put({ type: 'LOGIN_SUCCESS', payload: resObject });
   } catch (error) {
     yield put({ type: 'LOGIN_FAILURE', payload });
-    notifyError(`${error}`)
+    notifyError(`${error}`);
   }
 }
 function* passwordLoginSaga({
@@ -237,25 +236,23 @@ function* passwordLoginSaga({
   payload: any;
 }): Generator<any> {
   try {
-    const result:any = yield call(LoginUserData,payload);
+    const result: any = yield call(LoginUserData, payload);
 
-    if(result?.success){
+    if (result?.success) {
       yield put({ type: 'PASSWORD_LOGIN_SUCESS', payload: result });
 
       const userProfileData = yield call(getUserProfileService, payload?.email);
-    // notifySuccess('successfully getting userProfileData');
       yield put({
         type: GET_USER_PROFILE_SUCCESS,
         payload: userProfileData,
       });
-    }else{
-      notifyError(`${result?.error}`)
+    } else {
+      notifyError(`${result?.error}`);
       yield put({ type: 'PASSWORD_LOGIN_FAILURE', payload: result });
     }
-    // notifySuccess('login successful');
   } catch (error) {
     yield put({ type: 'PASSWORD_LOGIN_FAILURE', payload });
-    notifyError(`${error}`)
+    notifyError(`${error}`);
   }
 }
 
@@ -266,7 +263,7 @@ function* logoutSaga({ payload }: any) {
     notifySuccess('signOut successful');
     yield put({ type: 'LOGOUT_SUCCESS' });
   } catch (error) {
-    notifyError(`${error}`)
+    notifyError(`${error}`);
     yield put({ type: 'LOGOUT_FAILURE', payload });
   }
 }
@@ -279,13 +276,11 @@ export function* getUserProfileSaga({
 }): Generator<any> {
   try {
     const userProfileData = yield call(getUserProfileService, payload);
-    // notifySuccess('successfully getting userProfileData');
     yield put({
       type: GET_USER_PROFILE_SUCCESS,
       payload: userProfileData,
     });
   } catch (error: any) {
-    // notifyError(`${error}`)
     yield put({
       type: GET_USER_PROFILE_FAILURE,
     });
@@ -299,10 +294,10 @@ export function* createBotProfileSaga({
   payload: any;
 }): Generator<any> {
   try {
-    const createBot : any = yield call(createUserBotProfileService, payload);
-    if(createBot.success){
-       notifySuccess('Bot created successfully');
-    }else{
+    const createBot: any = yield call(createUserBotProfileService, payload);
+    if (createBot.success) {
+      notifySuccess('Bot created successfully');
+    } else {
       notifyError(`${createBot.error}`);
     }
     yield put({
@@ -316,9 +311,8 @@ export function* createBotProfileSaga({
         break;
       }
     }
-    
+
     const botProfiles = yield call(getUserBotProfileService, userId);
-    // notifySuccess('api successful for getting botProfiles');
     yield put({
       type: GET_USER_BOT_PROFILE_SUCCESS,
       payload: botProfiles,
@@ -346,7 +340,7 @@ export function* editBotProfileSaga({
       payload: editBot,
     });
   } catch (error: any) {
-    notifyError(`${error}`)
+    notifyError(`${error}`);
     yield put({
       type: EDIT_BOT_PROFILE_FAILURE,
     });
@@ -383,20 +377,19 @@ export function* deleteBotProfilesSaga({
   payload: any;
 }): Generator<any> {
   try {
-    const botProfiles = yield call(deleteBotProfileService, payload)
+    const botProfiles = yield call(deleteBotProfileService, payload);
     notifySuccess('botProfile deleted successfully');
     yield put({
       type: DELETE_BOT_PROFILE_SUCCESS,
       payload: botProfiles,
     });
   } catch (error: any) {
-    notifyError(`${error}`)
+    notifyError(`${error}`);
     yield put({
       type: DELETE_BOT_PROFILE_FAILURE,
     });
   }
 }
-
 
 export function* exportBotProfileSaga({
   payload,
@@ -406,7 +399,6 @@ export function* exportBotProfileSaga({
 }): Generator<any> {
   try {
     const exportedBotProfile = yield call(exportBotProfileService, payload);
-    // notifySuccess('Bot profile exported successfully');
     yield put({
       type: EXPORT_BOT_PROFILE_SUCCESS,
       payload: exportedBotProfile,
@@ -429,9 +421,9 @@ export function* createKnowledgeBaseSaga({
   payload: any;
 }): Generator<any> {
   try {
-    const knowledgebase :any = yield call(createKnowledgeBaseService, payload);
-    if(knowledgebase.success){
-    notifySuccess('knowledge base created successfully');
+    const knowledgebase: any = yield call(createKnowledgeBaseService, payload);
+    if (knowledgebase.success) {
+      notifySuccess('knowledge base created successfully');
     } else {
       notifyError(`${knowledgebase.error}`);
     }
@@ -440,7 +432,7 @@ export function* createKnowledgeBaseSaga({
       payload: knowledgebase,
     });
   } catch (error: any) {
-    notifyError(`${error}`)
+    notifyError(`${error}`);
     yield put({
       type: CREATE_KNOWLEDGE_BASE_FAILURE,
     });
@@ -456,13 +448,11 @@ export function* getUserKnowledgeBaseSaga({
 }): Generator<any> {
   try {
     const botProfiles = yield call(getUserKnowledgeBaseService, payload);
-    // notifySuccess('knowledge base fetched successfully');
     yield put({
       type: GET_USER_KNOWLEDGE_BASE_SUCCESS,
       payload: botProfiles,
     });
   } catch (error: any) {
-    // notifyError(`${error}`)
     yield put({
       type: GET_USER_KNOWLEDGE_BASE_FAILURE,
     });
@@ -483,10 +473,8 @@ export function* deleteUserKnowledgeBaseSaga({
       type: DELETE_USER_KNOWLEDGE_BASE_SUCCESS,
       payload: botProfiles,
     });
-
-    
   } catch (error: any) {
-    notifyError(`${error}`)
+    notifyError(`${error}`);
     yield put({
       type: DELETE_USER_KNOWLEDGE_BASE_FAILURE,
     });
@@ -502,10 +490,8 @@ export function* getUserChatSaga({
   payload: any;
 }): Generator<any> {
   try {
-    // console.log('api userChat with bot payload  --->', payload);
     const userChat: any = yield call(getUserChatService, payload);
     const answerOfQuestion = userChat.chats[userChat.chats.length - 1].answer;
-    // notifySuccess('knowledge base fetched successfully');
     yield put({
       type: GET_USER_CHAT_SUCCESS,
       payload: {
@@ -515,7 +501,7 @@ export function* getUserChatSaga({
       },
     });
   } catch (error: any) {
-    notifyError(`${error}`)
+    notifyError(`${error}`);
     yield put({
       type: GET_USER_CHAT_FAILURE,
     });
@@ -559,51 +545,109 @@ export function* getAdvanceFeatureSaga({
       payload: userChat,
     });
   } catch (error: any) {
-    notifyError(`${error}`)
+    notifyError(`${error}`);
     yield put({
       type: ADVANCE_FEATURE_FAILURE,
     });
   }
 }
 
-
-export function* payPalPaymentSaga({
-  payload,
-}: {
-  type: string;
-  payload: any;
-}): Generator<any> {
+function* fetchPlansSaga(): Generator<any, void, any> {
   try {
-    const response: any = yield call(processPayPalPaymentService, payload);
-    // console.log('API response:', response);
-    // Save the response in Redux
-    yield put({
-      type: CREATE_PAYMENT_SUCCESS,
-      payload: response,
-      paypalUrl: response.paypalUrl,
-    });
+    const response: { name: string; price: number; _id: string }[] = yield call(
+      fetchPlansApi
+    ); // Call the API function
 
+    // Ensure response is an array and not empty
+    if (!Array.isArray(response) || response.length === 0) {
+      throw new Error('No plans found or invalid data format');
+    }
+
+    console.log('API response data:', response);
+
+    // Process data
+    const filteredData = response.map(
+      (plan: { name: string; price: number; _id: string }) => ({
+        name: plan.name,
+        price: plan.price,
+        planId: plan._id,
+      })
+    );
+    console.log('Filtered data:', filteredData);
+
+    yield put(fetchPlansSuccess(filteredData)); // Dispatch success action
+  } catch (error) {
+    console.error('Fetch plans failed with error:', error);
+    yield put(fetchPlansFailure('Plans fetch failed')); // Dispatch failure action
+  }
+}
+
+export function* payPalPaymentSaga({ payload }: { type: string; payload: { planId: string; data: any } }): Generator<any> {
+  try {
+    const { planId, data } = payload;
+    const response: any = yield call(processPayPalPaymentService, planId, data);
+    console.log('PayPal payment creation response:', response);
+    const approvalUrl = response?.approvalUrl;  
+    const subscriptionId = response?._id;
+    console.log('PayPal subscriptionId' , subscriptionId);
+    if (approvalUrl) {
+      // Dispatch success action to store approvalUrl
+      yield put(createPaymentSuccess({ approvalUrl , subscriptionId,  planId ,  data }));
+    } else {
+      throw new Error('Approval URL not found in the response');
+    }
     notifySuccess('Payment processed successfully');
-    
   } catch (error: any) {
-    yield put({
-      type: CREATE_PAYMENT_FAILURE,
-      payload: error.message,
-    });
+    console.error('Error in payPalPaymentSaga:', error);
+    yield put(createPaymentFailure(error.message));
     notifyError('Payment processing failed');
   }
 }
 
-export function* capturePaymentSaga({ payload }: { type: string; payload: string; }): Generator<any> {
+export function* capturePaymentSaga({ payload }: { type: string; payload: { subscriptionId: string } }): Generator<any> {
   try {
-    const response = yield call(capturePaymentService, payload);
-    const paymentId = (response as { _id: string })._id;
-    // // Save the captured payment response in Redux
-    yield put(capturePaymentSuccess(response));
+    // Call the capture payment service with subscriptionId
+    const response = yield call(capturePaymentService, payload.subscriptionId);
+
+    // Log the full response for debugging
+    console.log('Full response:', response);
+    const subscriptionId = (response as { _id: string })._id;
+
+    // Dispatch success action with subscriptionId and response
+    yield put(capturePaymentSuccess(subscriptionId, response));
+
+    // Notify success
     notifySuccess('Payment captured successfully');
   } catch (error: any) {
+    // Log error and dispatch failure action
+    console.error('Payment capture failed:', error);
     yield put(capturePaymentFailure(error.message));
+
+    // Notify error
     notifyError('Payment capture failed');
+  }
+}
+
+export function* fetchMembershipPlanSaga(): Generator<any, void, string> {
+  try {
+    const planName: string = yield call(getMembershipPlan);
+    yield put(fetchMembershipPlanSuccess(planName));
+  } catch (error: any) {
+    yield put(fetchMembershipPlanFailure(error.message));
+  }
+}
+
+
+export function* pathnameSaga({
+  payload,
+}: {
+  type: string;
+  payload: string;
+}): Generator<any> {
+  try {
+    yield put({ type: SET_PATHNAME_SUCCESS, payload: payload });
+  } catch (error) {
+    yield put({ type: SET_PATHNAME_FAILURE, error });
   }
 }
 export default function* rootSaga() {
@@ -624,9 +668,12 @@ export default function* rootSaga() {
   yield takeEvery(USER_CHAT_DATA, getUserChatSaga);
   yield takeEvery(USER_ALL_SESSION, getUserAllSessionSaga);
   yield takeEvery(ADVANCE_FEATURE, getAdvanceFeatureSaga);
-  yield takeEvery(VERIFY_USER_OTP,verifyOtpUserSaga);
-  yield takeEvery(GOOGLE_LOGIN,signUpGoogleUserSagaData);
-  yield takeEvery(PASSWORD_LOGIN,passwordLoginSaga);
-  yield takeEvery(CREATE_PAYMENT_REQUEST , payPalPaymentSaga);
+  yield takeEvery(VERIFY_USER_OTP, verifyOtpUserSaga);
+  yield takeEvery(GOOGLE_LOGIN, signUpGoogleUserSagaData);
+  yield takeEvery(PASSWORD_LOGIN, passwordLoginSaga);
+  yield takeEvery(FETCH_PLANS, fetchPlansSaga);
+  yield takeEvery(CREATE_PAYMENT_REQUEST, payPalPaymentSaga);
   yield takeLatest(CAPTURE_PAYMENT_REQUEST, capturePaymentSaga);
+  yield takeLatest(FETCH_MEMBERSHIP_PLAN_REQUEST, fetchMembershipPlanSaga);
+  yield takeLatest(SET_PATHNAME, pathnameSaga);
 }

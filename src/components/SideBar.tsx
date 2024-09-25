@@ -65,6 +65,11 @@ const initialSIDENAV_ITEMS: SidebarItemProps[] = [
       { path: '/knowledgebase', title: 'Knowledge Base' },
     ],
   },
+  {
+    icon: 'fa-window-restore',
+    text: 'Integration',
+    path: '/integration'
+  },
 ];
 
 const SIDENAV_ITEMS2: SidebarItemProps[] = [
@@ -196,13 +201,13 @@ const MenuItem: React.FC<MenuItemProps> = ({ item, onClick }) => {
     }));
   };
 
-  const botSession = (botId: any, userId: any) => {
+  const botSession = (botId: any, userId: any, botName:any) => {
     const data = {
       botId,
       userId,
     };
     dispatch(botSessionId(data));
-    router.push('/botsession');
+    router.push(`/botsession?botName=${encodeURIComponent(botName)}`);
   };
 
   useEffect(() => {}, [botSessionaa]);
@@ -291,7 +296,7 @@ const MenuItem: React.FC<MenuItemProps> = ({ item, onClick }) => {
                             <div key={childIdx}>
                               <div
                                 className={`text-gray-300 hover:bg-white hover:bg-opacity-10 rounded-full cursor-pointer`}
-                                onClick={() => botSession(bot._id, bot.userId)}
+                                onClick={() => botSession(bot._id, bot.userId,bot.botName)}
                               >
                                 <button
                                   // onClick={() => botSession(bot._id, bot.userId)}

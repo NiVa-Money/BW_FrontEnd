@@ -3,9 +3,9 @@ import QuestionAnswers from '../FAQ';
 
 const Question = () => {
   return (
-    <div>
+    <>
       <QuestionAnswers />
-    </div>
+    </>
   );
 };
 

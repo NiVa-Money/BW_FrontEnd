@@ -35,6 +35,7 @@ export default function RootLayout({
     '/editbot',
     '/knowledgebase',
     '/profile',
+    '/rize',
     '/membership',
     '/membership-failure',
     '/membership-success',
@@ -46,6 +47,10 @@ export default function RootLayout({
     '/botsession',
     '/faq/questionsAns',
     '/faq/docs',
+    '/data-deletion',
+
+    '/integration'
+
   ];
   const routeWithoutFooter: string[] = [
     '/mychatbots',
@@ -53,6 +58,7 @@ export default function RootLayout({
     '/editbot',
     '/knowledgebase',
     '/profile',
+    '/rize',
     '/membership',
     '/membership-failure',
     '/membership-success',
@@ -66,12 +72,18 @@ export default function RootLayout({
     '/faq/docs',
     '/privacy',
     '/terms',
+    '/data-deletion',
+
+    '/integration'
+
+
   ];
   const routeWithoutSidebar: string[] = [
     '/createbot',
     '/editbot',
     '/aboutus',
     '/pricing',
+    '/rize',
     '/blog',
     '/contactus',
     '/membership-failure',
@@ -81,6 +93,7 @@ export default function RootLayout({
     '/botsession',
     '/privacy',
     '/terms',
+    '/data-deletion',
   ];
   const knownRoutes: string[] = [
     ...routeWithoutSidebar,
@@ -97,6 +110,7 @@ export default function RootLayout({
     '/aboutus',
     '/pricing',
     '/blog',
+    '/rize',
     '/contactus',
     '/home',
     '/privacy',
@@ -126,7 +140,7 @@ export default function RootLayout({
               <PathnameHandler />
               <ConditionalHeader routeWithoutHeader={routeWithoutHeader} />
               <div className="flex flex-grow relative">
-                <div className="">
+                <div className="h-screen">
                   <SidebarToggleButton
                     isVisible={isSidebarVisible}
                     onClick={() => setIsSidebarVisible(!isSidebarVisible)}
@@ -144,7 +158,13 @@ export default function RootLayout({
                     )}
                   </div>
                 </div>
-                <main className="flex-grow">{children}</main>
+                <main
+                  className={`flex-grow ${
+                    isSidebarVisible && 'h-screen overflow-y-scroll'
+                  }`}
+                >
+                  {children}
+                </main>
               </div>
               <ConditionalFooter routeWithoutFooter={routeWithoutFooter} />
             </PersistGate>

@@ -24,6 +24,7 @@ import {
   GOOGLE_LOGIN,
   GOOGLE_LOGIN_SUCCESS,
   GOOGLE_LOGIN_FAILURE,
+  SET_PATHNAME_SUCCESS,
 } from '@/redux/actions/actionTypes';
 import initialState from './initialState';
 export default function globalReducers(state = initialState.root, action: any) {
@@ -32,6 +33,13 @@ export default function globalReducers(state = initialState.root, action: any) {
       return {
         ...state,
         pathName: action.payload,
+        pageLoader: true,
+      };
+    case SET_PATHNAME_SUCCESS:
+      return {
+        ...state,
+        pathName: action.payload,
+        pageLoader: false,
       };
     case SET_USER:
       return {
@@ -55,41 +63,39 @@ export default function globalReducers(state = initialState.root, action: any) {
           data: {},
           loader: false,
         },
-        otp:{
+        otp: {
           data: {},
           loader: false,
         },
-        GLoginData:{
-          data:{},
-          loader:false
-        }
+        GLoginData: {
+          data: {},
+          loader: false,
+        },
       };
 
     case GOOGLE_LOGIN:
-        return {
-          ...state,
-          GLoginData: {data:action.payload,loader:false},
-          loader:true
-        };
-  
+      return {
+        ...state,
+        GLoginData: { data: action.payload, loader: false },
+        loader: true,
+      };
 
     case GOOGLE_LOGIN_SUCCESS:
       return {
         ...state,
-        GLoginData: {data:action.payload,loader:false},
+        GLoginData: { data: action.payload, loader: false },
         userData: action.payload,
-        loader:false
+        loader: false,
       };
 
-      case GOOGLE_LOGIN_FAILURE:
-        return {
-          ...state,
-          GLoginData:{data:action.payload,loader:false},
-          loader:false
-        };
+    case GOOGLE_LOGIN_FAILURE:
+      return {
+        ...state,
+        GLoginData: { data: action.payload, loader: false },
+        loader: false,
+      };
 
     case LOGIN_SUCCESS:
-      // console.log("LOGIN_SUCCESS",LOGIN_SUCCESS)
       return {
         ...state,
         user: action.payload,
@@ -104,37 +110,36 @@ export default function globalReducers(state = initialState.root, action: any) {
         googleLogin: false,
         error: action.payload,
       };
-      case PASSWORD_LOGIN:
-        return {
-          ...state,
-          userData: action.payload.body,
-          error: null,
-        };
-        case PASSWORD_LOGIN_SUCESS:
-          localStorage.setItem('token', action.payload.body.token);
-          localStorage.setItem('userId', action.payload.body.user_id);
-          return {
-            ...state,
-            userData: action.payload.body,
-            error: null,
-          };
-          case PASSWORD_LOGIN_FAILURE:
-            // console.log('PASSWORD_LOGIN_FAILURE' , action.payload)
-            return {
-              ...state,
-              userData: action.payload,
-              error: action.payload,
-            };
+    case PASSWORD_LOGIN:
+      return {
+        ...state,
+        userData: action.payload.body,
+        error: null,
+      };
+    case PASSWORD_LOGIN_SUCESS:
+      localStorage.setItem('token', action.payload.body.token);
+      localStorage.setItem('userId', action.payload.body.user_id);
+      return {
+        ...state,
+        userData: action.payload.body,
+        error: null,
+      };
+    case PASSWORD_LOGIN_FAILURE:
+      return {
+        ...state,
+        userData: action.payload,
+        error: action.payload,
+      };
     case VERIFY_USER_OTP:
-      return{
-       ...state,
-       otp: {
-        ...state.otp,
-        loader: true,
-      },
-      }
+      return {
+        ...state,
+        otp: {
+          ...state.otp,
+          loader: true,
+        },
+      };
     case VERIFY_USER_OTP_SUCCESS:
-      return{
+      return {
         ...state,
         otp: {
           ...state.otp,
@@ -142,17 +147,16 @@ export default function globalReducers(state = initialState.root, action: any) {
           loader: false,
         },
         userData: action.payload,
-    }
+      };
     case VERIFY_USER_OTP_FAILURE:
-      return{
+      return {
         ...state,
         otp: {
           ...state.otp,
           data: action.payload,
           loader: false,
         },
-
-    }
+      };
     case SIGN_UP_DATA:
       return {
         ...state,
@@ -168,11 +172,10 @@ export default function globalReducers(state = initialState.root, action: any) {
         userData: { ...action.payload, ...state.userData },
         userVerify: true,
       };
-      case REMOVE_OTP_MODAL:
-      
+    case REMOVE_OTP_MODAL:
       return {
         ...state,
-      
+
         userVerify: false,
       };
     case SIGN_UP_DATA_FAILURE:
@@ -209,7 +212,7 @@ export default function globalReducers(state = initialState.root, action: any) {
         userMetric: {
           ...state.userMetric,
           data: action.payload,
-          loader: true,
+          loader: false,
         },
       };
     case GET_USER_PROFILE:

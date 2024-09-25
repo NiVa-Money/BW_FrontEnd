@@ -11,9 +11,10 @@ import {
   signUpDataAction,
 } from '@/redux/actions/authActions';
 import Testimonials from '@/components/testemonial/Testimonials';
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import Media from '@/components/Media/mediaLinks';
 import BackgroundAnimation from '@/components/BackgroundAnimation/backgroundAnimation';
+import Script from 'next/script';
 const LandingPage: React.FC = () => {
   const userEmail = useSelector((state: RootState) => state.root?.user?.email);
   const userVerify = useSelector((state: RootState) => state.root?.userVerify);
@@ -26,6 +27,7 @@ const LandingPage: React.FC = () => {
   );
   const dispatch = useDispatch();
   const router = useRouter();
+  const pathname = usePathname();
 
   useEffect(() => {
     if (GLoginData?.data?.success) {
@@ -57,7 +59,7 @@ const LandingPage: React.FC = () => {
           firstName: firstName,
           lastName: lastName,
           emailId: email,
-          mobileNo: '7779797977',
+          mobileNo: '',
           password: 'password',
         };
         dispatch(signUpDataAction(payload));
@@ -73,6 +75,9 @@ const LandingPage: React.FC = () => {
 
   return (
     <>
+      
+        <Script src="https://messages-dump.s3.amazonaws.com/widget/66cf26cda51861b4b167422c/66ec1e16a0ffb67f4eb2cce3.js" />
+     
       <main>
         <Hero />
         <section>

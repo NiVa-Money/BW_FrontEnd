@@ -27,3 +27,7 @@
   animation: borderAnimation 4s linear infinite;
   z-index: -1;
 }
+/* hero.css */
+.no-scroll {
+  overflow: hidden;
+}

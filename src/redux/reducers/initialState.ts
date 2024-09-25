@@ -5,7 +5,7 @@ const initialState: any = {
     error: null,
     googleLogin: false,
     userData: null,
-
+    pageLoader: false,
     userVerify: false,
     userMetric: {
       data: {},
@@ -73,7 +73,7 @@ const initialState: any = {
       data: [],
       sessionId: null,
       loader: false,
-      lastMessageFrom:'receiver'
+      lastMessageFrom: 'receiver',
     },
     advanceFeature: {
       data: {},
@@ -84,10 +84,16 @@ const initialState: any = {
       loader: false,
     },
   },
+  
   payment: {
     loading: false,
     paymentData: null,
     error: null,
+    plans: {  
+      plans: [],
+      loading: false,
+      error: null,
+    },
   },
 };
 

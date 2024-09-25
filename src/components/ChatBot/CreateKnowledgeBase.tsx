@@ -57,13 +57,10 @@ const CreateKnowledgeBase: React.FC = () => {
       const formData = new FormData();
       formData.append('docName', docName);
       formData.append('docType', docType);
-      // formData.append('docId', docId);
       formData.append('userId', userIdRedux);
       formData.append('file', selectedFile);
 
-      formData.forEach((value, key) => {
-        // console.log(key, value);
-      });
+      formData.forEach((value, key) => {});
 
       dispatch(createKnowledgebaseAction(formData));
       router.push('/knowledgebase');

@@ -86,9 +86,9 @@ const Modal: React.FC<ModalProps> = ({ closeModal, handleSignUp }) => {
       newErrors.password =
         'Password should be at least 8 characters long and include one uppercase letter, one lowercase letter, one number, and one special character.';
     }
-    if (!mobilePattern.test(mobileNo)) {
-      newErrors.mobileNo = 'Mobile number should be exactly 10 digits.';
-    }
+    // if (!mobilePattern.test(mobileNo)) {
+    //   newErrors.mobileNo = 'Mobile number should be exactly 10 digits.';
+    // }
 
     return newErrors;
   };
@@ -113,7 +113,6 @@ const Modal: React.FC<ModalProps> = ({ closeModal, handleSignUp }) => {
         ...prevErrors,
         global: 'Error processing your request',
       }));
-      console.error('Error:', error);
     }
   };
 
@@ -123,7 +122,7 @@ const Modal: React.FC<ModalProps> = ({ closeModal, handleSignUp }) => {
 
   return (
     <>
-      <div className='bg-opacity-35'>
+      <div className="bg-opacity-35">
         <div className="fixed inset-0 flex items-center justify-center bg-black">
           <div className="p-6 rounded-lg max-w-lg mx-auto relative">
             <div className="flex justify-end">
