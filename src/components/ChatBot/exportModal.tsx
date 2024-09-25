@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
-import Modal from 'react-modal';
+import Dialog from '@mui/material/Dialog';
+import DialogContent from '@mui/material/DialogContent';
+import DialogTitle from '@mui/material/DialogTitle';
+import Button from '@mui/material/Button';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCopy } from '@fortawesome/free-solid-svg-icons';
 
@@ -26,44 +29,38 @@ const ExportModal: React.FC<ExportModalProps> = ({ isOpen, onClose, exportRespon
   };
 
   return (
-    <Modal
-      isOpen={isOpen}
-      onRequestClose={handleClose}  // Use the updated handleClose function
-      className="fixed inset-0 flex items-center justify-center"
-      overlayClassName="fixed inset-0 bg-black bg-opacity-75"
-    >
-      <div className="bg-gray-800 text-white p-6 rounded-lg shadow-xl max-w-2xl w-full">
-        <h2 className="text-2xl font-bold mb-4">Export Bot Profile</h2>
-
+    <Dialog open={isOpen} onClose={handleClose} maxWidth="md">
+      <DialogContent dividers className="bg-gray-800 text-white p-6 rounded-lg shadow-xl">
         {exportResponse && exportResponse.success ? (
           <div>
             <p className="mb-2">Your bot has been successfully exported. Include the following script in your HTML:</p>
             <div className="mt-4 flex items-center mb-2">
-              <button 
+              <Button 
                 onClick={handleCopy} 
-                className="px-4 py-2 bg-[#0B031E] text-white rounded-md flex items-center"
+                variant="contained" 
+                className="bg-[#0B031E] text-white"
+                startIcon={<FontAwesomeIcon icon={faCopy} />}
               >
-                <FontAwesomeIcon icon={faCopy} className="mr-2" />
                 Copy to Clipboard
-              </button>
+              </Button>
               {copySuccess && <p className="text-green-400 ml-4">{copySuccess}</p>}
             </div>
             <pre className="bg-gray-900 p-2 rounded whitespace-pre-wrap break-words">
               <code>{`<script src="${exportResponse.url}"></script>`}</code>
             </pre>
-          
           </div>
         ) : (
           <p className="text-red-400">Failed to export bot profile.</p>
         )}
-        <button 
+        <Button 
           onClick={handleClose} 
-          className="mt-6 px-4 py-2 bg-[#0B031E] text-white rounded-md"
+          variant="contained"
+          className="mt-6 bg-[#0B031E] text-white"
         >
           Close
-        </button>
-      </div>
-    </Modal>
+        </Button>
+      </DialogContent>
+    </Dialog>
   );
 };
 
