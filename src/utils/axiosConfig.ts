@@ -1,6 +1,14 @@
 import axios from 'axios';
 
 const axiosInstance = axios.create({
+<<<<<<< HEAD
+=======
+  baseURL: 'https://api.botwot.io',
+  // baseURL: 'http://13.235.189.116:8000',
+  // baseURL: 'http://13.71.119.166/',
+  // baseURL: 'https://uatapi.botwot.io',
+});
+>>>>>>> bfcfcb9 (baseurl change)
 
   baseURL: process.env.NEXT_PUBLIC_BASE_URL,
 
