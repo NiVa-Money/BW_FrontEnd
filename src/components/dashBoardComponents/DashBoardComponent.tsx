@@ -12,6 +12,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import withAuth from '../withAuth';
 import CardHeaderOne from './CardHeaderOne';
+import { fetchMembershipPlanRequest } from '@/redux/actions/paymentActions';
 
 const DashBoardComponent: React.FC = () => {
   const userEmail = useSelector((state: RootState) => state.root?.user?.email);
@@ -33,7 +34,9 @@ const DashBoardComponent: React.FC = () => {
   const [metricData, setMetricData] = useState(userMetricData);
 
   const [profileData, setProfileData] = React.useState<any>(userDataRedux);
+  
   const dispatch = useDispatch();
+  const { planName } = useSelector((state: RootState) => state.payment);
   const totalSatisfaction =
     metricData?.userSatisfaction?.good +
     metricData?.userSatisfaction?.bad +
@@ -105,6 +108,14 @@ const DashBoardComponent: React.FC = () => {
       }
     }
   }, []);
+
+  useEffect(() => {
+    // Fetch membership plan on component mount
+    dispatch(fetchMembershipPlanRequest());
+  }, [dispatch]);
+
+  const formattedPlanName = planName ? planName.charAt(0).toUpperCase() + planName.slice(1) : '';
+
 
   useEffect(() => {
     let interval: NodeJS.Timeout | null = null;
@@ -213,15 +224,16 @@ const DashBoardComponent: React.FC = () => {
             <div className={styles.textSize}>User Profile</div>
           </div>
           <div className={`${styles.textSize} gap-[8px] flex text-gray-400`}>
-            <div>Name</div>
+            <div>Name:</div>
             <div> {profileData?.firstName}</div>
           </div>
           <div className={`${styles.textSize} gap-[8px] flex text-gray-400`}>
-            <div>User ID </div>
+            <div>User ID: </div>
             <div>{profileData?.emailId}</div>
           </div>
           <div className={`${styles.textSize} gap-[8px] flex text-gray-400`}>
-            <div>Membership Plan </div>
+            <div>Membership Plan: </div>
+            <div>{formattedPlanName}</div>
           </div>
         </div>
         <div className="bg-[#1E1935] w-full md:w-[70%] rounded-2xl p-4 m-1">
