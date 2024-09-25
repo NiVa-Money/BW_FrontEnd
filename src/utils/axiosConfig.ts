@@ -3,7 +3,7 @@ import store from '@/redux/configureStore';
 import axios, { AxiosRequestConfig } from 'axios';
 
 const axiosInstance = axios.create({
-  baseURL: 'https://uatapi.botwot.io',
+  baseURL: 'https://api.botwot.io',
   // baseURL: 'http://13.235.189.116:8000',
   // baseURL: 'http://13.71.119.166/',
   // baseURL: 'https://uatapi.botwot.io',
