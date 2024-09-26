@@ -148,7 +148,11 @@ const ChatBotList: React.FC = () => {
         <button className="flex  justify-center  text-xl font-medium text-gray-100 bg-[#3F2181] rounded-[60px]">
           <Link href="/createbot" className="flex px-14 py-3 gap-2">
             <span>Create Bot</span>
-            <AddIcon style={{ fontSize: '30px' }} />
+            <AddIcon
+              sx={{
+                fontSize: '30px',
+              }}
+            />
           </Link>
         </button>
       </header>
