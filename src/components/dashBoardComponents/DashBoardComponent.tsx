@@ -8,8 +8,7 @@ import styles from './dashboardComponent.module.css';
 import Link from 'next/link';
 import { fetchMetricsAction } from '@/redux/actions/authActions';
 import { getUserProfileAction } from '@/redux/actions/authActions';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlus } from '@fortawesome/free-solid-svg-icons';
+import AddIcon from '@mui/icons-material/Add';
 import withAuth from '../withAuth';
 import CardHeaderOne from './CardHeaderOne';
 import { fetchMembershipPlanRequest } from '@/redux/actions/paymentActions';
@@ -175,7 +174,7 @@ const DashBoardComponent: React.FC = () => {
               className="flex items-center justify-center gap-2"
             >
               <span>Create Bot</span>
-              <FontAwesomeIcon icon={faPlus} className="w-[25px] h-[25px]" />
+              <AddIcon style={{ fontSize: '30px' }} />
             </Link>
           </button>
         </div>

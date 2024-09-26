@@ -1,14 +1,13 @@
 import React from 'react';
-import {
-  faPencilAlt,
-  faTrash,
-  faDownload,
-  faArrowRightFromBracket,
-} from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { IconButton } from '@mui/material';
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
+import DownloadIcon from '@mui/icons-material/Download';
+import ExportIcon from '@mui/icons-material/Upload';
 import Link from 'next/link';
 import { formatedDate } from '@/utils/commonFunctions';
 import Image from 'next/image';
+import { blue, green } from '@mui/material/colors';
 
 interface ChatBot {
   botId?: string;
@@ -133,26 +132,40 @@ const ChatBotCard: React.FC<ChatBotCardProps> = ({ bot, actions, botCard }) => {
       </div>
       <div className="flex gap-6">
         {actions?.onDelete && (
-          <button
+          <IconButton
             aria-label="Delete bot"
-            className="text-red-500"
+            color="error"
             onClick={actions.onDelete}
+            sx={{
+              fontSize: '1rem',
+              '&:hover': {
+                backgroundColor: 'transparent', // Prevent background color change on hover
+                opacity: 1, // Maintain opacity on hover
+              },
+            }}
           >
-            <FontAwesomeIcon icon={faTrash} />
+            <DeleteIcon />
             <span>Delete</span>
-          </button>
+          </IconButton>
         )}
         {actions?.onEdit && (
-          <button
+          <IconButton
             aria-label="Edit bot"
-            className="text-blue-500"
             onClick={actions.onEdit}
+            sx={{
+              fontSize: '1rem',
+              color: blue[300],
+              '&:hover': {
+                backgroundColor: 'transparent', // Prevent background color change on hover
+                opacity: 1, // Maintain opacity on hover
+              },
+            }}
           >
-            <FontAwesomeIcon icon={faPencilAlt} />
+            <EditIcon />
             <Link href={`/editbot`}>
               <span>Edit</span>
             </Link>
-          </button>
+          </IconButton>
         )}
         {actions?.onDownload && (
           <button
@@ -160,19 +173,26 @@ const ChatBotCard: React.FC<ChatBotCardProps> = ({ bot, actions, botCard }) => {
             className="text-green-500"
             onClick={actions.onDownload}
           >
-            <FontAwesomeIcon icon={faDownload} />
+            <DownloadIcon />
             <span>Download</span>
           </button>
         )}
         {actions?.onExport && (
-          <button
+          <IconButton
             aria-label="Export bot"
-            className="text-green-500"
             onClick={actions.onExport}
+            sx={{
+              fontSize: '1rem',
+              color: green[300],
+              '&:hover': {
+                backgroundColor: 'transparent', // Prevent background color change on hover
+                opacity: 1, // Maintain opacity on hover
+              },
+            }}
           >
-            <FontAwesomeIcon icon={faArrowRightFromBracket} />
+            <ExportIcon />
             <span>Export</span>
-          </button>
+          </IconButton>
         )}
       </div>
     </article>
