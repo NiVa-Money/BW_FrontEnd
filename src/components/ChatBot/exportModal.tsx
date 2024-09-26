@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import Dialog from '@mui/material/Dialog';
 import DialogContent from '@mui/material/DialogContent';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCopy } from '@fortawesome/free-solid-svg-icons';
+import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 
 interface ExportModalProps {
   isOpen: boolean;
@@ -43,10 +42,10 @@ const ExportModal: React.FC<ExportModalProps> = ({
             <div className="mt-4 flex items-center mb-2">
               <button
                 onClick={handleCopy}
-                className="my-2 text-white flex justify-center items-center gap-[5px] min-w-[64px] px-[16px] py-[6px] rounded-[4px] text-white bg-[#0B031E]"
+                className=" my-2 min-w-[64px] px-[14px] py-[10px] rounded-[4px] text-white bg-[#0B031E]"
               >
-                <FontAwesomeIcon icon={faCopy} />
-                <span>Copy to Clipboard</span>
+                <ContentCopyIcon />
+                <span> Copy to Clipboard</span>
               </button>
               {copySuccess && (
                 <p className="text-green-400 ml-4">{copySuccess}</p>
@@ -61,7 +60,7 @@ const ExportModal: React.FC<ExportModalProps> = ({
         )}
         <button
           onClick={handleClose}
-          className=" my-2 text-white min-w-[64px] px-[16px] py-[6px] rounded-[4px] text-white bg-[#0B031E]"
+          className=" my-2 min-w-[64px] px-[16px] py-[6px] rounded-[4px] text-white bg-[#0B031E]"
         >
           Close
         </button>

@@ -1,14 +1,13 @@
 'use client';
-import React, { useEffect, useReducer, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
-import '@fortawesome/fontawesome-free/css/all.min.css';
-import { Icon } from '@iconify/react';
 import Image from 'next/image';
-import mainLogo from '@/public/assets/mainLogo.svg';
-import ClearConversation from './clearConversation/clearConversation';
-import { RootState } from '@/redux/configureStore';
 import { useDispatch, useSelector } from 'react-redux';
+import ClearConversation from './clearConversation/clearConversation';
+import ModalDialog from './ModalDialog';
+import mainLogo from '@/public/assets/mainLogo.svg';
+import { RootState } from '@/redux/configureStore';
 import {
   getUserBotProfileAction,
   removeAdvanceFeature,
@@ -16,13 +15,23 @@ import {
 } from '@/redux/actions/BotProfileActions';
 import { logoutUser } from '@/redux/actions/authActions';
 import { botSessionId } from '@/redux/actions/userChatAction';
-import { BackgroundCss } from './BackgroundAnimation/backgroundCss';
-import { Modal } from '@mui/material';
-import ModalDialog from './ModalDialog';
+
+// Import MUI icons
+import DashboardIcon from '@mui/icons-material/Dashboard';
+import ChatIcon from '@mui/icons-material/Chat';
+import SmartToyIcon from '@mui/icons-material/SmartToy';
+import IntegrationInstructionsIcon from '@mui/icons-material/IntegrationInstructions';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
+import HelpIcon from '@mui/icons-material/Help';
+import ExitToAppIcon from '@mui/icons-material/ExitToApp';
+import AddIcon from '@mui/icons-material/Add';
+import PhoneAndroidIcon from '@mui/icons-material/PhoneAndroid';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
 interface SidebarItemProps {
   path?: string;
-  icon?: string;
+  icon?: React.ReactNode;
   text: string;
   onClick?: () => void;
   isActive?: boolean;
@@ -37,14 +46,14 @@ interface SidebarItemProps {
 
 const DashboardItem: SidebarItemProps = {
   path: '/dashboard',
-  icon: 'fa-gauge-high',
+  icon: <DashboardIcon />,
   text: 'Dashboard',
   hasDropdown: false,
 };
 
 const initialSIDENAV_ITEMS: SidebarItemProps[] = [
   {
-    icon: 'fa-comment',
+    icon: <ChatIcon />,
     text: 'Chat',
     hasDropdown: true,
     subMenuItems: [
@@ -57,7 +66,7 @@ const initialSIDENAV_ITEMS: SidebarItemProps[] = [
     ],
   },
   {
-    icon: 'fa-robot',
+    icon: <SmartToyIcon />,
     text: 'Bots',
     hasDropdown: true,
     subMenuItems: [
@@ -66,18 +75,17 @@ const initialSIDENAV_ITEMS: SidebarItemProps[] = [
     ],
   },
   {
-    icon: 'fa-window-restore',
+    icon: <IntegrationInstructionsIcon />,
     text: 'Integration',
-    path: '/integration'
+    path: '/integration',
   },
 ];
 
 const SIDENAV_ITEMS2: SidebarItemProps[] = [
-  { icon: 'fa-user', text: 'Profile', path: '/profile' },
-  // { icon: 'fa-trash', text: 'Clear Conversations', onClick: undefined },
-  { icon: 'fa-crown', text: 'Membership', path: '/membership' },
-  { icon: 'fa-question-circle', text: 'Help Center', path: '/faq' },
-  { icon: 'fa-sign-out-alt', text: 'Log Out', path: '/' },
+  { icon: <AccountCircleIcon />, text: 'Profile', path: '/profile' },
+  { icon: <AttachMoneyIcon />, text: 'Membership', path: '/membership' },
+  { icon: <HelpIcon />, text: 'Help Center', path: '/faq' },
+  { icon: <ExitToAppIcon />, text: 'Log Out', path: '/' },
 ];
 
 const SideBar: React.FC = () => {
@@ -117,9 +125,9 @@ const SideBar: React.FC = () => {
   }, [userData?.user_id]);
 
   useEffect(() => {}, [botProfiles]);
+
   return (
     <div className="w-64 p-4 bg-[#0B031E] flex flex-col h-screen relative">
-      {/* <BackgroundCss/> */}
       <Link
         href={'/dashboard'}
         className="flex justify-center w-full mt-[10px] mb-[20px]"
@@ -130,11 +138,11 @@ const SideBar: React.FC = () => {
         onClick={getUserBotProfiles}
         className="bg-[#1E1E2E] text-white rounded-full py-4 px-4 mb-8 flex items-center space-x-4 justify-center"
       >
-        <i className="fas fa-plus"></i>
+        <AddIcon />
         <Link href={`/newchat`}>
           <span>Test your Bot</span>
         </Link>
-      </button>{' '}
+      </button>
       <MenuItem item={DashboardItem} key={DashboardItem?.text} />
       <div className="flex flex-col h-[100%] justify-between overflow-y-scroll">
         <div className="flex flex-col space-y-2">
@@ -149,12 +157,7 @@ const SideBar: React.FC = () => {
             onClick={handleClickOpen}
           >
             <div className="flex justify-start space-x-3 items-center">
-              <Image
-                src="/images/mobile.svg"
-                width={20}
-                height={30}
-                alt="mobile"
-              />
+              <PhoneAndroidIcon />
               <span>Available on Android</span>
             </div>
           </button>
@@ -183,6 +186,7 @@ interface MenuItemProps {
   item: SidebarItemProps;
   onClick?: () => void;
 }
+
 const MenuItem: React.FC<MenuItemProps> = ({ item, onClick }) => {
   const router = useRouter();
   const pathname = usePathname();
@@ -201,7 +205,7 @@ const MenuItem: React.FC<MenuItemProps> = ({ item, onClick }) => {
     }));
   };
 
-  const botSession = (botId: any, userId: any, botName:any) => {
+  const botSession = (botId: any, userId: any, botName: any) => {
     const data = {
       botId,
       userId,
@@ -224,10 +228,10 @@ const MenuItem: React.FC<MenuItemProps> = ({ item, onClick }) => {
                 : ''
             }`}
           >
-            <i className={`fas ${item.icon}`}></i>
+            {item.icon}
             <span>{item.text}</span>
             <div className={`${subMenuOpen ? 'rotate-180' : ''} ml-auto`}>
-              <Icon icon="lucide:chevron-down" width="24" height="24" />
+              <ExpandMoreIcon />
             </div>
           </button>
           {subMenuOpen && (
@@ -252,11 +256,7 @@ const MenuItem: React.FC<MenuItemProps> = ({ item, onClick }) => {
                               subMenuChildOpen[idx] ? 'rotate-180' : ''
                             } ml-auto`}
                           >
-                            <Icon
-                              icon="lucide:chevron-down"
-                              width="24"
-                              height="24"
-                            />
+                            <ExpandMoreIcon />
                           </div>
                         )}
                       </div>
@@ -278,11 +278,7 @@ const MenuItem: React.FC<MenuItemProps> = ({ item, onClick }) => {
                               subMenuChildOpen[idx] ? 'rotate-180' : ''
                             } ml-auto`}
                           >
-                            <Icon
-                              icon="lucide:chevron-down"
-                              width="24"
-                              height="24"
-                            />
+                            <ExpandMoreIcon />
                           </div>
                         )}
                       </div>
@@ -296,12 +292,11 @@ const MenuItem: React.FC<MenuItemProps> = ({ item, onClick }) => {
                             <div key={childIdx}>
                               <div
                                 className={`text-gray-300 hover:bg-white hover:bg-opacity-10 rounded-full cursor-pointer`}
-                                onClick={() => botSession(bot._id, bot.userId,bot.botName)}
+                                onClick={() =>
+                                  botSession(bot._id, bot.userId, bot.botName)
+                                }
                               >
-                                <button
-                                  // onClick={() => botSession(bot._id, bot.userId)}
-                                  className="flex items-center space-x-3 py-2 px-3"
-                                >
+                                <button className="flex items-center space-x-3 py-2 px-3">
                                   <span>{bot.botName}</span>
                                 </button>
                               </div>
@@ -323,11 +318,12 @@ const MenuItem: React.FC<MenuItemProps> = ({ item, onClick }) => {
           }`}
           onClick={onClick}
         >
-          <i className={`fas ${item.icon}`}></i>
+          {item.icon}
           <span>{item.text}</span>
         </Link>
       )}
     </div>
   );
 };
+
 export default SideBar;

@@ -8,8 +8,7 @@ import styles from './dashboardComponent.module.css';
 import Link from 'next/link';
 import { fetchMetricsAction } from '@/redux/actions/authActions';
 import { getUserProfileAction } from '@/redux/actions/authActions';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlus } from '@fortawesome/free-solid-svg-icons';
+import AddIcon from '@mui/icons-material/Add';
 import withAuth from '../withAuth';
 import CardHeaderOne from './CardHeaderOne';
 import { fetchMembershipPlanRequest } from '@/redux/actions/paymentActions';
@@ -34,7 +33,7 @@ const DashBoardComponent: React.FC = () => {
   const [metricData, setMetricData] = useState(userMetricData);
 
   const [profileData, setProfileData] = React.useState<any>(userDataRedux);
-  
+
   const dispatch = useDispatch();
   const { planName } = useSelector((state: RootState) => state.payment);
   const totalSatisfaction =
@@ -114,8 +113,9 @@ const DashBoardComponent: React.FC = () => {
     dispatch(fetchMembershipPlanRequest());
   }, [dispatch]);
 
-  const formattedPlanName = planName ? planName.charAt(0).toUpperCase() + planName.slice(1) : '';
-
+  const formattedPlanName = planName
+    ? planName.charAt(0).toUpperCase() + planName.slice(1)
+    : '';
 
   useEffect(() => {
     let interval: NodeJS.Timeout | null = null;
@@ -175,7 +175,11 @@ const DashBoardComponent: React.FC = () => {
               className="flex items-center justify-center gap-2"
             >
               <span>Create Bot</span>
-              <FontAwesomeIcon icon={faPlus} className="w-[25px] h-[25px]" />
+              <AddIcon
+                sx={{
+                  fontSize: '30px',
+                }}
+              />
             </Link>
           </button>
         </div>
