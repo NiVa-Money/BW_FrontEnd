@@ -33,7 +33,7 @@ const DashBoardComponent: React.FC = () => {
   const [metricData, setMetricData] = useState(userMetricData);
 
   const [profileData, setProfileData] = React.useState<any>(userDataRedux);
-  
+
   const dispatch = useDispatch();
   const { planName } = useSelector((state: RootState) => state.payment);
   const totalSatisfaction =
@@ -113,8 +113,9 @@ const DashBoardComponent: React.FC = () => {
     dispatch(fetchMembershipPlanRequest());
   }, [dispatch]);
 
-  const formattedPlanName = planName ? planName.charAt(0).toUpperCase() + planName.slice(1) : '';
-
+  const formattedPlanName = planName
+    ? planName.charAt(0).toUpperCase() + planName.slice(1)
+    : '';
 
   useEffect(() => {
     let interval: NodeJS.Timeout | null = null;
@@ -174,7 +175,11 @@ const DashBoardComponent: React.FC = () => {
               className="flex items-center justify-center gap-2"
             >
               <span>Create Bot</span>
-              <AddIcon style={{ fontSize: '30px' }} />
+              <AddIcon
+                sx={{
+                  fontSize: '30px',
+                }}
+              />
             </Link>
           </button>
         </div>

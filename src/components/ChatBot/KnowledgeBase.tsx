@@ -129,7 +129,11 @@ const KnowledgeBase: React.FC = () => {
         <button className="flex gap-2 justify-center px-14 py-3 text-xl font-medium text-gray-100 bg-[#3F2181] rounded-[60px]">
           <Link href="/createknowledgebase" className="flex px-8 py-1 gap-2">
             <span>Create Knowledge Base</span>
-             <AddIcon style={{ fontSize: '30px' }} />
+            <AddIcon
+              sx={{
+                fontSize: '30px',
+              }}
+            />
           </Link>
         </button>
       </header>
