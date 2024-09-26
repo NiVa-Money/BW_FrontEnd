@@ -2,8 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import ChatBotCard from './ChatBotCard';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlus } from '@fortawesome/free-solid-svg-icons';
+import AddIcon from '@mui/icons-material/Add';
 import Link from 'next/link';
 import { RootState } from '@/redux/configureStore';
 import { useDispatch, useSelector } from 'react-redux';
@@ -149,7 +148,7 @@ const ChatBotList: React.FC = () => {
         <button className="flex  justify-center  text-xl font-medium text-gray-100 bg-[#3F2181] rounded-[60px]">
           <Link href="/createbot" className="flex px-14 py-3 gap-2">
             <span>Create Bot</span>
-            <FontAwesomeIcon icon={faPlus} className="w-[25px] h-[25px]" />
+            <AddIcon style={{ fontSize: '30px' }} />
           </Link>
         </button>
       </header>

@@ -2,8 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import ChatBotCard from '../ChatBot/ChatBotCard';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlus } from '@fortawesome/free-solid-svg-icons';
+import AddIcon from '@mui/icons-material/Add';
 import Link from 'next/link';
 import { RootState } from '@/redux/configureStore';
 import { useDispatch, useSelector } from 'react-redux';
@@ -130,7 +129,7 @@ const KnowledgeBase: React.FC = () => {
         <button className="flex gap-2 justify-center px-14 py-3 text-xl font-medium text-gray-100 bg-[#3F2181] rounded-[60px]">
           <Link href="/createknowledgebase" className="flex px-8 py-1 gap-2">
             <span>Create Knowledge Base</span>
-            <FontAwesomeIcon icon={faPlus} className="w-[25px] h-[25px]" />
+             <AddIcon style={{ fontSize: '30px' }} />
           </Link>
         </button>
       </header>

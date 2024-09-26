@@ -312,7 +312,7 @@ const BotSessionComponent: React.FC = () => {
         <div className="text-white mt-[8px] flex justify-center items-center">
           <span className="text-[#6C6779]">Sessions History</span>
         </div>
-        <div className="text-white m-auto w-full h-full mx-3 my-3 overflow-scroll m-auto flex flex-col">
+        <div className="text-white m-auto w-full h-full mx-3 my-3 overflow-scroll flex flex-col">
           {botSessionsList?.map((item: any, id: any) => (
             <>
               <div
@@ -438,7 +438,7 @@ const BotSessionComponent: React.FC = () => {
                 >
                   <div>Bot Profile</div>
                 </div>
-                <div className="flex w-[8.5vw] h-[60px] flex justify-center items-center py-2.5 bg-[#1E1533] overflow-y-scroll  rounded p-1 border-gray-500 border-solid text-white">
+                <div className="flex w-[8.5vw] h-[60px] justify-center items-center py-2.5 bg-[#1E1533] overflow-y-scroll  rounded p-1 border-gray-500 border-solid text-white">
                   <div>{botNameDropDown}</div>
                 </div>
                 {isBotProfileOpen && (
