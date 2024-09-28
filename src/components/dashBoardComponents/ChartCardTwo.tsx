@@ -18,6 +18,8 @@ const ChartCardTwo = () => {
     { category: 'Bot2', value: 150 },
   ];
 
+  
+
   return (
     <div className="bg-[#0B031E] p-6">
       <div>
@@ -31,6 +33,7 @@ const ChartCardTwo = () => {
           sx={{
             backgroundColor: '#0A1330',
             color: '#AEB9E1',
+            borderColor: "#343B4F",
             borderRadius: '4px',
             '& .MuiSelect-select': {
               padding: '10px',
@@ -44,7 +47,7 @@ const ChartCardTwo = () => {
       </div>
       <div className="flex gap-6">
         {/* Donut Chart */}
-        <Card className="flex-grow bg-white bg-opacity-10 border-none">
+        <Card className="flex-grow bg-white bg-opacity-10 border-none" style={{ backgroundColor: 'rgba(255, 255, 255, 0.1)' }}>
           <div className="flex justify-between items-start mb-4">
             <div>
               <Title className="text-xl text-[#AEB9E1]">Total Messages</Title>
@@ -67,7 +70,7 @@ const ChartCardTwo = () => {
         </Card>
 
         {/* Bar Chart */}
-        <Card className="flex-grow bg-white bg-opacity-10 border-none">
+        <Card className="flex-grow bg-white bg-opacity-10 border-none" style={{ backgroundColor: 'rgba(255, 255, 255, 0.1)' }}>
           <div className="flex justify-between items-start mb-4">
             <div>
               <Title className="text-xl text-[#AEB9E1]">
