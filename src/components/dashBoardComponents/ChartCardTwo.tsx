@@ -1,115 +1,115 @@
 import React from 'react';
-import { Card, Title, BarChart, DonutChart, Metric, Text } from '@tremor/react';
-import ArrowUpward from '@mui/icons-material/ArrowUpward';
+import { Card, Title, BarChart, Metric, Text } from '@tremor/react';
 import { Select, MenuItem } from '@mui/material';
+import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
+import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 
-const resolvedData = [
-  { time: '12 AM', Bot1: 40, Bot2: 60 },
-  { time: '4 AM', Bot1: 30, Bot2: 40 },
-  { time: '8 AM', Bot1: 50, Bot2: 70 },
-  { time: '12 PM', Bot1: 40, Bot2: 50 },
-  { time: '4 PM', Bot1: 60, Bot2: 80 },
-  { time: '8 PM', Bot1: 50, Bot2: 60 },
+const monthlyData = [
+  { month: 'Jan', Positive: 20000, Neutral: 15000, Negative: 10000 },
+  { month: 'Feb', Positive: 25000, Neutral: 50000, Negative: 15000 },
+  { month: 'Mar', Positive: 35000, Neutral: 40000, Negative: 12000 },
+  { month: 'Apr', Positive: 40000, Neutral: 30000, Negative: 5000 },
+  { month: 'May', Positive: 30000, Neutral: 20000, Negative: 10000 },
+  { month: 'Jun', Positive: 20000, Neutral: 50000, Negative: 15000 },
+  { month: 'Jul', Positive: 15000, Neutral: 5000, Negative: 0 },
+  { month: 'Aug', Positive: 40000, Neutral: 35000, Negative: 20000 },
+  { month: 'Sep', Positive: 20000, Neutral: 10000, Negative: 10000 },
+  { month: 'Oct', Positive: 30000, Neutral: 20000, Negative: 15000 },
+  { month: 'Nov', Positive: 25000, Neutral: 0, Negative: 20000 },
+  { month: 'Dec', Positive: 30000, Neutral: 20000, Negative: 25000 },
 ];
 
-const ChartCardTwo = () => {
-  const donutData = [
-    { category: 'Bot1', value: 300 },
-    { category: 'Bot2', value: 150 },
-  ];
-
-  
-
+const ReportsOverview = () => {
   return (
-    <div className="bg-[#0B031E] p-6">
-      <div>
-        <div className="text-white font-bold text-2xl mb-4">
-          Reports overview
-        </div>
+    <div className="bg-[#0B031E] p-4">
+      <div className="flex-col mb-4">
+        <h1 className="text-white text-2xl font-semibold mb-4">Reports overview</h1>
         <Select
-          defaultValue=""
+          value=""
+          displayEmpty
           variant="outlined"
-          className="mb-4"
+          className="bg-[#0A1330] text-white"
           sx={{
-            backgroundColor: '#0A1330',
-            color: '#AEB9E1',
-            borderColor: "#343B4F",
-            borderRadius: '4px',
-            '& .MuiSelect-select': {
-              padding: '10px',
+            '& .MuiOutlinedInput-notchedOutline': {
+              borderColor: '#343B4F',
+            },
+            '&:hover .MuiOutlinedInput-notchedOutline': {
+              borderColor: '#343B4F',
+            },
+            '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+              borderColor: '#343B4F',
             },
           }}
+          IconComponent={KeyboardArrowDownIcon}
         >
-          <MenuItem value="option1">Option 1</MenuItem>
-          <MenuItem value="option2">Option 2</MenuItem>
-          <MenuItem value="option3">Option 3</MenuItem>
+          <MenuItem value="" disabled>
+            <div className="flex text-[#AEB9E1] items-center">
+              <CalendarTodayIcon className="mr-2" />
+              Select date
+            </div>
+          </MenuItem>
         </Select>
       </div>
-      <div className="flex gap-6">
-        {/* Donut Chart */}
-        <Card className="flex-grow bg-white bg-opacity-10 border-none" style={{ backgroundColor: 'rgba(255, 255, 255, 0.1)' }}>
-          <div className="flex justify-between items-start mb-4">
-            <div>
-              <Title className="text-xl text-[#AEB9E1]">Total Messages</Title>
-              <Metric className="text-3xl font-bold text-white mt-2">
-                450
-              </Metric>
-              <Text className="text-green-400 flex items-center text-sm mt-1">
-                <ArrowUpward className="w-4 h-4 mr-1" />
-                12.5%
-              </Text>
-            </div>
+      
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <Card className="!bg-opacity-10 !bg-white">
+          <Title className="text-[#AEB9E1] mb-2">Total Messages</Title>
+          <Metric className="text-white text-4xl font-bold">10,234</Metric>
+          
+          <div className="mt-4">
+            <Title className="text-[#AEB9E1] mb-2">Top 5 Bots</Title>
+            {[
+              { name: 'Bot 1', messages: 1230, color: 'bg-purple-500' },
+              { name: 'Bot 2', messages: 751, color: 'bg-cyan-500' },
+              { name: 'Bot 3', messages: 471, color: 'bg-blue-500' },
+              { name: 'Bot 4', messages: 280, color: 'bg-cyan-500' },
+              { name: 'Bot 5', messages: 87, color: 'bg-blue-500' },
+            ].map((bot, index) => (
+              <div key={index} className="flex items-center mt-2">
+                <div className={`w-full h-2 ${bot.color} rounded-full mr-2`} style={{ width: `${(bot.messages / 1230) * 100}%` }}></div>
+                <span className="text-[#AEB9E1] w-20">{bot.name}</span>
+                <span className="text-white ml-6">{bot.messages}</span>
+              </div>
+            ))}
           </div>
-          <DonutChart
-            className="h-48 mt-4"
-            data={donutData}
-            category="value"
-            index="category"
-            colors={['purple', 'cyan']}
-          />
         </Card>
-
-        {/* Bar Chart */}
-        <Card className="flex-grow bg-white bg-opacity-10 border-none" style={{ backgroundColor: 'rgba(255, 255, 255, 0.1)' }}>
-          <div className="flex justify-between items-start mb-4">
+        
+        <Card className="!bg-opacity-10 !bg-white">
+          <div className="flex justify-between items-center mb-4">
             <div>
-              <Title className="text-xl text-[#AEB9E1]">
-                Sentiment Analysis
-              </Title>
-              <Metric className="text-3xl font-bold text-white mt-2">
-                $144.6K
-              </Metric>
-              <Text className="text-green-400 flex items-center text-sm mt-1">
-                <ArrowUpward className="w-4 h-4 mr-1" />
-                28.5%
-              </Text>
+              <Title className="text-[#AEB9E1]">Sentiment Analysis</Title>
             </div>
-            <div>
-              <Select
-                defaultValue=""
-                variant="outlined"
-                className="mb-4"
-                sx={{
-                  backgroundColor: '#0A1330',
-                  color: '#AEB9E1',
-                  borderRadius: '4px',
-                  '& .MuiSelect-select': {
-                    padding: '10px',
-                  },
-                }}
-              >
-                <MenuItem value="option1">Monthly</MenuItem>
-                <MenuItem value="option2">Weekly</MenuItem>
-                <MenuItem value="option3">Yearly</MenuItem>
-              </Select>
-            </div>
+            <Select
+              value="Monthly"
+              variant="outlined"
+              className="bg-[#0A1330] text-[#AEB9E1]"
+              sx={{
+                '& .MuiOutlinedInput-notchedOutline': {
+                  borderColor: '#343B4F',
+                },
+                '&:hover .MuiOutlinedInput-notchedOutline': {
+                  borderColor: '#343B4F',
+                },
+                '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+                  borderColor: '#343B4F',
+                },
+              }}
+              IconComponent={KeyboardArrowDownIcon}
+            >
+              <MenuItem value="Monthly">Monthly</MenuItem>
+              <MenuItem value="Weekly">Weekly</MenuItem>
+              <MenuItem value="Yearly">Yearly</MenuItem>
+            </Select>
           </div>
           <BarChart
-            className="h-48 mt-4"
-            data={resolvedData}
-            index="time"
-            categories={['Bot1', 'Bot2']}
-            colors={['purple', 'cyan']}
+            className="h-72 mt-4"
+            data={monthlyData}
+            index="month"
+            categories={['Positive', 'Neutral', 'Negative']}
+            colors={['purple', 'cyan', 'blue']}
+            valueFormatter={(number) => `${Intl.NumberFormat('us').format(number).toString()}K`}
+            stack={true}
           />
         </Card>
       </div>
@@ -117,4 +117,4 @@ const ChartCardTwo = () => {
   );
 };
 
-export default ChartCardTwo;
+export default ReportsOverview;

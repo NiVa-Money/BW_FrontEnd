@@ -15,6 +15,7 @@ import { fetchMembershipPlanRequest } from '@/redux/actions/paymentActions';
 import MetricCard from './MetricCard';
 import ChartCardOne from './ChartCardOne';
 import ChartCardTwo from './ChartCardTwo';
+import ReportsOverview from './ChartCardTwo';
 
 const DashBoardComponent: React.FC = () => {
   const userEmail = useSelector((state: RootState) => state.root?.user?.email);
@@ -89,7 +90,7 @@ const DashBoardComponent: React.FC = () => {
       </div>
       <div className="w-full justify-center gap-4">
         <ChartCardOne />
-        <ChartCardTwo />
+        <ReportsOverview />
       </div>
     </div>
   );
