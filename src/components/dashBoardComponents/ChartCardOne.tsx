@@ -283,8 +283,8 @@ const ChartCardOne = () => {
   );
 
   return (
-    <div className="bg-[#0B031E] p-6">
-      <Card className="!bg-white !bg-opacity-10 !border-r-[1px] border-none mb-6 h-auto">
+    <div className="bg-[#0B031E] p-4">
+      <Card className="!bg-white !bg-opacity-10 !border-r-[1px] border-none mb-4 h-auto">
         <div className="flex justify-between">
           {/* Left Side - Bot Usage Chart */}
           <div className="w-2/3">
