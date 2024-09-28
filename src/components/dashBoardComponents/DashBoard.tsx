@@ -84,10 +84,10 @@ const DashBoardComponent: React.FC = () => {
 
   return (
     <div className="w-full h-full flex flex-col p-4 md:p-8 bg-[#0B031E] text-white">
-      <div className="w-full flex flex-col md:flex-row h-auto md:h-[15%] gap-4">
+      <div className="w-full flex justify-center flex-col mt-4 h-auto md:h-[15%] gap-4">
         <MetricCard/>
       </div>
-      <div className="w-full gap-4 mt-6">
+      <div className="w-full justify-center gap-4">
         <ChartCardOne />
         <ChartCardTwo />
       </div>
