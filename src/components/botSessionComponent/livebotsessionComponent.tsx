@@ -70,7 +70,7 @@ const BotSessionComponent: React.FC = () => {
 
     React.useEffect(() => {
         if (sessionId && botIdLive && userIdLive) {
-            const newSocket = io("https://a29b-2405-201-6805-c0a3-1844-2684-7a44-6421.ngrok-free.app/", {
+            const newSocket = io("https://uatapi.botwot.io", {
                 query: {
                     isWidget: "false",
                     chatRoom: sessionId,
@@ -79,14 +79,14 @@ const BotSessionComponent: React.FC = () => {
                 },
             });
 
-            newSocket.on('message', () => {
-                console.log('Connected to socket server');
-            });
+            // newSocket.on('message', () => {
+            //     console.log('Connected to socket server');
+            // });
 
             newSocket.on('message', (message) => {
                 console.log('Received message:', message);
                 setMessages((prevMessages: any) => [...prevMessages, {
-                    text: message.answer,
+                    text: message.question,
                     sender: 'bot'
                 }]);
             });
@@ -257,7 +257,7 @@ const BotSessionComponent: React.FC = () => {
         return messages.map((message: any, index: number) => (
             <div key={index} className={`flex w-full mb-4 ${message.sender === 'user' ? 'justify-end' : 'justify-start'}`}>
                 <div className={`w-fit max-w-[75%] p-2 rounded-xl ${
-                    message.sender === 'user' ? 'bg-[#3F2181]' : 'bg-[#2B243C]'
+                    message.sender === 'user' 
                 }`}>
                     <span className="text-white">{message.text}</span>
                 </div>

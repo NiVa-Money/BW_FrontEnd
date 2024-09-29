@@ -50,6 +50,48 @@ const DashboardItem: SidebarItemProps = {
   hasDropdown: false,
 };
 
+const initialSIDENAV_ITEMS: SidebarItemProps[] = [
+  {
+    icon: <ChatIcon />,
+    text: 'Chat',
+    hasDropdown: true,
+    subMenuItems: [
+      {
+        title: 'All Chats',
+        hasDropdown: true,
+        subChildItems: [{ title: 'hey', path: '/mychatbots' }],
+      },
+      {
+        title: 'Live Chat',
+        hasDropdown: true,
+        subChildItems: [{ title: 'hey', path: '/livechat' }],
+      },
+      { title: 'Reports (coming soon)' },
+    ],
+  },
+  {
+    icon: <SmartToyIcon />,
+    text: 'Bots',
+    hasDropdown: true,
+    subMenuItems: [
+      { path: '/mychatbots', title: 'My Chatbots' },
+      { path: '/knowledgebase', title: 'Knowledge Base' },
+    ],
+  },
+  {
+    icon: <IntegrationInstructionsIcon />,
+    text: 'Integration',
+    path: '/integration',
+  },
+];
+
+const SIDENAV_ITEMS2: SidebarItemProps[] = [
+  { icon: <AccountCircleIcon />, text: 'Profile', path: '/profile' },
+  { icon: <AttachMoneyIcon />, text: 'Membership', path: '/membership' },
+  { icon: <HelpIcon />, text: 'Help Center', path: '/faq' },
+  { icon: <ExitToAppIcon />, text: 'Log Out', path: '/' },
+];
+
 const SideBar: React.FC = () => {
   const dispatch = useDispatch();
   const router = useRouter();
