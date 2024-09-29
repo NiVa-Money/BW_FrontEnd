@@ -111,11 +111,11 @@ const DashBoardComponent: React.FC = () => {
   useEffect(() => {
     // Fetch membership plan on component mount
     dispatch(fetchMembershipPlanRequest());
-  }, [dispatch]);
+  });
 
   const formattedPlanName = planName
     ? planName.charAt(0).toUpperCase() + planName.slice(1)
-    : '';
+    : 'Free';
 
   useEffect(() => {
     let interval: NodeJS.Timeout | null = null;
