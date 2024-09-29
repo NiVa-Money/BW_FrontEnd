@@ -189,7 +189,7 @@ const BotSessionComponent: React.FC = () => {
   React.useEffect(() => {
     // Fetch membership plan on component mount
     dispatch(fetchMembershipPlanRequest());
-  });
+  } , []);
 
   const formattedPlanName = planName ? planName.charAt(0).toUpperCase() + planName.slice(1) : 'Free';
 

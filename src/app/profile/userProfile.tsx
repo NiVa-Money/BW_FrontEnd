@@ -39,9 +39,11 @@ const ProfileComponent: React.FC = () => {
   React.useEffect(() => {
     // Fetch membership plan on component mount
     dispatch(fetchMembershipPlanRequest());
-  });
+  }, []);
 
-  const formattedPlanName = planName ? planName.charAt(0).toUpperCase() + planName.slice(1) : 'Free';
+  const formattedPlanName = planName
+    ? planName.charAt(0).toUpperCase() + planName.slice(1)
+    : 'Free';
   const handleDeleteProfile = () => {
     if (userEmail) {
       alert(`User Membership Plan cancelled`); // This should pop up a dialog box
