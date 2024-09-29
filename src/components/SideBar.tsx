@@ -62,6 +62,11 @@ const initialSIDENAV_ITEMS: SidebarItemProps[] = [
         hasDropdown: true,
         subChildItems: [{ title: 'hey', path: '/mychatbots' }],
       },
+      {
+        title: 'Live Chat',
+        hasDropdown: true,
+        subChildItems: [{ title: 'hey', path: '/livechat' }],
+      },
       { title: 'Reports (coming soon)' },
     ],
   },
@@ -211,7 +216,7 @@ const MenuItem: React.FC<MenuItemProps> = ({ item, onClick }) => {
       userId,
     };
     dispatch(botSessionId(data));
-    router.push(`/botsession?botName=${encodeURIComponent(botName)}`);
+    router.push(`/livechat?botName=${encodeURIComponent(botName)}`);
   };
 
   useEffect(() => {}, [botSessionaa]);
