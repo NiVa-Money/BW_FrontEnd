@@ -430,6 +430,11 @@ const SideBar: React.FC = () => {
           hasDropdown: true,
           subChildItems: [{ title: 'hey', path: '/mychatbots' }],
         },
+        {
+          title: 'Live Chats',
+          hasDropdown: true,
+          subChildItems: [{ title: 'hey', path: '/mychatbots' }],
+        },
         { title: 'Reports (coming soon)' },
       ],
     },
