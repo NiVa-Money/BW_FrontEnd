@@ -303,8 +303,8 @@ const ChartCardOne = () => {
                 <Select
                   value={dateRange}
                   onChange={(e) => setDateRange(e.target.value)}
-                  className="mb-4 bg-[#0A1330] text-white"
-                  style={{ color: 'white', borderColor: '#343B4F' }}
+                  className="bg-[#0A1330] text-[#AEB9E1]"
+                  style={{ color: '#AEB9E1', borderColor: '#343B4F' }}
                 >
                   <MenuItem value="Jan 2024 - Dec 2024">
                     Jan 2024 - Dec 2024
@@ -344,7 +344,7 @@ const ChartCardOne = () => {
                 </Text>
               </div>
             </div>
-            <div className="h-[250px] w-full">
+            <div className="h-[180px] w-full">
               <BarChart
                 className="h-full w-full"
                 data={resolvedData}
@@ -353,7 +353,7 @@ const ChartCardOne = () => {
                 colors={['purple', 'cyan']}
               />
             </div>
-           
+
             {/* NPS Chart */}
             <div className="flex justify-between items-start mb-4">
               <div>
@@ -369,7 +369,7 @@ const ChartCardOne = () => {
                 </Text>
               </div>
             </div>
-            <div className="h-[250px] w-full">
+            <div className="h-[180px] w-full">
               <AreaChart
                 className="h-full w-full"
                 data={npsData}
