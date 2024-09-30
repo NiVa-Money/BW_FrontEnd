@@ -139,14 +139,24 @@ const ReportsOverview = () => {
   const [dateRange, setDateRange] = useState('Jan 2024 - Dec 2024');
   const [sentimentPeriod, setSentimentPeriod] = useState('Monthly');
 
-  const metrics = useSelector((state: RootState) => state.root?.userMetric?.data);
+  const metrics = useSelector(
+    (state: RootState) => state.root?.userMetric?.data
+  );
 
   // Define the type for botSessionMapping and extract it from the metrics
-  const botSessionMapping: BotSessionMappingType = metrics?.botSessionMapping || [];
+  const botSessionMapping: BotSessionMappingType =
+    metrics?.botSessionMapping || [];
   const totalMessages = metrics?.sessionConsumed || 0;
 
+  // Sort the botSessionMapping based on the message count in descending order
+  const topBots = [...botSessionMapping]
+    .sort((a, b) => b[1][0] - a[1][0])
+    .slice(0, 5);
+
   // Determine the highest message count for the progress bar percentage calculation
-  const maxMessages = Math.max(...botSessionMapping.map(([, [messages]]) => messages));
+  const maxMessages = Math.max(
+    ...botSessionMapping.map(([, [messages]]) => messages)
+  );
 
   return (
     <div className="bg-[#0B031E] p-4">
@@ -168,7 +178,9 @@ const ReportsOverview = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <Card className="!bg-opacity-10 !bg-white">
           <Title className="text-[#AEB9E1] mb-2">Total Messages</Title>
-          <Metric className="text-white text-4xl font-bold">{totalMessages}</Metric>
+          <Metric className="text-white text-4xl font-bold">
+            {totalMessages}
+          </Metric>
 
           <div className="mt-4">
             <Title className="text-[#AEB9E1] mb-2">Top 5 Bots</Title>
@@ -176,20 +188,21 @@ const ReportsOverview = () => {
               <span>Bots</span>
               <span>Messages</span>
             </div>
-            {botSessionMapping.slice(0, 5).map(([botName, [messages]], index: number) => (
-              <div key={index} className="flex items-center mt-2">
-                <span className="text-[#AEB9E1] w-12">{botName}</span>
-                <div className="flex-grow mx-2">
-                  <div
-                    className={`h-2 bg-purple-600 rounded-full`}
-                    style={{
-                      width: `${(messages / maxMessages) * 100}%`,
-                    }}
-                  ></div>
+            {topBots
+              .map(([botName, [messages]], index: number) => (
+                <div key={index} className="flex items-center mt-2">
+                  <span className="text-[#AEB9E1] w-12">{botName}</span>
+                  <div className="flex-grow mx-2">
+                    <div
+                      className={`h-2 bg-purple-600 rounded-full`}
+                      style={{
+                        width: `${(messages / maxMessages) * 100}%`,
+                      }}
+                    ></div>
+                  </div>
+                  <span className="text-white w-12 text-right">{messages}</span>
                 </div>
-                <span className="text-white w-12 text-right">{messages}</span>
-              </div>
-            ))}
+              ))}
           </div>
         </Card>
 
