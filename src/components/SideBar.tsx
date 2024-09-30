@@ -23,11 +23,8 @@ import SmartToyIcon from '@mui/icons-material/SmartToy';
 import IntegrationInstructionsIcon from '@mui/icons-material/IntegrationInstructions';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
-import HelpIcon from '@mui/icons-material/Help';
-import ExitToAppIcon from '@mui/icons-material/ExitToApp';
-import AddIcon from '@mui/icons-material/Add';
-import PhoneAndroidIcon from '@mui/icons-material/PhoneAndroid';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import SettingsRoundedIcon from '@mui/icons-material/SettingsRounded';
+import PhoneAndroidRoundedIcon from '@mui/icons-material/PhoneAndroidRounded';
 import KeyboardArrowRightRoundedIcon from '@mui/icons-material/KeyboardArrowRightRounded';
 import colors from 'tailwindcss/colors';
 
@@ -43,6 +40,7 @@ interface SidebarItemProps {
     title: string;
     hasDropdown?: boolean | any;
     subChildItems?: any[] | any;
+    onClick?: () => void;
   }[];
 }
 
@@ -53,42 +51,7 @@ const DashboardItem: SidebarItemProps = {
   hasDropdown: false,
 };
 
-const initialSIDENAV_ITEMS: SidebarItemProps[] = [
-  {
-    icon: <ChatIcon />,
-    text: 'Chats',
-    hasDropdown: true,
-    subMenuItems: [
-      {
-        title: 'All Chats',
-        hasDropdown: true,
-        subChildItems: [{ title: 'hey', path: '/mychatbots' }],
-      },
-      { title: 'Reports (coming soon)' },
-    ],
-  },
-  {
-    icon: <SmartToyIcon />,
-    text: 'Bots',
-    hasDropdown: true,
-    subMenuItems: [
-      { path: '/mychatbots', title: 'My Chatbots' },
-      { path: '/knowledgebase', title: 'Knowledge Base' },
-    ],
-  },
-  {
-    icon: <IntegrationInstructionsIcon />,
-    text: 'Integration',
-    path: '/integration',
-  },
-];
 
-const SIDENAV_ITEMS2: SidebarItemProps[] = [
-  { icon: <AccountCircleIcon />, text: 'Profile', path: '/profile' },
-  { icon: <AttachMoneyIcon />, text: 'Pricing', path: '/membership' },
-  { icon: <HelpIcon />, text: 'Help Center', path: '/faq' },
-  { icon: <ExitToAppIcon />, text: 'Log Out', path: '/' },
-];
 
 const SideBar: React.FC = () => {
   const dispatch = useDispatch();
@@ -102,8 +65,6 @@ const SideBar: React.FC = () => {
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
   const [open, setOpen] = useState<any>(false);
-
-  const isActive = pathname === '/dashboard';
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -130,6 +91,53 @@ const SideBar: React.FC = () => {
   }, [userData?.user_id]);
 
   useEffect(() => {}, [botProfiles]);
+
+
+  const initialSIDENAV_ITEMS: SidebarItemProps[] = [
+    {
+      icon: <ChatIcon />,
+      text: 'Chats',
+      hasDropdown: true,
+      subMenuItems: [
+        {
+          title: 'All Chats',
+          hasDropdown: true,
+          subChildItems: [{ title: 'hey', path: '/mychatbots' }],
+        },
+        { title: 'Reports (coming soon)' },
+      ],
+    },
+    {
+      icon: <SmartToyIcon />,
+      text: 'Bots',
+      hasDropdown: true,
+      subMenuItems: [
+        { path: '/mychatbots', title: 'My Chatbots' },
+        { path: '/knowledgebase', title: 'Knowledge Base' },
+      ],
+    },
+    {
+      icon: <AttachMoneyIcon />,
+      text: 'Pricing',
+      path: '/membership',
+    },
+    {
+      icon: <IntegrationInstructionsIcon />,
+      text: 'Integration',
+      path: '/integration',
+    },
+    {
+      icon: <SettingsRoundedIcon />,
+      text: 'Settings',
+      hasDropdown: true,
+      subMenuItems: [
+        { onClick: openModal, title: 'Clear Conversation' },
+        { path: '/faq', title: 'Help Center' },
+        { title: 'Log out', onClick: LogoutButton },
+      ],
+    },
+    { icon: <AccountCircleIcon />, text: 'Profile', path: '/profile' },
+  ];
 
   return (
     <div className="w-64 p-4 bg-[#0B031E] flex flex-col h-screen relative">
@@ -161,11 +169,11 @@ const SideBar: React.FC = () => {
             onClick={handleClickOpen}
           >
             <div className="flex justify-start space-x-3 items-center">
-              <PhoneAndroidIcon />
+              <PhoneAndroidRoundedIcon />
               <span>Available on Android</span>
             </div>
           </button>
-          {SIDENAV_ITEMS2.map((item, idx) => (
+          {initialSIDENAV_ITEMS.map((item, idx) => (
             <MenuItem
               key={idx}
               item={item}
@@ -225,9 +233,11 @@ const MenuItem: React.FC<MenuItemProps> = ({ item, onClick }) => {
   };
 
   const menuItemClasses = `flex items-center space-x-3 py-2 px-3 rounded-md cursor-pointer w-full
-    ${isActive(item.path || item.text.toLowerCase()) 
-      ? 'bg-[#081028] text-white' 
-      : 'text-[#AEB9E1] hover:bg-[#081028] hover:text-white'}`;
+    ${
+      isActive(item.path || item.text.toLowerCase())
+        ? 'bg-[#081028] text-white'
+        : 'text-[#AEB9E1] hover:bg-[#081028] hover:text-white'
+    }`;
 
   return (
     <div>
@@ -236,7 +246,11 @@ const MenuItem: React.FC<MenuItemProps> = ({ item, onClick }) => {
           <button onClick={toggleSubMenu} className={menuItemClasses}>
             <div className="w-6">{item.icon}</div>
             <span className="flex-grow text-left">{item.text}</span>
-            <div className={`transition-transform duration-200 ${subMenuOpen ? 'rotate-90' : ''}`}>
+            <div
+              className={`transition-transform duration-200 ${
+                subMenuOpen ? 'rotate-90' : ''
+              }`}
+            >
               <KeyboardArrowRightRoundedIcon />
             </div>
           </button>
@@ -245,19 +259,36 @@ const MenuItem: React.FC<MenuItemProps> = ({ item, onClick }) => {
               {item.subMenuItems?.map((subItem, idx) => (
                 <div key={idx}>
                   {subItem.path ? (
-                    <Link href={subItem.path} onClick={onClick} className={menuItemClasses}>
+                    <Link
+                      href={subItem.path}
+                      onClick={onClick}
+                      className={menuItemClasses}
+                    >
                       <span className="flex-grow">{subItem.title}</span>
                       {subItem.hasDropdown && (
-                        <div className={`transition-transform duration-200 ${subMenuChildOpen[idx] ? 'rotate-90' : ''}`}>
+                        <div
+                          className={`transition-transform duration-200 ${
+                            subMenuChildOpen[idx] ? 'rotate-90' : ''
+                          }`}
+                        >
                           <KeyboardArrowRightRoundedIcon />
                         </div>
                       )}
                     </Link>
                   ) : (
-                    <button onClick={() => toggleSubMenuChild(idx)} className={menuItemClasses}>
-                      <span className="flex-grow text-left">{subItem.title}</span>
+                    <button
+                      onClick={() => toggleSubMenuChild(idx)}
+                      className={menuItemClasses}
+                    >
+                      <span className="flex-grow text-left">
+                        {subItem.title}
+                      </span>
                       {subItem.hasDropdown && (
-                        <div className={`transition-transform duration-200 ${subMenuChildOpen[idx] ? 'rotate-90' : ''}`}>
+                        <div
+                          className={`transition-transform duration-200 ${
+                            subMenuChildOpen[idx] ? 'rotate-90' : ''
+                          }`}
+                        >
                           <KeyboardArrowRightRoundedIcon />
                         </div>
                       )}
@@ -265,11 +296,19 @@ const MenuItem: React.FC<MenuItemProps> = ({ item, onClick }) => {
                   )}
                   {subItem.hasDropdown && subMenuChildOpen[idx] && (
                     <div className="ml-6 mt-1">
-                      {botProfiles?.botProfiles?.data?.map((bot: any, childIdx: any) => (
-                        <div key={childIdx} className={menuItemClasses} onClick={() => botSession(bot._id, bot.userId, bot.botName)}>
-                          <span>{bot.botName}</span>
-                        </div>
-                      ))}
+                      {botProfiles?.botProfiles?.data?.map(
+                        (bot: any, childIdx: any) => (
+                          <div
+                            key={childIdx}
+                            className={menuItemClasses}
+                            onClick={() =>
+                              botSession(bot._id, bot.userId, bot.botName)
+                            }
+                          >
+                            <span>{bot.botName}</span>
+                          </div>
+                        )
+                      )}
                     </div>
                   )}
                 </div>
@@ -278,14 +317,17 @@ const MenuItem: React.FC<MenuItemProps> = ({ item, onClick }) => {
           )}
         </>
       ) : (
-        <Link href={item.path ?? ''} className={menuItemClasses} onClick={onClick}>
+        <Link
+          href={item.path ?? ''}
+          className={menuItemClasses}
+          onClick={onClick}
+        >
           <div className="w-6">{item.icon}</div>
           <span className="flex-grow">{item.text}</span>
         </Link>
       )}
     </div>
   );
-
 };
 
 export default SideBar;
