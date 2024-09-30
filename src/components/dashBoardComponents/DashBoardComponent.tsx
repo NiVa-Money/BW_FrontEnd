@@ -227,15 +227,15 @@ const DashBoardComponent: React.FC = () => {
             </div>
             <div className={styles.textSize}>User Profile</div>
           </div>
-          <div className={`${styles.textSize} gap-[8px] flex text-gray-400`}>
+          <div className={`${styles.textSize} gap-[8px] flex text-[#AEB9E1]`}>
             <div>Name:</div>
             <div> {profileData?.firstName}</div>
           </div>
-          <div className={`${styles.textSize} gap-[8px] flex text-gray-400`}>
+          <div className={`${styles.textSize} gap-[8px] flex text-[#AEB9E1]`}>
             <div>User ID: </div>
             <div>{profileData?.emailId}</div>
           </div>
-          <div className={`${styles.textSize} gap-[8px] flex text-gray-400`}>
+          <div className={`${styles.textSize} gap-[8px] flex text-[#AEB9E1]`}>
             <div>Membership Plan: </div>
             <div>{formattedPlanName}</div>
           </div>

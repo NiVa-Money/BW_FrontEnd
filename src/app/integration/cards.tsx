@@ -18,10 +18,10 @@ const Card: React.FC<CardProps> = ({ image, title, subTitle, description }) => {
             <div className="flex items-center mb-4">
                 <div className="ml-4">
                     <h3 className="text-lg font-semibold">{title}</h3>
-                    <p className="text-sm text-gray-400">{subTitle}</p>
+                    <p className="text-sm text-[#AEB9E1]">{subTitle}</p>
                 </div>
                 <div className="ml-auto">
-                    <button className="text-gray-400">
+                    <button className="text-[#AEB9E1]">
                         ...
                     </button>
                 </div>
@@ -30,10 +30,10 @@ const Card: React.FC<CardProps> = ({ image, title, subTitle, description }) => {
                 <img src={image} alt={`${title} icon`} className="h-24 object-contain" />
             </div>
 
-            <p className="text-sm text-gray-300">{description}</p>
+            <p className="text-sm text-[#AEB9E1]">{description}</p>
             
             {/* Support Information */}
-            <p className="text-sm text-gray-300 mt-4">
+            <p className="text-sm text-[#AEB9E1] mt-4">
                 For support, call us at <span className="font-semibold">+91 95824 74246</span>
             </p>
 
@@ -47,7 +47,7 @@ const Card: React.FC<CardProps> = ({ image, title, subTitle, description }) => {
 
                 {/* Export button greyed out */}
                 <button
-                    className="text-gray-400 text-sm px-3 py-1.5 md:px-4 md:py-2 rounded-full bg-gray-700 cursor-not-allowed"
+                    className="text-[#AEB9E1] text-sm px-3 py-1.5 md:px-4 md:py-2 rounded-full bg-gray-700 cursor-not-allowed"
                     disabled
                 >
                     Export
