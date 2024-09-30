@@ -17,7 +17,7 @@ import { logoutUser } from '@/redux/actions/authActions';
 import { botSessionId } from '@/redux/actions/userChatAction';
 
 // Import MUI icons
-import DashboardIcon from '@mui/icons-material/Dashboard';
+import HomeRoundedIcon from '@mui/icons-material/HomeRounded';
 import ChatIcon from '@mui/icons-material/Chat';
 import SmartToyIcon from '@mui/icons-material/SmartToy';
 import IntegrationInstructionsIcon from '@mui/icons-material/IntegrationInstructions';
@@ -28,6 +28,8 @@ import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 import AddIcon from '@mui/icons-material/Add';
 import PhoneAndroidIcon from '@mui/icons-material/PhoneAndroid';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import KeyboardArrowRightRoundedIcon from '@mui/icons-material/KeyboardArrowRightRounded';
+import colors from 'tailwindcss/colors';
 
 interface SidebarItemProps {
   path?: string;
@@ -46,7 +48,7 @@ interface SidebarItemProps {
 
 const DashboardItem: SidebarItemProps = {
   path: '/dashboard',
-  icon: <DashboardIcon />,
+  icon: <HomeRoundedIcon />,
   text: 'Dashboard',
   hasDropdown: false,
 };
@@ -54,7 +56,7 @@ const DashboardItem: SidebarItemProps = {
 const initialSIDENAV_ITEMS: SidebarItemProps[] = [
   {
     icon: <ChatIcon />,
-    text: 'Chat',
+    text: 'Chats',
     hasDropdown: true,
     subMenuItems: [
       {
@@ -83,7 +85,7 @@ const initialSIDENAV_ITEMS: SidebarItemProps[] = [
 
 const SIDENAV_ITEMS2: SidebarItemProps[] = [
   { icon: <AccountCircleIcon />, text: 'Profile', path: '/profile' },
-  { icon: <AttachMoneyIcon />, text: 'Membership', path: '/membership' },
+  { icon: <AttachMoneyIcon />, text: 'Pricing', path: '/membership' },
   { icon: <HelpIcon />, text: 'Help Center', path: '/faq' },
   { icon: <ExitToAppIcon />, text: 'Log Out', path: '/' },
 ];
@@ -95,10 +97,13 @@ const SideBar: React.FC = () => {
     useState<SidebarItemProps[]>(initialSIDENAV_ITEMS);
   const userData = useSelector((state: RootState) => state?.root.userData);
   const botProfiles = useSelector((state: RootState) => state.botProfile);
+  const pathname = usePathname();
 
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
   const [open, setOpen] = useState<any>(false);
+
+  const isActive = pathname === '/dashboard';
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -136,11 +141,10 @@ const SideBar: React.FC = () => {
       </Link>
       <button
         onClick={getUserBotProfiles}
-        className="bg-[#1E1E2E] text-white rounded-full py-4 px-4 mb-8 flex items-center space-x-4 justify-center"
+        className="bg-white bg-opacity-10 border border-[#343B4F] rounded-md text-white font-semibold py-3 px-2 mt-4 mb-8 flex justify-start"
       >
-        <AddIcon />
         <Link href={`/newchat`}>
-          <span>Test your Bot</span>
+          <span> Test your Bot</span>
         </Link>
       </button>
       <MenuItem item={DashboardItem} key={DashboardItem?.text} />
@@ -153,7 +157,7 @@ const SideBar: React.FC = () => {
 
         <div className="flex flex-col space-y-2 mt-2">
           <button
-            className="text-white rounded-full py-2 px-2  flex items-center space-x-4 justify-start"
+            className="text-white rounded-md py-2 px-2  flex items-center space-x-4 justify-start"
             onClick={handleClickOpen}
           >
             <div className="flex justify-start space-x-3 items-center">
@@ -216,93 +220,56 @@ const MenuItem: React.FC<MenuItemProps> = ({ item, onClick }) => {
 
   useEffect(() => {}, [botSessionaa]);
 
+  const isActive = (path: string) => {
+    return pathname === path || (pathname && pathname.includes(path));
+  };
+
+  const menuItemClasses = `flex items-center space-x-3 py-2 px-3 rounded-md cursor-pointer w-full
+    ${isActive(item.path || item.text.toLowerCase()) 
+      ? 'bg-[#081028] text-white' 
+      : 'text-[#AEB9E1] hover:bg-[#081028] hover:text-white'}`;
+
   return (
     <div>
       {item.hasDropdown ? (
         <>
-          <button
-            onClick={toggleSubMenu}
-            className={`flex items-center space-x-3 py-2 px-3 text-gray-300 hover:bg-white hover:bg-opacity-10 rounded-full cursor-pointer ${
-              pathname && pathname.includes(item.text.toLowerCase())
-                ? 'bg-white bg-opacity-10'
-                : ''
-            }`}
-          >
-            {item.icon}
-            <span>{item.text}</span>
-            <div className={`${subMenuOpen ? 'rotate-180' : ''} ml-auto`}>
-              <ExpandMoreIcon />
+          <button onClick={toggleSubMenu} className={menuItemClasses}>
+            <div className="w-6">{item.icon}</div>
+            <span className="flex-grow text-left">{item.text}</span>
+            <div className={`transition-transform duration-200 ${subMenuOpen ? 'rotate-90' : ''}`}>
+              <KeyboardArrowRightRoundedIcon />
             </div>
           </button>
           {subMenuOpen && (
-            <div className="ml-4">
+            <div className="ml-6 mt-1">
               {item.subMenuItems?.map((subItem, idx) => (
                 <div key={idx}>
                   {subItem.path ? (
-                    <Link
-                      href={subItem.path}
-                      className="text-gray-300 hover:bg-white hover:bg-opacity-10 rounded-full cursor-pointer"
-                      onClick={onClick}
-                    >
-                      <div
-                        className={`flex items-center space-x-3 py-2 px-3 ${
-                          subItem.path === pathname ? 'font-bold' : ''
-                        }`}
-                      >
-                        <div>{subItem.title}</div>
-                        {subItem.hasDropdown && (
-                          <div
-                            className={`${
-                              subMenuChildOpen[idx] ? 'rotate-180' : ''
-                            } ml-auto`}
-                          >
-                            <ExpandMoreIcon />
-                          </div>
-                        )}
-                      </div>
+                    <Link href={subItem.path} onClick={onClick} className={menuItemClasses}>
+                      <span className="flex-grow">{subItem.title}</span>
+                      {subItem.hasDropdown && (
+                        <div className={`transition-transform duration-200 ${subMenuChildOpen[idx] ? 'rotate-90' : ''}`}>
+                          <KeyboardArrowRightRoundedIcon />
+                        </div>
+                      )}
                     </Link>
                   ) : (
-                    <button
-                      onClick={() => toggleSubMenuChild(idx)}
-                      className="text-gray-300 hover:bg-white hover:bg-opacity-10 rounded-full cursor-pointer"
-                    >
-                      <div
-                        className={`flex items-center space-x-3 py-2 px-3 ${
-                          subItem.path === pathname ? 'font-bold' : ''
-                        }`}
-                      >
-                        <div>{subItem.title}</div>
-                        {subItem.hasDropdown && (
-                          <div
-                            className={`${
-                              subMenuChildOpen[idx] ? 'rotate-180' : ''
-                            } ml-auto`}
-                          >
-                            <ExpandMoreIcon />
-                          </div>
-                        )}
-                      </div>
+                    <button onClick={() => toggleSubMenuChild(idx)} className={menuItemClasses}>
+                      <span className="flex-grow text-left">{subItem.title}</span>
+                      {subItem.hasDropdown && (
+                        <div className={`transition-transform duration-200 ${subMenuChildOpen[idx] ? 'rotate-90' : ''}`}>
+                          <KeyboardArrowRightRoundedIcon />
+                        </div>
+                      )}
                     </button>
                   )}
                   {subItem.hasDropdown && subMenuChildOpen[idx] && (
-                    <div className="ml-4">
-                      {botProfiles &&
-                        botProfiles?.botProfiles?.data?.map(
-                          (bot: any, childIdx: any) => (
-                            <div key={childIdx}>
-                              <div
-                                className={`text-gray-300 hover:bg-white hover:bg-opacity-10 rounded-full cursor-pointer`}
-                                onClick={() =>
-                                  botSession(bot._id, bot.userId, bot.botName)
-                                }
-                              >
-                                <button className="flex items-center space-x-3 py-2 px-3">
-                                  <span>{bot.botName}</span>
-                                </button>
-                              </div>
-                            </div>
-                          )
-                        )}
+                    <div className="ml-6 mt-1">
+                      {botProfiles?.botProfiles?.data?.map((bot: any, childIdx: any) => (
+                        <div key={childIdx} className={menuItemClasses} onClick={() => botSession(bot._id, bot.userId, bot.botName)}>
+                          <span>{bot.botName}</span>
+                        </div>
+                      ))}
                     </div>
                   )}
                 </div>
@@ -311,19 +278,14 @@ const MenuItem: React.FC<MenuItemProps> = ({ item, onClick }) => {
           )}
         </>
       ) : (
-        <Link
-          href={item.path ?? ''}
-          className={`flex items-center space-x-3 py-2 px-3 text-gray-300 hover:bg-white hover:bg-opacity-10 rounded-full cursor-pointer ${
-            item.path === pathname ? 'bg-white bg-opacity-10' : ''
-          }`}
-          onClick={onClick}
-        >
-          {item.icon}
-          <span>{item.text}</span>
+        <Link href={item.path ?? ''} className={menuItemClasses} onClick={onClick}>
+          <div className="w-6">{item.icon}</div>
+          <span className="flex-grow">{item.text}</span>
         </Link>
       )}
     </div>
   );
+
 };
 
 export default SideBar;
