@@ -69,7 +69,7 @@ const Testimonials: React.FC = () => {
                   <p className="text-fuchsia-700 font-semibold mb-2">
                     {testimonial.name}
                   </p>
-                  <p className="text-gray-400 text-center text-sm mb-4">
+                  <p className="text-[#AEB9E1] text-center text-sm mb-4">
                     {testimonial.text}
                   </p>
                   <blockquote className="text-xl text-gray-100 text-center font-semibold">

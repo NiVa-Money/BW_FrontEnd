@@ -92,7 +92,7 @@ interface ProfileFieldProps {
 const ProfileField: React.FC<ProfileFieldProps> = ({ label, value }) => {
   return (
     <div className="bg-[#1E1935] rounded-3xl p-6">
-      <div className="text-sm text-gray-400">{label}</div>
+      <div className="text-sm text-[#AEB9E1]">{label}</div>
       <div className="text-2xl mt-2">{value}</div>
     </div>
   );

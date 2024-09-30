@@ -217,7 +217,7 @@ const DataDeletionPage: React.FC = () => {
               Account Deletion Form
             </h2>
 
-            <p className="text-gray-300 mb-6">
+            <p className="text-[#AEB9E1] mb-6">
               Please fill out this form with the required information
             </p>
             <div className="flex justify-between mb-6">

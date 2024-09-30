@@ -300,7 +300,7 @@ const BotSessionComponent: React.FC = () => {
         <div className="text-white mt-[54px] mx-3">
           <Link
             href={'/dashboard'}
-            className={`flex items-center space-x-3 py-2 px-3 text-gray-300 hover:bg-white' 
+            className={`flex items-center space-x-3 py-2 px-3 text-[#AEB9E1] hover:bg-white' 
           }`}
           >
             <span>
@@ -460,19 +460,19 @@ const BotSessionComponent: React.FC = () => {
                 )}
               </div>
               <div className="flex w-full md:w-[10vw] text-center flex-col bg-transparent py-2.5 px-1 rounded-xl border border-white border-solid">
-                <div className="text-base text-gray-300">Number of bots:</div>
+                <div className="text-base text-[#AEB9E1]">Number of bots:</div>
                 <div className="flex items-center justify-center mt-2.5 text-3xl font-semibold text-white">
                   {botProfiles?.botProfiles?.data?.length}
                 </div>
               </div>
               <div className="flex w-full md:w-[10vw] text-center flex-col py-2.5 bg-transparent px-1 rounded-xl border border-white border-solid">
-                <div className="text-base text-gray-300">Messages left:</div>
+                <div className="text-base text-[#AEB9E1]">Messages left:</div>
                 <div className="flex items-center justify-center mt-2.5 text-3xl font-semibold text-white">
                   {messagesLeft}
                 </div>
               </div>
               <div className="flex w-full md:w-[10vw] text-center flex-col py-2.5 bg-transparent px-1 whitespace-nowrap rounded-xl border border-white border-solid">
-                <div className="text-base text-gray-300">Membership:</div>
+                <div className="text-base text-[#AEB9E1]">Membership:</div>
                 <div className="flex items-center justify-center mt-2.5 text-3xl font-semibold text-white">
                   {formattedPlanName}
                 </div>
@@ -519,7 +519,7 @@ const BotSessionComponent: React.FC = () => {
               <p>Please select a bot profile</p>
             </div>
           )}
-          <div className="flex gap-2.5 z-10 px-8 py-5 mt-2.5 w-[98%] h-[69px] text-base whitespace-nowrap bg-[#2D2640] rounded-xl max-w-[930px] text-gray-300 max-md:flex-wrap max-md:px-5 max-md:max-w-full">
+          <div className="flex gap-2.5 z-10 px-8 py-5 mt-2.5 w-[98%] h-[69px] text-base whitespace-nowrap bg-[#2D2640] rounded-xl max-w-[930px] text-[#AEB9E1] max-md:flex-wrap max-md:px-5 max-md:max-w-full">
             <form onSubmit={handleSubmit} className="Input-container">
               <input
                 type="text"
