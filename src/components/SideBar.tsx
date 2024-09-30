@@ -51,17 +51,60 @@ const DashboardItem: SidebarItemProps = {
   hasDropdown: false,
 };
 
+const initialSIDENAV_ITEMS: SidebarItemProps[] = [
+  {
+    icon: <ChatIcon />,
+    text: 'Chats',
+    hasDropdown: true,
+    subMenuItems: [
+      {
+        title: 'All Chats',
+        hasDropdown: true,
+        subChildItems: [{ title: 'hey', path: '/mychatbots' }],
+      },
+      { title: 'Reports (coming soon)' },
+    ],
+  },
+  {
+    icon: <SmartToyIcon />,
+    text: 'Bots',
+    hasDropdown: true,
+    subMenuItems: [
+      { path: '/mychatbots', title: 'My Chatbots' },
+      { path: '/knowledgebase', title: 'Knowledge Base' },
+    ],
+  },
+  {
+    icon: <AttachMoneyIcon />,
+    text: 'Pricing',
+    path: '/membership',
+  },
+  {
+    icon: <IntegrationInstructionsIcon />,
+    text: 'Integration',
+    path: '/integration',
+  },
+  {
+    icon: <SettingsRoundedIcon />,
+    text: 'Settings',
+    hasDropdown: true,
+    subMenuItems: [
+      { onClick: openModal, title: 'Clear Conversation' },
+      { path: '/faq', title: 'Help Center' },
+      { title: 'Log out', onClick: LogoutButton },
+    ],
+  },
+  { icon: <AccountCircleIcon />, text: 'Profile', path: '/profile' },
+];
 
+const [SIDENAV_ITEMS, setSIDENAV_ITEMS] = useState<SidebarItemProps[]>(initialSIDENAV_ITEMS); 
 
 const SideBar: React.FC = () => {
   const dispatch = useDispatch();
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [SIDENAV_ITEMS, setSIDENAV_ITEMS] =
-    useState<SidebarItemProps[]>(initialSIDENAV_ITEMS);
   const userData = useSelector((state: RootState) => state?.root.userData);
   const botProfiles = useSelector((state: RootState) => state.botProfile);
-  const pathname = usePathname();
-
+  const pathname = usePathname(); 
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
   const [open, setOpen] = useState<any>(false);
@@ -91,53 +134,8 @@ const SideBar: React.FC = () => {
   }, [userData?.user_id]);
 
   useEffect(() => {}, [botProfiles]);
+ 
 
-
-  const initialSIDENAV_ITEMS: SidebarItemProps[] = [
-    {
-      icon: <ChatIcon />,
-      text: 'Chats',
-      hasDropdown: true,
-      subMenuItems: [
-        {
-          title: 'All Chats',
-          hasDropdown: true,
-          subChildItems: [{ title: 'hey', path: '/mychatbots' }],
-        },
-        { title: 'Reports (coming soon)' },
-      ],
-    },
-    {
-      icon: <SmartToyIcon />,
-      text: 'Bots',
-      hasDropdown: true,
-      subMenuItems: [
-        { path: '/mychatbots', title: 'My Chatbots' },
-        { path: '/knowledgebase', title: 'Knowledge Base' },
-      ],
-    },
-    {
-      icon: <AttachMoneyIcon />,
-      text: 'Pricing',
-      path: '/membership',
-    },
-    {
-      icon: <IntegrationInstructionsIcon />,
-      text: 'Integration',
-      path: '/integration',
-    },
-    {
-      icon: <SettingsRoundedIcon />,
-      text: 'Settings',
-      hasDropdown: true,
-      subMenuItems: [
-        { onClick: openModal, title: 'Clear Conversation' },
-        { path: '/faq', title: 'Help Center' },
-        { title: 'Log out', onClick: LogoutButton },
-      ],
-    },
-    { icon: <AccountCircleIcon />, text: 'Profile', path: '/profile' },
-  ];
 
   return (
     <div className="w-64 p-4 bg-[#0B031E] flex flex-col h-screen relative">
