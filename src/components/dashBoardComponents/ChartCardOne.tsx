@@ -202,30 +202,31 @@ import { RootState } from '@/redux/configureStore';
 import { useSelector } from 'react-redux';
 import { format } from 'date-fns';
 
-const resolvedData = [
-  { time: '12 AM', Bot1: 40, Bot2: 60 },
-  { time: '4 AM', Bot1: 30, Bot2: 40 },
-  { time: '8 AM', Bot1: 50, Bot2: 70 },
-  { time: '12 PM', Bot1: 40, Bot2: 50 },
-  { time: '4 PM', Bot1: 60, Bot2: 80 },
-  { time: '8 PM', Bot1: 50, Bot2: 60 },
-];
-
-const npsData = [
-  { time: '12 AM', nps: 50 },
-  { time: '4 AM', nps: 150 },
-  { time: '8 AM', nps: 100 },
-  { time: '12 PM', nps: 250 },
-  { time: '4 PM', nps: 180 },
-  { time: '8 PM', nps: 100 },
-];
-
 const ChartCardOne = () => {
   const [dateRange, setDateRange] = useState('Jan 2024 - Dec 2024');
 
+  // Get the metrics data from the Redux store
   const metrics = useSelector(
     (state: RootState) => state.root?.userMetric?.data
   );
+  
+  // Extract resolved and unresolved session data from metrics
+  const resolvedSessions = metrics?.resolvedSessions ?? 0;
+  const unresolvedSessions = metrics?.unresolvedSessions ?? 0;
+
+  // Data for the Unresolved/Resolved Bar Chart
+  const resolvedData = [
+    { time: 'Current', Resolved: resolvedSessions, Unresolved: unresolvedSessions },
+  ];
+
+  const npsData = [
+    { time: '12 AM', nps: 50 },
+    { time: '4 AM', nps: 150 },
+    { time: '8 AM', nps: 100 },
+    { time: '12 PM', nps: 250 },
+    { time: '4 PM', nps: 180 },
+    { time: '8 PM', nps: 100 },
+  ];
 
   const botNameMap: { [key: string]: string[] } = {};
 
@@ -349,7 +350,7 @@ const ChartCardOne = () => {
                 className="h-full w-full"
                 data={resolvedData}
                 index="time"
-                categories={['Bot1', 'Bot2']}
+                categories={['Resolved', 'Unresolved']}
                 colors={['purple', 'cyan']}
               />
             </div>
