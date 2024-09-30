@@ -49,8 +49,7 @@ export default function RootLayout({
     '/faq/docs',
     '/data-deletion',
 
-    '/integration'
-
+    '/integration',
   ];
   const routeWithoutFooter: string[] = [
     '/mychatbots',
@@ -74,9 +73,7 @@ export default function RootLayout({
     '/terms',
     '/data-deletion',
 
-    '/integration'
-
-
+    '/integration',
   ];
   const routeWithoutSidebar: string[] = [
     '/createbot',
@@ -124,19 +121,7 @@ export default function RootLayout({
       <body className="flex flex-col min-h-screen">
         {knownRoutes.includes(pathnameBrowser) ? (
           <Provider store={store}>
-            <PersistGate
-              loading={
-                <div className="h-screen w-screen flex justify-center items-center">
-                  <Image
-                    src="/images/bot-loader.gif"
-                    alt="BotWot"
-                    width={500}
-                    height={300}
-                  />
-                </div>
-              }
-              persistor={persistor}
-            >
+            <PersistGate loading={null} persistor={persistor}>
               <PathnameHandler />
               <ConditionalHeader routeWithoutHeader={routeWithoutHeader} />
               <div className="flex flex-grow relative">

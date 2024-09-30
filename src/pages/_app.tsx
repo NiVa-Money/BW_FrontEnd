@@ -16,19 +16,7 @@ const inter = Inter({ subsets: ['latin'] });
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <Provider store={store}>
-      <PersistGate
-        loading={
-          <div className="h-screen w-screen flex justify-center items-center">
-            <Image
-              src="/images/bot-loader.gif"
-              alt="BotWot"
-              width={500}
-              height={300}
-            />
-          </div>
-        }
-        persistor={persistor}
-      >
+      <PersistGate loading={null} persistor={persistor}>
         <Head>
           <link
             rel="icon"
