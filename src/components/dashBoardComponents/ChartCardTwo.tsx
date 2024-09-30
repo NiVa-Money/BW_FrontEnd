@@ -115,7 +115,10 @@
 import React, { useState } from 'react';
 import { Card, Title, BarChart, Metric } from '@tremor/react';
 import { Select, MenuItem } from '@mui/material';
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import { RootState } from '@/redux/configureStore';
+import { useSelector } from 'react-redux';
+
+type BotSessionMappingType = [string, [number]][];
 
 const monthlyData = [
   { month: 'Jan', Positive: 20000, Neutral: 15000, Negative: 10000 },
@@ -132,20 +135,18 @@ const monthlyData = [
   { month: 'Dec', Positive: 30000, Neutral: 20000, Negative: 25000 },
 ];
 
-const bots = [
-  { name: 'Bot 1', messages: 1230, color: 'bg-purple-500' },
-  { name: 'Bot 2', messages: 751, color: 'bg-cyan-500' },
-  { name: 'Bot 3', messages: 471, color: 'bg-blue-500' },
-  { name: 'Bot 4', messages: 280, color: 'bg-cyan-500' },
-  { name: 'Bot 5', messages: 87, color: 'bg-blue-500' },
-];
-
 const ReportsOverview = () => {
   const [dateRange, setDateRange] = useState('Jan 2024 - Dec 2024');
-  const [sentimentPeriod, setSentimentPeriod] = useState('Monthly'); // Manage state for dropdown
+  const [sentimentPeriod, setSentimentPeriod] = useState('Monthly');
 
-  // Filter data based on sentimentPeriod if necessary (example data remains the same for demo purposes)
-  const filteredData = monthlyData; // In real case, modify this according to sentimentPeriod
+  const metrics = useSelector((state: RootState) => state.root?.userMetric?.data);
+
+  // Define the type for botSessionMapping and extract it from the metrics
+  const botSessionMapping: BotSessionMappingType = metrics?.botSessionMapping || [];
+  const totalMessages = metrics?.sessionConsumed || 0;
+
+  // Determine the highest message count for the progress bar percentage calculation
+  const maxMessages = Math.max(...botSessionMapping.map(([, [messages]]) => messages));
 
   return (
     <div className="bg-[#0B031E] p-4">
@@ -167,7 +168,7 @@ const ReportsOverview = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <Card className="!bg-opacity-10 !bg-white">
           <Title className="text-[#AEB9E1] mb-2">Total Messages</Title>
-          <Metric className="text-white text-4xl font-bold">10,234</Metric>
+          <Metric className="text-white text-4xl font-bold">{totalMessages}</Metric>
 
           <div className="mt-4">
             <Title className="text-[#AEB9E1] mb-2">Top 5 Bots</Title>
@@ -175,20 +176,18 @@ const ReportsOverview = () => {
               <span>Bots</span>
               <span>Messages</span>
             </div>
-            {bots.map((bot, index) => (
+            {botSessionMapping.slice(0, 5).map(([botName, [messages]], index: number) => (
               <div key={index} className="flex items-center mt-2">
-                <span className="text-[#AEB9E1] w-12">{bot.name}</span>
+                <span className="text-[#AEB9E1] w-12">{botName}</span>
                 <div className="flex-grow mx-2">
                   <div
-                    className={`h-2 ${bot.color} rounded-full`}
+                    className={`h-2 bg-purple-600 rounded-full`}
                     style={{
-                      width: `${(bot.messages / bots[0].messages) * 100}%`,
+                      width: `${(messages / maxMessages) * 100}%`,
                     }}
                   ></div>
                 </div>
-                <span className="text-white w-12 text-right">
-                  {bot.messages}
-                </span>
+                <span className="text-white w-12 text-right">{messages}</span>
               </div>
             ))}
           </div>
@@ -213,7 +212,7 @@ const ReportsOverview = () => {
           </div>
           <BarChart
             className="h-72 mt-4"
-            data={filteredData}
+            data={monthlyData}
             index="month"
             categories={['Positive', 'Neutral', 'Negative']}
             colors={['purple', 'cyan', 'blue']}
