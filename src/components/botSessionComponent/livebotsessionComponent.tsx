@@ -9,9 +9,7 @@ import { useSearchParams } from 'next/navigation';
 import '../NewChat/newchat.css';
 import {
     filteredSession,
-    getAdvanceFeature,
     getAllSessionLive,
-    sendUserQuestion,
     sendUserQuestionOnly,
 } from '@/redux/actions/userChatAction';
 import Image from 'next/image';
@@ -25,16 +23,13 @@ const BotSessionComponent: React.FC = () => {
     const dispatch = useDispatch();
     const [isBotProfileOpen, setIsBotProfileOpen] = React.useState(false);
     const [showPopup, setShowPopup] = React.useState<any>(false);
-    const [isPopupOpen, setIsPopupOpen] = React.useState<any>(false);
     const [activeBotIndex, setActiveBotIndex] = React.useState(null);
     const [botSessionsList, setBotSessionsList] = React.useState<any>([]);
     const [botId, setBotId] = React.useState<any>(null);
     const chatContainerRef = React.useRef<any>(null);
     const [sessionId, setSessionId] = React.useState<string>('');
-
-
-    const [continueAdv, setContinueAdv] = React.useState<any>(false);
-
+    const [botIdLive, setBotIdLive] = React.useState<string>('');
+    const [userIdLive, setBotUserIdLive] = React.useState<string>('');
     const [isChatEnabled, setIsChatEnabled] = React.useState(false);
     const [newMessage, setNewMessage] = React.useState<any>('');
     const [messages, setMessages] = React.useState<any>([]);
@@ -51,25 +46,32 @@ const BotSessionComponent: React.FC = () => {
     const userChatSessionsRedux = useSelector(
         (state: RootState) => state.userChat?.allSessionLive?.data?.sessions
     );
-    console.log("hello",userChatSessionsRedux)
-  
+
+
     const [botIdLocal, setBotIdLocal] = React.useState<any>('');
     const userId: any = useSelector(
         (state: RootState) => state?.root?.userData?.user_id
     );
     const userChatMessagesRes = useSelector(
-        (state: RootState) => state?.userChat?.allSession
+        (state: RootState) => state?.userChat?.allSessionLive
     );
+
 
     const messagesLeft = useSelector(
         (state: RootState) => state?.root?.userMetric?.data?.sessionLeft
     );
 
-    const advanceFeature = useSelector(
-        (state: RootState) => state?.userChat?.advanceFeature
-    );
-    const [chatsData, setchatsData] = React.useState<any>([]);
 
+    const [chatsData, setchatsData] = React.useState<any>([]);
+    
+    React.useEffect(() => {
+        if (sessionId !== undefined) {
+            const filteredList = userChatMessagesRes?.data?.sessions?.filter(
+                (session: any) => session._id === sessionId
+            );
+            setchatsData(filteredList);
+        }
+    }, [userChatMessagesRes, sessionId]);
 
     const searchParams = useSearchParams() as URLSearchParams;
     useEffect(() => {
@@ -107,15 +109,7 @@ const BotSessionComponent: React.FC = () => {
         dispatch(getAllSessionLive(data));
     };
 
-    const botSesssion = () => {
-        if (sessionId) {
-            dispatch(getAdvanceFeature(sessionId));
-            setIsPopupOpen(false);
-            setContinueAdv(false);
-        } else {
-            setContinueAdv(true);
-        }
-    };
+
 
     const sendMessage = (event: any) => {
         event.preventDefault();
@@ -127,10 +121,9 @@ const BotSessionComponent: React.FC = () => {
                 userId: userId,
                 sessionId: sessionId,
                 question: newMessage,
-                subscriptionPlanId: 'subscriptionPlanId1',
                 botId: botId,
             };
-            dispatch(sendUserQuestion(data));
+
         }
     };
 
@@ -183,25 +176,7 @@ const BotSessionComponent: React.FC = () => {
         }
     }, [botIdRedux?.botId]);
 
-    React.useEffect(() => {
-        const data = {
-            filteredSessions: [],
-            sessionId: null,
-        };
-        dispatch(removeAdvanceFeature());
-        dispatch(filteredSession(data));
-        if (botIdLocal?.length) {
-            getChatHistory();
-        }
-    }, []);
-    React.useEffect(() => {
-        if (sessionId !== undefined) {
-            const filteredList = userChatMessagesRes?.data?.sessions?.filter(
-                (session: any) => session._id === sessionId
-            );
-            setchatsData(filteredList);
-        }
-    }, [userChatMessagesRes, sessionId]);
+
 
 
     React.useEffect(() => {
@@ -209,7 +184,7 @@ const BotSessionComponent: React.FC = () => {
             getChatHistory();
         }
     }, [botIdLocal, pathName, dispatch]);
-    
+
     React.useEffect(() => {
         if (userChatSessionsRedux?.length) {
             const tempArray = userChatSessionsRedux;
@@ -231,12 +206,8 @@ const BotSessionComponent: React.FC = () => {
             window.removeEventListener('mouseup', handleMouseUp);
         };
     }, [isDragging]);
-    const [sessionInfo, setSessionInfo] = React.useState({
-        sessionId: "",
-        userId: "",
-        botId: ""
-    });
-    // console.log("data", sessionInfo)
+
+
     const handleToggle = () => {
         setIsChatEnabled(prevState => !prevState); // Toggle chat enabled state
     };
@@ -264,17 +235,16 @@ const BotSessionComponent: React.FC = () => {
                 </div>
                 <div className="text-white m-auto w-full h-full mx-3 my-3 overflow-scroll flex flex-col">
                     {botSessionsList?.map((item: any, id: any) => (
-                        <React.Fragment key={id}>
+                        <>
                             <div
                                 className="flex flex-col px-3 py-3 bg-[#141218] w-[90%]"
                                 onClick={() => {
-                                    setSessionInfo({
-                                        sessionId: item._id,
-                                        userId: item.userId,
-                                        botId: item.botId
-                                    });
+                                    setBotIdLive(item.botId);
+                                    setBotUserIdLive(item.userId);
                                     setSessionId(item._id);
+                                    
                                 }}
+                                 
                             >
                                 <div className="flex justify-between items-center">
                                     <span className="cursor-pointer"> {id + 1}. Session</span>
@@ -290,7 +260,7 @@ const BotSessionComponent: React.FC = () => {
                                 </span>
                             </div>
                             <div className="w-[90%] bg-[#ffffffb3] h-[2px]"></div>
-                        </React.Fragment>
+                        </>
                     ))}
                 </div>
 
@@ -469,44 +439,44 @@ const BotSessionComponent: React.FC = () => {
 
 
                     <div className="flex gap-2.5 z-10 px-8 py-5 mt-2.5 w-[98%] h-[69px] text-base whitespace-nowrap bg-[#2D2640] rounded-xl text-gray-300 max-md:flex-wrap max-md:px-5 max-md:max-w-full justify-end items-center">
-                    <button
-                        onClick={handleToggle}
-                        className={`mr-4 px-4 py-2 rounded-full ${isChatEnabled ? 'bg-green-500' : 'bg-gray-500'} text-white`}
-                    >
-                        {isChatEnabled ? 'Turn off' : 'Turn on to chat now'}
-                    </button>
-                    {isChatEnabled && (
-                        <form onSubmit={handleSubmit} className="flex items-center flex-1 ml-4">
-                            <input
-                                type="text"
-                                placeholder="Enter your message..."
-                                className="flex-1 bg-transparent outline-none text-gray-300 rounded-sm"
-                                onChange={(e) => setNewMessage(e.target.value)}
-                                value={newMessage}
-                            />
-                            <button
-                                className="shrink-0 w-8 h-8 flex items-center justify-center rounded-full hover:bg-[#4A2E8B] transition-colors duration-300 ml-2"
-                                aria-label="Send message"
-                                type="submit"
-                            >
-                                <svg
-                                    width="22"
-                                    height="22"
-                                    viewBox="0 0 22 22"
-                                    fill="none"
-                                    xmlns="http://www.w3.org/2000/svg"
+                        <button
+                            onClick={handleToggle}
+                            className={`mr-4 px-4 py-2 rounded-full ${isChatEnabled ? 'bg-green-500' : 'bg-gray-500'} text-white`}
+                        >
+                            {isChatEnabled ? 'Turn off' : 'Turn on to chat now'}
+                        </button>
+                        {isChatEnabled && (
+                            <form onSubmit={handleSubmit} className="flex items-center flex-1 ml-4">
+                                <input
+                                    type="text"
+                                    placeholder="Enter your message..."
+                                    className="flex-1 bg-transparent outline-none text-gray-300 rounded-sm"
+                                    onChange={(e) => setNewMessage(e.target.value)}
+                                    value={newMessage}
+                                />
+                                <button
+                                    className="shrink-0 w-8 h-8 flex items-center justify-center rounded-full hover:bg-[#4A2E8B] transition-colors duration-300 ml-2"
+                                    aria-label="Send message"
+                                    type="submit"
                                 >
-                                    <path
-                                        d="M20.0708 1.92961L9.40683 12.5936M2.27149 7.23529L18.8774 1.47406C19.9 1.11927 20.8811 2.1004 20.5264 3.12303L14.7651 19.7289C14.3704 20.8665 12.773 20.8977 12.3342 19.7764L9.69727 13.0377C9.56558 12.7011 9.29931 12.4348 8.96275 12.3031L2.22402 9.66625C1.10268 9.22746 1.13387 7.62997 2.27149 7.23529Z"
-                                        stroke="#EEEEF0"
-                                        strokeWidth="2"
-                                        strokeLinecap="round"
-                                    />
-                                </svg>
-                            </button>
-                        </form>
-                    )}
-                </div>
+                                    <svg
+                                        width="22"
+                                        height="22"
+                                        viewBox="0 0 22 22"
+                                        fill="none"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                    >
+                                        <path
+                                            d="M20.0708 1.92961L9.40683 12.5936M2.27149 7.23529L18.8774 1.47406C19.9 1.11927 20.8811 2.1004 20.5264 3.12303L14.7651 19.7289C14.3704 20.8665 12.773 20.8977 12.3342 19.7764L9.69727 13.0377C9.56558 12.7011 9.29931 12.4348 8.96275 12.3031L2.22402 9.66625C1.10268 9.22746 1.13387 7.62997 2.27149 7.23529Z"
+                                            stroke="#EEEEF0"
+                                            strokeWidth="2"
+                                            strokeLinecap="round"
+                                        />
+                                    </svg>
+                                </button>
+                            </form>
+                        )}
+                    </div>
                 </div>
                 <div
                     className="z-10 bg-[#CECCD3] bg-opacity-40 cursor-ew-resize"
