@@ -1,5 +1,4 @@
 'use client';
-import { removeAdvanceFeature } from '@/redux/actions/BotProfileActions';
 import { RootState } from '@/redux/configureStore';
 import * as React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -10,7 +9,7 @@ import '../NewChat/newchat.css';
 import {
     filteredSession,
     getAllSessionLive,
-    sendUserQuestionOnly,
+
 } from '@/redux/actions/userChatAction';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -18,8 +17,11 @@ import withAuth from '../withAuth';
 import { useEffect } from 'react';
 import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
 import { fetchMembershipPlanRequest } from '@/redux/actions/paymentActions';
-
+import io from 'socket.io-client';
 const BotSessionComponent: React.FC = () => {
+
+    const socket = io('sdfsd');
+
     const dispatch = useDispatch();
     const [isBotProfileOpen, setIsBotProfileOpen] = React.useState(false);
     const [showPopup, setShowPopup] = React.useState<any>(false);
@@ -115,7 +117,16 @@ const BotSessionComponent: React.FC = () => {
         event.preventDefault();
         if (newMessage.trim() !== '') {
             setMessages([...messages, { text: newMessage, sender: 'user' }]);
-            dispatch(sendUserQuestionOnly({ text: newMessage, sender: 'user' }));
+           
+
+            // Emit socket event with all required parameters
+            socket.emit('chatMessage', {
+                sessionId: sessionId,
+                userId: userIdLive,
+                botId: botIdLive,
+                message: newMessage
+            });
+
             setNewMessage('');
             const data = {
                 userId: userId,
@@ -123,7 +134,6 @@ const BotSessionComponent: React.FC = () => {
                 question: newMessage,
                 botId: botId,
             };
-
         }
     };
 
