@@ -9,7 +9,7 @@ import '../NewChat/newchat.css';
 import {
     filteredSession,
     getAllSessionLive,
-
+    // sendUserQuestionOnly,
 } from '@/redux/actions/userChatAction';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -117,7 +117,7 @@ const BotSessionComponent: React.FC = () => {
         event.preventDefault();
         if (newMessage.trim() !== '') {
             setMessages([...messages, { text: newMessage, sender: 'user' }]);
-           
+            // dispatch(sendUserQuestionOnly({ text: newMessage, sender: 'user' }));
 
             // Emit socket event with all required parameters
             socket.emit('chatMessage', {
