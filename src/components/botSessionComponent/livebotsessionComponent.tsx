@@ -9,7 +9,7 @@ import '../NewChat/newchat.css';
 import {
     filteredSession,
     getAllSessionLive,
-    // sendUserQuestionOnly,
+
 } from '@/redux/actions/userChatAction';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -66,19 +66,43 @@ const BotSessionComponent: React.FC = () => {
 
 
     const [chatsData, setchatsData] = React.useState<any>([]);
+    const [socket, setSocket] = React.useState<any>(null);
 
+    React.useEffect(() => {
+        if (sessionId && botIdLive && userIdLive) {
+            const newSocket = io("http://localhost:8000", {
+                query: {
+                    isWidget: "false",
+                    chatRoom: sessionId,
+                    botId: botIdLive,
+                    userId: userIdLive,
+                },
+            });
+
+            newSocket.on('connect', () => {
+                console.log('Connected to socket server');
+            });
+
+            newSocket.on('message', (message) => {
+                console.log('Received message:', message);
+                setMessages((prevMessages: any) => [...prevMessages, {
+                    text: message.answer,
+                    sender: 'bot'
+                }]);
+            });
+
+            setSocket(newSocket);
+
+            return () => {
+                newSocket.disconnect();
+            };
+        }
+    }, [sessionId, botIdLive, userIdLive]);
     const botIdForConnection = "66fc3bfb1f9e230493e5b75c";
     const userIdForConnection = "66fc3afa1f9e230493e5b733";
     let chatRoom;
       // Establish Socket.IO connection
-  const socket = io("http://localhost:8000", {
-    query: {
-      isWidget: "false",
-      chatRoom: sessionId,
-      botId: botIdForConnection,
-      userId: userIdForConnection,
-    },
-  });
+
     
     React.useEffect(() => {
         if (sessionId !== undefined) {
@@ -125,61 +149,32 @@ const BotSessionComponent: React.FC = () => {
         dispatch(getAllSessionLive(data));
     };
 
-
-
-    // const sendMessage = (event: any) => {
-    //     console.log("HI");
-    //     event.preventDefault();
-    //     if (newMessage.trim() !== '') {
-    //         setMessages([...messages, { text: newMessage, sender: 'user' }]);
-    //         // dispatch(sendUserQuestionOnly({ text: newMessage, sender: 'user' }));
-    //         console.log(" sending data ", sessionId, userId, botIdLive, newMessage);
-    //         // Emit socket event with all required parameters
-    //         socket.emit('joinAdmin', {
-    //             sessionId: sessionId,
-    //             userId: userIdLive,
-    //             botId: botIdLive,
-    //             message: newMessage
-    //         });
-
-    //         setNewMessage('');
-    //         const data = {
-    //             userId: userId,
-    //             sessionId: sessionId,
-    //             question: newMessage,
-    //             botId: botId,
-    //         };
-    //     }
-    // };
-
     const sendMessage = (event: any) => {
-        // console.log("HI");
         event.preventDefault();
-            setMessages([...messages, { text: newMessage, sender: 'user' }]);
-            // Emit socket event with all required parameters
-            console.log(" sending data ", sessionId, userId, botIdLive, newMessage);
-            socket.emit('joinRoom', {
-                chatRoom: sessionId,
-                userId: userIdLive,
-                botId: botIdLive,
-                question: newMessage
-            });
+        if (!newMessage.trim() || !socket) return;
 
-            setNewMessage('');
-    }
+        const messageObj = {
+            text: newMessage,
+            sender: 'user'
+        };
+
+        setMessages((prevMessages: any) => [...prevMessages, messageObj]);
+        
+        socket.emit('message', {
+            chatRoom: sessionId,
+            userId: userIdLive,
+            botId: botIdLive,
+            question: newMessage
+        });
+
+        setNewMessage('');
+    };
 
     const toggleBotProfile = () => {
         setIsBotProfileOpen(!isBotProfileOpen);
         setShowPopup(false);
     };
-    // const handleSubmit = (e: any) => {
-    //     e.preventDefault();
-    //     if (!botId) {
-    //         setShowPopup(true);
-    //     } else {
-    //         sendMessage(e);
-    //     }
-    // };
+
 
     const handleSubmit = (e: any) => {
         e.preventDefault();       
@@ -256,9 +251,19 @@ const BotSessionComponent: React.FC = () => {
 
 
     const handleToggle = () => {
-        setIsChatEnabled(prevState => !prevState); // Toggle chat enabled state
+        setIsChatEnabled(prevState => !prevState); 
     };
-
+    const renderMessages = () => {
+        return messages.map((message: any, index: number) => (
+            <div key={index} className={`flex w-full mb-4 ${message.sender === 'user' ? 'justify-end' : 'justify-start'}`}>
+                <div className={`w-fit max-w-[70%] p-2 rounded-xl ${
+                    message.sender === 'user' ? 'bg-[#3F2181]' : 'bg-[#2B243C]'
+                }`}>
+                    <span className="text-white">{message.text}</span>
+                </div>
+            </div>
+        ));
+    };
     return (
         <div className="flex h-screen">
             <div className="w-80 h-[100%] flex flex-col">
@@ -290,9 +295,7 @@ const BotSessionComponent: React.FC = () => {
                                     setBotUserIdLive(item.userId);
                                     setSessionId(item._id);
                                     
-                                }}
-                                 
-                            >
+                                }} >
                                 <div className="flex justify-between items-center">
                                     <span className="cursor-pointer"> {id + 1}. Session</span>
                                     <div className="relative">
@@ -466,6 +469,7 @@ const BotSessionComponent: React.FC = () => {
                                                             ?.replace(/\n/g, '<br />')
                                                             .replace(/\*(.*?)\*/g, '<b>$1</b>'),
                                                     }}
+                                                    
                                                 ></span>
                                             </div>
                                             <div className="w-full py-2 gap-2 rounded text-white text-left">
@@ -481,6 +485,7 @@ const BotSessionComponent: React.FC = () => {
                                         </div>
                                     </div>
                                 ))}
+                                {renderMessages()}
                         </div>
                     </div>
 
