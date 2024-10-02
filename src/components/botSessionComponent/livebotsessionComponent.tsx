@@ -20,7 +20,8 @@ import { fetchMembershipPlanRequest } from '@/redux/actions/paymentActions';
 import io from 'socket.io-client';
 const BotSessionComponent: React.FC = () => {
 
-    const socket = io('sdfsd');
+
+    // const socket = io('http://localhost:8000');
 
     const dispatch = useDispatch();
     const [isBotProfileOpen, setIsBotProfileOpen] = React.useState(false);
@@ -65,6 +66,19 @@ const BotSessionComponent: React.FC = () => {
 
 
     const [chatsData, setchatsData] = React.useState<any>([]);
+
+    const botIdForConnection = "66fc3bfb1f9e230493e5b75c";
+    const userIdForConnection = "66fc3afa1f9e230493e5b733";
+    let chatRoom;
+      // Establish Socket.IO connection
+  const socket = io("http://localhost:8000", {
+    query: {
+      isWidget: "false",
+      chatRoom: sessionId,
+      botId: botIdForConnection,
+      userId: userIdForConnection,
+    },
+  });
     
     React.useEffect(() => {
         if (sessionId !== undefined) {
@@ -113,42 +127,65 @@ const BotSessionComponent: React.FC = () => {
 
 
 
-    const sendMessage = (event: any) => {
-        event.preventDefault();
-        if (newMessage.trim() !== '') {
-            setMessages([...messages, { text: newMessage, sender: 'user' }]);
-            // dispatch(sendUserQuestionOnly({ text: newMessage, sender: 'user' }));
+    // const sendMessage = (event: any) => {
+    //     console.log("HI");
+    //     event.preventDefault();
+    //     if (newMessage.trim() !== '') {
+    //         setMessages([...messages, { text: newMessage, sender: 'user' }]);
+    //         // dispatch(sendUserQuestionOnly({ text: newMessage, sender: 'user' }));
+    //         console.log(" sending data ", sessionId, userId, botIdLive, newMessage);
+    //         // Emit socket event with all required parameters
+    //         socket.emit('joinAdmin', {
+    //             sessionId: sessionId,
+    //             userId: userIdLive,
+    //             botId: botIdLive,
+    //             message: newMessage
+    //         });
 
+    //         setNewMessage('');
+    //         const data = {
+    //             userId: userId,
+    //             sessionId: sessionId,
+    //             question: newMessage,
+    //             botId: botId,
+    //         };
+    //     }
+    // };
+
+    const sendMessage = (event: any) => {
+        // console.log("HI");
+        event.preventDefault();
+            setMessages([...messages, { text: newMessage, sender: 'user' }]);
             // Emit socket event with all required parameters
-            socket.emit('chatMessage', {
-                sessionId: sessionId,
+            console.log(" sending data ", sessionId, userId, botIdLive, newMessage);
+            socket.emit('joinRoom', {
+                chatRoom: sessionId,
                 userId: userIdLive,
                 botId: botIdLive,
-                message: newMessage
+                question: newMessage
             });
 
             setNewMessage('');
-            const data = {
-                userId: userId,
-                sessionId: sessionId,
-                question: newMessage,
-                botId: botId,
-            };
-        }
-    };
+    }
 
     const toggleBotProfile = () => {
         setIsBotProfileOpen(!isBotProfileOpen);
         setShowPopup(false);
     };
+    // const handleSubmit = (e: any) => {
+    //     e.preventDefault();
+    //     if (!botId) {
+    //         setShowPopup(true);
+    //     } else {
+    //         sendMessage(e);
+    //     }
+    // };
+
     const handleSubmit = (e: any) => {
-        e.preventDefault();
-        if (!botId) {
-            setShowPopup(true);
-        } else {
+        e.preventDefault();       
             sendMessage(e);
-        }
     };
+
     const [leftWidth, setLeftWidth] = React.useState(71);
     const [isDragging, setIsDragging] = React.useState(false);
     const containerRef = React.useRef(null);
