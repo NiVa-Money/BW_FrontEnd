@@ -256,7 +256,7 @@ const BotSessionComponent: React.FC = () => {
     const renderMessages = () => {
         return messages.map((message: any, index: number) => (
             <div key={index} className={`flex w-full mb-4 ${message.sender === 'user' ? 'justify-end' : 'justify-start'}`}>
-                <div className={`w-fit max-w-[70%] p-2 rounded-xl ${
+                <div className={`w-fit max-w-[75%] p-2 rounded-xl ${
                     message.sender === 'user' ? 'bg-[#3F2181]' : 'bg-[#2B243C]'
                 }`}>
                     <span className="text-white">{message.text}</span>
