@@ -70,7 +70,7 @@ const BotSessionComponent: React.FC = () => {
 
     React.useEffect(() => {
         if (sessionId && botIdLive && userIdLive) {
-            const newSocket = io("http://localhost:8000", {
+            const newSocket = io("https://c53c-2405-201-6805-c0a3-799b-7216-e93d-c943.ngrok-free.app/", {
                 query: {
                     isWidget: "false",
                     chatRoom: sessionId,
