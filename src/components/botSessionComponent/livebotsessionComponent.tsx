@@ -79,7 +79,7 @@ const BotSessionComponent: React.FC = () => {
                 },
             });
 
-            newSocket.on('connect', () => {
+            newSocket.on('message', () => {
                 console.log('Connected to socket server');
             });
 
@@ -160,7 +160,7 @@ const BotSessionComponent: React.FC = () => {
 
         setMessages((prevMessages: any) => [...prevMessages, messageObj]);
         
-        socket.emit('message', {
+        socket.emit('joinAdmin', {
             chatRoom: sessionId,
             userId: userIdLive,
             botId: botIdLive,
