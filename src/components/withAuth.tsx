@@ -1,16 +1,16 @@
-"use client";
+'use client';
 import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { isAuthenticated } from '@/utils/auth';
 // import { isAuthenticated } from '../utils/auth';
 
-const withAuth = (WrappedComponent:any) => {
-  return (props:any) => {
+const withAuth = (WrappedComponent: any) => {
+  return (props: any) => {
     const router = useRouter();
 
     useEffect(() => {
       if (!isAuthenticated()) {
-        router.replace('/home');
+        router.replace('/');
       }
     }, []);
 

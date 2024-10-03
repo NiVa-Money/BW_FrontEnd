@@ -17,17 +17,17 @@ import { RootState } from '@/redux/configureStore';
 const Hero = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
-  const userData = useSelector((state: RootState) => state.root?.userData);
-  const googleVerifyRedux = useSelector(
-    (state: RootState) => state.root.googleLogin
-  );
-  const userRedux = useSelector((state: RootState) => state?.root?.user);
-  const googleLoginUser = useSelector(
-    (state: RootState) => state?.root?.googleLogin
-  );
+  // const userData = useSelector((state: RootState) => state.root?.userData);
+  // const googleVerifyRedux = useSelector(
+  //   (state: RootState) => state.root.googleLogin
+  // );
+  // const userRedux = useSelector((state: RootState) => state?.root?.user);
+  // const googleLoginUser = useSelector(
+  //   (state: RootState) => state?.root?.googleLogin
+  // );
 
-  const router = useRouter();
-  const dispatch = useDispatch();
+  // const router = useRouter();
+  // const dispatch = useDispatch();
 
   const handleButtonClick = () => {
     setIsModalOpen(true);
@@ -42,7 +42,7 @@ const Hero = () => {
   };
 
   const handleSignIn = () => {
-    dispatch(loginRequest());
+    // dispatch(loginRequest());
   };
   const handleLoginButtonClick = () => {
     setIsLoginModalOpen(true);
@@ -52,40 +52,40 @@ const Hero = () => {
     setIsLoginModalOpen(false);
   };
 
-  useEffect(() => {
-    if (isModalOpen || isLoginModalOpen) {
-      document.body.classList.add('no-scroll');
-    } else {
-      document.body.classList.remove('no-scroll');
-    }
+  // useEffect(() => {
+  //   if (isModalOpen || isLoginModalOpen) {
+  //     document.body.classList.add('no-scroll');
+  //   } else {
+  //     document.body.classList.remove('no-scroll');
+  //   }
 
-    return () => {
-      document.body.classList.remove('no-scroll');
-    };
-  }, [isModalOpen, isLoginModalOpen]);
+  //   return () => {
+  //     document.body.classList.remove('no-scroll');
+  //   };
+  // }, [isModalOpen, isLoginModalOpen]);
 
-  useEffect(() => {
-    if (googleVerifyRedux) {
-      const email = userRedux?.email;
-      dispatch(verifyUserDataAction(email));
-    }
-  }, [googleVerifyRedux]);
+  // useEffect(() => {
+  //   if (googleVerifyRedux) {
+  //     const email = userRedux?.email;
+  //     dispatch(verifyUserDataAction(email));
+  //   }
+  // }, [googleVerifyRedux]);
 
-  useEffect(() => {
-    if (googleVerifyRedux) {
-      const [firstName, lastName] = userRedux?.displayName.split(' ');
-      const email = userRedux?.email;
-      const payload = {
-        firstName: firstName,
-        lastName: lastName ? lastName : '',
-        emailId: email,
-        mobileNo: '',
-      };
-      if (!userData?.success) {
-        dispatch(googleLogin(payload));
-      }
-    }
-  }, [userRedux, googleLoginUser]);
+  // useEffect(() => {
+  //   if (googleVerifyRedux) {
+  //     const [firstName, lastName] = userRedux?.displayName.split(' ');
+  //     const email = userRedux?.email;
+  //     const payload = {
+  //       firstName: firstName,
+  //       lastName: lastName ? lastName : '',
+  //       emailId: email,
+  //       mobileNo: '',
+  //     };
+  //     if (!userData?.success) {
+  //       dispatch(googleLogin(payload));
+  //     }
+  //   }
+  // }, [userRedux, googleLoginUser]);
 
   return (
     <section>

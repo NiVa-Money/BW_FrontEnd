@@ -1,6 +1,5 @@
 import React from 'react';
 import Link from 'next/link';
-import notFoundImg from '@/public/assets/oops.svg';
 import Image from 'next/image';
 const NotFound = () => {
   return (
@@ -9,7 +8,7 @@ const NotFound = () => {
       <p className="text-xl mb-4">Error 404</p>
       <div className="relative w-[605px] h-[486px] mb-8">
         <Image
-          src={notFoundImg.src} 
+          src="/images/oops.svg"
           alt="Lost"
           layout="fill"
           objectFit="contain"

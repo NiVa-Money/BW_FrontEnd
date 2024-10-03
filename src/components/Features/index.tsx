@@ -3,15 +3,13 @@ import Card from './Card';
 const Features: React.FC = () => {
   const cardData = [
     {
-      imageSrc:
-        '/images/Vectorrocket.png',
+      imageSrc: '/images/Vectorrocket.png',
       title: 'Launch in minutes',
       description:
         'Choose and deploy pre-built conversational modules tailored to your business instantly.',
     },
     {
-      imageSrc:
-        '/images/Vectormagic.png',
+      imageSrc: '/images/Vectormagic.png',
       title: 'Seamless Integrations',
       description:
         'Effortlessly connect with your systems using our no-code, user-friendly platform.',
@@ -34,9 +32,9 @@ const Features: React.FC = () => {
       </p>
       <section className="self-start  ml-16 pl-15 pr-10 mt-10 mb-2.5 w-full max-w-[1150px]">
         <div className="flex gap-5 max-md:flex-col max-md:gap-0s">
-          {cardData.map((card, index) => (
+          {cardData?.map((card, index) => (
             <div key={index} className="flex gap-4 flex-col w-[33%] ">
-              <Card {...card}  />
+              <Card {...card} />
             </div>
           ))}
         </div>

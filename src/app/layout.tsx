@@ -7,18 +7,12 @@ import { Provider, useSelector } from 'react-redux';
 import SideBar from '@/components/SideBar';
 import PathnameHandler from '@/components/PathNameHandler/pathNameHandler';
 import store, { RootState } from '@/redux/configureStore';
-import { PersistGate } from 'redux-persist/integration/react';
 import { persistStore } from 'redux-persist';
 import Toast from '@/components/Toaster/toast';
 import React from 'react';
-import cancelImg from '../../public/images/icons8-cancel-64.png';
-import menuImg from '../../public/images/icons8-menu-64.png';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import NotFound from './not-found';
-interface cancelImg {
-  img: string;
-}
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -86,7 +80,7 @@ export default function RootLayout({
     '/membership-failure',
     '/membership-success',
     '/login',
-    '/home',
+    '/',
     '/botsession',
     '/privacy',
     '/terms',
@@ -109,50 +103,54 @@ export default function RootLayout({
     '/blog',
     '/rize',
     '/contactus',
-    '/home',
+    '/',
     '/privacy',
     '/terms',
   ];
 
   const [isSidebarVisible, setIsSidebarVisible] = React.useState(true);
-  let persistor = persistStore(store);
   return (
     <html lang="en">
       <body className="flex flex-col min-h-screen">
         {knownRoutes.includes(pathnameBrowser) ? (
           <Provider store={store}>
-            <PersistGate loading={null} persistor={persistor}>
-              <PathnameHandler />
-              <ConditionalHeader routeWithoutHeader={routeWithoutHeader} />
-              <div className="flex flex-grow relative">
-                <div className="h-screen">
-                  <SidebarToggleButton
-                    isVisible={isSidebarVisible}
-                    onClick={() => setIsSidebarVisible(!isSidebarVisible)}
-                    routeWithoutSidebar={routeWithoutSidebar}
-                  />
-                  <div
-                    className={`relative transition-transform duration-800 ease-in ${
-                      isSidebarVisible ? 'translate-x-0' : '-translate-x-full'
-                    }`}
-                  >
-                    {isSidebarVisible && (
-                      <ConditionalSideBar
-                        routeWithoutSidebar={routeWithoutSidebar}
-                      />
-                    )}
-                  </div>
-                </div>
-                <main
-                  className={`flex-grow ${
-                    isSidebarVisible && 'h-screen overflow-y-scroll'
+            <PathnameHandler />
+            <ConditionalHeader
+              routeWithoutHeader={routeWithoutHeader}
+              pathnameBrowser={pathnameBrowser}
+            />
+            <div className="flex flex-grow relative">
+              <div className="h-screen">
+                <SidebarToggleButton
+                  isVisible={isSidebarVisible}
+                  onClick={() => setIsSidebarVisible(!isSidebarVisible)}
+                  routeWithoutSidebar={routeWithoutSidebar}
+                />
+                <div
+                  className={`relative transition-transform duration-800 ease-in ${
+                    isSidebarVisible ? 'translate-x-0' : '-translate-x-full'
                   }`}
                 >
-                  {children}
-                </main>
+                  {isSidebarVisible && (
+                    <ConditionalSideBar
+                      routeWithoutSidebar={routeWithoutSidebar}
+                      pathnameBrowser={pathnameBrowser}
+                    />
+                  )}
+                </div>
               </div>
-              <ConditionalFooter routeWithoutFooter={routeWithoutFooter} />
-            </PersistGate>
+              <main
+                className={`flex-grow ${
+                  isSidebarVisible && 'h-screen overflow-y-scroll'
+                }`}
+              >
+                {children}
+              </main>
+            </div>
+            <ConditionalFooter
+              routeWithoutFooter={routeWithoutFooter}
+              pathnameBrowser={pathnameBrowser}
+            />
             <Toast />
           </Provider>
         ) : (
@@ -180,7 +178,7 @@ const SidebarToggleButton = ({
       >
         {isVisible ? (
           <Image
-            src={cancelImg}
+            src="/images/icons8-cancel-64.png"
             alt="Background"
             layout="fill"
             objectFit="cover"
@@ -188,7 +186,7 @@ const SidebarToggleButton = ({
           />
         ) : (
           <Image
-            src={menuImg}
+            src="/images/icons8-menu-64.png"
             alt="Background"
             layout="fill"
             objectFit="cover"
@@ -203,25 +201,38 @@ const SidebarToggleButton = ({
 // Move ConditionalHeader outside of RootLayout
 function ConditionalHeader({
   routeWithoutHeader,
+  pathnameBrowser,
 }: {
   routeWithoutHeader: string[];
+  pathnameBrowser: string;
 }) {
   const pathName = useSelector((state: RootState) => state.root.pathName);
-  return <>{!routeWithoutHeader.includes(pathName) ? <Header /> : null}</>;
+  return (
+    <>{!routeWithoutHeader.includes(pathnameBrowser) ? <Header /> : null}</>
+  );
 }
 function ConditionalFooter({
   routeWithoutFooter,
+  pathnameBrowser,
 }: {
   routeWithoutFooter: string[];
+  pathnameBrowser: string;
 }) {
   const pathName = useSelector((state: RootState) => state.root.pathName);
-  return <>{!routeWithoutFooter.includes(pathName) ? <Footer /> : null}</>;
+  return (
+    <>{!routeWithoutFooter.includes(pathnameBrowser) ? <Footer /> : null}</>
+  );
 }
 function ConditionalSideBar({
   routeWithoutSidebar,
+  pathnameBrowser,
 }: {
   routeWithoutSidebar: string[];
+  pathnameBrowser: string;
 }) {
   const pathName = useSelector((state: RootState) => state.root.pathName);
-  return <>{!routeWithoutSidebar.includes(pathName) ? <SideBar /> : null}</>;
+  console.log('p', pathnameBrowser);
+  return (
+    <>{!routeWithoutSidebar.includes(pathnameBrowser) ? <SideBar /> : null}</>
+  );
 }

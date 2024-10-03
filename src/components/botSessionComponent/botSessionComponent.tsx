@@ -3,8 +3,6 @@ import { removeAdvanceFeature } from '@/redux/actions/BotProfileActions';
 import { RootState } from '@/redux/configureStore';
 import * as React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import icon from '../../public/assets/chatBotSymbol.svg';
-import mainLogo from '@/public/assets/mainLogo.svg';
 import './botSession.css';
 import { useSearchParams } from 'next/navigation';
 import '../NewChat/newchat.css';
@@ -189,9 +187,11 @@ const BotSessionComponent: React.FC = () => {
   React.useEffect(() => {
     // Fetch membership plan on component mount
     dispatch(fetchMembershipPlanRequest());
-  } , []);
+  }, []);
 
-  const formattedPlanName = planName ? planName.charAt(0).toUpperCase() + planName.slice(1) : 'Free';
+  const formattedPlanName = planName
+    ? planName.charAt(0).toUpperCase() + planName.slice(1)
+    : 'Free';
 
   React.useEffect(() => {
     if (sentimentAnalysis) {
@@ -295,7 +295,7 @@ const BotSessionComponent: React.FC = () => {
     <div className="flex h-screen">
       <div className="w-80 h-[100%] flex flex-col">
         <div className="w-full mt-8 flex justify-center items-center">
-          <Image src={mainLogo.src} alt="logo" width={90} height={80} />
+          <Image src="/images/mainLogo.svg" alt="logo" width={90} height={80} />
         </div>
         <div className="text-white mt-[54px] mx-3">
           <Link
@@ -638,7 +638,12 @@ const BotSessionComponent: React.FC = () => {
             </div>
             <div className="flex justify-center items-center mt-6 mb-3">
               <div>
-                <Image src={icon} alt="logo" width={170} height={170} />
+                <Image
+                  src="/images/chatBotSymbol.svg"
+                  alt="logo"
+                  width={170}
+                  height={170}
+                />
               </div>
             </div>
           </div>

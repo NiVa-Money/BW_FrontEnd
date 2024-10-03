@@ -2,8 +2,6 @@ import React from 'react';
 import Dialog from '@mui/material/Dialog';
 import DialogContent from '@mui/material/DialogContent';
 import Image from 'next/image';
-import apkQR from '@/public/assets/apkQr.png';
-import mobileView from '@/public/assets/mobileView.png';
 
 interface ModalDialogProps {
   open: boolean;
@@ -38,7 +36,7 @@ const ModalDialog: React.FC<ModalDialogProps> = ({ open, onClose }) => {
             </a>
             <div className="bg-white p-4 rounded-lg">
               <Image
-                src={apkQR}
+                src="/images/apkQr.png"
                 alt="Android QR Code"
                 width={200}
                 height={200}
@@ -49,7 +47,7 @@ const ModalDialog: React.FC<ModalDialogProps> = ({ open, onClose }) => {
           <div className="w-3/5 h-full flex justify-center items-center">
             <div className="w-full h-full relative">
               <Image
-                src={mobileView}
+                src="/images/mobileView.png"
                 alt="Mobile App Preview"
                 layout="fill"
                 objectFit="contain"

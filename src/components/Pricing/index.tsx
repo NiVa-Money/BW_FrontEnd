@@ -34,7 +34,7 @@ const PricingCard = () => {
   }, []);
 
   const showFreeTrialButton = pathname
-    ? ['/home', '/pricing'].includes(pathname)
+    ? ['/', '/pricing'].includes(pathname)
     : false;
 
   // Default pricing tiers with placeholders for API data

@@ -582,17 +582,24 @@ function* fetchPlansSaga(): Generator<any, void, any> {
   }
 }
 
-export function* payPalPaymentSaga({ payload }: { type: string; payload: { planId: string; data: any } }): Generator<any> {
+export function* payPalPaymentSaga({
+  payload,
+}: {
+  type: string;
+  payload: { planId: string; data: any };
+}): Generator<any> {
   try {
     const { planId, data } = payload;
     const response: any = yield call(processPayPalPaymentService, planId, data);
     console.log('PayPal payment creation response:', response);
-    const approvalUrl = response?.approvalUrl;  
+    const approvalUrl = response?.approvalUrl;
     const subscriptionId = response?._id;
-    console.log('PayPal subscriptionId' , subscriptionId);
+    console.log('PayPal subscriptionId', subscriptionId);
     if (approvalUrl) {
       // Dispatch success action to store approvalUrl
-      yield put(createPaymentSuccess({ approvalUrl , subscriptionId,  planId ,  data }));
+      yield put(
+        createPaymentSuccess({ approvalUrl, subscriptionId, planId, data })
+      );
     } else {
       throw new Error('Approval URL not found in the response');
     }
@@ -604,7 +611,12 @@ export function* payPalPaymentSaga({ payload }: { type: string; payload: { planI
   }
 }
 
-export function* capturePaymentSaga({ payload }: { type: string; payload: { subscriptionId: string } }): Generator<any> {
+export function* capturePaymentSaga({
+  payload,
+}: {
+  type: string;
+  payload: { subscriptionId: string };
+}): Generator<any> {
   try {
     // Call the capture payment service with subscriptionId
     const response = yield call(capturePaymentService, payload.subscriptionId);
@@ -637,7 +649,6 @@ export function* fetchMembershipPlanSaga(): Generator<any, void, string> {
   }
 }
 
-
 export function* pathnameSaga({
   payload,
 }: {
@@ -669,7 +680,7 @@ export default function* rootSaga() {
   yield takeEvery(USER_ALL_SESSION, getUserAllSessionSaga);
   yield takeEvery(ADVANCE_FEATURE, getAdvanceFeatureSaga);
   yield takeEvery(VERIFY_USER_OTP, verifyOtpUserSaga);
-  yield takeEvery(GOOGLE_LOGIN, signUpGoogleUserSagaData);
+  // yield takeEvery(GOOGLE_LOGIN, signUpGoogleUserSagaData);
   yield takeEvery(PASSWORD_LOGIN, passwordLoginSaga);
   yield takeEvery(FETCH_PLANS, fetchPlansSaga);
   yield takeEvery(CREATE_PAYMENT_REQUEST, payPalPaymentSaga);

@@ -26,7 +26,7 @@ const factorsList = [
 const Factors: React.FC = () => {
   return (
     <div className="flex gap-5 justify-between py-16 mt-10 w-full text-center border border-gradient-bcg">
-      {factorsList.map((factor, index) => (
+      {factorsList?.map((factor, index) => (
         <Cards
           key={index}
           title={factor.title}

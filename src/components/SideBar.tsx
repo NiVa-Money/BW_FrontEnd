@@ -6,7 +6,6 @@ import Image from 'next/image';
 import { useDispatch, useSelector } from 'react-redux';
 import ClearConversation from './clearConversation/clearConversation';
 import ModalDialog from './ModalDialog';
-import mainLogo from '@/public/assets/mainLogo.svg';
 import { RootState } from '@/redux/configureStore';
 import {
   getUserBotProfileAction,
@@ -132,7 +131,7 @@ const SideBar: React.FC = () => {
         href={'/dashboard'}
         className="flex justify-center w-full mt-[10px] mb-[20px]"
       >
-        <Image src={mainLogo.src} alt="logo" width={90} height={80} />
+        <Image src="/images/mainLogo.svg" alt="logo" width={90} height={80} />
       </Link>
       <button
         onClick={getUserBotProfiles}

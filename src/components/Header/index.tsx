@@ -1,7 +1,6 @@
 'use client';
 import Image from 'next/image';
 import React from 'react';
-import mainLogo from '@/public/assets/mainLogo.svg';
 import { usePathname } from 'next/navigation';
 import Link from 'next/link';
 import './header.css';
@@ -34,14 +33,19 @@ const Header: React.FC = () => {
       <div className="flex gap-5 justify-between py-0.5 pl-1.5 w-full max-w-[1184px] max-md:flex-wrap ">
         <Link className={`link ${pathname === '/'}`} href="/">
           <div className="flex gap-2 justify-center px-1.5 py-2 my-auto text-2xl font-bold tracking-widest whitespace-nowrap">
-            <Image src={mainLogo.src} alt="logo" width={90} height={80} />
+            <Image
+              src="/images/mainLogo.svg"
+              alt="logo"
+              width={90}
+              height={80}
+            />
           </div>
         </Link>
         <nav className="flex gap-5 justify-between items-center py-2 pl-3 text-sm leading-5 max-md:flex-wrap ">
           <ul className="flex gap-10">
             <Link
-              className={`link ${pathname === '/home' ? 'active' : ''}`}
-              href="/home"
+              className={`link ${pathname === '/' ? 'active' : ''}`}
+              href="/"
             >
               Home
             </Link>

@@ -18,9 +18,9 @@ interface ModalProps {
 }
 
 const Modal: React.FC<ModalProps> = ({ closeModal, handleSignUp }) => {
-  const userSuccess = useSelector(
-    (state: RootState) => state?.root?.userVerify
-  );
+  // const userSuccess = useSelector(
+  //   (state: RootState) => state?.root?.userVerify
+  // );
   const [viewOtp, setViewOtp] = useState(false);
 
   const [formData, setFormData] = useState({
@@ -50,11 +50,11 @@ const Modal: React.FC<ModalProps> = ({ closeModal, handleSignUp }) => {
     }));
   };
 
-  useEffect(() => {
-    if (userSuccess === true) {
-      setViewOtp(userSuccess);
-    }
-  }, [userSuccess]);
+  // useEffect(() => {
+  //   if (userSuccess === true) {
+  //     setViewOtp(userSuccess);
+  //   }
+  // }, [userSuccess]);
 
   const validateForm = () => {
     const { firstName, lastName, emailId, mobileNo, password } = formData;
@@ -239,9 +239,9 @@ const Modal: React.FC<ModalProps> = ({ closeModal, handleSignUp }) => {
                 Sign Up
               </button>
             </form>
-            {userSuccess && (
+            {/* {userSuccess && (
               <SignUpModalOtp viewOtp={userSuccess} setViewOtp={setViewOtp} />
-            )}
+            )} */}
           </div>
         </div>
       </div>
