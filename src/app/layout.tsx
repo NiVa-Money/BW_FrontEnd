@@ -48,9 +48,8 @@ export default function RootLayout({
     '/faq/questionsAns',
     '/faq/docs',
     '/data-deletion',
-
-    '/integration'
-
+    '/integration/whatsapp',
+    '/integration',
   ];
   const routeWithoutFooter: string[] = [
     '/mychatbots',
@@ -73,10 +72,8 @@ export default function RootLayout({
     '/privacy',
     '/terms',
     '/data-deletion',
-
-    '/integration'
-
-
+    '/integration/whatsapp',
+    '/integration',
   ];
   const routeWithoutSidebar: string[] = [
     '/createbot',
@@ -115,6 +112,7 @@ export default function RootLayout({
     '/home',
     '/privacy',
     '/terms',
+    '/integration/whatsapp',
   ];
 
   const [isSidebarVisible, setIsSidebarVisible] = React.useState(true);
