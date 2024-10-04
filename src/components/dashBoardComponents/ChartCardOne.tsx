@@ -143,11 +143,12 @@ const ChartCardOne = () => {
             <div className="flex justify-between items-start mb-4">
               <div>
                 <Title className="text-xl text-[#AEB9E1]">
-                  Unresolved/Resolved
+                  Resolved/Unresolved
                 </Title>
-                {/* <Metric className="text-3xl font-bold text-white mt-2">
-                  $144.6K
-                </Metric> */}
+                <div className="text-[#AEB9E1] mt-2 flex flex-col">
+                  <span className="whitespace-nowrap">Resolved : {resolvedSessions}</span>
+                  <span className="whitespace-nowrap">Unresolved : {unresolvedSessions}</span>
+                </div>
               </div>
             </div>
             <div className="h-[180px] w-full">
