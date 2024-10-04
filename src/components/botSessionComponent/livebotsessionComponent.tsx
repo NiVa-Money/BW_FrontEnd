@@ -79,9 +79,7 @@ const BotSessionComponent: React.FC = () => {
                 },
             });
 
-            // newSocket.on('message', () => {
-            //     console.log('Connected to socket server');
-            // });
+
 
             newSocket.on('message', (message) => {
                 console.log('Received message:', message);
