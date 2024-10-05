@@ -1,5 +1,6 @@
 'use client';
 import { BarList } from '@tremor/react';
+import React from 'react';
 
 const CardHeaderOne: React.FC<any> = ({ userMetricData }) => {
   const datahero = [
