@@ -6,7 +6,6 @@ import { RootState } from '@/redux/configureStore';
 import { useSelector } from 'react-redux';
 import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-import Multiselect from 'multiselect-react-dropdown';
 
 type BotSessionMappingType = [string, [number]][];
 
