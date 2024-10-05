@@ -100,9 +100,9 @@ const LandingPage: React.FC = () => {
         <section>
           <Media />
         </section>
-        <section>
+        {/* <section>
           <BrandLogos />
-        </section>
+        </section> */}
         <section>
           <PricingCard />
         </section>
