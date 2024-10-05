@@ -9,7 +9,6 @@ import '../NewChat/newchat.css';
 import {
     filteredSession,
     getAllSessionLive,
-
 } from '@/redux/actions/userChatAction';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -18,10 +17,9 @@ import { useEffect } from 'react';
 import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
 import { fetchMembershipPlanRequest } from '@/redux/actions/paymentActions';
 import io from 'socket.io-client';
+import axiosInstance from '@/utils/axiosConfig';
 const BotSessionComponent: React.FC = () => {
 
-
-    // const socket = io('http://localhost:8000');
 
     const dispatch = useDispatch();
     const [isBotProfileOpen, setIsBotProfileOpen] = React.useState(false);
@@ -34,6 +32,9 @@ const BotSessionComponent: React.FC = () => {
     const [botIdLive, setBotIdLive] = React.useState<string>('');
     const [userIdLive, setBotUserIdLive] = React.useState<string>('');
     const [isChatEnabled, setIsChatEnabled] = React.useState(false);
+    const [showConfirmationModal, setShowConfirmationModal] = React.useState(false);
+    const [showFeedbackModal, setShowFeedbackModal] = React.useState(false);
+    const [resolved, setResolved] = React.useState('');
     const [newMessage, setNewMessage] = React.useState<any>('');
     const [messages, setMessages] = React.useState<any>([]);
     const [botNameDropDown, setBotNameDropDown] = React.useState<string | null>(
@@ -98,9 +99,6 @@ const BotSessionComponent: React.FC = () => {
                 }
             });
             
-            
-            
-
             setSocket(newSocket);
 
             return () => {
@@ -257,8 +255,47 @@ const BotSessionComponent: React.FC = () => {
 
 
     const handleToggle = () => {
-        setIsChatEnabled(prevState => !prevState); 
+        if (isChatEnabled) {
+            // If the chat is being ended, show the confirmation modal
+            setShowConfirmationModal(true);
+        } else {
+            // Enable the chat immediately if it's being turned on
+            setIsChatEnabled(true);
+        }
     };
+    const handleCloseModals = () => {
+        setShowConfirmationModal(false);
+        setShowFeedbackModal(false);
+        setIsChatEnabled(false); // End the chat
+    };
+
+    const handleResolution = (resolution: any) => {
+        setResolved(resolution);
+        setShowConfirmationModal(false);
+        setShowFeedbackModal(true);
+    };
+    const submitFeedback = async (resolveQuery: string, satisfaction: any) => {
+        try {
+            const payload = {
+                sessionId: sessionId, 
+                userFeedback: {
+                    resolveQuery: resolveQuery === 'Yes', // true for "Yes", false for "No"
+                    satisfaction: satisfaction // Feedback from modal selection
+                }
+            };
+            // API POST request to send feedback
+            const response = await axiosInstance.post('/user/feedback', payload);
+            console.log('Feedback submitted successfully:', response.data);
+        } catch (error) {
+            console.error('Error submitting feedback:', error);
+        }
+    };
+    const handleFeedback = (feedback: string) => {
+        submitFeedback(resolved, feedback); // Call API with resolution and feedback
+        setShowFeedbackModal(false);
+        setIsChatEnabled(false); // End chat after feedback
+    };
+
     const renderMessages = () => {
         return messages.map((message: any, index: number) => (
             <div key={index} className={`flex w-full mb-4 ${message.sender === 'user' ? 'justify-end' : message.sender === 'system' ? 'justify-center' : 'justify-start'}`}>
@@ -278,9 +315,7 @@ const BotSessionComponent: React.FC = () => {
                 <div className="text-white mt-[54px] mx-3">
                     <Link
                         href={'/dashboard'}
-                        className={`flex items-center space-x-3 py-2 px-3 text-gray-300 hover:bg-white' 
-          }`}
-                    >
+                        className={`flex items-center space-x-3 py-2 px-3 text-gray-300 hover:bg-white' }`}>
                         <span>
                             <i className="fas fa-gauge-high mr-3" />
                             Dashboard
@@ -320,7 +355,7 @@ const BotSessionComponent: React.FC = () => {
                 </div>
 
             </div>
-            <div
+            <div 
                 ref={containerRef}
                 className="relative w-[100%] h-[100vh] flex justify-end items-center pl-10 py-10 bg-[#0B031E] min-h-screen max-md:px-5 overflow-hidden"
                 onMouseMove={handleMouseMove}
@@ -494,12 +529,61 @@ const BotSessionComponent: React.FC = () => {
                         </div>
                     </div>
                     <div className="flex gap-2.5 z-10 px-8 py-5 mt-2.5 w-[98%] h-[69px] text-base whitespace-nowrap bg-[#2D2640] rounded-xl text-gray-300 max-md:flex-wrap max-md:px-5 max-md:max-w-full justify-end items-center">
-                        <button
-                            onClick={handleToggle}
-                            className={`mr-4 px-4 py-2 rounded-full ${isChatEnabled ? 'bg-green-500' : 'bg-gray-500'} text-white`}
-                        >
-                            {isChatEnabled ? 'End Chat ?' : 'Turn on to chat now'}
+                    <button
+                onClick={handleToggle}
+                className={`mr-4 px-4 py-2 rounded-full ${isChatEnabled ? 'bg-green-500' : 'bg-gray-500'} text-white`}
+            >
+                {isChatEnabled ? 'End Chat?' : 'Turn on to chat now'}
+            </button>
+            {showConfirmationModal && (
+                <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+                <div className="bg-white rounded-lg shadow-lg p-6 w-full max-w-md">
+                    <h2 className="text-xl font-semibold mb-4 text-center">Was your query resolved?</h2>
+                    <div className="flex justify-around">
+                        <button 
+                            onClick={() => handleResolution('Yes')} 
+                            className="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-full transition duration-300">
+                            Yes
                         </button>
+                        <button 
+                            onClick={() => handleResolution('No')} 
+                            className="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded-full transition duration-300">
+                            No
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            )}
+
+            {/* Feedback Modal */}
+            {showFeedbackModal && (
+             <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+             <div className="bg-white rounded-lg shadow-lg p-6 w-full max-w-md">
+                 <h2 className="text-xl font-semibold mb-4 text-center">Please provide your feedback:</h2>
+                 <div className="flex justify-around">
+                     <button 
+                         onClick={() => handleFeedback('Good')} 
+                         className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full transition duration-300">
+                         Good
+                     </button>
+                     <button 
+                         onClick={() => handleFeedback('Neutral')} 
+                         className="bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-2 px-4 rounded-full transition duration-300">
+                         Neutral
+                     </button>
+                     <button 
+                         onClick={() => handleFeedback('Bad')} 
+                         className="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded-full transition duration-300">
+                         Bad
+                     </button>
+                 </div>
+             </div>
+         </div>
+         
+            )}
+
+            
                         {isChatEnabled && (
                             <form onSubmit={handleSubmit} className="flex items-center flex-1 ml-4">
                                 <input
