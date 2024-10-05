@@ -79,15 +79,27 @@ const BotSessionComponent: React.FC = () => {
                 },
             });
 
-
-
             newSocket.on('message', (message) => {
                 console.log('Received message:', message);
-                setMessages((prevMessages: any) => [...prevMessages, {
-                    text: message.question,
-                    sender: 'bot'
-                }]);
+            
+                // Check if the message is a system message
+                if (typeof message === 'string' && message.includes('has joined the chat')) {
+                    // Handle system messages like "Admin has joined the chat"
+                    setMessages((prevMessages: any) => [
+                        ...prevMessages, 
+                        { text: message, sender: 'system' }
+                    ]);
+                } else if (message.question) {
+                    // Handle normal user messages (like "kaise ho")
+                    setMessages((prevMessages: any) => [
+                        ...prevMessages, 
+                        { text: message.question, sender: 'bot' }
+                    ]);
+                }
             });
+            
+            
+            
 
             setSocket(newSocket);
 
@@ -96,8 +108,7 @@ const BotSessionComponent: React.FC = () => {
             };
         }
     }, [sessionId, botIdLive, userIdLive]);
-    const botIdForConnection = "66fc3bfb1f9e230493e5b75c";
-    const userIdForConnection = "66fc3afa1f9e230493e5b733";
+
     let chatRoom;
       // Establish Socket.IO connection
 
@@ -216,9 +227,6 @@ const BotSessionComponent: React.FC = () => {
         }
     }, [botIdRedux?.botId]);
 
-
-
-
     React.useEffect(() => {
         if (botIdLocal?.length || pathName === '/botsession') {
             getChatHistory();
@@ -253,15 +261,14 @@ const BotSessionComponent: React.FC = () => {
     };
     const renderMessages = () => {
         return messages.map((message: any, index: number) => (
-            <div key={index} className={`flex w-full mb-4 ${message.sender === 'user' ? 'justify-end' : 'justify-start'}`}>
-                <div className={`w-fit max-w-[75%] p-2 rounded-xl ${
-                    message.sender === 'user' 
-                }`}>
+            <div key={index} className={`flex w-full mb-4 ${message.sender === 'user' ? 'justify-end' : message.sender === 'system' ? 'justify-center' : 'justify-start'}`}>
+                <div className={`w-fit max-w-[75%] p-2 rounded-xl ${message.sender === 'user' ? 'bg-purple-500' : message.sender === 'system' ? 'bg-green-400' : 'bg-gray-500'}`}>
                     <span className="text-white">{message.text}</span>
                 </div>
             </div>
         ));
     };
+    
     return (
         <div className="flex h-screen">
             <div className="w-80 h-[100%] flex flex-col">
@@ -486,14 +493,12 @@ const BotSessionComponent: React.FC = () => {
                                 {renderMessages()}
                         </div>
                     </div>
-
-
                     <div className="flex gap-2.5 z-10 px-8 py-5 mt-2.5 w-[98%] h-[69px] text-base whitespace-nowrap bg-[#2D2640] rounded-xl text-gray-300 max-md:flex-wrap max-md:px-5 max-md:max-w-full justify-end items-center">
                         <button
                             onClick={handleToggle}
                             className={`mr-4 px-4 py-2 rounded-full ${isChatEnabled ? 'bg-green-500' : 'bg-gray-500'} text-white`}
                         >
-                            {isChatEnabled ? 'Turn off' : 'Turn on to chat now'}
+                            {isChatEnabled ? 'End Chat ?' : 'Turn on to chat now'}
                         </button>
                         {isChatEnabled && (
                             <form onSubmit={handleSubmit} className="flex items-center flex-1 ml-4">
