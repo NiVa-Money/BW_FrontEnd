@@ -63,6 +63,12 @@ import {
   SET_PATHNAME,
   FETCH_PLANS,
   FETCH_MEMBERSHIP_PLAN_REQUEST,
+  SAVE_WHATSAPP_INTEGRATION_SUCCESS,
+  SAVE_WHATSAPP_INTEGRATION_FAILURE,
+  SAVE_WHATSAPP_INTEGRATION,
+  GET_WHATSAPP_WEBHOOK_SUCCESS,
+  GET_WHATSAPP_WEBHOOK_FAILURE,
+  GET_WHATSAPP_WEBHOOK,
 } from '../actions/actionTypes';
 
 import {
@@ -88,6 +94,8 @@ import {
   capturePaymentService,
   fetchPlansApi,
   getMembershipPlan,
+  wpSaveService,
+  getWPWebhookService,
 } from '../services';
 import { notifyError, notifySuccess } from '@/components/Toaster/toast';
 import {
@@ -582,17 +590,24 @@ function* fetchPlansSaga(): Generator<any, void, any> {
   }
 }
 
-export function* payPalPaymentSaga({ payload }: { type: string; payload: { planId: string; data: any } }): Generator<any> {
+export function* payPalPaymentSaga({
+  payload,
+}: {
+  type: string;
+  payload: { planId: string; data: any };
+}): Generator<any> {
   try {
     const { planId, data } = payload;
     const response: any = yield call(processPayPalPaymentService, planId, data);
     console.log('PayPal payment creation response:', response);
-    const approvalUrl = response?.approvalUrl;  
+    const approvalUrl = response?.approvalUrl;
     const subscriptionId = response?._id;
-    console.log('PayPal subscriptionId' , subscriptionId);
+    console.log('PayPal subscriptionId', subscriptionId);
     if (approvalUrl) {
       // Dispatch success action to store approvalUrl
-      yield put(createPaymentSuccess({ approvalUrl , subscriptionId,  planId ,  data }));
+      yield put(
+        createPaymentSuccess({ approvalUrl, subscriptionId, planId, data })
+      );
     } else {
       throw new Error('Approval URL not found in the response');
     }
@@ -604,7 +619,12 @@ export function* payPalPaymentSaga({ payload }: { type: string; payload: { planI
   }
 }
 
-export function* capturePaymentSaga({ payload }: { type: string; payload: { subscriptionId: string } }): Generator<any> {
+export function* capturePaymentSaga({
+  payload,
+}: {
+  type: string;
+  payload: { subscriptionId: string };
+}): Generator<any> {
   try {
     // Call the capture payment service with subscriptionId
     const response = yield call(capturePaymentService, payload.subscriptionId);
@@ -637,7 +657,6 @@ export function* fetchMembershipPlanSaga(): Generator<any, void, string> {
   }
 }
 
-
 export function* pathnameSaga({
   payload,
 }: {
@@ -648,6 +667,48 @@ export function* pathnameSaga({
     yield put({ type: SET_PATHNAME_SUCCESS, payload: payload });
   } catch (error) {
     yield put({ type: SET_PATHNAME_FAILURE, error });
+  }
+}
+//whatsapp
+
+export function* saveWhatsAppSaga({
+  type,
+  payload,
+}: {
+  type: string;
+  payload: any;
+}): Generator<any> {
+  try {
+    const whatsAppSuccess = yield call(wpSaveService, payload);
+    yield put({
+      type: SAVE_WHATSAPP_INTEGRATION_SUCCESS,
+      payload: whatsAppSuccess,
+    });
+  } catch (error: any) {
+    yield put({
+      type: SAVE_WHATSAPP_INTEGRATION_FAILURE,
+      payload: false,
+    });
+  }
+}
+export function* getWhatsAppWebhookSaga({
+  type,
+  payload,
+}: {
+  type: string;
+  payload: any;
+}): Generator<any> {
+  try {
+    const whatsAppSuccess = yield call(getWPWebhookService, payload);
+    yield put({
+      type: GET_WHATSAPP_WEBHOOK_SUCCESS,
+      payload: whatsAppSuccess,
+    });
+  } catch (error: any) {
+    yield put({
+      type: GET_WHATSAPP_WEBHOOK_FAILURE,
+      payload: false,
+    });
   }
 }
 export default function* rootSaga() {
@@ -676,4 +737,6 @@ export default function* rootSaga() {
   yield takeLatest(CAPTURE_PAYMENT_REQUEST, capturePaymentSaga);
   yield takeLatest(FETCH_MEMBERSHIP_PLAN_REQUEST, fetchMembershipPlanSaga);
   yield takeLatest(SET_PATHNAME, pathnameSaga);
+  yield takeLatest(SAVE_WHATSAPP_INTEGRATION, saveWhatsAppSaga);
+  yield takeLatest(GET_WHATSAPP_WEBHOOK, getWhatsAppWebhookSaga);
 }

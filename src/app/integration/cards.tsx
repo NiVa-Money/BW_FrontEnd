@@ -1,4 +1,5 @@
 'use client';
+import Link from 'next/link';
 import React from 'react';
 
 interface CardProps {
@@ -6,9 +7,16 @@ interface CardProps {
   title: string;
   subTitle: string;
   description: string;
+  path: string;
 }
 
-const Card: React.FC<CardProps> = ({ image, title, subTitle, description }) => {
+const Card: React.FC<CardProps> = ({
+  image,
+  title,
+  subTitle,
+  description,
+  path,
+}) => {
   const handleContactSupport = () => {
     window.location.href = 'mailto:support@botwot.io';
   };
@@ -49,12 +57,12 @@ const Card: React.FC<CardProps> = ({ image, title, subTitle, description }) => {
         </button>
 
         {/* Export button greyed out */}
-        <button
-          className="text-[#AEB9E1] text-sm px-3 py-1.5 md:px-4 md:py-2 rounded-full bg-gray-700 cursor-not-allowed"
-          disabled
+        <Link
+          href={`${path}`}
+          className="text-[#AEB9E1] text-sm px-3 py-1.5 md:px-4 md:py-2 rounded-full bg-gray-700 "
         >
           Enable
-        </button>
+        </Link>
       </div>
     </div>
   );

@@ -228,16 +228,27 @@ export const getAdvanceFeatureService = async (payload: any) => {
 export const fetchPlansApi = async () => {
   try {
     const response = await axiosInstance.get('/payment/plans');
-    return response.data;  // Returns the array of plans
+    return response.data; // Returns the array of plans
   } catch (error) {
     throw new Error('Payment Plans fetching failed');
   }
 };
 
-export const processPayPalPaymentService = async (planId: string, payload: any) => {
-  console.log('processPayPalPaymentService called with planId:', planId, 'and payload:', payload);
+export const processPayPalPaymentService = async (
+  planId: string,
+  payload: any
+) => {
+  console.log(
+    'processPayPalPaymentService called with planId:',
+    planId,
+    'and payload:',
+    payload
+  );
   try {
-    const response = await axiosInstance.post(`/payment/subscription/${planId}`, payload);
+    const response = await axiosInstance.post(
+      `/payment/subscription/${planId}`,
+      payload
+    );
     console.log('API response:', response);
     return response.data;
   } catch (error) {
@@ -248,7 +259,9 @@ export const processPayPalPaymentService = async (planId: string, payload: any) 
 
 export const capturePaymentService = async (id: string) => {
   try {
-    const response = await axiosInstance.post(`/payment/capture-subscription/${id}`);
+    const response = await axiosInstance.post(
+      `/payment/capture-subscription/${id}`
+    );
     return response.data;
   } catch (error) {
     throw new Error('Payment capture failed');
@@ -259,4 +272,27 @@ export const getMembershipPlan = async () => {
   const response = await axiosInstance.get('/payment/user-subscription');
   return response.data.planName;
 };
+// whatsapp integration post request
 
+export const wpSaveService = async (payload: any) => {
+  try {
+    const response = await axiosInstance.post(
+      `/external-integration/wp/save`,
+      payload
+    );
+    return response.data;
+  } catch (error) {
+    throw new Error('Payment capture failed');
+  }
+};
+
+export const getWPWebhookService = async (payload: any) => {
+  try {
+    const response = await axiosInstance.get(
+      `/external-integration/wp/webhook?botId=${payload}`
+    );
+    return response.data;
+  } catch (error: any) {
+    throw new Error('Error: unable to fetch whatsApp webhook');
+  }
+};
