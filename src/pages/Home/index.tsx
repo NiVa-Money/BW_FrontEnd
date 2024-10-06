@@ -15,6 +15,8 @@ import { usePathname, useRouter } from 'next/navigation';
 import Media from '@/components/Media/mediaLinks';
 import BackgroundAnimation from '@/components/BackgroundAnimation/backgroundAnimation';
 import Script from 'next/script';
+import BrandLogos from '@/components/Brands/brands';
+import React from 'react';
 const LandingPage: React.FC = () => {
   const userEmail = useSelector((state: RootState) => state.root?.user?.email);
   const userVerify = useSelector((state: RootState) => state.root?.userVerify);
@@ -98,6 +100,9 @@ const LandingPage: React.FC = () => {
         <section>
           <Media />
         </section>
+        {/* <section>
+          <BrandLogos />
+        </section> */}
         <section>
           <PricingCard />
         </section>
