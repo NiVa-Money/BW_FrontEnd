@@ -76,6 +76,7 @@ const SideBar: React.FC = () => {
     dispatch(logoutUser());
     dispatch(removeFromReduxbot());
     dispatch(removeAdvanceFeature());
+    router.push('/home');
   };
 
   const getUserBotProfiles = () => {
