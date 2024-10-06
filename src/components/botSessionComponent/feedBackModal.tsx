@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import axiosInstance from '@/utils/axiosConfig';
-import { XCircle } from 'lucide-react';
+// import { XCircle } from 'lucide-react';
 
 interface FeedbackPopupProps {
   isOpen: boolean;
@@ -42,7 +42,7 @@ const FeedbackPopup: React.FC<FeedbackPopupProps> = ({ isOpen, onClose, sessionI
           onClick={onClose}
           className="absolute top-2 right-2 text-gray-400 hover:text-white"
         >
-          <XCircle size={24} />
+         
         </button>
         
         <div className="mb-6">
