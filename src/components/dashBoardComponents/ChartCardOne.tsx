@@ -14,7 +14,6 @@ const ChartCardOne = () => {
   const metrics = useSelector(
     (state: RootState) => state.root?.userMetric?.data
   );
-
   // Extract resolved and unresolved session data from metrics
   const resolvedSessions = metrics?.resolvedSessions ?? 0;
   const unresolvedSessions = metrics?.unresolvedSessions ?? 0;
@@ -146,8 +145,12 @@ const ChartCardOne = () => {
                   Resolved/Unresolved
                 </Title>
                 <div className="text-[#AEB9E1] mt-2 flex flex-col">
-                  <span className="whitespace-nowrap">Resolved : {resolvedSessions}</span>
-                  <span className="whitespace-nowrap">Unresolved : {unresolvedSessions}</span>
+                  <span className="whitespace-nowrap">
+                    Resolved : {resolvedSessions}
+                  </span>
+                  <span className="whitespace-nowrap">
+                    Unresolved : {unresolvedSessions}
+                  </span>
                 </div>
               </div>
             </div>

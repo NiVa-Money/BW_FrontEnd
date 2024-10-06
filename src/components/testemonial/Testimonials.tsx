@@ -12,7 +12,7 @@ const testimonials: Testimonial[] = [
   {
     name: 'Arthi Benjaram',
     quote:
-      '“Botwot\'s recommendation engine has been a game-changer for our platform. It\'s like having a personal beauty assistant that knows our users better than we do.”',
+      "“Botwot's recommendation engine has been a game-changer for our platform. It's like having a personal beauty assistant that knows our users better than we do.”",
     img: 'https://cdn.builder.io/api/v1/image/assets/TEMP/b7ad23889c1acca2a12804f00c11b12980fc398725762c81489fd00c54554c07?apiKey=555c811dd3f44fc79b6b2689129389e8&',
   },
   {
@@ -46,7 +46,9 @@ const Testimonials: React.FC = () => {
       <h2 className="text-2xl font-semibold tracking-tight leading-7 text-gray-100">
         Testimonials
       </h2>
-      <p className="mt-2 text-xl leading-6 text-zinc-500">See What Our Users Say</p>
+      <p className="mt-2 text-xl leading-6 text-zinc-500">
+        See What Our Users Say
+      </p>
       <div className="mt-12 w-full max-w-3xl mx-auto relative">
         <div className="overflow-hidden">
           <div
@@ -77,7 +79,9 @@ const Testimonials: React.FC = () => {
             <button
               key={dotIndex}
               className={`h-2 w-2 rounded-full mx-1 ${
-                dotIndex === currentIndex % testimonials.length ? 'bg-white' : 'bg-gray-500'
+                dotIndex === currentIndex % testimonials.length
+                  ? 'bg-white'
+                  : 'bg-gray-500'
               }`}
               onClick={() => setCurrentIndex(dotIndex)}
             ></button>

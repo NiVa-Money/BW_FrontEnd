@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Card, Title, BarChart, Metric } from '@tremor/react';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
@@ -25,6 +25,9 @@ const monthlyData = [
 ];
 
 const ReportsOverview = () => {
+  const [dateRange, setDateRange] = useState('Jan 2024 - Dec 2024');
+  const [sentimentPeriod, setSentimentPeriod] = useState('Monthly');
+
   const metrics = useSelector(
     (state: RootState) => state.root?.userMetric?.data
   );

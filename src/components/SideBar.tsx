@@ -96,6 +96,12 @@ const SideBar: React.FC = () => {
           hasDropdown: true,
           subChildItems: [{ title: 'hey', path: '/mychatbots' }],
         },
+        {
+          title: 'Live Chat',
+          hasDropdown: true,
+          subChildItems: [{ title: 'hey', path: '/livechat' }],
+        },
+
         // {
         //   title: 'Live Chats',
         //   hasDropdown: true,
@@ -202,16 +208,18 @@ const MenuItem: React.FC<MenuItemProps> = ({ item, onClick }) => {
     }));
   };
 
-  const botSession = (botId: string, userId: string, botName: string) => {
+  const botSession = (botId: string, userId: string, botName: string, title:string) => {
+
     const data = {
       botId,
       userId,
+      title
     };
     dispatch(botSessionId(data));
-    router.push(`/botsession?botName=${encodeURIComponent(botName)}`);
+    router.push(`/${title=="All Chats"? "botsession" : "livechat" }?botName=${encodeURIComponent(botName)}`);
   };
 
-  useEffect(() => {}, [botSessionaa]);
+ 
 
   const isActive = (path: string) => {
     return pathname === path || (pathname && pathname.includes(path));
@@ -292,7 +300,8 @@ const MenuItem: React.FC<MenuItemProps> = ({ item, onClick }) => {
                             key={childIdx}
                             className={menuItemClasses}
                             onClick={() =>
-                              botSession(bot._id, bot.userId, bot.botName)
+                              botSession(bot._id, bot.userId, bot.botName,subItem.title)
+                              
                             }
                           >
                             <span>{bot.botName}</span>

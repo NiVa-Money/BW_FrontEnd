@@ -215,6 +215,14 @@ export const getUserAllSessionService = async (payload: any) => {
     throw new Error('Error: Getting user all session');
   }
 };
+export const getUserAllSessionLiveService = async (payload: any) => {
+  try {
+    const response = await axiosInstance.post(`/user/getLiveSession`, payload);
+    return response.data;
+  } catch (error) {
+    throw new Error('Error: Getting user all session');
+  }
+};
 
 export const getAdvanceFeatureService = async (payload: any) => {
   try {
