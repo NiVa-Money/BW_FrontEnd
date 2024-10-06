@@ -75,9 +75,10 @@ const NewChatComponent: React.FC = () => {
     setIsAutoScrollEnabled(true);
     event.preventDefault();
     if (newMessage.trim() !== '') {
+      const currentTime = new Date().toLocaleString();
       setQuestion(newMessage);
-      setMessages([...messages, { text: newMessage, sender: 'user' }]);
-      dispatch(sendUserQuestionOnly({ text: newMessage, sender: 'user' }));
+      setMessages([...messages, { text: newMessage, sender: 'user', time: currentTime }]);
+      dispatch(sendUserQuestionOnly({ text: newMessage, sender: 'user' , time: currentTime }));
       setNewMessage('');
       const data = {
         userId: userId,
@@ -366,6 +367,7 @@ const NewChatComponent: React.FC = () => {
                           dangerouslySetInnerHTML={{ __html: formattedText }}
                         />
                       )}
+                          <div className="text-xs text-gray-400 mt-1">{message?.time}</div>
                     </div>
                   </div>
                 </div>

@@ -25,9 +25,6 @@ const monthlyData = [
 ];
 
 const ReportsOverview = () => {
-  const [dateRange, setDateRange] = useState('Jan 2024 - Dec 2024');
-  const [sentimentPeriod, setSentimentPeriod] = useState('Monthly');
-
   const metrics = useSelector(
     (state: RootState) => state.root?.userMetric?.data
   );
