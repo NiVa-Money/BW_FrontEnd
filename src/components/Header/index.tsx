@@ -60,6 +60,7 @@ const Header: React.FC = () => {
             <Link
               className={`link ${pathname === '/blog' ? 'active' : ''}`}
               href="/blog"
+              // href="https://blog.botwot.io"
             >
               Blog
             </Link>
