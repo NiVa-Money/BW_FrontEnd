@@ -74,8 +74,6 @@ const SideBar: React.FC = () => {
     localStorage.removeItem('user_id');
     localStorage.removeItem('token');
     dispatch(logoutUser());
-    dispatch(removeFromReduxbot());
-    dispatch(removeAdvanceFeature());
     router.push('/home');
   };
 
