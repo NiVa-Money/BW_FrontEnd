@@ -26,6 +26,7 @@ import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 import SettingsRoundedIcon from '@mui/icons-material/SettingsRounded';
 import PhoneAndroidRoundedIcon from '@mui/icons-material/PhoneAndroidRounded';
 import KeyboardArrowRightRoundedIcon from '@mui/icons-material/KeyboardArrowRightRounded';
+import AssistantIcon from '@mui/icons-material/Assistant';
 
 interface SidebarItemProps {
   path?: string;
@@ -140,6 +141,7 @@ const SideBar: React.FC = () => {
       ],
     },
     { icon: <AccountCircleIcon />, text: 'Profile', path: '/profile' },
+    { icon: <AssistantIcon />, text: 'Feedback', path: '/feedback' },
   ]);
 
   return (

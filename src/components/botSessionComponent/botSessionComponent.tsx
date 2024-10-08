@@ -189,9 +189,11 @@ const BotSessionComponent: React.FC = () => {
   React.useEffect(() => {
     // Fetch membership plan on component mount
     dispatch(fetchMembershipPlanRequest());
-  } , []);
+  }, []);
 
-  const formattedPlanName = planName ? planName.charAt(0).toUpperCase() + planName.slice(1) : 'Free';
+  const formattedPlanName = planName
+    ? planName.charAt(0).toUpperCase() + planName.slice(1)
+    : 'Free';
 
   React.useEffect(() => {
     if (sentimentAnalysis) {
@@ -295,7 +297,9 @@ const BotSessionComponent: React.FC = () => {
     <div className="flex h-screen">
       <div className="w-80 h-[100%] flex flex-col">
         <div className="w-full mt-8 flex justify-center items-center">
-          <Image src={mainLogo.src} alt="logo" width={90} height={80} />
+          <Link href="/dashboard">
+            <Image src={mainLogo.src} alt="logo" width={90} height={80} />
+          </Link>
         </div>
         <div className="text-white mt-[54px] mx-3">
           <Link
@@ -303,10 +307,7 @@ const BotSessionComponent: React.FC = () => {
             className={`flex items-center space-x-3 py-2 px-3 text-[#AEB9E1] hover:bg-white' 
           }`}
           >
-            <span>
-              <i className="fas fa-gauge-high mr-3" />
-              Dashboard
-            </span>
+            <span className="text-[#CB3CFF] text-bold">Dashboard</span>
           </Link>
         </div>
         <div className="text-white mt-[8px] flex justify-center items-center">
