@@ -122,7 +122,11 @@ const SideBar: React.FC = () => {
     {
       icon: <IntegrationInstructionsIcon />,
       text: 'Integration',
-      path: '/integration',
+      hasDropdown: true,
+      subMenuItems: [
+        { title: 'New Integration', path: '/integration' },
+        { title: 'My Integrations', path: '/myintegrations' },
+      ],
     },
     {
       icon: <SettingsRoundedIcon />,
