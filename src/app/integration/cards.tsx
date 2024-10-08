@@ -14,7 +14,7 @@ const Card: React.FC<CardProps> = ({ image, title, subTitle, description }) => {
     };
 
     return (
-        <div className="bg-black text-white rounded-lg p-6 md:p-8 w-full sm:w-80 md:w-96 shadow-lg border border-gray-500 mx-auto my-4">
+        <div className="bg-[#0B031E] text-white rounded-lg p-6 md:p-8 w-full sm:w-80 md:w-96 shadow-lg border border-gray-500 mx-auto my-4">
             <div className="flex items-center mb-4">
                 <div className="ml-4">
                     <h3 className="text-lg font-semibold">{title}</h3>
