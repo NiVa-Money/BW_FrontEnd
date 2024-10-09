@@ -7,7 +7,7 @@ import {
   SAVE_WHATSAPP_INTEGRATION_SUCCESS,
 } from '../actions/actionTypes';
 import initialState from './initialState';
-export default function knowledgeBaseReducers(
+export default function socialIntegrationReducers(
   state = initialState.socialIntegrations,
   action: any
 ) {
@@ -30,7 +30,7 @@ export default function knowledgeBaseReducers(
           ...state.whatsApp,
           getWebhook: {
             loader: false,
-            data: action.payload,
+            data: action.payload.data,
           },
         },
       };
@@ -63,7 +63,7 @@ export default function knowledgeBaseReducers(
           ...state.whatsApp,
           saveWebhook: {
             loader: false,
-            data: action.payload,
+            data: action.payload.data,
           },
         },
       };

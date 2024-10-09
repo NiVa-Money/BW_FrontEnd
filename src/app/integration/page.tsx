@@ -3,6 +3,7 @@ import React, { useEffect } from 'react';
 import Card from './cards';
 import { useDispatch } from 'react-redux';
 import { getWhatsAppWebhookAction } from '@/redux/actions/socialIntegrations/whatsAppIntegration';
+import withAuth from '@/components/withAuth';
 
 const Integration = () => {
   const dispatch = useDispatch();
@@ -45,9 +46,7 @@ const Integration = () => {
       },
     ],
   ];
-  useEffect(() => {
-    dispatch(getWhatsAppWebhookAction(''));
-  }, []);
+
 
   return (
     <>
@@ -83,4 +82,4 @@ const Integration = () => {
   );
 };
 
-export default Integration;
+export default withAuth( Integration);
