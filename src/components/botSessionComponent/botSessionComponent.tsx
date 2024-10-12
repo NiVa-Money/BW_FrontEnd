@@ -198,8 +198,9 @@ const BotSessionComponent: React.FC = () => {
   React.useEffect(() => {
     if (sentimentAnalysis) {
       const parseValue = (value: any) => {
-        return value ? parseFloat(value.replace('%', '')) : 0;
+        return typeof value === 'string' ? parseFloat(value.replace('%', '')) : 0;
       };
+      
       setChartData([
         {
           name: 'Negative',
