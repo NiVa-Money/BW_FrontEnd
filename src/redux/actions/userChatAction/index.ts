@@ -5,6 +5,7 @@ import {
   USER_SESSION_HISTORY,
   ADVANCE_FEATURE,
   BOTSESSION_ID,
+  USER_ALL_SESSION_LIVE,
 } from '../actionTypes';
 
 export const sendUserQuestion = (userChatData: any) => ({
@@ -16,6 +17,12 @@ export const getAllSession = (userId: any) => ({
   type: USER_ALL_SESSION,
   payload: userId,
 });
+
+export const getAllSessionLive = (userId: any) => ({
+  type: USER_ALL_SESSION_LIVE,
+  payload: userId,
+});
+
 
 export const sendUserQuestionOnly = (payload: any) => ({
   type: USER_OUESTION_SESSION,

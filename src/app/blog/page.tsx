@@ -31,7 +31,7 @@ function ContentCard({ img, title, description, readTime }: ContentCardPropsType
       <CardContent className="flex flex-col p-4 justify-start items-start">
         <Typography
           variant="body2"
-          className="text-gray-400 mb-2"
+          className="text-[#AEB9E1] mb-2"
         >
           {readTime} min read
         </Typography>
@@ -43,7 +43,7 @@ function ContentCard({ img, title, description, readTime }: ContentCardPropsType
         </Typography>
         <Typography
           variant="body2"
-         className="text-gray-400 mt-4"
+         className="text-[#AEB9E1] mt-4"
         >
           {description}
         </Typography>
@@ -92,7 +92,7 @@ const Blog = () => {
           </Typography>
           <Typography
             variant="body1"
-            className="text-gray-400 max-w-2xl mb-14 text-center"
+            className="text-[#AEB9E1] max-w-2xl mb-14 text-center"
           >
             To democratize AI-powered customer engagement by providing an intuitive, no-code platform that enables businesses of all sizes to create, deploy, and evolve intelligent chatbots.
           </Typography>

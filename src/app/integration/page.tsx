@@ -38,7 +38,7 @@ const Integration = () => {
                 <h1 className="mt-5 text-5xl font-bold tracking-tighter text-white leading-[58px] max-md:max-w-full max-md:text-4xl max-md:leading-[54px]">
                     Enable Integrations 🤝
                 </h1>
-                <h2 className="mt-4 text-xl text-gray-300 text-left max-md:max-w-full max-md:text-lg">
+                <h2 className="mt-4 text-xl text-[#AEB9E1] text-left max-md:max-w-full max-md:text-lg">
                     Get your chatbot seamlessly connected to other systems or platforms,<br />
                     allowing it to perform specific tasks beyond just answering user queries.
                 </h2>

@@ -8,7 +8,6 @@ import { useSelector, useDispatch } from 'react-redux';
 import { fetchPlans } from '@/redux/actions/paymentActions';
 
 const PricingCard = () => {
-  const [isPaymentSuccessful, setIsPaymentSuccessful] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalMessage, setModalMessage] = useState('');
   const router = useRouter();
@@ -134,7 +133,7 @@ const PricingCard = () => {
                   <button
                     className="py-2 px-6 text-base font-medium bg-gray-100 rounded-lg text-slate-950 w-full"
                     onClick={() => {
-                      window.scrollTo({ top: 0, behavior: 'smooth' });
+                      router.push('/login');
                     }}
                   >
                     Start For Free

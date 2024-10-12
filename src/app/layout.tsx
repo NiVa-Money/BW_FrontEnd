@@ -35,14 +35,13 @@ export default function RootLayout({
     '/membership-success',
     '/faq',
     '/dashboard',
-    '/login',
+    '/feedback',
     '/createknowledgebase',
     '/newchat',
     '/botsession',
     '/faq/questionsAns',
     '/faq/docs',
     '/data-deletion',
-
     '/integration',
   ];
   const routeWithoutFooter: string[] = [
@@ -58,6 +57,7 @@ export default function RootLayout({
     '/faq',
     '/dashboard',
     '/login',
+    '/feedback',
     '/createknowledgebase',
     '/newchat',
     '/botsession',
@@ -66,7 +66,7 @@ export default function RootLayout({
     '/privacy',
     '/terms',
     '/data-deletion',
-
+    '/signup',
     '/integration',
   ];
   const routeWithoutSidebar: string[] = [
@@ -79,12 +79,14 @@ export default function RootLayout({
     '/contactus',
     '/membership-failure',
     '/membership-success',
-    '/login',
+    '/signup',
     '/',
     '/botsession',
     '/privacy',
     '/terms',
     '/data-deletion',
+     "/livechat",
+     "/login"
   ];
   const knownRoutes: string[] = [
     ...routeWithoutSidebar,
@@ -95,7 +97,7 @@ export default function RootLayout({
     '/membership',
     '/faq',
     '/dashboard',
-    '/login',
+    '/feedback',
     '/createknowledgebase',
     '/newchat',
     '/aboutus',

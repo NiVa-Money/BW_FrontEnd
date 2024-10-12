@@ -1,6 +1,6 @@
 'use client'
 
-import LoginModal from '@/components/loginModal/loginModal'
+import LoginModal from '@/components/LoginComponent/LoginComponent'
 import React from 'react'
 
 export default function Login() {

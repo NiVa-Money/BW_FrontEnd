@@ -2,11 +2,13 @@
 import React from 'react';
 
 import DashBoardComponent from '@/components/dashBoardComponents/DashBoardComponent';
+import DashBoard from '@/components/dashBoardComponents/DashBoard';
 
 const Page = () => {
   return (
     <>
-      <DashBoardComponent />
+      {/* <DashBoardComponent /> */}
+      <DashBoard/>
     </>
   );
 };

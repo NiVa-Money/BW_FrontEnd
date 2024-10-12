@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import Modal from '../signupModal/page';
 import BackgroundAnimation from '../BackgroundAnimation/backgroundAnimation';
-import LoginModal from '../loginModal/loginModal';
+import LoginModal from '../LoginComponent/LoginComponent';
 import {
   verifyUserDataAction,
   loginRequest,
@@ -13,6 +13,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import './hero.css';
 import { useRouter } from 'next/navigation';
 import { RootState } from '@/redux/configureStore';
+import Link from 'next/link';
 
 const Hero = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -98,7 +99,7 @@ const Hero = () => {
           <p className="mt-4 text-2xl text-center text-gray-100 w-[691px]">
             Click. Create. Chat.
           </p>
-          <button
+          {/* <button
             onClick={handleSignIn}
             className="flex gap-4 justify-center px-6 py-4 mt-20 text-2xl text-white-200 bg-black rounded-[99px] max-md:px-6 max-md:mt-10 border-gradient hover:bg-[conic-gradient(from_180deg_at_50%_50%,#B52BBA_4.666563235223293deg,#A12CBC_23.647727966308594deg,#8C2EBE_44.85525995492935deg,#792FBF_72.45651304721832deg,#6C30C0_82.50000178813934deg,#4B32C3_127.99007892608643deg,#5831C2_160.968976020813deg,#6330C1_178.45529437065125deg,#742FC0_189.47770357131958deg,#8D2DBE_202.95226335525513deg,#A62CBC_230.65982580184937deg,#B92ABA_251.35178089141846deg,#D029B8_276.4414644241333deg,#EC27B6_306.45145654678345deg,#C729B9_331.67617321014404deg)]"
           >
@@ -108,13 +109,20 @@ const Hero = () => {
               className="shrink-0 self-start aspect-square w-[35px]"
             />
             <span className="text-[#EEEEF0]">Sign in with Google</span>
-          </button>
-          <button
-            className="flex gap-4 justify-center px-6 py-4 mt-4 text-2xl  text-white rounded-[99px] max-md:px-5"
+          </button> */}
+          <div className='flex gap-2'><Link href="/login"
+            className="flex gap-4 justify-center px-3 py-2 text-2xl text-white-200 bg-black rounded-[50px] max-md:px-6  border-gradient hover:bg-[conic-gradient(from_180deg_at_50%_50%,#B52BBA_4.666563235223293deg,#A12CBC_23.647727966308594deg,#8C2EBE_44.85525995492935deg,#792FBF_72.45651304721832deg,#6C30C0_82.50000178813934deg,#4B32C3_127.99007892608643deg,#5831C2_160.968976020813deg,#6330C1_178.45529437065125deg,#742FC0_189.47770357131958deg,#8D2DBE_202.95226335525513deg,#A62CBC_230.65982580184937deg,#B92ABA_251.35178089141846deg,#D029B8_276.4414644241333deg,#EC27B6_306.45145654678345deg,#C729B9_331.67617321014404deg)]"
             onClick={handleButtonClick}
           >
-            <span className=" text-[#EEEEF0]">Sign Up With Your Email</span>
-          </button>
+            <span className=" text-[#EEEEF0]">Log In</span>
+          </Link>
+          <Link href="/signup"
+            className="flex gap-4 justify-center px-3 py-2 text-2xl text-white-200 bg-black rounded-[50px] max-md:px-6  border-gradient hover:bg-[conic-gradient(from_180deg_at_50%_50%,#B52BBA_4.666563235223293deg,#A12CBC_23.647727966308594deg,#8C2EBE_44.85525995492935deg,#792FBF_72.45651304721832deg,#6C30C0_82.50000178813934deg,#4B32C3_127.99007892608643deg,#5831C2_160.968976020813deg,#6330C1_178.45529437065125deg,#742FC0_189.47770357131958deg,#8D2DBE_202.95226335525513deg,#A62CBC_230.65982580184937deg,#B92ABA_251.35178089141846deg,#D029B8_276.4414644241333deg,#EC27B6_306.45145654678345deg,#C729B9_331.67617321014404deg)]"
+            onClick={handleButtonClick}
+          >
+            <span className=" text-[#EEEEF0]">Log In</span>
+          </Link> </div>
+          
 
           {isModalOpen && (
             <Modal closeModal={closeModal} handleSignUp={handleSignUp} />
