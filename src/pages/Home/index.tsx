@@ -18,6 +18,10 @@ import Script from 'next/script';
 import BrandLogos from '@/components/Brands/brands';
 import React from 'react';
 import AwardsRecognition from '@/components/Awards/awardsRecognition';
+import FeaturesGrid from '@/components/Features/features';
+import CodingFactor from '@/components/Factors/codingFactors';
+import Creation from '@/components/Factors/Creation';
+import Integrations from '@/components/Brands/integrations';
 const LandingPage: React.FC = () => {
   const userEmail = useSelector((state: RootState) => state.root?.user?.email);
   const userVerify = useSelector((state: RootState) => state.root?.userVerify);
@@ -92,10 +96,22 @@ const LandingPage: React.FC = () => {
           <AwardsRecognition />
         </section>
         <section>
+          <Media />
+        </section>
+        <section>
+          <FeaturesGrid/>
+        </section>
+        <section>
+          <CodingFactor/>
+        </section>
+        <section>
           <Factors />
         </section>
         <section>
-          <Media />
+          <Integrations />
+        </section>
+        <section>
+          <Creation />
         </section>
         <section>
           <Testimonials />
