@@ -38,7 +38,7 @@ const BrandLogos = () => {
 
 return (
   <div className="text-white text-center py-8">
-    <h2 className="text-3xl font-semibold mb-6">Trusted by</h2>
+    <h2 className="text-3xl font-semibold mt-2 mb-6">Trusted by</h2>
     <div
       ref={scrollRef}
       className="flex overflow-hidden items-center justify-center max-w-6xl mx-auto"
@@ -59,7 +59,7 @@ return (
         </div>
       ))}
     </div>
-    <div className="mt-6 h-px bg-[#4C465B] w-full max-w-6xl mx-auto" />
+    <div className="mt-12 h-px bg-[#4C465B] w-full max-w-6xl mx-auto" />
   </div>
 );
 };

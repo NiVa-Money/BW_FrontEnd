@@ -67,7 +67,7 @@ const Media = () => {
 
   return (
     <div className="text-white text-center py-8">
-      <h2 className="text-3xl font-semibold mb-10">Media</h2>
+      <h2 className="text-3xl font-semibold mt-4 mb-10">Media</h2>
       <div
         ref={scrollRef}
         className="flex overflow-hidden items-center justify-start max-w-6xl mx-auto"
