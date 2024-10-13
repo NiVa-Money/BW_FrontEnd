@@ -12,6 +12,7 @@ import {
   filteredSession,
   getAdvanceFeature,
   getAllSession,
+  getAllSessionBot,
   sendUserQuestion,
   sendUserQuestionOnly,
 } from '@/redux/actions/userChatAction';
@@ -20,7 +21,7 @@ import Link from 'next/link';
 import { BarChart } from '@tremor/react';
 import withAuth from '../withAuth';
 import { useEffect } from 'react';
-import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
+import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline'
 import { fetchMembershipPlanRequest } from '@/redux/actions/paymentActions';
 
 const BotSessionComponent: React.FC = () => {
@@ -54,9 +55,11 @@ const BotSessionComponent: React.FC = () => {
     (state: RootState) => state.userChat?.allSession?.data?.sessions
   );
   const [botIdLocal, setBotIdLocal] = React.useState<any>('');
+
   const userId: any = useSelector(
     (state: RootState) => state?.root?.userData?.user_id
   );
+
   const userChatMessagesRes = useSelector(
     (state: RootState) => state?.userChat?.allSession
   );
@@ -70,6 +73,12 @@ const BotSessionComponent: React.FC = () => {
   const advanceFeature = useSelector(
     (state: RootState) => state?.userChat?.advanceFeature
   );
+
+  const getUserBotDataAnalysis = useSelector(
+    (state: RootState) => state?.userChat.allSessionBot?.data
+  )
+  console.log("getUserBotDataAnalysis",getUserBotDataAnalysis)
+
   const [chatsData, setchatsData] = React.useState<any>([]);
   const [chartData, setChartData] = React.useState([
     {
@@ -87,12 +96,15 @@ const BotSessionComponent: React.FC = () => {
   ]);
 
   const searchParams = useSearchParams() as URLSearchParams;
+
   useEffect(() => {
     const name = searchParams.get('botName');
 
     if (name) {
       const decodedName = decodeURIComponent(name);
+
       setBotNameDropDown(decodedName);
+    
     }
   }, [searchParams]);
 
@@ -322,6 +334,7 @@ const BotSessionComponent: React.FC = () => {
                 className="flex flex-col px-3 py-3 bg-[#141218] w-[90%] "
                 onClick={() => {
                   setSessionId(item._id);
+                  dispatch(getAllSessionBot({sessionId:item._id,userId:userId}))
                 }}
               >
                 <div className="flex justify-between items-center">
@@ -645,7 +658,7 @@ const BotSessionComponent: React.FC = () => {
             </div>
           </div>
         </div>
-        {isPopupOpen && (
+        { isPopupOpen && (
           <div className="popup-overlay">
             <div
               className="popup-content relative"
@@ -746,7 +759,7 @@ const BotSessionComponent: React.FC = () => {
                 <button
                   className="Continue-btn mt-4"
                   onClick={() => {
-                    setIsPopupOpen(false);
+                    !getUserBotDataAnalysis && setIsPopupOpen(false);
                     setContinueAdv(false);
                   }}
                 >

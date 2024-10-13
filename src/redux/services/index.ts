@@ -224,6 +224,17 @@ export const getUserAllSessionLiveService = async (payload: any) => {
   }
 };
 
+export const getUserAllSessionBotService = async (payload: any) => {
+  try {
+    const response = await axiosInstance.get(`/user/chat-analysis/${payload.userId}/${payload.sessionId}`);
+    return response.data;
+  } catch (error) {
+    throw new Error('Error: Getting user all session');
+  }
+};
+
+
+
 export const getAdvanceFeatureService = async (payload: any) => {
   try {
     const response = await axiosInstance.post(`user/chat-analysis`, payload);

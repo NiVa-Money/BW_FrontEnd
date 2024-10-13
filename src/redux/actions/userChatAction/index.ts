@@ -6,6 +6,7 @@ import {
   ADVANCE_FEATURE,
   BOTSESSION_ID,
   USER_ALL_SESSION_LIVE,
+  USER_ALL_SESSION_BOT,
 } from '../actionTypes';
 
 export const sendUserQuestion = (userChatData: any) => ({
@@ -23,6 +24,10 @@ export const getAllSessionLive = (userId: any) => ({
   payload: userId,
 });
 
+export const getAllSessionBot = (session: any) => ({
+  type: USER_ALL_SESSION_BOT,
+  payload: session,
+});
 
 export const sendUserQuestionOnly = (payload: any) => ({
   type: USER_OUESTION_SESSION,

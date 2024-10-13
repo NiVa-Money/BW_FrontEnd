@@ -66,6 +66,9 @@ import {
   GET_USER_All_SESSION_SUCCESS_LIVE,
   GET_USER_All_SESSION_FAILURE_LIVE,
   USER_ALL_SESSION_LIVE,
+  GET_USER_All_SESSION_SUCCESS_BOT,
+  GET_USER_All_SESSION_FAILURE_BOT,
+  USER_ALL_SESSION_BOT,
 } from '../actions/actionTypes';
 
 import {
@@ -91,7 +94,8 @@ import {
   capturePaymentService,
   fetchPlansApi,
   getMembershipPlan,
-  getUserAllSessionLiveService
+  getUserAllSessionLiveService,
+  getUserAllSessionBotService
 } from '../services';
 import { notifyError, notifySuccess } from '@/components/Toaster/toast';
 import {
@@ -552,6 +556,26 @@ export function* getUserAllSessionLiveSaga({
   }
 }
 
+export function* getUserAllSessionBotSaga({
+  payload,
+  type,
+}: {
+  type: string;
+  payload: any;
+}): Generator<any> {
+  try {
+    const userChat = yield call(getUserAllSessionBotService, payload);
+    yield put({
+      type: GET_USER_All_SESSION_SUCCESS_BOT,
+      payload: userChat,
+    });
+  } catch (error: any) {
+    yield put({
+      type: GET_USER_All_SESSION_FAILURE_BOT,
+    });
+  }
+}
+
 export function* getAdvanceFeatureSaga({
   payload,
   type,
@@ -701,4 +725,6 @@ export default function* rootSaga() {
   yield takeLatest(CAPTURE_PAYMENT_REQUEST, capturePaymentSaga);
   yield takeLatest(FETCH_MEMBERSHIP_PLAN_REQUEST, fetchMembershipPlanSaga);
   yield takeLatest(SET_PATHNAME, pathnameSaga);
+  yield takeEvery(USER_ALL_SESSION_BOT, getUserAllSessionBotSaga);
+
 }
