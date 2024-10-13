@@ -2,6 +2,7 @@
 import {
   getWhatsAppWebhookAction,
   saveWhatsAppAction,
+  editWhatsAppAction
 } from '@/redux/actions/socialIntegrations/whatsAppIntegration';
 import { RootState } from '@/redux/configureStore';
 import Image from 'next/image';
@@ -9,8 +10,10 @@ import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import withAuth from '../withAuth';
 import WhatsAppSaveConfirmationModal from '@/app/integration/whatsapp/whatsappSaveConfirmationModal';
+import { usePathname, useSearchParams } from 'next/navigation';
+import { useRouter } from 'next/router';
 
-const WhatsAppIntegration = () => {
+const EditWhatsAppIntegration = () => {
   const [formData, setFormData] = useState({
     provider: 'Meta',
     bot: '',
@@ -23,19 +26,21 @@ const WhatsAppIntegration = () => {
   const botDataRedux = useSelector(
     (state: RootState) => state.botProfile?.botProfiles?.data
   );
-
+  const searchParams = useSearchParams() as URLSearchParams;
+  console.log('searchParamssssss', searchParams);
+  const [botParam, setBotParam] = useState<string>('');
   const botloader = useSelector(
     (state: RootState) => state.botProfile?.botProfiles?.loader
   );
   const whatsappIntegratedBots = useSelector(
     (state: RootState) => state.socialIntegrations?.whatsApp?.getWebhook?.data
   );
-  const whatsappIntegrationSave = useSelector(
-    (state: RootState) => state.socialIntegrations?.whatsApp?.saveWebhook?.data
+  const whatsappIntegrationEditRedux = useSelector(
+    (state: RootState) => state.socialIntegrations?.whatsApp?.editWebhook?.data
   );
   const whatsappIntegrationLoader = useSelector(
     (state: RootState) =>
-      state.socialIntegrations?.whatsApp?.saveWebhook?.loader
+      state.socialIntegrations?.whatsApp?.editWebhook?.loader
   );
   const dispatch = useDispatch();
   const [transformedBotsData, setTransformedBotsData] = useState<any>([]);
@@ -49,29 +54,20 @@ const WhatsAppIntegration = () => {
     setExportResponse(null);
   };
   useEffect(() => {
-    if (botDataRedux?.length) {
-      const data: any = botDataRedux.map(
-        ({ _id, botName }: { _id: string; botName: string }) => ({
-          id: _id,
-          botName: botName,
-        })
-      );
-      const filteredBots = whatsappIntegratedBots?.length
-        ? data.filter(
-            (bot: any) =>
-              !whatsappIntegratedBots.some((item: any) => item.botId === bot.id)
-          )
-        : data;
+
+      const filteredBots = whatsappIntegratedBots?.find(item => item.botId === botParam)
+      console.log('filteredBots',filteredBots)
       setTransformedBotsData(filteredBots);
 
-      setFormData({
-        ...formData,
-        bot: filteredBots[0].id,
-      });
-    }
-  }, [botDataRedux, botloader, whatsappIntegratedBots]);
-
+      // setFormData({
+      //   ...formData,
+      //   bot: filteredBots[0].id,
+      // });
+    
+  }, [ whatsappIntegratedBots]);
+console.log('whatsappIntegratedBots')
   useEffect(() => {
+    console.log('whatsappIntegrationSave', whatsappIntegrationSave);
     if (whatsappIntegrationSave?.webhookUrl) {
       setExportResponse({
         success: true,
@@ -82,11 +78,21 @@ const WhatsAppIntegration = () => {
       });
       setIsExportModalOpen(true);
     }
-  }, [whatsappIntegrationSave, whatsappIntegrationLoader]);
+  }, [whatsappIntegrationEditRedux, whatsappIntegrationLoader]);
 
   useEffect(() => {
-    dispatch(getWhatsAppWebhookAction(''));
-  }, []);
+    console.log('whatsappIntegratedBots', whatsappIntegratedBots);
+    
+  }, [whatsappIntegratedBots]);
+  useEffect(() => {
+    const id = searchParams.get('id');
+    console.log('id', id);
+    if (id) {
+      setBotParam(id);
+    }
+  }, [searchParams]);
+  console.log('bot', botParam);
+
   const {
     provider,
     bot,
@@ -118,7 +124,7 @@ const WhatsAppIntegration = () => {
       phoneNumber: whatsappNumber,
       accessToken: accessToken,
     };
-    dispatch(saveWhatsAppAction(payload));
+    dispatch(editWhatsAppAction(payload))
   };
 
   return (
@@ -162,6 +168,14 @@ const WhatsAppIntegration = () => {
               <label className="block text-white mb-2" htmlFor="bot">
                 Select Bot
               </label>
+              <input
+                id="bot"
+                name="bot"
+                type="text"
+                value={formData.whatsappNumber}
+                onChange={handleChange}
+                className="w-full px-3 py-2 rounded-lg bg-gray-700 text-white"
+              />
               <select
                 id="bot"
                 name="bot"
@@ -289,4 +303,4 @@ const WhatsAppIntegration = () => {
   );
 };
 
-export default withAuth(WhatsAppIntegration);
+export default withAuth(EditWhatsAppIntegration);

@@ -105,6 +105,14 @@ const initialState: any = {
         loader: false,
         data: null,
       },
+      editWehook: {
+        loader: false,
+        data: null,
+      },
+      deleteWebhook: {
+        loader: false,
+        data: null,
+      },
     },
   },
 };

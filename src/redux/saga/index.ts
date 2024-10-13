@@ -69,6 +69,9 @@ import {
   GET_WHATSAPP_WEBHOOK_SUCCESS,
   GET_WHATSAPP_WEBHOOK_FAILURE,
   GET_WHATSAPP_WEBHOOK,
+  EDIT_WHATSAPP_INTEGRATION_SUCCESS,
+  EDIT_WHATSAPP_INTEGRATION_FAILURE,
+  EDIT_WHATSAPP_INTEGRATION,
 } from '../actions/actionTypes';
 
 import {
@@ -96,6 +99,7 @@ import {
   getMembershipPlan,
   wpSaveService,
   getWPWebhookService,
+  wpEditService,
 } from '../services';
 import { notifyError, notifySuccess } from '@/components/Toaster/toast';
 import {
@@ -691,6 +695,26 @@ export function* saveWhatsAppSaga({
     });
   }
 }
+export function* editWhatsAppSaga({
+  type,
+  payload,
+}: {
+  type: string;
+  payload: any;
+}): Generator<any> {
+  try {
+    const whatsAppSuccess = yield call(wpEditService, payload);
+    yield put({
+      type: EDIT_WHATSAPP_INTEGRATION_SUCCESS,
+      payload: whatsAppSuccess,
+    });
+  } catch (error: any) {
+    yield put({
+      type: EDIT_WHATSAPP_INTEGRATION_FAILURE,
+      payload: false,
+    });
+  }
+}
 export function* getWhatsAppWebhookSaga({
   type,
   payload,
@@ -739,4 +763,5 @@ export default function* rootSaga() {
   yield takeLatest(SET_PATHNAME, pathnameSaga);
   yield takeLatest(SAVE_WHATSAPP_INTEGRATION, saveWhatsAppSaga);
   yield takeLatest(GET_WHATSAPP_WEBHOOK, getWhatsAppWebhookSaga);
+  yield takeLatest(EDIT_WHATSAPP_INTEGRATION, editWhatsAppSaga);
 }

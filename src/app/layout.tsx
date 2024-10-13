@@ -49,8 +49,9 @@ export default function RootLayout({
     '/faq/docs',
     '/data-deletion',
     '/integration/whatsapp',
+    '/integration/editwhatsapp',
     '/integration',
-    '/myintegrations'
+    '/myintegrations',
   ];
   const routeWithoutFooter: string[] = [
     '/mychatbots',
@@ -74,8 +75,9 @@ export default function RootLayout({
     '/terms',
     '/data-deletion',
     '/integration/whatsapp',
+    '/integration/editwhatsapp',
     '/integration',
-    '/myintegrations'
+    '/myintegrations',
   ];
   const routeWithoutSidebar: string[] = [
     '/createbot',

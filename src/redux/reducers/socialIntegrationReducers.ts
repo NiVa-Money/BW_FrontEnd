@@ -1,4 +1,10 @@
 import {
+  DELETE_WHATSAPP_INTEGRATION,
+  DELETE_WHATSAPP_INTEGRATION_FAILURE,
+  DELETE_WHATSAPP_INTEGRATION_SUCCESS,
+  EDIT_WHATSAPP_INTEGRATION,
+  EDIT_WHATSAPP_INTEGRATION_FAILURE,
+  EDIT_WHATSAPP_INTEGRATION_SUCCESS,
   GET_WHATSAPP_WEBHOOK,
   GET_WHATSAPP_WEBHOOK_FAILURE,
   GET_WHATSAPP_WEBHOOK_SUCCESS,
@@ -73,6 +79,73 @@ export default function socialIntegrationReducers(
         whatsApp: {
           ...state.whatsApp,
           saveWebhook: {
+            loader: false,
+            data: null,
+          },
+        },
+      };
+    case EDIT_WHATSAPP_INTEGRATION:
+      return {
+        ...state,
+        whatsApp: {
+          ...state.whatsApp,
+          editWebhook: {
+            ...state.whatsApp.saveWebhook,
+            loader: true,
+          },
+        },
+      };
+    case EDIT_WHATSAPP_INTEGRATION_SUCCESS:
+      return {
+        ...state,
+        whatsApp: {
+          ...state.whatsApp,
+          editWebhook: {
+            loader: false,
+            data: action.payload.data,
+          },
+        },
+      };
+    case EDIT_WHATSAPP_INTEGRATION_FAILURE:
+      return {
+        ...state,
+        whatsApp: {
+          ...state.whatsApp,
+          editWebhook: {
+            loader: false,
+            data: null,
+          },
+        },
+      };
+
+    case DELETE_WHATSAPP_INTEGRATION:
+      return {
+        ...state,
+        whatsApp: {
+          ...state.whatsApp,
+          deleteWebhook: {
+            ...state.whatsApp.saveWebhook,
+            loader: true,
+          },
+        },
+      };
+    case DELETE_WHATSAPP_INTEGRATION_SUCCESS:
+      return {
+        ...state,
+        whatsApp: {
+          ...state.whatsApp,
+          deleteWebhook: {
+            loader: false,
+            data: action.payload.data,
+          },
+        },
+      };
+    case DELETE_WHATSAPP_INTEGRATION_FAILURE:
+      return {
+        ...state,
+        whatsApp: {
+          ...state.whatsApp,
+          deleteWebhook: {
             loader: false,
             data: null,
           },

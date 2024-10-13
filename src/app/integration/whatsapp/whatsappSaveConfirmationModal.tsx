@@ -47,8 +47,8 @@ const WhatsAppSaveConfirmationModal: React.FC<
         {exportResponse && exportResponse.success ? (
           <div>
             <p className="mb-2">
-              Your bot has been successfully exported. Include the following
-              script in your HTML:
+              Your bot has been successfully integrated with WhatsApp. Please
+              copy your webhookUrl and Secret Token.
             </p>
             <div className="mt-4 flex items-center mb-2">
               <button

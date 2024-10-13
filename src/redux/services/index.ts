@@ -289,10 +289,33 @@ export const wpSaveService = async (payload: any) => {
 export const getWPWebhookService = async (payload: any) => {
   try {
     const response = await axiosInstance.get(
-      `/external-integration/wp/webhook?botId=${payload}`
+      `/external-integration/wp?botId=${payload}`
     );
     return response.data;
   } catch (error: any) {
     throw new Error('Error: unable to fetch whatsApp webhook');
+  }
+};
+
+export const wpEditService = async (payload: any) => {
+  try {
+    const response = await axiosInstance.put(
+      `/external-integration/wp`,
+      payload
+    );
+    return response.data;
+  } catch (error) {
+    throw new Error('Payment capture failed');
+  }
+};
+
+export const wpDeleteService = async (payload: any) => {
+  try {
+    const response = await axiosInstance.put(
+      `/external-integration/wp?id=${payload}`
+    );
+    return response.data;
+  } catch (error: any) {
+    throw new Error('Error: delete User Knowledge Base');
   }
 };
