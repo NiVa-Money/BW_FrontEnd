@@ -37,6 +37,7 @@ const BotSessionComponent: React.FC = () => {
   const [summary, setSummary] = React.useState<string>('');
   const [continueAdv, setContinueAdv] = React.useState<any>(false);
   const [sentimentAnalysis, setSentimentAnalysis] = React.useState<any>({});
+  const [emotions,setEmotion] =  React.useState<string>('');
   const [nextSteps, setNextSteps] = React.useState<string>('');
   const [newMessage, setNewMessage] = React.useState<any>('');
   const [messages, setMessages] = React.useState<any>([]);
@@ -255,6 +256,7 @@ const BotSessionComponent: React.FC = () => {
     setReasonDetails(advanceFeature?.data?.data?.cause);
     setSummary(advanceFeature?.data?.data?.summary);
     setSentimentAnalysis(advanceFeature?.data?.data?.sentiments);
+    setEmotion(advanceFeature?.data?.data?.emotion)
     const formattedNextSteps = advanceFeature?.data?.data?.nextStep.replace(
       /\n/g,
       '<br />'
@@ -623,6 +625,19 @@ const BotSessionComponent: React.FC = () => {
                     valueFormatter={dataFormatter}
                     yAxisWidth={48}
                   />
+                </div>
+              ) : (
+                ''
+              )}
+                            <button
+                className="custom-button bg-[#FFFFFF] bg-opacity-10"
+                onClick={openPopup}
+              >
+                Emotions
+              </button>
+              {emotions ? (
+                <div className="w-[80%] flex justify-center items-center mt-2 border-4 border-[#DB88DB] py-4 px-10 text-base  text-white">
+                  {emotions}
                 </div>
               ) : (
                 ''
