@@ -747,17 +747,18 @@ export function* deleteWhatsAppWebhookSaga({
   payload: any;
 }): Generator<any> {
   try {
-    const whatsAppSuccess = yield call(wpDeleteService, payload);
+    const whatsAppSuccess: any = yield call(wpDeleteService, payload);
     yield put({
       type: DELETE_WHATSAPP_INTEGRATION_SUCCESS,
       payload: whatsAppSuccess,
     });
-notifySuccess(whatsAppSuccess.message)
+    notifySuccess(whatsAppSuccess?.message);
   } catch (error: any) {
     yield put({
       type: DELETE_WHATSAPP_INTEGRATION_FAILURE,
       payload: false,
     });
+    notifyError('Something went wrong');
   }
 }
 export default function* rootSaga() {

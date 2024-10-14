@@ -2,7 +2,7 @@
 import {
   getWhatsAppWebhookAction,
   saveWhatsAppAction,
-  editWhatsAppAction
+  editWhatsAppAction,
 } from '@/redux/actions/socialIntegrations/whatsAppIntegration';
 import { RootState } from '@/redux/configureStore';
 import Image from 'next/image';
@@ -10,7 +10,7 @@ import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import withAuth from '../withAuth';
 import WhatsAppSaveConfirmationModal from '@/app/integration/whatsapp/whatsappSaveConfirmationModal';
-import {  useRouter, useSearchParams } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 
 const EditWhatsAppIntegration = () => {
   const [formData, setFormData] = useState({
@@ -21,7 +21,7 @@ const EditWhatsAppIntegration = () => {
     mobileNumberId: '',
     businessAccountId: '',
     accessToken: '',
-    botId:''
+    botId: '',
   });
   const botDataRedux = useSelector(
     (state: RootState) => state.botProfile?.botProfiles?.data
@@ -42,7 +42,7 @@ const EditWhatsAppIntegration = () => {
       state.socialIntegrations?.whatsApp?.editWebhook?.loader
   );
   const dispatch = useDispatch();
-  const router=useRouter()
+  const router = useRouter();
   const [transformedBotsData, setTransformedBotsData] = useState<any>([]);
   const [isExportModalOpen, setIsExportModalOpen] = useState(false);
   const [exportResponse, setExportResponse] = useState<{
@@ -57,24 +57,28 @@ const EditWhatsAppIntegration = () => {
     // }
   };
   useEffect(() => {
-    if(whatsappIntegratedBots.length && botParam.length){
-      const filteredBots = whatsappIntegratedBots.filter((item:any) => item.botId === botParam)[0];
-      if(botDataRedux?.length){
-      const bots = botDataRedux.filter((item:any) => item._id === botParam)[0];
-      setFormData({
-        ...formData,
-        bot: bots?.botName,
-        appId:filteredBots?.appId,
-        provider: 'Meta',
-        whatsappNumber: filteredBots?.phoneNumber,
-        mobileNumberId: filteredBots?.phoneNumberId,
-        businessAccountId: filteredBots?.whatsappBusinessAccountId,
-        accessToken: filteredBots?.accessToken,
-        botId:filteredBots?.botId
-
-      });}
+    if (whatsappIntegratedBots.length && botParam.length) {
+      const filteredBots = whatsappIntegratedBots.filter(
+        (item: any) => item.botId === botParam
+      )[0];
+      if (botDataRedux?.length) {
+        const bots = botDataRedux.filter(
+          (item: any) => item._id === botParam
+        )[0];
+        setFormData({
+          ...formData,
+          bot: bots?.botName,
+          appId: filteredBots?.appId,
+          provider: 'Meta',
+          whatsappNumber: filteredBots?.phoneNumber,
+          mobileNumberId: filteredBots?.phoneNumberId,
+          businessAccountId: filteredBots?.whatsappBusinessAccountId,
+          accessToken: filteredBots?.accessToken,
+          botId: 'bot-id',
+        });
+      }
     }
-  }, [ whatsappIntegratedBots,botParam,botDataRedux]);
+  }, [whatsappIntegratedBots, botParam, botDataRedux]);
   useEffect(() => {
     if (whatsappIntegrationEditRedux?.webhookUrl) {
       setExportResponse({
@@ -84,13 +88,28 @@ const EditWhatsAppIntegration = () => {
           secretToken: whatsappIntegrationEditRedux?.secretToken,
         },
       });
-      if(!whatsappIntegrationLoader){
-        console.log('whatsappIntegrationEditRedux',whatsappIntegrationEditRedux)
-      setIsExportModalOpen(true);}
+      if (!whatsappIntegrationLoader) {
+        console.log(
+          'whatsappIntegrationEditRedux',
+          whatsappIntegrationEditRedux
+        );
+        setIsExportModalOpen(true);
+      }
     }
   }, [whatsappIntegrationEditRedux, whatsappIntegrationLoader]);
+  useEffect(() => {
+    if(whatsappIntegratedBots?.length){
+      const filteredBots = whatsappIntegratedBots.filter((item:any) => item.botId === botId)[0];
+      setExportResponse({
+        success:true,
+        data:{
+          webhookUrl: filteredBots?.webhookUrl, secretToken: filteredBots?.accessToken
+        }
+      })
+    }
+  }, []);
 
- console.log('isExportModalOpen',isExportModalOpen)
+  console.log('isExportModalOpen', isExportModalOpen);
   useEffect(() => {
     const id = searchParams.get('id');
     if (id) {
@@ -101,6 +120,7 @@ const EditWhatsAppIntegration = () => {
   const {
     provider,
     bot,
+    botId,
     whatsappNumber,
     appId,
     mobileNumberId,
@@ -122,14 +142,23 @@ const EditWhatsAppIntegration = () => {
     // Handle form submission (e.g., API call)
     const payload = {
       integrationType: 'whatsapp',
-      botId: bot,
+      botId: botId,
       appId: appId,
       phoneNumberId: mobileNumberId,
       whatsappBusinessAccountId: businessAccountId,
       phoneNumber: whatsappNumber,
       accessToken: accessToken,
     };
-    dispatch(editWhatsAppAction(payload))
+    dispatch(editWhatsAppAction(payload));
+    setFormData(
+      {provider: 'Meta',
+    bot: '',
+    whatsappNumber: '',
+    appId: '',
+    mobileNumberId: '',
+    businessAccountId: '',
+    accessToken: '',
+    botId: '',})
   };
 
   return (
@@ -180,7 +209,6 @@ const EditWhatsAppIntegration = () => {
                 value={formData.bot}
                 className="w-full px-3 py-2 rounded-lg bg-gray-700 text-white"
               />
-             
             </div>
 
             <div className="mb-4 w-full">
@@ -284,11 +312,13 @@ const EditWhatsAppIntegration = () => {
           </div>
         </form>
       </div>
+      {exportResponse?.data.webhookUrl&&
+
       <WhatsAppSaveConfirmationModal
         isOpen={isExportModalOpen}
         onClose={closeExportModal}
         exportResponse={exportResponse}
-      />
+      />}
     </>
   );
 };

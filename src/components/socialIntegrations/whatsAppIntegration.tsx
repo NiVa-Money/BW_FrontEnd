@@ -111,7 +111,7 @@ const WhatsAppIntegration = () => {
     // Handle form submission (e.g., API call)
     const payload = {
       integrationType: 'whatsapp',
-      botId: bot,
+      botId: 'bot-id',
       appId: appId,
       phoneNumberId: mobileNumberId,
       whatsappBusinessAccountId: businessAccountId,
@@ -119,6 +119,15 @@ const WhatsAppIntegration = () => {
       accessToken: accessToken,
     };
     dispatch(saveWhatsAppAction(payload));
+    setFormData({
+      provider: 'Meta',
+      bot: '',
+      whatsappNumber: '',
+      appId: '',
+      mobileNumberId: '',
+      businessAccountId: '',
+      accessToken: '',
+    });
   };
 
   return (
