@@ -105,7 +105,7 @@ const initialState: any = {
         loader: false,
         data: null,
       },
-      editWehook: {
+      editWebhook: {
         loader: false,
         data: null,
       },

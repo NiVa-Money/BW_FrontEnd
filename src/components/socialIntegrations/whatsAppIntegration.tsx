@@ -169,7 +169,7 @@ const WhatsAppIntegration = () => {
                 onChange={handleChange}
                 className="w-full px-3 py-2 rounded-lg bg-gray-700 text-white"
               >
-                {transformedBotsData.map(
+                {transformedBotsData?.map(
                   ({ id, botName }: { id: string; botName: string }) => (
                     <option key={id} value={id}>
                       {botName}

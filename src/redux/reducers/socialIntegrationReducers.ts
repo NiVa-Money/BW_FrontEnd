@@ -38,6 +38,10 @@ export default function socialIntegrationReducers(
             loader: false,
             data: action.payload.data,
           },
+          editWebhook:{
+            loader:false,
+            data:null
+          }
         },
       };
     case GET_WHATSAPP_WEBHOOK_FAILURE:

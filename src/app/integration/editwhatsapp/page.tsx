@@ -1,4 +1,4 @@
-import EditWhatsAppIntegration from '@/components/socialIntegrations/EditWhatsAppIntegration';
+import EditWhatsAppIntegration from "@/components/socialIntegrations/editWhatsAppIntegration";
 
 const EditWhatsAppIntegrationPage: React.FC = () => {
   console.log('EditWhatsAppIntegrationPage')

@@ -10,8 +10,7 @@ import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import withAuth from '../withAuth';
 import WhatsAppSaveConfirmationModal from '@/app/integration/whatsapp/whatsappSaveConfirmationModal';
-import { usePathname, useSearchParams } from 'next/navigation';
-import { useRouter } from 'next/router';
+import {  useRouter, useSearchParams } from 'next/navigation';
 
 const EditWhatsAppIntegration = () => {
   const [formData, setFormData] = useState({
@@ -22,12 +21,12 @@ const EditWhatsAppIntegration = () => {
     mobileNumberId: '',
     businessAccountId: '',
     accessToken: '',
+    botId:''
   });
   const botDataRedux = useSelector(
     (state: RootState) => state.botProfile?.botProfiles?.data
   );
   const searchParams = useSearchParams() as URLSearchParams;
-  console.log('searchParamssssss', searchParams);
   const [botParam, setBotParam] = useState<string>('');
   const botloader = useSelector(
     (state: RootState) => state.botProfile?.botProfiles?.loader
@@ -43,6 +42,7 @@ const EditWhatsAppIntegration = () => {
       state.socialIntegrations?.whatsApp?.editWebhook?.loader
   );
   const dispatch = useDispatch();
+  const router=useRouter()
   const [transformedBotsData, setTransformedBotsData] = useState<any>([]);
   const [isExportModalOpen, setIsExportModalOpen] = useState(false);
   const [exportResponse, setExportResponse] = useState<{
@@ -52,46 +52,51 @@ const EditWhatsAppIntegration = () => {
   const closeExportModal = () => {
     setIsExportModalOpen(false);
     setExportResponse(null);
+    // if(whatsappIntegrationEditRedux?.secretToken){
+    //   router.push('/myintegrations')
+    // }
   };
   useEffect(() => {
+    if(whatsappIntegratedBots.length && botParam.length){
+      const filteredBots = whatsappIntegratedBots.filter((item:any) => item.botId === botParam)[0];
+      if(botDataRedux?.length){
+      const bots = botDataRedux.filter((item:any) => item._id === botParam)[0];
+      setFormData({
+        ...formData,
+        bot: bots?.botName,
+        appId:filteredBots?.appId,
+        provider: 'Meta',
+        whatsappNumber: filteredBots?.phoneNumber,
+        mobileNumberId: filteredBots?.phoneNumberId,
+        businessAccountId: filteredBots?.whatsappBusinessAccountId,
+        accessToken: filteredBots?.accessToken,
+        botId:filteredBots?.botId
 
-      const filteredBots = whatsappIntegratedBots?.find(item => item.botId === botParam)
-      console.log('filteredBots',filteredBots)
-      setTransformedBotsData(filteredBots);
-
-      // setFormData({
-      //   ...formData,
-      //   bot: filteredBots[0].id,
-      // });
-    
-  }, [ whatsappIntegratedBots]);
-console.log('whatsappIntegratedBots')
+      });}
+    }
+  }, [ whatsappIntegratedBots,botParam,botDataRedux]);
   useEffect(() => {
-    console.log('whatsappIntegrationSave', whatsappIntegrationSave);
-    if (whatsappIntegrationSave?.webhookUrl) {
+    if (whatsappIntegrationEditRedux?.webhookUrl) {
       setExportResponse({
         success: true,
         data: {
-          webhookUrl: whatsappIntegrationSave?.webhookUrl,
-          secretToken: whatsappIntegrationSave?.secretToken,
+          webhookUrl: whatsappIntegrationEditRedux?.webhookUrl,
+          secretToken: whatsappIntegrationEditRedux?.secretToken,
         },
       });
-      setIsExportModalOpen(true);
+      if(!whatsappIntegrationLoader){
+        console.log('whatsappIntegrationEditRedux',whatsappIntegrationEditRedux)
+      setIsExportModalOpen(true);}
     }
   }, [whatsappIntegrationEditRedux, whatsappIntegrationLoader]);
 
-  useEffect(() => {
-    console.log('whatsappIntegratedBots', whatsappIntegratedBots);
-    
-  }, [whatsappIntegratedBots]);
+ console.log('isExportModalOpen',isExportModalOpen)
   useEffect(() => {
     const id = searchParams.get('id');
-    console.log('id', id);
     if (id) {
       setBotParam(id);
     }
   }, [searchParams]);
-  console.log('bot', botParam);
 
   const {
     provider,
@@ -172,25 +177,10 @@ console.log('whatsappIntegratedBots')
                 id="bot"
                 name="bot"
                 type="text"
-                value={formData.whatsappNumber}
-                onChange={handleChange}
+                value={formData.bot}
                 className="w-full px-3 py-2 rounded-lg bg-gray-700 text-white"
               />
-              <select
-                id="bot"
-                name="bot"
-                value={formData.bot}
-                onChange={handleChange}
-                className="w-full px-3 py-2 rounded-lg bg-gray-700 text-white"
-              >
-                {transformedBotsData.map(
-                  ({ id, botName }: { id: string; botName: string }) => (
-                    <option key={id} value={id}>
-                      {botName}
-                    </option>
-                  )
-                )}
-              </select>
+             
             </div>
 
             <div className="mb-4 w-full">
