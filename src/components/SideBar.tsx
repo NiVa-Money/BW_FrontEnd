@@ -26,6 +26,7 @@ import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 import SettingsRoundedIcon from '@mui/icons-material/SettingsRounded';
 import PhoneAndroidRoundedIcon from '@mui/icons-material/PhoneAndroidRounded';
 import KeyboardArrowRightRoundedIcon from '@mui/icons-material/KeyboardArrowRightRounded';
+import AssistantIcon from '@mui/icons-material/Assistant';
 
 interface SidebarItemProps {
   path?: string;
@@ -74,8 +75,7 @@ const SideBar: React.FC = () => {
     localStorage.removeItem('user_id');
     localStorage.removeItem('token');
     dispatch(logoutUser());
-    dispatch(removeFromReduxbot());
-    dispatch(removeAdvanceFeature());
+    router.push('/home');
   };
 
   const getUserBotProfiles = () => {
@@ -98,10 +98,16 @@ const SideBar: React.FC = () => {
           subChildItems: [{ title: 'hey', path: '/mychatbots' }],
         },
         {
-          title: 'Live Chats',
+          title: 'Live Chat',
           hasDropdown: true,
-          subChildItems: [{ title: 'hey', path: '/mychatbots' }],
+          subChildItems: [{ title: 'hey', path: '/livechat' }],
         },
+
+        // {
+        //   title: 'Live Chats',
+        //   hasDropdown: true,
+        //   subChildItems: [{ title: 'hey', path: '/mychatbots' }],
+        // },
         { title: 'Reports (coming soon)' },
       ],
     },
@@ -139,6 +145,7 @@ const SideBar: React.FC = () => {
       ],
     },
     { icon: <AccountCircleIcon />, text: 'Profile', path: '/profile' },
+    { icon: <AssistantIcon />, text: 'Feedback', path: '/feedback' },
   ]);
 
   return (
@@ -207,16 +214,18 @@ const MenuItem: React.FC<MenuItemProps> = ({ item, onClick }) => {
     }));
   };
 
-  const botSession = (botId: string, userId: string, botName: string) => {
+  const botSession = (botId: string, userId: string, botName: string, title:string) => {
+
     const data = {
       botId,
       userId,
+      title
     };
     dispatch(botSessionId(data));
-    router.push(`/botsession?botName=${encodeURIComponent(botName)}`);
+    router.push(`/${title=="All Chats"? "botsession" : "livechat" }?botName=${encodeURIComponent(botName)}`);
   };
 
-  useEffect(() => {}, [botSessionaa]);
+ 
 
   const isActive = (path: string) => {
     return pathname === path || (pathname && pathname.includes(path));
@@ -297,7 +306,8 @@ const MenuItem: React.FC<MenuItemProps> = ({ item, onClick }) => {
                             key={childIdx}
                             className={menuItemClasses}
                             onClick={() =>
-                              botSession(bot._id, bot.userId, bot.botName)
+                              botSession(bot._id, bot.userId, bot.botName,subItem.title)
+                              
                             }
                           >
                             <span>{bot.botName}</span>

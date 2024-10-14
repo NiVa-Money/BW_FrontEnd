@@ -8,7 +8,6 @@ import { useSelector, useDispatch } from 'react-redux';
 import { fetchPlans } from '@/redux/actions/paymentActions';
 
 const PricingCard = () => {
-  const [isPaymentSuccessful, setIsPaymentSuccessful] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalMessage, setModalMessage] = useState('');
   const router = useRouter();
@@ -42,10 +41,10 @@ const PricingCard = () => {
     {
       title: 'Basic', // This will be replaced by API data
       price: '0.00', // This will be replaced by API data
-      sessions: '10,000 Messages',
+      sessions: '100 Messages',
       features: [
         'Access to essential features for creating your AI chatbot.',
-        'Suitable for up to 10,000 chat messages.',
+        'Suitable for up to 100 chat messages.',
         'Manage 2 Bot Profile with 2 Knowledge Base.',
         'Text uploads allowed for content.',
       ],
@@ -134,7 +133,7 @@ const PricingCard = () => {
                   <button
                     className="py-2 px-6 text-base font-medium bg-gray-100 rounded-lg text-slate-950 w-full"
                     onClick={() => {
-                      window.scrollTo({ top: 0, behavior: 'smooth' });
+                      router.push('/login');
                     }}
                   >
                     Start For Free

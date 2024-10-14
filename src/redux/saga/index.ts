@@ -75,6 +75,9 @@ import {
   DELETE_WHATSAPP_INTEGRATION_SUCCESS,
   DELETE_WHATSAPP_INTEGRATION_FAILURE,
   DELETE_WHATSAPP_INTEGRATION,
+  GET_USER_All_SESSION_SUCCESS_LIVE,
+  GET_USER_All_SESSION_FAILURE_LIVE,
+  USER_ALL_SESSION_LIVE,
 } from '../actions/actionTypes';
 
 import {
@@ -104,6 +107,7 @@ import {
   getWPWebhookService,
   wpEditService,
   wpDeleteService,
+  getUserAllSessionLiveService,
 } from '../services';
 import { notifyError, notifySuccess } from '@/components/Toaster/toast';
 import {
@@ -544,6 +548,26 @@ export function* getUserAllSessionSaga({
   }
 }
 
+export function* getUserAllSessionLiveSaga({
+  payload,
+  type,
+}: {
+  type: string;
+  payload: any;
+}): Generator<any> {
+  try {
+    const userChat = yield call(getUserAllSessionLiveService, payload);
+    yield put({
+      type: GET_USER_All_SESSION_SUCCESS_LIVE,
+      payload: userChat,
+    });
+  } catch (error: any) {
+    yield put({
+      type: GET_USER_All_SESSION_FAILURE_LIVE,
+    });
+  }
+}
+
 export function* getAdvanceFeatureSaga({
   payload,
   type,
@@ -778,6 +802,7 @@ export default function* rootSaga() {
   yield takeEvery(DELETE_USER_KNOWLEDGE_BASE, deleteUserKnowledgeBaseSaga);
   yield takeEvery(USER_CHAT_DATA, getUserChatSaga);
   yield takeEvery(USER_ALL_SESSION, getUserAllSessionSaga);
+  yield takeEvery(USER_ALL_SESSION_LIVE, getUserAllSessionLiveSaga);
   yield takeEvery(ADVANCE_FEATURE, getAdvanceFeatureSaga);
   yield takeEvery(VERIFY_USER_OTP, verifyOtpUserSaga);
   yield takeEvery(GOOGLE_LOGIN, signUpGoogleUserSagaData);

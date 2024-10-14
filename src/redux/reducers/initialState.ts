@@ -69,6 +69,10 @@ const initialState: any = {
       data: [],
       loader: false,
     },
+    allSessionLive: {
+      data: [],
+      loader: false,
+    },
     sessionChat: {
       data: [],
       sessionId: null,

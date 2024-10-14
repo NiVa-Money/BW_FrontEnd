@@ -1,4 +1,4 @@
-'use client'
+'use client';
 import React, { useEffect } from 'react';
 import Card from './cards';
 import { useDispatch } from 'react-redux';
@@ -47,7 +47,6 @@ const Integration = () => {
     ],
   ];
 
-
   return (
     <>
       <div className="flex flex-col justify-center items-left mt-10">
@@ -82,4 +81,4 @@ const Integration = () => {
   );
 };
 
-export default withAuth( Integration);
+export default withAuth(Integration);

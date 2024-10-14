@@ -37,6 +37,7 @@ const BotSessionComponent: React.FC = () => {
   const [summary, setSummary] = React.useState<string>('');
   const [continueAdv, setContinueAdv] = React.useState<any>(false);
   const [sentimentAnalysis, setSentimentAnalysis] = React.useState<any>({});
+  const [emotions,setEmotion] =  React.useState<string>('');
   const [nextSteps, setNextSteps] = React.useState<string>('');
   const [newMessage, setNewMessage] = React.useState<any>('');
   const [messages, setMessages] = React.useState<any>([]);
@@ -189,31 +190,40 @@ const BotSessionComponent: React.FC = () => {
   React.useEffect(() => {
     // Fetch membership plan on component mount
     dispatch(fetchMembershipPlanRequest());
-  } , []);
+  }, []);
 
-  const formattedPlanName = planName ? planName.charAt(0).toUpperCase() + planName.slice(1) : 'Free';
+  const formattedPlanName = planName
+    ? planName.charAt(0).toUpperCase() + planName.slice(1)
+    : 'Free';
 
-  React.useEffect(() => {
-    if (sentimentAnalysis) {
-      const parseValue = (value: any) => {
-        return value ? parseFloat(value.replace('%', '')) : 0;
-      };
-      setChartData([
-        {
-          name: 'Negative',
-          'Customer Sentiment': Number(parseValue(sentimentAnalysis?.negative)),
-        },
-        {
-          name: 'Positive',
-          'Customer Sentiment': Number(parseValue(sentimentAnalysis?.positive)),
-        },
-        {
-          name: 'Neutral',
-          'Customer Sentiment': Number(parseValue(sentimentAnalysis?.neutral)),
-        },
-      ]);
-    }
-  }, [sentimentAnalysis]);
+    React.useEffect(() => {
+      if (sentimentAnalysis) {
+        const parseValue = (value: any) => {
+          if (typeof value === 'string') {
+            return parseFloat(value.replace('%', '')); // Remove % and parse the string as a float
+          } else if (typeof value === 'number') {
+            return value; // If it's already a number, return it as is
+          }
+          return 0; // Return 0 if the value is null, undefined, or another type
+        };
+    
+        setChartData([
+          {
+            name: 'Negative',
+            'Customer Sentiment': parseValue(sentimentAnalysis?.negative),
+          },
+          {
+            name: 'Positive',
+            'Customer Sentiment': parseValue(sentimentAnalysis?.positive),
+          },
+          {
+            name: 'Neutral',
+            'Customer Sentiment': parseValue(sentimentAnalysis?.neutral),
+          },
+        ]);
+      }
+    }, [sentimentAnalysis]);
+    
 
   const dataFormatter = (value: any) => `${value}%`;
 
@@ -246,6 +256,7 @@ const BotSessionComponent: React.FC = () => {
     setReasonDetails(advanceFeature?.data?.data?.cause);
     setSummary(advanceFeature?.data?.data?.summary);
     setSentimentAnalysis(advanceFeature?.data?.data?.sentiments);
+    setEmotion(advanceFeature?.data?.data?.emotion)
     const formattedNextSteps = advanceFeature?.data?.data?.nextStep.replace(
       /\n/g,
       '<br />'
@@ -295,7 +306,9 @@ const BotSessionComponent: React.FC = () => {
     <div className="flex h-screen">
       <div className="w-80 h-[100%] flex flex-col">
         <div className="w-full mt-8 flex justify-center items-center">
-          <Image src={mainLogo.src} alt="logo" width={90} height={80} />
+          <Link href="/dashboard">
+            <Image src={mainLogo.src} alt="logo" width={90} height={80} />
+          </Link>
         </div>
         <div className="text-white mt-[54px] mx-3">
           <Link
@@ -303,10 +316,7 @@ const BotSessionComponent: React.FC = () => {
             className={`flex items-center space-x-3 py-2 px-3 text-[#AEB9E1] hover:bg-white' 
           }`}
           >
-            <span>
-              <i className="fas fa-gauge-high mr-3" />
-              Dashboard
-            </span>
+            <span className="text-[#CB3CFF] text-bold">Dashboard</span>
           </Link>
         </div>
         <div className="text-white mt-[8px] flex justify-center items-center">
@@ -615,6 +625,19 @@ const BotSessionComponent: React.FC = () => {
                     valueFormatter={dataFormatter}
                     yAxisWidth={48}
                   />
+                </div>
+              ) : (
+                ''
+              )}
+                            <button
+                className="custom-button bg-[#FFFFFF] bg-opacity-10"
+                onClick={openPopup}
+              >
+                 Detected Emotion
+              </button>
+              {emotions ? (
+                <div className="w-[80%] flex justify-center items-center mt-2 border-4 border-[#DB88DB] py-4 px-10 text-base  text-white">
+                  {emotions}
                 </div>
               ) : (
                 ''

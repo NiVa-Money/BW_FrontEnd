@@ -1,20 +1,14 @@
 import * as React from 'react';
-import { SqureCardOne } from '@/components/dashBoardComponents/squreCardOne';
-import { SqureCardTwo } from '@/components/dashBoardComponents/squreCardTwo';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '@/redux/configureStore';
-import { useEffect, useState } from 'react';
-import styles from './dashboardComponent.module.css';
-import Link from 'next/link';
+import { useEffect } from 'react';
 import { fetchMetricsAction } from '@/redux/actions/authActions';
 import { getUserProfileAction } from '@/redux/actions/authActions';
-import AddIcon from '@mui/icons-material/Add';
 import withAuth from '../withAuth';
 import CardHeaderOne from './CardHeaderOne';
 import { fetchMembershipPlanRequest } from '@/redux/actions/paymentActions';
 import MetricCard from './MetricCard';
 import ChartCardOne from './ChartCardOne';
-import ChartCardTwo from './ChartCardTwo';
 import ReportsOverview from './ChartCardTwo';
 
 const DashBoardComponent: React.FC = () => {
@@ -52,18 +46,11 @@ const DashBoardComponent: React.FC = () => {
       dispatch(getUserProfileAction(userEmail));
     }
   }, []);
-  const memoizedCardHeaderOne = React.useMemo(() => {
-    return <CardHeaderOne userMetricData={userMetricData} />;
-  }, [userMetricData]);
 
   useEffect(() => {
     // Fetch membership plan on component mount
     dispatch(fetchMembershipPlanRequest());
   }, [dispatch]);
-
-  const formattedPlanName = planName
-    ? planName.charAt(0).toUpperCase() + planName.slice(1)
-    : '';
 
   useEffect(() => {
     let interval: NodeJS.Timeout | null = null;
@@ -86,7 +73,7 @@ const DashBoardComponent: React.FC = () => {
   return (
     <div className="w-full h-full flex flex-col p-4 md:p-8 bg-[#0B031E] text-white">
       <div className="w-full flex justify-center flex-col mt-4 h-auto md:h-[15%] gap-4">
-        <MetricCard/>
+        <MetricCard />
       </div>
       <div className="w-full justify-center gap-4">
         <ChartCardOne />

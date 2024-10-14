@@ -15,6 +15,13 @@ import { usePathname, useRouter } from 'next/navigation';
 import Media from '@/components/Media/mediaLinks';
 import BackgroundAnimation from '@/components/BackgroundAnimation/backgroundAnimation';
 import Script from 'next/script';
+import BrandLogos from '@/components/Brands/brands';
+import React from 'react';
+import AwardsRecognition from '@/components/Awards/awardsRecognition';
+import FeaturesGrid from '@/components/Features/features';
+import CodingFactor from '@/components/Factors/codingFactors';
+import Creation from '@/components/Factors/Creation';
+import Integrations from '@/components/Brands/integrations';
 const LandingPage: React.FC = () => {
   const userEmail = useSelector((state: RootState) => state.root?.user?.email);
   const userVerify = useSelector((state: RootState) => state.root?.userVerify);
@@ -75,28 +82,39 @@ const LandingPage: React.FC = () => {
 
   return (
     <>
-      
-        <Script src="https://messages-dump.s3.amazonaws.com/widget/66cf26cda51861b4b167422c/66ec1e16a0ffb67f4eb2cce3.js" />
-     
+      <Script src="https://messages-dump.s3.amazonaws.com/widget/66cf26cda51861b4b167422c/66ec1e16a0ffb67f4eb2cce3.js" />
+
       <main>
         <Hero />
         <section>
-          <div>
-            <Features />
-          </div>
+          <Features />
         </section>
         <section>
-          <div>
-            <Factors />
-          </div>
+          <BrandLogos />
         </section>
         <section>
-          <div>
-            <Testimonials />
-          </div>
+          <AwardsRecognition />
         </section>
         <section>
           <Media />
+        </section>
+        <section>
+          <FeaturesGrid/>
+        </section>
+        <section>
+          <CodingFactor/>
+        </section>
+        <section>
+          <Factors />
+        </section>
+        <section>
+          <Integrations />
+        </section>
+        <section>
+          <Creation />
+        </section>
+        <section>
+          <Testimonials />
         </section>
         <section>
           <PricingCard />

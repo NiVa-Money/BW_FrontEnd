@@ -1,12 +1,21 @@
 'use client'
 
 import LoginModal from '@/components/loginModal/loginModal'
-import React from 'react'
+import { useRouter } from 'next/navigation';
+import React, { useState } from 'react'
 
 export default function Login() {
+  const [isModalOpen, setIsModalOpen] = useState(true);
+  const router = useRouter(); 
+
+  const closeModal = () => {
+    setIsModalOpen(false); // This will close the modal
+    router.back();
+  };
+
   return (
-    <LoginModal closeModal={function (): void {
-          throw new Error('Function not implemented.')
-      } }/>
+    <>
+      {isModalOpen && <LoginModal closeModal={closeModal} />} {/* Pass the actual closeModal function */}
+    </>
   )
 }

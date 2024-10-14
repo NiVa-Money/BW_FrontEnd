@@ -42,6 +42,7 @@ export default function RootLayout({
     '/faq',
     '/dashboard',
     '/login',
+    '/feedback',
     '/createknowledgebase',
     '/newchat',
     '/botsession',
@@ -52,6 +53,7 @@ export default function RootLayout({
     '/integration/editwhatsapp',
     '/integration',
     '/myintegrations',
+    '/livechat',
   ];
   const routeWithoutFooter: string[] = [
     '/mychatbots',
@@ -66,6 +68,7 @@ export default function RootLayout({
     '/faq',
     '/dashboard',
     '/login',
+    '/feedback',
     '/createknowledgebase',
     '/newchat',
     '/botsession',
@@ -78,6 +81,7 @@ export default function RootLayout({
     '/integration/editwhatsapp',
     '/integration',
     '/myintegrations',
+    '/livechat',
   ];
   const routeWithoutSidebar: string[] = [
     '/createbot',
@@ -95,6 +99,7 @@ export default function RootLayout({
     '/privacy',
     '/terms',
     '/data-deletion',
+    '/livechat',
   ];
   const knownRoutes: string[] = [
     ...routeWithoutSidebar,
@@ -106,6 +111,7 @@ export default function RootLayout({
     '/faq',
     '/dashboard',
     '/login',
+    '/feedback',
     '/createknowledgebase',
     '/newchat',
     '/aboutus',
