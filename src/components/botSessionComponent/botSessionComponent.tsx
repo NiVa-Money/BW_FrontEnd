@@ -780,7 +780,7 @@ const BotSessionComponent: React.FC = () => {
                 <button
                   className="Continue-btn mt-4"
                   onClick={() => {
-                    !getUserBotDataAnalysis && setIsPopupOpen(false);
+                    setIsPopupOpen(false);
                     setContinueAdv(false);
                   }}
                 >
