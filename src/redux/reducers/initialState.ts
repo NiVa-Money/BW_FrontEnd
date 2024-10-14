@@ -93,15 +93,35 @@ const initialState: any = {
       loader: false,
     },
   },
-  
+
   payment: {
     loading: false,
     paymentData: null,
     error: null,
-    plans: {  
+    plans: {
       plans: [],
       loading: false,
       error: null,
+    },
+  },
+  socialIntegrations: {
+    whatsApp: {
+      getWebhook: {
+        loader: false,
+        data: null,
+      },
+      saveWebhook: {
+        loader: false,
+        data: null,
+      },
+      editWebhook: {
+        loader: false,
+        data: null,
+      },
+      deleteWebhook: {
+        loader: false,
+        data: null,
+      },
     },
   },
 };

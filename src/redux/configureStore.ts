@@ -11,6 +11,7 @@ import userChatReducers from './reducers/userChatReducers';
 import { persistStore, persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage'; // default localStorage
 import paymentReducer from './reducers/paymentReducers';
+import socialIntegrationReducers from './reducers/socialIntegrationReducers';
 
 const sagaMiddleware = createSagaMiddleware();
 
@@ -25,6 +26,7 @@ const rootReducer = {
   botProfile: botProfileReducers,
   KnowledgeBase: knowledgeBaseReducers,
   userChat: userChatReducers,
+  socialIntegrations:socialIntegrationReducers
 };
 
 const persistedReducer = persistReducer(persistConfig, combineReducers(rootReducer));
