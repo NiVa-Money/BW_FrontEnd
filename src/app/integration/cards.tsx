@@ -28,9 +28,7 @@ const Card: React.FC<CardProps> = ({
           <h3 className="text-lg font-semibold">{title}</h3>
           <p className="text-sm text-[#AEB9E1]">{subTitle}</p>
         </div>
-        <div className="ml-auto">
-          <button className="text-[#AEB9E1]">...</button>
-        </div>
+        
       </div>
       <div className="flex justify-center mb-4">
         <img

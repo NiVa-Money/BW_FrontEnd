@@ -1,4 +1,5 @@
 import {
+  DELETE_WHATSAPP_INTEGRATION,
   EDIT_WHATSAPP_INTEGRATION,
   GET_WHATSAPP_WEBHOOK,
   SAVE_WHATSAPP_INTEGRATION,
@@ -16,5 +17,9 @@ export const getWhatsAppWebhookAction = (payload: any) => ({
 
 export const editWhatsAppAction = (payload: any) => ({
   type: EDIT_WHATSAPP_INTEGRATION,
+  payload,
+});
+export const deleteWhatsAppAction = (payload: any) => ({
+  type: DELETE_WHATSAPP_INTEGRATION,
   payload,
 });

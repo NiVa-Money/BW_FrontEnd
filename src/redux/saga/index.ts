@@ -72,6 +72,8 @@ import {
   EDIT_WHATSAPP_INTEGRATION_SUCCESS,
   EDIT_WHATSAPP_INTEGRATION_FAILURE,
   EDIT_WHATSAPP_INTEGRATION,
+  DELETE_WHATSAPP_INTEGRATION_SUCCESS,
+  DELETE_WHATSAPP_INTEGRATION_FAILURE,
 } from '../actions/actionTypes';
 
 import {
@@ -100,6 +102,7 @@ import {
   wpSaveService,
   getWPWebhookService,
   wpEditService,
+  wpDeleteService,
 } from '../services';
 import { notifyError, notifySuccess } from '@/components/Toaster/toast';
 import {
@@ -735,6 +738,26 @@ export function* getWhatsAppWebhookSaga({
     });
   }
 }
+export function* deleteWhatsAppWebhookSaga({
+  type,
+  payload,
+}: {
+  type: string;
+  payload: any;
+}): Generator<any> {
+  try {
+    const whatsAppSuccess = yield call(wpDeleteService, payload);
+    yield put({
+      type: DELETE_WHATSAPP_INTEGRATION_SUCCESS,
+      payload: whatsAppSuccess,
+    });
+  } catch (error: any) {
+    yield put({
+      type: DELETE_WHATSAPP_INTEGRATION_FAILURE,
+      payload: false,
+    });
+  }
+}
 export default function* rootSaga() {
   yield takeLatest(VERIFY_USER_DATA, verifyUserSaga);
   yield takeLatest(SIGN_UP_DATA, signUpUserSaga);
@@ -764,4 +787,5 @@ export default function* rootSaga() {
   yield takeLatest(SAVE_WHATSAPP_INTEGRATION, saveWhatsAppSaga);
   yield takeLatest(GET_WHATSAPP_WEBHOOK, getWhatsAppWebhookSaga);
   yield takeLatest(EDIT_WHATSAPP_INTEGRATION, editWhatsAppSaga);
+  yield takeLatest(DELETE_WHATSAPP_INTEGRATION_FAILURE, deleteWhatsAppWebhookSaga);
 }

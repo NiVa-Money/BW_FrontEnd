@@ -1,11 +1,13 @@
 'use client';
 import WhatsAppSaveConfirmationModal from '@/app/integration/whatsapp/whatsappSaveConfirmationModal';
+import { deleteWhatsAppAction } from '@/redux/actions/socialIntegrations/whatsAppIntegration';
 import { RootState } from '@/redux/configureStore';
 import { List, ListItem, ListItemButton } from '@mui/material';
 import Image from 'next/image';
 import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import ConfirmModal from '../ChatBot/modalDelete';
 // import { Unstable_Popup as BasePopup } from '@mui/base/Unstable_Popup';
 
 interface whatsAppBotCardProps {
@@ -24,13 +26,29 @@ const WhatsAppIntegrationCard: React.FC<whatsAppBotCardProps> = ({
   const whatsappIntegratedBots = useSelector(
     (state: RootState) => state.socialIntegrations?.whatsApp?.getWebhook?.data
   );
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [botIdToDelete, setBotIdToDelete] = useState<string | null>(null);
   const [exportResponse, setExportResponse] = useState<{
     success: true;
     data: { webhookUrl: string; secretToken: string };
   } | null>(null);
+  const dispatch=useDispatch()
   const closeExportModal = () => {
     setIsExportModalOpen(false);
-    setExportResponse(null);
+  };
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setBotIdToDelete(null);
+  };
+  const confirmDelete = () => {
+    if (botId) {
+      dispatch(
+        deleteWhatsAppAction(botId)
+      );
+      
+      setIsModalOpen(false);
+      setBotIdToDelete(null);
+    }
   };
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchor(!anchor);
@@ -140,6 +158,12 @@ const WhatsAppIntegrationCard: React.FC<whatsAppBotCardProps> = ({
         </button>
       </div>
     </div>
+    <ConfirmModal
+        isOpen={isModalOpen}
+        onClose={closeModal}
+        onConfirm={confirmDelete}
+        message="Are you sure you want to delete this chatbot?"
+      />
     {exportResponse?.data.webhookUrl&&
           <WhatsAppSaveConfirmationModal
           isOpen={isExportModalOpen}
