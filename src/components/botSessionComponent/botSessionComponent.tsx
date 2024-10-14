@@ -633,7 +633,7 @@ const BotSessionComponent: React.FC = () => {
                 className="custom-button bg-[#FFFFFF] bg-opacity-10"
                 onClick={openPopup}
               >
-                Emotions
+                 Detected Emotion
               </button>
               {emotions ? (
                 <div className="w-[80%] flex justify-center items-center mt-2 border-4 border-[#DB88DB] py-4 px-10 text-base  text-white">
