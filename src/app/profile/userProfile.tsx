@@ -68,6 +68,7 @@ const ProfileComponent: React.FC = () => {
         {/* <ProfileField label="Country" value="United states" /> */}
         {/* <ProfileField label="Phone number" value={`${profileData?.mobileNo}`} /> */}
         <ProfileField label="Membership Plan" value={formattedPlanName} />
+        <ProfileField label="Next Billing Date" value={" Nov 16, 2024"} />
       </div>
 
       {/* <div className="mt-10">
