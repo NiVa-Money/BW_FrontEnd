@@ -29,6 +29,7 @@ const CreateBotComponent: React.FC = () => {
   const [showColorPicker, setShowColorPicker] = useState<any>(false);
   const [colorPicker, setColorPicker] = useState<any>(false);
   const [supportEmail, setSupportEmail] = useState('');
+  const [appoimentLink, setAppoimentLink] = useState('');
   const [supportPhone, setSupportPhone] = useState('');
   const [greetingMessage, setGreetingMessage] = useState(
     'Hi, How can I assist you today?'
@@ -150,6 +151,7 @@ const CreateBotComponent: React.FC = () => {
     formData.append('botSmartness', botSmartnessVal);
     formData.append('botIdentity', botIdentity);
     formData.append('supportNumber', supportPhone);
+    formData.append('appoimentLink',appoimentLink);
     formData.append('supportEmail', supportEmail);
     formData.append('wordLimitPerMessage', botLimit);
     formData.append('docName', filename);
@@ -385,6 +387,19 @@ const CreateBotComponent: React.FC = () => {
           onChange={(e) => setBotLimit(Number(e.target.value))}
           className="w-full bg-[#171029] text-white p-2 rounded-[12px]"
         />
+      </div>
+      <div className="mb-4">
+        <label className="block text-gray-200 mb-2">Appointment Scheduling Link</label>
+        <input
+          type="email"
+          value={appoimentLink}
+          onChange={(e) => setAppoimentLink(e.target.value)}
+          placeholder="Enter Appointment Link"
+          className="w-full bg-[#171029] text-white p-2 rounded-[12px]"
+        />
+        {error.includes('email') && (
+          <div className="text-red-500 mb-4">{error}</div>
+        )}
       </div>
       <div className="mb-4">
         <label className="block text-gray-200 mb-2">Support Email</label>
