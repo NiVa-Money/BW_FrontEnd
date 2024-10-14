@@ -19,43 +19,32 @@ const MetricCard: React.FC = () => {
   );
   const activeBots = userMetricData?.activeBots || 0;
   const totalSatisfaction =
-    metricData?.userSatisfaction?.good +
-    metricData?.userSatisfaction?.bad +
-    metricData?.userSatisfaction?.neutral;
-  const goodPercentage =
-    totalSatisfaction > 0
-      ? (metricData?.userSatisfaction.good / totalSatisfaction) * 100
-      : 0;
-  const badPercentage =
-    totalSatisfaction > 0
-      ? (metricData?.userSatisfaction.bad / totalSatisfaction) * 100
-      : 0;
-  const neutralPercentage =
-    totalSatisfaction > 0
-      ? (metricData.userSatisfaction.neutral / totalSatisfaction) * 100
-      : 0;
+  metricData?.resolvedSessions + metricData?.unresolvedSessions;
 
-  //   let displayEmoji = '😐';
-  let displayEmoji = '😐';
-  let displayPercentage = 0;
+const goodPercentage =
+  totalSatisfaction > 0
+    ? (metricData?.resolvedSessions / totalSatisfaction) * 100
+    : 0;
 
-  if (badPercentage > 50) {
-    displayEmoji = '😢';
-    displayPercentage = badPercentage;
-  } else if (goodPercentage > 50) {
-    displayEmoji = '😄';
-    displayPercentage = goodPercentage;
-  } else if (
-    goodPercentage === 0 &&
-    badPercentage === 0 &&
-    neutralPercentage === 0
-  ) {
-    displayEmoji = '😢';
-    displayPercentage = 0;
-  } else {
-    displayEmoji = '😐';
-    displayPercentage = neutralPercentage;
-  }
+const badPercentage =
+  totalSatisfaction > 0
+    ? (metricData?.unresolvedSessions / totalSatisfaction) * 100
+    : 0;
+
+let displayEmoji = '😐';
+let displayPercentage = 0;
+
+if (badPercentage > 50) {
+  displayEmoji = '😢';
+  displayPercentage = badPercentage;
+} else if (goodPercentage > 50) {
+  displayEmoji = '😄';
+  displayPercentage = goodPercentage;
+} else {
+  displayEmoji = '😐';  // Neutral emoji for balanced cases
+  displayPercentage = Math.max(goodPercentage, badPercentage);  // Pick the larger percentage
+}
+
   const aiAnalysisMessages = 154; // Fixed value
 
   React.useEffect(() => {
@@ -102,7 +91,7 @@ const MetricCard: React.FC = () => {
       <div className="bg-white bg-opacity-10 rounded-lg p-4">
         <div className="flex items-center text-[#AEB9E1] mb-4">
           <SentimentSatisfiedAltIcon className="mr-2" />
-          <span>Sentiment Meter</span>
+          <span>AI Resolution (%)</span>
         </div>
         <div className="text-2xl font-bold">
           <span>{displayEmoji}</span>
