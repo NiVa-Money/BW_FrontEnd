@@ -20,7 +20,6 @@ const WhatsAppIntegration = () => {
     mobileNumberId: '',
     businessAccountId: '',
     accessToken: '',
-    botId: '',
   });
   const botDataRedux = useSelector(
     (state: RootState) => state.botProfile?.botProfiles?.data
