@@ -14,12 +14,14 @@ interface whatsAppBotCardProps {
   phoneNumber: string;
   botName: string;
   botId: string;
+  integrationId:string
 }
 
 const WhatsAppIntegrationCard: React.FC<whatsAppBotCardProps> = ({
   phoneNumber,
   botName,
   botId,
+  integrationId
 }) => {
   const [anchor, setAnchor] = React.useState<boolean | HTMLElement>(false);
   const [isExportModalOpen, setIsExportModalOpen] = useState(false);
@@ -27,7 +29,6 @@ const WhatsAppIntegrationCard: React.FC<whatsAppBotCardProps> = ({
     (state: RootState) => state.socialIntegrations?.whatsApp?.getWebhook?.data
   );
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [botIdToDelete, setBotIdToDelete] = useState<string | null>(null);
   const [exportResponse, setExportResponse] = useState<{
     success: true;
     data: { webhookUrl: string; secretToken: string };
@@ -38,16 +39,18 @@ const WhatsAppIntegrationCard: React.FC<whatsAppBotCardProps> = ({
   };
   const closeModal = () => {
     setIsModalOpen(false);
-    setBotIdToDelete(null);
+  };
+  
+  const handleDelete = () => {
+    setIsModalOpen(true);
   };
   const confirmDelete = () => {
-    if (botId) {
+    if (integrationId) {
       dispatch(
-        deleteWhatsAppAction(botId)
+        deleteWhatsAppAction(integrationId)
       );
       
       setIsModalOpen(false);
-      setBotIdToDelete(null);
     }
   };
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
@@ -57,7 +60,6 @@ const WhatsAppIntegrationCard: React.FC<whatsAppBotCardProps> = ({
     window.location.href = 'mailto:support@botwot.io';
   };
   const handleExport = () => {
-    console.log('handle')
     setIsExportModalOpen(true)
   };
   useEffect(() => {
@@ -83,7 +85,6 @@ const WhatsAppIntegrationCard: React.FC<whatsAppBotCardProps> = ({
     }
   }, []);
 
-  console.log('exportResponse',exportResponse)
    return (
     <>
     <div className="bg-[#1E1E1E] my-[30px] p-6 w-[90%] rounded-lg shadow-lg text-white flex flex-col  justify-between items-center">
@@ -96,7 +97,7 @@ const WhatsAppIntegrationCard: React.FC<whatsAppBotCardProps> = ({
               src="/images/whatsapp.png"
               height={50}
               width={50}
-            />{' '}
+            />
             <div className="flex-col flex justify-start">
               <span className="text-lg font-semibold">WhatsApp Integrated</span>
               <span className=" text-sm text-green-400">
@@ -121,7 +122,7 @@ const WhatsAppIntegrationCard: React.FC<whatsAppBotCardProps> = ({
                   </ListItemButton>
                 </ListItem>
                 <ListItem disablePadding>
-                  <ListItemButton>Delete</ListItemButton>
+                  <ListItemButton><button onClick={()=>handleDelete()}>Delete</button></ListItemButton>
                 </ListItem>
                 <ListItem disablePadding>
                   <ListItemButton><button onClick={()=>handleExport()}>Export</button> </ListItemButton>

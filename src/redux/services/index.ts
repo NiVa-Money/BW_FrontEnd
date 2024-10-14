@@ -311,7 +311,7 @@ export const wpEditService = async (payload: any) => {
 
 export const wpDeleteService = async (payload: any) => {
   try {
-    const response = await axiosInstance.put(
+    const response = await axiosInstance.delete(
       `/external-integration/wp?id=${payload}`
     );
     return response.data;

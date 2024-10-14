@@ -21,6 +21,7 @@ const MyIntegrations = () => {
   useEffect(() => {
     dispatch(getWhatsAppWebhookAction(''));
   }, []);
+  console.log('whatsAppBotsData',whatsAppBotsData)
   return (
     <>
       <div className="flex flex-col justify-center items-left mt-10">
@@ -40,6 +41,7 @@ const MyIntegrations = () => {
               phoneNumber={item.phoneNumber}
               botName="Bot 1"
               botId={item.botId}
+              integrationId={item._id}
             />
           ))}
       </div>

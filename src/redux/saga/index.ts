@@ -74,6 +74,7 @@ import {
   EDIT_WHATSAPP_INTEGRATION,
   DELETE_WHATSAPP_INTEGRATION_SUCCESS,
   DELETE_WHATSAPP_INTEGRATION_FAILURE,
+  DELETE_WHATSAPP_INTEGRATION,
 } from '../actions/actionTypes';
 
 import {
@@ -751,6 +752,7 @@ export function* deleteWhatsAppWebhookSaga({
       type: DELETE_WHATSAPP_INTEGRATION_SUCCESS,
       payload: whatsAppSuccess,
     });
+notifySuccess(whatsAppSuccess.message)
   } catch (error: any) {
     yield put({
       type: DELETE_WHATSAPP_INTEGRATION_FAILURE,
@@ -787,5 +789,5 @@ export default function* rootSaga() {
   yield takeLatest(SAVE_WHATSAPP_INTEGRATION, saveWhatsAppSaga);
   yield takeLatest(GET_WHATSAPP_WEBHOOK, getWhatsAppWebhookSaga);
   yield takeLatest(EDIT_WHATSAPP_INTEGRATION, editWhatsAppSaga);
-  yield takeLatest(DELETE_WHATSAPP_INTEGRATION_FAILURE, deleteWhatsAppWebhookSaga);
+  yield takeLatest(DELETE_WHATSAPP_INTEGRATION, deleteWhatsAppWebhookSaga);
 }
