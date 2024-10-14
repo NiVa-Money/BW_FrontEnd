@@ -54,12 +54,14 @@ const Card: React.FC<CardProps> = ({
         </button>
 
         {/* Export button greyed out */}
-        <Link
-          href={`${path}`}
-          className="text-[#AEB9E1] text-sm px-3 py-1.5 md:px-4 md:py-2 rounded-full bg-gray-700 "
-        >
-          Enable
-        </Link>
+        {title === 'Whatsapp' && (
+          <Link
+            href={`${path}`}
+            className="text-gray-100 bg-[#3F2181] text-sm px-3 py-1.5 md:px-4 md:py-2 rounded-full "
+          >
+            Enable
+          </Link>
+        )}
       </div>
     </div>
   );
