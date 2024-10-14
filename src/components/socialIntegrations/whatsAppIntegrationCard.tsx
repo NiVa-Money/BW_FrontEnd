@@ -1,8 +1,11 @@
 'use client';
+import WhatsAppSaveConfirmationModal from '@/app/integration/whatsapp/whatsappSaveConfirmationModal';
+import { RootState } from '@/redux/configureStore';
 import { List, ListItem, ListItemButton } from '@mui/material';
 import Image from 'next/image';
 import Link from 'next/link';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 // import { Unstable_Popup as BasePopup } from '@mui/base/Unstable_Popup';
 
 interface whatsAppBotCardProps {
@@ -17,14 +20,54 @@ const WhatsAppIntegrationCard: React.FC<whatsAppBotCardProps> = ({
   botId,
 }) => {
   const [anchor, setAnchor] = React.useState<boolean | HTMLElement>(false);
-
+  const [isExportModalOpen, setIsExportModalOpen] = useState(false);
+  const whatsappIntegratedBots = useSelector(
+    (state: RootState) => state.socialIntegrations?.whatsApp?.getWebhook?.data
+  );
+  const [exportResponse, setExportResponse] = useState<{
+    success: true;
+    data: { webhookUrl: string; secretToken: string };
+  } | null>(null);
+  const closeExportModal = () => {
+    setIsExportModalOpen(false);
+    setExportResponse(null);
+  };
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchor(!anchor);
   };
   const handleContactSupport = () => {
     window.location.href = 'mailto:support@botwot.io';
   };
-  return (
+  const handleExport = () => {
+    console.log('handle')
+    setIsExportModalOpen(true)
+  };
+  useEffect(() => {
+    if(whatsappIntegratedBots?.length){
+      const filteredBots = whatsappIntegratedBots.filter((item:any) => item.botId === botId)[0];
+      setExportResponse({
+        success:true,
+        data:{
+          webhookUrl: filteredBots?.webhookUrl, secretToken: filteredBots?.accessToken
+        }
+      })
+    }
+  }, [whatsappIntegratedBots]);
+  useEffect(() => {
+    if(whatsappIntegratedBots?.length){
+      const filteredBots = whatsappIntegratedBots.filter((item:any) => item.botId === botId)[0];
+      setExportResponse({
+        success:true,
+        data:{
+          webhookUrl: filteredBots?.webhookUrl, secretToken: filteredBots?.accessToken
+        }
+      })
+    }
+  }, []);
+
+  console.log('exportResponse',exportResponse)
+   return (
+    <>
     <div className="bg-[#1E1E1E] my-[30px] p-6 w-[90%] rounded-lg shadow-lg text-white flex flex-col  justify-between items-center">
       <div className="flex flex-col">
         {/* WhatsApp Integrated */}
@@ -63,7 +106,7 @@ const WhatsAppIntegrationCard: React.FC<whatsAppBotCardProps> = ({
                   <ListItemButton>Delete</ListItemButton>
                 </ListItem>
                 <ListItem disablePadding>
-                  <ListItemButton>Export</ListItemButton>
+                  <ListItemButton><button onClick={()=>handleExport()}>Export</button> </ListItemButton>
                 </ListItem>
               </List>
             </div>
@@ -97,6 +140,13 @@ const WhatsAppIntegrationCard: React.FC<whatsAppBotCardProps> = ({
         </button>
       </div>
     </div>
+    {exportResponse?.data.webhookUrl&&
+          <WhatsAppSaveConfirmationModal
+          isOpen={isExportModalOpen}
+          onClose={closeExportModal}
+          exportResponse={exportResponse}
+        />}
+        </>
   );
 };
 
