@@ -21,7 +21,7 @@ const MyIntegrations = () => {
   useEffect(() => {
     dispatch(getWhatsAppWebhookAction(''));
   }, []);
-  console.log('whatsAppBotsData',whatsAppBotsData)
+  console.log('whatsAppBotsData', whatsAppBotsData);
   return (
     <>
       <div className="flex flex-col justify-center items-left mt-10">
@@ -39,7 +39,7 @@ const MyIntegrations = () => {
           whatsAppBotsData.map((item: any) => (
             <WhatsAppIntegrationCard
               phoneNumber={item.phoneNumber}
-              botName="Bot 1"
+              botName={item.botName}
               botId={item.botId}
               integrationId={item._id}
             />

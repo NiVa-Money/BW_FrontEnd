@@ -1,4 +1,4 @@
-import WhatsAppIntegration from "@/components/socialIntegrations/whatsAppIntegration";
+import WhatsAppIntegration from '@/components/socialIntegrations/whatsAppIntegration';
 
 const WhatsAppIntegrationPage: React.FC = () => {
   return (

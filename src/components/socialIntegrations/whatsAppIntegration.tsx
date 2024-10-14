@@ -8,6 +8,7 @@ import Image from 'next/image';
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import withAuth from '../withAuth';
+import { getUserBotProfileAction } from '@/redux/actions/BotProfileActions';
 import WhatsAppSaveConfirmationModal from '@/app/integration/whatsapp/whatsappSaveConfirmationModal';
 
 const WhatsAppIntegration = () => {
@@ -19,10 +20,15 @@ const WhatsAppIntegration = () => {
     mobileNumberId: '',
     businessAccountId: '',
     accessToken: '',
+    botId: '',
   });
   const botDataRedux = useSelector(
     (state: RootState) => state.botProfile?.botProfiles?.data
   );
+  const userId = useSelector(
+    (state: RootState) => state.root?.userData?.user_id
+  );
+  const [userIdLocal, setUserIdLocal] = useState(userId);
 
   const botloader = useSelector(
     (state: RootState) => state.botProfile?.botProfiles?.loader
@@ -83,7 +89,13 @@ const WhatsAppIntegration = () => {
       setIsExportModalOpen(true);
     }
   }, [whatsappIntegrationSave, whatsappIntegrationLoader]);
-
+  useEffect(() => {
+    if (userId !== undefined) {
+      if (userId?.length || userIdLocal) {
+        dispatch(getUserBotProfileAction(userId));
+      }
+    }
+  }, [userId]);
   useEffect(() => {
     dispatch(getWhatsAppWebhookAction(''));
   }, []);
@@ -99,6 +111,7 @@ const WhatsAppIntegration = () => {
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
+    console.log('e', e.target.name, e.target.value);
     setFormData({
       ...formData,
       [e.target.name]: e.target.value,
@@ -107,11 +120,10 @@ const WhatsAppIntegration = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Form Data:', formData);
     // Handle form submission (e.g., API call)
     const payload = {
       integrationType: 'whatsapp',
-      botId: 'bot-id',
+      botId: bot,
       appId: appId,
       phoneNumberId: mobileNumberId,
       whatsappBusinessAccountId: businessAccountId,
