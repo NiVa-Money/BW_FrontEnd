@@ -12,7 +12,6 @@ import {
   filteredSession,
   getAdvanceFeature,
   getAllSession,
-  getAllSessionBot,
   sendUserQuestion,
   sendUserQuestionOnly,
 } from '@/redux/actions/userChatAction';
@@ -38,7 +37,7 @@ const BotSessionComponent: React.FC = () => {
   const [summary, setSummary] = React.useState<string>('');
   const [continueAdv, setContinueAdv] = React.useState<any>(false);
   const [sentimentAnalysis, setSentimentAnalysis] = React.useState<any>({});
-  const [emotions, setEmotion] = React.useState<string>('');
+  const [emotions,setEmotion] =  React.useState<string>('');
   const [nextSteps, setNextSteps] = React.useState<string>('');
   const [newMessage, setNewMessage] = React.useState<any>('');
   const [messages, setMessages] = React.useState<any>([]);
@@ -56,11 +55,9 @@ const BotSessionComponent: React.FC = () => {
     (state: RootState) => state.userChat?.allSession?.data?.sessions
   );
   const [botIdLocal, setBotIdLocal] = React.useState<any>('');
-
   const userId: any = useSelector(
     (state: RootState) => state?.root?.userData?.user_id
   );
-
   const userChatMessagesRes = useSelector(
     (state: RootState) => state?.userChat?.allSession
   );
@@ -74,12 +71,6 @@ const BotSessionComponent: React.FC = () => {
   const advanceFeature = useSelector(
     (state: RootState) => state?.userChat?.advanceFeature
   );
-
-  const getUserBotDataAnalysis = useSelector(
-    (state: RootState) => state?.userChat.allSessionBot?.data
-  );
-  console.log('getUserBotDataAnalysis', getUserBotDataAnalysis);
-
   const [chatsData, setchatsData] = React.useState<any>([]);
   const [chartData, setChartData] = React.useState([
     {
@@ -97,13 +88,11 @@ const BotSessionComponent: React.FC = () => {
   ]);
 
   const searchParams = useSearchParams() as URLSearchParams;
-
   useEffect(() => {
     const name = searchParams.get('botName');
 
     if (name) {
       const decodedName = decodeURIComponent(name);
-
       setBotNameDropDown(decodedName);
     }
   }, [searchParams]);
@@ -207,33 +196,34 @@ const BotSessionComponent: React.FC = () => {
     ? planName.charAt(0).toUpperCase() + planName.slice(1)
     : 'Free';
 
-  React.useEffect(() => {
-    if (sentimentAnalysis) {
-      const parseValue = (value: any) => {
-        if (typeof value === 'string') {
-          return parseFloat(value.replace('%', '')); // Remove % and parse the string as a float
-        } else if (typeof value === 'number') {
-          return value; // If it's already a number, return it as is
-        }
-        return 0; // Return 0 if the value is null, undefined, or another type
-      };
-
-      setChartData([
-        {
-          name: 'Negative',
-          'Customer Sentiment': parseValue(sentimentAnalysis?.negative),
-        },
-        {
-          name: 'Positive',
-          'Customer Sentiment': parseValue(sentimentAnalysis?.positive),
-        },
-        {
-          name: 'Neutral',
-          'Customer Sentiment': parseValue(sentimentAnalysis?.neutral),
-        },
-      ]);
-    }
-  }, [sentimentAnalysis]);
+    React.useEffect(() => {
+      if (sentimentAnalysis) {
+        const parseValue = (value: any) => {
+          if (typeof value === 'string') {
+            return parseFloat(value.replace('%', '')); // Remove % and parse the string as a float
+          } else if (typeof value === 'number') {
+            return value; // If it's already a number, return it as is
+          }
+          return 0; // Return 0 if the value is null, undefined, or another type
+        };
+    
+        setChartData([
+          {
+            name: 'Negative',
+            'Customer Sentiment': parseValue(sentimentAnalysis?.negative),
+          },
+          {
+            name: 'Positive',
+            'Customer Sentiment': parseValue(sentimentAnalysis?.positive),
+          },
+          {
+            name: 'Neutral',
+            'Customer Sentiment': parseValue(sentimentAnalysis?.neutral),
+          },
+        ]);
+      }
+    }, [sentimentAnalysis]);
+    
 
   const dataFormatter = (value: any) => `${value}%`;
 
@@ -266,7 +256,7 @@ const BotSessionComponent: React.FC = () => {
     setReasonDetails(advanceFeature?.data?.data?.cause);
     setSummary(advanceFeature?.data?.data?.summary);
     setSentimentAnalysis(advanceFeature?.data?.data?.sentiments);
-    setEmotion(advanceFeature?.data?.data?.emotion);
+    setEmotion(advanceFeature?.data?.data?.emotion)
     const formattedNextSteps = advanceFeature?.data?.data?.nextStep.replace(
       /\n/g,
       '<br />'
@@ -311,10 +301,6 @@ const BotSessionComponent: React.FC = () => {
       window.removeEventListener('mouseup', handleMouseUp);
     };
   }, [isDragging]);
-  console.log(
-    '!getUserBotDataAnalysis?.cause?.length',
-    !getUserBotDataAnalysis?.cause?.length
-  );
 
   return (
     <div className="flex h-screen">
@@ -344,9 +330,6 @@ const BotSessionComponent: React.FC = () => {
                 className="flex flex-col px-3 py-3 bg-[#141218] w-[90%] "
                 onClick={() => {
                   setSessionId(item._id);
-                  dispatch(
-                    getAllSessionBot({ sessionId: item._id, userId: userId })
-                  );
                 }}
               >
                 <div className="flex justify-between items-center">
@@ -601,9 +584,7 @@ const BotSessionComponent: React.FC = () => {
             <div className="button-container">
               <button
                 className="custom-button bg-[#FFFFFF] bg-opacity-10"
-                onClick={
-                  getUserBotDataAnalysis?.cause?.length ? openPopup : () => {}
-                }
+                onClick={openPopup}
               >
                 Reason & Details
               </button>
@@ -616,7 +597,7 @@ const BotSessionComponent: React.FC = () => {
               )}
               <button
                 className="custom-button bg-[#FFFFFF] bg-opacity-10"
-                onClick={ getUserBotDataAnalysis?.cause?.length ? openPopup : () => {}}
+                onClick={openPopup}
               >
                 Summary
               </button>
@@ -629,7 +610,7 @@ const BotSessionComponent: React.FC = () => {
               )}
               <button
                 className="custom-button bg-[#FFFFFF] bg-opacity-10 mt-5"
-                onClick={ getUserBotDataAnalysis?.cause?.length ? openPopup : () => {}}
+                onClick={openPopup}
               >
                 Customer Sentiment
               </button>
@@ -648,11 +629,11 @@ const BotSessionComponent: React.FC = () => {
               ) : (
                 ''
               )}
-              <button
+                            <button
                 className="custom-button bg-[#FFFFFF] bg-opacity-10"
                 onClick={openPopup}
               >
-                Emotions
+                 Detected Emotion
               </button>
               {emotions ? (
                 <div className="w-[80%] flex justify-center items-center mt-2 border-4 border-[#DB88DB] py-4 px-10 text-base  text-white">
