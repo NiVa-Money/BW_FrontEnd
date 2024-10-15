@@ -10,20 +10,19 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 type BotSessionMappingType = [string, [number]][];
 
 const dailyData = [
-  { date: '01-01-2024', Positive: 200, Neutral: 150, Negative: 10 },
-  { date: '15-02-2024', Positive: 250, Neutral: 500, Negative: 15 },
-  { date: '10-03-2024', Positive: 350, Neutral: 400, Negative: 12 },
-  { date: '20-04-2024', Positive: 400, Neutral: 300, Negative: 50 },
-  { date: '05-05-2024', Positive: 300, Neutral: 200, Negative: 100 },
-  { date: '30-06-2024', Positive: 200, Neutral: 500, Negative: 150 },
-  { date: '11-07-2024', Positive: 150, Neutral: 500, Negative: 0 },
-  { date: '22-08-2024', Positive: 400, Neutral: 350, Negative: 500 },
-  { date: '14-09-2024', Positive: 200, Neutral: 100, Negative: 100 },
-  { date: '01-10-2024', Positive: 300, Neutral: 200, Negative: 100 },
-  { date: '18-11-2024', Positive: 250, Neutral: 0, Negative: 200 },
-  { date: '25-12-2024', Positive: 300, Neutral: 100, Negative: 250 },
+  { date: '01-01-2024', Positive: 56, Neutral: 42, Negative: 2 },
+  { date: '15-02-2024', Positive: 33, Neutral: 65, Negative: 2 },
+  { date: '10-03-2024', Positive: 46, Neutral: 52, Negative: 2 },
+  { date: '20-04-2024', Positive: 53, Neutral: 40, Negative: 7 },
+  { date: '05-05-2024', Positive: 50, Neutral: 33, Negative: 17 },
+  { date: '30-06-2024', Positive: 24, Neutral: 58, Negative: 18 },
+  { date: '11-07-2024', Positive: 23, Neutral: 77, Negative: 0 },
+  { date: '22-08-2024', Positive: 32, Neutral: 28, Negative: 40 },
+  { date: '14-09-2024', Positive: 50, Neutral: 25, Negative: 25 },
+  { date: '01-10-2024', Positive: 50, Neutral: 33, Negative: 17 },
+  { date: '18-11-2024', Positive: 56, Neutral: 0, Negative: 44 },
+  { date: '25-12-2024', Positive: 46, Neutral: 15, Negative: 39 }
 ];
-
 
 const ReportsOverview = () => {
   const metrics = useSelector(
