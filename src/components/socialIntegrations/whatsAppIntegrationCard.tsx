@@ -68,7 +68,7 @@ const WhatsAppIntegrationCard: React.FC<whatsAppBotCardProps> = ({
       setExportResponse({
         success:true,
         data:{
-          webhookUrl: filteredBots?.webhookUrl, secretToken: filteredBots?.accessToken
+          webhookUrl: filteredBots?.webhookUrl, secretToken: filteredBots?.secretToken
         }
       })
     }
@@ -79,7 +79,7 @@ const WhatsAppIntegrationCard: React.FC<whatsAppBotCardProps> = ({
       setExportResponse({
         success:true,
         data:{
-          webhookUrl: filteredBots?.webhookUrl, secretToken: filteredBots?.accessToken
+          webhookUrl: filteredBots?.webhookUrl, secretToken: filteredBots?.secretToken
         }
       })
     }
