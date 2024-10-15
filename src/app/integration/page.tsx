@@ -25,15 +25,24 @@ const Integration = () => {
         description:
           'Integrate your calendar to streamline scheduling, manage appointments, and never miss an important event or meeting.',
       },
-    ],
-    [
       {
-        image: '/images/celanderImg.png',
-        title: 'Calendar',
+        image: '/images/instagram.png',
+        title: 'Instagram',
         subTitle: 'Integration',
         path: '/integration',
         description:
-          'Integrate your Slack to streamline scheduling, manage appointments, and never miss an important event or meeting.',
+          'Integrate your Instagram to streamline scheduling, manage appointments, and never miss an important event or meeting.',
+      },
+      
+    ],
+    [
+      {
+        image: '/images/telegram.png',
+        title: 'Telegram',
+        subTitle: 'Integration',
+        path: '/integration',
+        description:
+          'Integrate your Telegram to streamline scheduling, manage appointments, and never miss an important event or meeting.',
       },
       {
         image: '/images/shopify.jpg',
@@ -43,6 +52,14 @@ const Integration = () => {
 
         description:
           'Integrate your Shopify to streamline scheduling, manage appointments, and never miss an important event or meeting.',
+      },
+      {
+        image: '/images/facebook.png',
+        title: 'Facebook',
+        subTitle: 'Integration',
+        path: '/integration',
+        description:
+          'Integrate your Facebook to streamline scheduling, manage appointments, and never miss an important event or meeting.',
       },
     ],
   ];
