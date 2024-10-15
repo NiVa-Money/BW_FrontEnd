@@ -89,10 +89,7 @@ const EditWhatsAppIntegration = () => {
         },
       });
       if (!whatsappIntegrationLoader) {
-        console.log(
-          'whatsappIntegrationEditRedux',
-          whatsappIntegrationEditRedux
-        );
+        
         setIsExportModalOpen(true);
       }
     }
@@ -109,7 +106,6 @@ const EditWhatsAppIntegration = () => {
     }
   }, []);
 
-  console.log('isExportModalOpen', isExportModalOpen);
   useEffect(() => {
     const id = searchParams.get('id');
     if (id) {
@@ -138,7 +134,6 @@ const EditWhatsAppIntegration = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Form Data:', formData);
     // Handle form submission (e.g., API call)
     const payload = {
       integrationType: 'whatsapp',

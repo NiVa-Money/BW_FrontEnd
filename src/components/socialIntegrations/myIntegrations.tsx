@@ -16,12 +16,10 @@ const MyIntegrations = () => {
     }
   }, [whatsappIntegratedBots]);
 
-  console.log('whatsAppBotsReduxData', whatsAppBotsData);
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getWhatsAppWebhookAction(''));
   }, []);
-  console.log('whatsAppBotsData', whatsAppBotsData);
   return (
     <>
       <div className="flex flex-col justify-center items-left mt-10">
