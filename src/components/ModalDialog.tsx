@@ -28,7 +28,7 @@ const ModalDialog: React.FC<ModalDialogProps> = ({ open, onClose }) => {
         <div className="flex justify-between items-center h-full">
           <div className="flex flex-col justify-center items-center w-2/5 h-full space-y-4">
             <a
-              href="https://www.installonair.com/app-download-link/PKtMr3"
+              href=" https://play.google.com/store/apps/details?id=com.botwot.io.botwot_mobile"
               target="_blank"
               rel="noopener noreferrer"
               className="rounded-lg p-2 mb-2 text-white text-2xl font-semibold text-center"
@@ -46,16 +46,16 @@ const ModalDialog: React.FC<ModalDialogProps> = ({ open, onClose }) => {
               />
             </div>
           </div>
-          <div className="w-3/5 h-full flex justify-center items-center">
-            <div className="w-full h-full relative">
-              <Image
+          {/* <div className="w-3/5 h-full flex justify-center items-center"> */}
+            {/* <div className="w-full h-full relative"> */}
+              {/* <Image
                 src={mobileView}
                 alt="Mobile App Preview"
                 layout="fill"
                 objectFit="contain"
-              />
-            </div>
-          </div>
+              /> */}
+            {/* </div> */}
+          {/* </div> */}
         </div>
       </DialogContent>
     </Dialog>
