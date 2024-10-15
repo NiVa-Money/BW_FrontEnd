@@ -769,7 +769,8 @@ export function* editWhatsAppSaga({
       type: EDIT_WHATSAPP_INTEGRATION_FAILURE,
       payload: false,
     });
-    notifyError(whatsAppSuccess.message)
+
+    notifyError("Error editing Something went wrong")
   }
 }
 export function* getWhatsAppWebhookSaga({
