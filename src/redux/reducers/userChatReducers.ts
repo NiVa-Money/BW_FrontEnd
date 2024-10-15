@@ -4,13 +4,16 @@ import {
   ADVANCE_FEATURE_SUCCESS,
   BOTSESSION_ID,
   GET_USER_All_SESSION_FAILURE,
+  GET_USER_All_SESSION_FAILURE_BOT,
   GET_USER_All_SESSION_FAILURE_LIVE,
   GET_USER_All_SESSION_SUCCESS,
+  GET_USER_All_SESSION_SUCCESS_BOT,
   GET_USER_All_SESSION_SUCCESS_LIVE,
   GET_USER_CHAT_FAILURE,
   GET_USER_CHAT_SUCCESS,
   REMOVE_ADVANCE_FEATURE,
   USER_ALL_SESSION,
+  USER_ALL_SESSION_BOT,
   USER_ALL_SESSION_LIVE,
   USER_CHAT_DATA,
   USER_OUESTION_SESSION,
@@ -89,21 +92,38 @@ export default function userChatReducers(
         ...state,
         allSession: { data: action.payload, loader: false },
       };
-      case USER_ALL_SESSION_LIVE:
-        return {
-          ...state,
-          allSessionLive: { data: action.payload, loader: false },
-        };
-      case GET_USER_All_SESSION_SUCCESS_LIVE:
-        return {
-          ...state,
-          allSessionLive: { data: action.payload, loader: true },
-        };
-      case GET_USER_All_SESSION_FAILURE_LIVE:
-        return {
-          ...state,
-          allSessionLive: { data: action.payload, loader: false },
-        };
+    case USER_ALL_SESSION_LIVE:
+      return {
+        ...state,
+        allSessionLive: { data: action.payload, loader: false },
+      };
+    case GET_USER_All_SESSION_SUCCESS_LIVE:
+      return {
+        ...state,
+        allSessionLive: { data: action.payload, loader: true },
+      };
+    case GET_USER_All_SESSION_FAILURE_LIVE:
+      return {
+        ...state,
+        allSessionLive: { data: action.payload, loader: false },
+      };
+
+    case USER_ALL_SESSION_BOT:
+      return {
+        ...state,
+        allSessionBot: { data: action.payload, loader: false },
+      };
+    case GET_USER_All_SESSION_SUCCESS_BOT:
+      return {
+        ...state,
+        allSessionBot: { data: action.payload, loader: true },
+      };
+    case GET_USER_All_SESSION_FAILURE_BOT:
+      return {
+        ...state,
+        allSessionBot: { data: action.payload, loader: false },
+      };
+
 
     case ADVANCE_FEATURE:
       return {
