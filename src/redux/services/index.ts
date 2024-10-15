@@ -226,14 +226,14 @@ export const getUserAllSessionLiveService = async (payload: any) => {
 
 export const getUserAllSessionBotService = async (payload: any) => {
   try {
-    const response = await axiosInstance.get(`/user/chat-analysis/${payload.userId}/${payload.sessionId}`);
+    const response = await axiosInstance.get(
+      `/user/chat-analysis/${payload.userId}/${payload.sessionId}`
+    );
     return response.data;
   } catch (error) {
     throw new Error('Error: Getting user all session');
   }
 };
-
-
 
 export const getAdvanceFeatureService = async (payload: any) => {
   try {
@@ -307,9 +307,7 @@ export const wpSaveService = async (payload: any) => {
 
 export const getWPWebhookService = async (payload: any) => {
   try {
-    const response = await axiosInstance.get(
-      `/external-integration/wp?botId=${payload}`
-    );
+    const response = await axiosInstance.get(`/external-integration/wp`);
     return response.data;
   } catch (error: any) {
     throw new Error('Error: unable to fetch whatsApp webhook');
