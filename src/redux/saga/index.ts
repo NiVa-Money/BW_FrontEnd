@@ -769,6 +769,8 @@ export function* editWhatsAppSaga({
       type: EDIT_WHATSAPP_INTEGRATION_FAILURE,
       payload: false,
     });
+
+    notifyError("Error editing Something went wrong")
   }
 }
 export function* getWhatsAppWebhookSaga({
@@ -805,6 +807,18 @@ export function* deleteWhatsAppWebhookSaga({
       payload: whatsAppSuccess,
     });
     notifySuccess(whatsAppSuccess?.message);
+    try {
+      const whatsAppSuccess = yield call(getWPWebhookService, '');
+      yield put({
+        type: GET_WHATSAPP_WEBHOOK_SUCCESS,
+        payload: whatsAppSuccess,
+      });
+    } catch (error: any) {
+      yield put({
+        type: GET_WHATSAPP_WEBHOOK_FAILURE,
+        payload: false,
+      });
+    }
   } catch (error: any) {
     yield put({
       type: DELETE_WHATSAPP_INTEGRATION_FAILURE,

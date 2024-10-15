@@ -52,9 +52,9 @@ const EditWhatsAppIntegration = () => {
   const closeExportModal = () => {
     setIsExportModalOpen(false);
     setExportResponse(null);
-    // if(whatsappIntegrationEditRedux?.secretToken){
-    //   router.push('/myintegrations')
-    // }
+    if (whatsappIntegrationEditRedux?.webhookUrl && !whatsappIntegrationLoader) {
+      router.push('/myintegrations');
+    }
   };
   useEffect(() => {
     if (whatsappIntegratedBots.length && botParam.length) {
@@ -95,7 +95,7 @@ const EditWhatsAppIntegration = () => {
     }
   }, [whatsappIntegrationEditRedux, whatsappIntegrationLoader]);
   useEffect(() => {
-    if(whatsappIntegratedBots?.length){
+    if(whatsappIntegratedBots?.length && !whatsappIntegrationLoader){
       const filteredBots = whatsappIntegratedBots.filter((item:any) => item.botId === botId)[0];
       setExportResponse({
         success:true,

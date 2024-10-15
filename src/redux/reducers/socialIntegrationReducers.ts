@@ -41,6 +41,10 @@ export default function socialIntegrationReducers(
           editWebhook:{
             loader:false,
             data:null
+          },
+          saveWebhook:{
+            loader:false,
+            data:null
           }
         },
       };
