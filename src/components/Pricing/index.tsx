@@ -53,10 +53,10 @@ const PricingCard = () => {
     {
       title: 'Starter', // This will be replaced by API data
       price: '29.99', // This will be replaced by API data
-      sessions: '20,000 Messages',
+      sessions: '10,000 Messages',
       features: [
         'Advanced tools to create and manage your chatbot, featuring AI-generated responses.',
-        'Suitable for up to 20,000 chat messages.',
+        'Suitable for up to 10,000 chat messages.',
         'Manage 3 Bot Profiles with 4 Knowledge Bases.',
         'Text, PNG, JPEG uploads allowed for content.',
       ],
@@ -65,10 +65,10 @@ const PricingCard = () => {
     {
       title: 'Pro', // This will be replaced by API data
       price: '59.99', // This will be replaced by API data
-      sessions: '50,000 Messages',
+      sessions: '20,000 Messages',
       features: [
         'Enhanced features for extensive chatbot needs with AI-generated responses.',
-        'Suitable for up to 50,000 chat messages.',
+        'Suitable for up to 20,000 chat messages.',
         'Manage 5 Bot Profiles with 6 Knowledge Bases.',
         'Text, PNG, JPEG, PDF, Excel, and Word uploads allowed.',
       ],

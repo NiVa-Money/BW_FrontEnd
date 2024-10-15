@@ -151,7 +151,7 @@ const CreateBotComponent: React.FC = () => {
     formData.append('botSmartness', botSmartnessVal);
     formData.append('botIdentity', botIdentity);
     formData.append('supportNumber', supportPhone);
-    formData.append('appoimentLink',appoimentLink);
+    formData.append('appointmentSchedulerLink',appoimentLink);
     formData.append('supportEmail', supportEmail);
     formData.append('wordLimitPerMessage', botLimit);
     formData.append('docName', filename);

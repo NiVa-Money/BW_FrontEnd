@@ -73,6 +73,7 @@ const initialState: any = {
       data: [],
       loader: false,
     },
+
     sessionChat: {
       data: [],
       sessionId: null,
@@ -80,6 +81,10 @@ const initialState: any = {
       lastMessageFrom: 'receiver',
     },
     advanceFeature: {
+      data: {},
+      loader: false,
+    },
+    advanceBot: {
       data: {},
       loader: false,
     },
