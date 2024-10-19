@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Card, Title, AreaChart, BarChart, Metric, Text } from '@tremor/react';
+import ArrowUpward from '@mui/icons-material/ArrowUpward';
 import { RootState } from '@/redux/configureStore';
 import { useSelector } from 'react-redux';
 import { format } from 'date-fns';
@@ -16,15 +17,6 @@ const ChartCardOne = () => {
   // Extract resolved and unresolved session data from metrics
   const resolvedSessions = metrics?.resolvedSessions ?? 0;
   const unresolvedSessions = metrics?.unresolvedSessions ?? 0;
-
-  // Extract user satisfaction values
-  const userSatisfaction = metrics?.userSatisfaction || { good: 0, bad: 0, neutral: 0 };
-  const good = userSatisfaction.good || 0;  
-  const bad = userSatisfaction.bad || 0;    
-  const neutral = userSatisfaction.neutral || 0; 
-
-  // Calculate NPS (Net Promoter Score)
-  const nps = ((good - bad) / (good + bad + neutral)) * 100 || 0;
 
   // Data for the Unresolved/Resolved Bar Chart
   const resolvedData = [
@@ -108,6 +100,9 @@ const ChartCardOne = () => {
             <div className="flex justify-between items-start mb-4">
               <div>
                 <Title className="text-xl text-[#AEB9E1]">Bot Usage</Title>
+                {/* <Metric className="text-3xl font-bold text-white mt-2">
+                  $240.8K
+                </Metric> */}
               </div>
               <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <DemoContainer components={['DatePicker']}>
@@ -135,7 +130,7 @@ const ChartCardOne = () => {
                 data={chartdata}
                 categories={categories}
                 index="date"
-                colors={['purple', 'cyan', 'blue']}
+                colors={['purple', 'cyan']}
               />
             </div>
           </div>
@@ -176,19 +171,8 @@ const ChartCardOne = () => {
                   Net Promoter Score (NPS)
                 </Title>
                 <Metric className="text-3xl font-bold text-white mt-2">
-                  {nps.toFixed(2)} %
+                  92%
                 </Metric>
-                <div className="text-[#AEB9E1] mt-2 flex flex-col">
-                  <span className="whitespace-nowrap">
-                    Good : {good}
-                  </span>
-                  <span className="whitespace-nowrap">
-                    Bad : {bad}
-                  </span>
-                  <span className="whitespace-nowrap">
-                    Neutral : {neutral}
-                  </span>
-                </div>
               </div>
             </div>
             <div className="h-[180px] w-full">
@@ -197,7 +181,7 @@ const ChartCardOne = () => {
                 data={npsData}
                 index="time"
                 categories={['nps']}
-                colors={['purple', 'cyan', 'blue']}
+                colors={['purple']}
               />
             </div>
           </div>

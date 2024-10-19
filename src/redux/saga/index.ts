@@ -807,18 +807,6 @@ export function* deleteWhatsAppWebhookSaga({
       payload: whatsAppSuccess,
     });
     notifySuccess(whatsAppSuccess?.message);
-    try {
-      const whatsAppSuccess = yield call(getWPWebhookService, '');
-      yield put({
-        type: GET_WHATSAPP_WEBHOOK_SUCCESS,
-        payload: whatsAppSuccess,
-      });
-    } catch (error: any) {
-      yield put({
-        type: GET_WHATSAPP_WEBHOOK_FAILURE,
-        payload: false,
-      });
-    }
   } catch (error: any) {
     yield put({
       type: DELETE_WHATSAPP_INTEGRATION_FAILURE,

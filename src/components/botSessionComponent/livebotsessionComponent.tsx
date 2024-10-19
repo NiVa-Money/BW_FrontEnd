@@ -556,8 +556,8 @@ const BotSessionComponent: React.FC = () => {
               <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
                 <div className="bg-white rounded-lg shadow-lg p-6 w-full max-w-md">
                   <h2 className="text-xl font-semibold mb-4 text-center">
-                    Are you sure you want to end this conversation ?                  
-                    </h2>
+                    Was your query resolved?
+                  </h2>
                   <div className="flex justify-around">
                     <button
                       onClick={() => handleResolution('Yes')}
@@ -576,7 +576,36 @@ const BotSessionComponent: React.FC = () => {
               </div>
             )}
 
-           
+            {/* Feedback Modal */}
+            {showFeedbackModal && (
+              <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+                <div className="bg-white rounded-lg shadow-lg p-6 w-full max-w-md">
+                  <h2 className="text-xl font-semibold mb-4 text-center">
+                    Please provide your feedback:
+                  </h2>
+                  <div className="flex justify-around">
+                    <button
+                      onClick={() => handleFeedback('Good')}
+                      className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full transition duration-300"
+                    >
+                      Good
+                    </button>
+                    <button
+                      onClick={() => handleFeedback('Neutral')}
+                      className="bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-2 px-4 rounded-full transition duration-300"
+                    >
+                      Neutral
+                    </button>
+                    <button
+                      onClick={() => handleFeedback('Bad')}
+                      className="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded-full transition duration-300"
+                    >
+                      Bad
+                    </button>
+                  </div>
+                </div>
+              </div>
+            )}
 
             {isChatEnabled && (
               <form
