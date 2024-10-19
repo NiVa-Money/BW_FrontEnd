@@ -67,7 +67,7 @@ const BotSessionComponent: React.FC = () => {
 
   React.useEffect(() => {
     if (sessionId && botIdLive && userIdLive) {
-      const newSocket = io('https://api.botwot.io', {
+      const newSocket = io('https://uatapi.botwot.io', {
         query: {
           isWidget: 'false',
           chatRoom: sessionId,
