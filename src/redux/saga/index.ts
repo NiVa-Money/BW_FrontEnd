@@ -623,7 +623,9 @@ function* fetchPlansSaga(): Generator<any, void, any> {
       name: string;
       price: number;
       _id: string;
+
     }[] = yield call(fetchPlansApi); // Call the API function
+
 
     // Ensure response is an array and not empty
     if (!Array.isArray(response) || response.length === 0) {
@@ -770,6 +772,10 @@ export function* editWhatsAppSaga({
       type: EDIT_WHATSAPP_INTEGRATION_FAILURE,
       payload: false,
     });
+
+
+    notifyError('Error editing Something went wrong');
+
   }
 }
 export function* getWhatsAppWebhookSaga({
