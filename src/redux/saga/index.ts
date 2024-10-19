@@ -106,16 +106,12 @@ import {
   capturePaymentService,
   fetchPlansApi,
   getMembershipPlan,
-
   getUserAllSessionLiveService,
   getUserAllSessionBotService,
-
   wpSaveService,
   getWPWebhookService,
   wpEditService,
   wpDeleteService,
- 
-
 } from '../services';
 import { notifyError, notifySuccess } from '@/components/Toaster/toast';
 import {
@@ -622,9 +618,12 @@ export function* getAdvanceFeatureSaga({
 
 function* fetchPlansSaga(): Generator<any, void, any> {
   try {
-    const response: { name: string; price: number; _id: string }[] = yield call(
-      fetchPlansApi
-    ); // Call the API function
+    const response: {
+      meta: any;
+      name: string;
+      price: number;
+      _id: string;
+    }[] = yield call(fetchPlansApi);
 
     // Ensure response is an array and not empty
     if (!Array.isArray(response) || response.length === 0) {
@@ -634,13 +633,14 @@ function* fetchPlansSaga(): Generator<any, void, any> {
     console.log('API response data:', response);
 
     // Process data
-    const filteredData = response.map(
-      (plan: { name: string; price: number; _id: string }) => ({
-        name: plan.name,
-        price: plan.price,
-        planId: plan._id,
-      })
-    );
+    const filteredData = response.map((plan) => ({
+      name: plan.name,
+      price: plan.price,
+      planId: plan._id,
+      sessionLimit: plan.meta.sessionLimit,
+      botProfileLimit: plan.meta.botProfileLimit,
+      knowledgeBaseLimit: plan.meta.knowledgeBaseLimit,
+    }));
     console.log('Filtered data:', filteredData);
 
     yield put(fetchPlansSuccess(filteredData)); // Dispatch success action
@@ -770,7 +770,7 @@ export function* editWhatsAppSaga({
       payload: false,
     });
 
-    notifyError("Error editing Something went wrong")
+    notifyError('Error editing Something went wrong');
   }
 }
 export function* getWhatsAppWebhookSaga({
@@ -857,10 +857,8 @@ export default function* rootSaga() {
 
   yield takeEvery(USER_ALL_SESSION_BOT, getUserAllSessionBotSaga);
 
-
   yield takeLatest(SAVE_WHATSAPP_INTEGRATION, saveWhatsAppSaga);
   yield takeLatest(GET_WHATSAPP_WEBHOOK, getWhatsAppWebhookSaga);
   yield takeLatest(EDIT_WHATSAPP_INTEGRATION, editWhatsAppSaga);
   yield takeLatest(DELETE_WHATSAPP_INTEGRATION, deleteWhatsAppWebhookSaga);
-
 }

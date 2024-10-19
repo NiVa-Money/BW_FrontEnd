@@ -57,7 +57,7 @@ const PricingCard = () => {
       features: [
         'Advanced tools to create and manage your chatbot, featuring AI-generated responses.',
         'Suitable for up to 10,000 chat messages.',
-        'Manage 3 Bot Profiles with 4 Knowledge Bases.',
+        'Manage 4 Bot Profiles with 4 Knowledge Bases.',
         'Text, PNG, JPEG uploads allowed for content.',
       ],
       backgroundColor: 'bg-indigo-500',
@@ -69,7 +69,7 @@ const PricingCard = () => {
       features: [
         'Enhanced features for extensive chatbot needs with AI-generated responses.',
         'Suitable for up to 20,000 chat messages.',
-        'Manage 5 Bot Profiles with 6 Knowledge Bases.',
+        'Manage 6 Bot Profiles with 6 Knowledge Bases.',
         'Text, PNG, JPEG, PDF, Excel, and Word uploads allowed.',
       ],
       backgroundColor: 'bg-fuchsia-950',
@@ -96,6 +96,7 @@ const PricingCard = () => {
         return {
           ...tier,
           price: apiPlan.price.toFixed(2),
+          sessions: `${apiPlan.sessionLimit} Messages`,
           planId: apiPlan.planId,
         };
       }
