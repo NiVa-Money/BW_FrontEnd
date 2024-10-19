@@ -623,7 +623,9 @@ function* fetchPlansSaga(): Generator<any, void, any> {
       name: string;
       price: number;
       _id: string;
-    }[] = yield call(fetchPlansApi);
+
+    }[] = yield call(fetchPlansApi); // Call the API function
+
 
     // Ensure response is an array and not empty
     if (!Array.isArray(response) || response.length === 0) {
@@ -641,6 +643,7 @@ function* fetchPlansSaga(): Generator<any, void, any> {
       botProfileLimit: plan.meta.botProfileLimit,
       knowledgeBaseLimit: plan.meta.knowledgeBaseLimit,
     }));
+
     console.log('Filtered data:', filteredData);
 
     yield put(fetchPlansSuccess(filteredData)); // Dispatch success action
@@ -770,7 +773,9 @@ export function* editWhatsAppSaga({
       payload: false,
     });
 
+
     notifyError('Error editing Something went wrong');
+
   }
 }
 export function* getWhatsAppWebhookSaga({
@@ -807,18 +812,6 @@ export function* deleteWhatsAppWebhookSaga({
       payload: whatsAppSuccess,
     });
     notifySuccess(whatsAppSuccess?.message);
-    try {
-      const whatsAppSuccess = yield call(getWPWebhookService, '');
-      yield put({
-        type: GET_WHATSAPP_WEBHOOK_SUCCESS,
-        payload: whatsAppSuccess,
-      });
-    } catch (error: any) {
-      yield put({
-        type: GET_WHATSAPP_WEBHOOK_FAILURE,
-        payload: false,
-      });
-    }
   } catch (error: any) {
     yield put({
       type: DELETE_WHATSAPP_INTEGRATION_FAILURE,

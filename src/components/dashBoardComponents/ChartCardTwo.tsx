@@ -9,19 +9,19 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 
 type BotSessionMappingType = [string, [number]][];
 
-const dailyData = [
-  { date: '01-01-2024', Positive: 56, Neutral: 42, Negative: 2 },
-  { date: '15-02-2024', Positive: 33, Neutral: 65, Negative: 2 },
-  { date: '10-03-2024', Positive: 46, Neutral: 52, Negative: 2 },
-  { date: '20-04-2024', Positive: 53, Neutral: 40, Negative: 7 },
-  { date: '05-05-2024', Positive: 50, Neutral: 33, Negative: 17 },
-  { date: '30-06-2024', Positive: 24, Neutral: 58, Negative: 18 },
-  { date: '11-07-2024', Positive: 23, Neutral: 77, Negative: 0 },
-  { date: '22-08-2024', Positive: 32, Neutral: 28, Negative: 40 },
-  { date: '14-09-2024', Positive: 50, Neutral: 25, Negative: 25 },
-  { date: '01-10-2024', Positive: 50, Neutral: 33, Negative: 17 },
-  { date: '18-11-2024', Positive: 56, Neutral: 0, Negative: 44 },
-  { date: '25-12-2024', Positive: 46, Neutral: 15, Negative: 39 }
+const monthlyData = [
+  { month: 'Jan', Positive: 20000, Neutral: 15000, Negative: 10000 },
+  { month: 'Feb', Positive: 25000, Neutral: 50000, Negative: 15000 },
+  { month: 'Mar', Positive: 35000, Neutral: 40000, Negative: 12000 },
+  { month: 'Apr', Positive: 40000, Neutral: 30000, Negative: 5000 },
+  { month: 'May', Positive: 30000, Neutral: 20000, Negative: 10000 },
+  { month: 'Jun', Positive: 20000, Neutral: 50000, Negative: 15000 },
+  { month: 'Jul', Positive: 15000, Neutral: 5000, Negative: 0 },
+  { month: 'Aug', Positive: 40000, Neutral: 35000, Negative: 20000 },
+  { month: 'Sep', Positive: 20000, Neutral: 10000, Negative: 10000 },
+  { month: 'Oct', Positive: 30000, Neutral: 20000, Negative: 15000 },
+  { month: 'Nov', Positive: 25000, Neutral: 0, Negative: 20000 },
+  { month: 'Dec', Positive: 30000, Neutral: 20000, Negative: 25000 },
 ];
 
 const ReportsOverview = () => {
@@ -144,12 +144,12 @@ const ReportsOverview = () => {
           </div>
           <BarChart
             className="h-72 mt-4"
-            data={dailyData}
-            index="date"
+            data={monthlyData}
+            index="month"
             categories={['Positive', 'Neutral', 'Negative']}
             colors={['purple', 'cyan', 'blue']}
             valueFormatter={(number) =>
-              `${Intl.NumberFormat('us').format(number).toString()}`
+              `${Intl.NumberFormat('us').format(number).toString()}K`
             }
             stack={true}
           />

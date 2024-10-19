@@ -19,34 +19,33 @@ const MetricCard: React.FC = () => {
   );
   const activeBots = userMetricData?.activeBots || 0;
   const totalSatisfaction =
-    metricData?.resolvedSessions + metricData?.unresolvedSessions;
+  metricData?.resolvedSessions + metricData?.unresolvedSessions;
 
-  const aiAnalysisMessages = userMetricData?.aiPromptCountUsed || 0;
-  const goodPercentage =
-    totalSatisfaction > 0
-      ? (metricData?.resolvedSessions / totalSatisfaction) * 100
-      : 0;
+const goodPercentage =
+  totalSatisfaction > 0
+    ? (metricData?.resolvedSessions / totalSatisfaction) * 100
+    : 0;
 
-  const badPercentage =
-    totalSatisfaction > 0
-      ? (metricData?.unresolvedSessions / totalSatisfaction) * 100
-      : 0;
+const badPercentage =
+  totalSatisfaction > 0
+    ? (metricData?.unresolvedSessions / totalSatisfaction) * 100
+    : 0;
 
-  let displayEmoji = '😐';
-  let displayPercentage = 0;
+let displayEmoji = '😐';
+let displayPercentage = 0;
 
-  if (badPercentage > 50) {
-    displayEmoji = '😢';
-    displayPercentage = badPercentage;
-  } else if (goodPercentage > 50) {
-    displayEmoji = '😄';
-    displayPercentage = goodPercentage;
-  } else {
-    displayEmoji = '😐'; // Neutral emoji for balanced cases
-    displayPercentage = Math.max(goodPercentage, badPercentage); // Pick the larger percentage
-  }
+if (badPercentage > 50) {
+  displayEmoji = '😢';
+  displayPercentage = badPercentage;
+} else if (goodPercentage > 50) {
+  displayEmoji = '😄';
+  displayPercentage = goodPercentage;
+} else {
+  displayEmoji = '😐';  // Neutral emoji for balanced cases
+  displayPercentage = Math.max(goodPercentage, badPercentage);  // Pick the larger percentage
+}
 
-  // const aiAnalysisMessages = 154; // Fixed value
+  const aiAnalysisMessages = 154; // Fixed value
 
   React.useEffect(() => {
     const savedMetrics = localStorage.getItem('metricsData');
