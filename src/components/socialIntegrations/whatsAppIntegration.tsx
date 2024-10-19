@@ -3,8 +3,6 @@ import {
   getWhatsAppWebhookAction,
   saveWhatsAppAction,
 } from '@/redux/actions/socialIntegrations/whatsAppIntegration';
-import { useRouter } from 'next/navigation'; // use this hook for navigation in Next.js
-
 import { RootState } from '@/redux/configureStore';
 import Image from 'next/image';
 import React, { useEffect, useState } from 'react';
@@ -44,7 +42,6 @@ const WhatsAppIntegration = () => {
     (state: RootState) =>
       state.socialIntegrations?.whatsApp?.saveWebhook?.loader
   );
-  const router = useRouter();
   const dispatch = useDispatch();
   const [transformedBotsData, setTransformedBotsData] = useState<any>([]);
   const [isExportModalOpen, setIsExportModalOpen] = useState(false);
@@ -55,9 +52,6 @@ const WhatsAppIntegration = () => {
   const closeExportModal = () => {
     setIsExportModalOpen(false);
     setExportResponse(null);
-    if (whatsappIntegrationSave?.webhookUrl && !whatsappIntegrationLoader) {
-      router.push('/myintegrations');
-    }
   };
   useEffect(() => {
     if (botDataRedux?.length) {
@@ -81,8 +75,9 @@ const WhatsAppIntegration = () => {
       });
     }
   }, [botDataRedux, botloader, whatsappIntegratedBots]);
+
   useEffect(() => {
-    if (whatsappIntegrationSave?.webhookUrl && !whatsappIntegrationLoader) {
+    if (whatsappIntegrationSave?.webhookUrl) {
       setExportResponse({
         success: true,
         data: {
@@ -90,7 +85,6 @@ const WhatsAppIntegration = () => {
           secretToken: whatsappIntegrationSave?.secretToken,
         },
       });
-
       setIsExportModalOpen(true);
     }
   }, [whatsappIntegrationSave, whatsappIntegrationLoader]);
@@ -102,10 +96,6 @@ const WhatsAppIntegration = () => {
     }
   }, [userId]);
   useEffect(() => {
-    setExportResponse({
-      success: false,
-      data: { webhookUrl: '', secretToken: '' },
-    });
     dispatch(getWhatsAppWebhookAction(''));
   }, []);
   const {
@@ -281,7 +271,13 @@ const WhatsAppIntegration = () => {
               <label className="block text-white mb-2" htmlFor="accessToken">
                 Permanent Access Token given by Meta
               </label>
-
+              <p className="text-gray-400 text-sm ">
+                If you don't know where to access this token you can{' '}
+                <a href="#" className="underline">
+                  CLICK HERE
+                </a>{' '}
+                to find it.
+              </p>
               <input
                 id="accessToken"
                 name="accessToken"
@@ -303,13 +299,11 @@ const WhatsAppIntegration = () => {
           </div>
         </form>
       </div>
-      {exportResponse?.success && (
-        <WhatsAppSaveConfirmationModal
-          isOpen={isExportModalOpen}
-          onClose={closeExportModal}
-          exportResponse={exportResponse}
-        />
-      )}
+      <WhatsAppSaveConfirmationModal
+        isOpen={isExportModalOpen}
+        onClose={closeExportModal}
+        exportResponse={exportResponse}
+      />
     </>
   );
 };
