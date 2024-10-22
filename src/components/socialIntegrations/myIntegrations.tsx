@@ -8,16 +8,13 @@ const MyIntegrations = () => {
   const whatsappIntegratedBots = useSelector(
     (state: RootState) => state.socialIntegrations?.whatsApp?.getWebhook?.data
   );
-  const whatsappIntegratedBotsLoader = useSelector(
-    (state: RootState) => state.socialIntegrations?.whatsApp?.getWebhook?.loader
-  );
   const [whatsAppBotsData, setwhatsAppBotsData] = useState([]);
 
   useEffect(() => {
-    if (whatsappIntegratedBots?.length && !whatsappIntegratedBotsLoader) {
+    if (whatsappIntegratedBots?.length) {
       setwhatsAppBotsData(whatsappIntegratedBots);
     }
-  }, [whatsappIntegratedBots,whatsappIntegratedBotsLoader]);
+  }, [whatsappIntegratedBots]);
 
   const dispatch = useDispatch();
   useEffect(() => {
