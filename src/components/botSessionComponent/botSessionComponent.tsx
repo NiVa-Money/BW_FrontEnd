@@ -448,7 +448,7 @@ const BotSessionComponent: React.FC = () => {
                 >
                   <div>Bot Profile</div>
                 </div>
-                <div className="flex w-[8.5vw] h-[60px] justify-center items-center py-2.5 bg-[#1E1533] overflow-y-scroll  rounded p-1 border-gray-500 border-solid text-white">
+                <div className="flex w-[8.5vw] h-[60px] justify-center items-center py-2.5 bg-[#1E1533] overflow-y-scroll overflow-x-scroll rounded p-1 border-gray-500 border-solid text-white">
                   <div>{botNameDropDown}</div>
                 </div>
                 {isBotProfileOpen && (
