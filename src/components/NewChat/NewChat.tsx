@@ -284,7 +284,7 @@ const NewChatComponent: React.FC = () => {
             {/* selection box ends */}
             {isBotProfileOpen && (
               <div
-                className="flex mt-2 flex-col py-2 text-base tracking-wide leading-6 max-h-[200px] overflow-y-scroll h-full
+                className="flex mt-2 flex-col py-2 text-base tracking-wide leading-6 max-h-[200px] overflow-y-scroll 
             bg-[#1E1533] rounded-b-lg shadow absolute top-8 left-0 right-0 z-10"
               >
                 {botProfiles?.botProfiles?.data?.map((bot: any, index: any) => (
