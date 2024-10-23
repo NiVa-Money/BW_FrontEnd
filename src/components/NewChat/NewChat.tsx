@@ -77,8 +77,17 @@ const NewChatComponent: React.FC = () => {
     if (newMessage.trim() !== '') {
       const currentTime = new Date().toLocaleString();
       setQuestion(newMessage);
-      setMessages([...messages, { text: newMessage, sender: 'user', time: currentTime }]);
-      dispatch(sendUserQuestionOnly({ text: newMessage, sender: 'user' , time: currentTime }));
+      setMessages([
+        ...messages,
+        { text: newMessage, sender: 'user', time: currentTime },
+      ]);
+      dispatch(
+        sendUserQuestionOnly({
+          text: newMessage,
+          sender: 'user',
+          time: currentTime,
+        })
+      );
       setNewMessage('');
       const data = {
         userId: userId,
@@ -138,9 +147,11 @@ const NewChatComponent: React.FC = () => {
   React.useEffect(() => {
     // Fetch membership plan on component mount
     dispatch(fetchMembershipPlanRequest());
-  } , []);
+  }, []);
 
-  const formattedPlanName = planName ? planName.charAt(0).toUpperCase() + planName.slice(1) : 'Free';
+  const formattedPlanName = planName
+    ? planName.charAt(0).toUpperCase() + planName.slice(1)
+    : 'Free';
 
   React.useEffect(() => {
     setSessionId(userChatMessagesRes?.sessionId);
@@ -272,7 +283,10 @@ const NewChatComponent: React.FC = () => {
             )}
             {/* selection box ends */}
             {isBotProfileOpen && (
-              <div className="flex mt-2 overflow-y-auto flex-col py-2 text-base tracking-wide leading-6 bg-[#1E1533] rounded-b-lg shadow absolute top-8 left-0 right-0 z-10">
+              <div
+                className="flex mt-2 overflow-y-auto flex-col py-2 text-base tracking-wide leading-6 max-h-[200px] overflow-y-scroll h-full
+              bg-[#1E1533] rounded-b-lg shadow absolute top-8 left-0 right-0 z-10"
+              >
                 {botProfiles?.botProfiles?.data?.map((bot: any, index: any) => (
                   <div
                     key={index}
@@ -304,7 +318,7 @@ const NewChatComponent: React.FC = () => {
           <div className="flex w-full md:w-[10vw] text-center flex-col py-2.5 bg-transparent px-1 whitespace-nowrap rounded-xl border border-white border-solid">
             <div className="text-base text-[#AEB9E1]">Membership:</div>
             <div className="flex items-center justify-center mt-2.5 text-3xl font-semibold text-white">
-               {formattedPlanName}
+              {formattedPlanName}
             </div>
           </div>
         </div>
@@ -367,7 +381,9 @@ const NewChatComponent: React.FC = () => {
                           dangerouslySetInnerHTML={{ __html: formattedText }}
                         />
                       )}
-                          <div className="text-xs text-gray-400 mt-1">{message?.time}</div>
+                      <div className="text-xs text-gray-400 mt-1">
+                        {message?.time}
+                      </div>
                     </div>
                   </div>
                 </div>
