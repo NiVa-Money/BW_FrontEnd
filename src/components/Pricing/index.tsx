@@ -44,7 +44,7 @@ const PricingCard = () => {
       sessions: '100 Messages',
       features: [
         'Access to essential features for creating your AI chatbot.',
-        'Suitable for up to 100 chat messages.',
+        'Suitable for up to 10000 chat messages.',
         'Manage 2 Bot Profile with 2 Knowledge Base.',
         'Text uploads allowed for content.',
       ],
@@ -56,7 +56,7 @@ const PricingCard = () => {
       sessions: '10,000 Messages',
       features: [
         'Advanced tools to create and manage your chatbot, featuring AI-generated responses.',
-        'Suitable for up to 10,000 chat messages.',
+        'Suitable for up to 20,000 chat messages.',
         'Manage 4 Bot Profiles with 4 Knowledge Bases.',
         'Text, PNG, JPEG uploads allowed for content.',
       ],
@@ -68,7 +68,7 @@ const PricingCard = () => {
       sessions: '20,000 Messages',
       features: [
         'Enhanced features for extensive chatbot needs with AI-generated responses.',
-        'Suitable for up to 20,000 chat messages.',
+        'Suitable for up to 50,000 chat messages.',
         'Manage 6 Bot Profiles with 6 Knowledge Bases.',
         'Text, PNG, JPEG, PDF, Excel, and Word uploads allowed.',
       ],
