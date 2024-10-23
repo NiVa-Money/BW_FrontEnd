@@ -6,6 +6,7 @@ const TypingText = ({ formattedText, sender }:any) => {
 
   useEffect(() => {
     if (formattedText) {
+      setDisplayedText('');
       let index = 0;
       const interval = setInterval(() => {
         setDisplayedText(prev => prev + formattedText[index]);
