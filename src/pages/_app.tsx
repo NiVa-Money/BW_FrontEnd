@@ -51,6 +51,10 @@ function MyApp({ Component, pageProps }: AppProps) {
           async
           src="https://www.googletagmanager.com/gtag/js?id=G-Z2ZBZZN0Y0"
         ></Script>
+        <Script
+          async
+          src="https://www.googletagmanager.com/gtag/js?id=AW-16484085944"
+        />
         <Script>
           {`
             window.dataLayer = window.dataLayer || [];
