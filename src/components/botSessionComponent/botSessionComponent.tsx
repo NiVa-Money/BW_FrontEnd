@@ -257,11 +257,9 @@ const BotSessionComponent: React.FC = () => {
     setSentimentAnalysis(advanceFeature?.data?.data?.sentiments);
     setEmotion(advanceFeature?.data?.data?.emotion);
     const formattedNextSteps = advanceFeature?.data?.data?.nextStep
-    .split('\n')  // First split by newlines
-    .map((line: string) => {
-      return line.replace(/\*([^*]+)\*/g, '<strong>$1</strong>');
-    })
-    .join('<br />');
+      .replace(/\n/g, '<br />') // Handle line breaks
+      .replace(/\*\*(.*?)\*\*/g, '<b>$1</b>'); // Handle bold text using asterisks
+
     setNextSteps(formattedNextSteps);
   }, [advanceFeature]);
 
@@ -651,7 +649,7 @@ const BotSessionComponent: React.FC = () => {
               </button>
               {nextSteps ? (
                 <div
-                  className="w-[80%] flex justify-center items-center mt-2 border-4 border-[#DB88DB] py-4 px-10 text-base text-white"
+                className="w-[80%] justify-center items-center mt-2 border-4 border-[#DB88DB] py-4 px-10 text-base  text-white" 
                   dangerouslySetInnerHTML={{
                     __html: nextSteps,
                   }}
