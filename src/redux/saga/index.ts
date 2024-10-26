@@ -90,7 +90,6 @@ import {
   deleteUserKnowledgeBaseService,
   editUserBotProfileService,
   exportBotProfileService,
-  fetchUserData,
   fetchUserMetrics,
   getAdvanceFeatureService,
   getUserAllSessionService,
@@ -112,6 +111,7 @@ import {
   getWPWebhookService,
   wpEditService,
   wpDeleteService,
+  verifyUserDataService,
 } from '../services';
 import { notifyError, notifySuccess } from '@/components/Toaster/toast';
 import {
@@ -136,7 +136,7 @@ export function* verifyUserSaga({
 }): Generator<any> {
   try {
     // Api call
-    const verifyUser = yield call(fetchUserData, payload);
+    const verifyUser = yield call(verifyUserDataService, payload);
     yield put({
       type: VERIFY_USER_DATA_SUCCESS,
       payload: verifyUser,
