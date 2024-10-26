@@ -69,7 +69,7 @@ const LandingPage: React.FC = () => {
           mobileNo: '',
           password: 'password',
         };
-        dispatch(signUpDataAction(payload));
+        // dispatch(signUpDataAction(payload));
       }
     }
   }, [userVerify]);
@@ -99,10 +99,10 @@ const LandingPage: React.FC = () => {
           <Media />
         </section>
         <section>
-          <FeaturesGrid/>
+          <FeaturesGrid />
         </section>
         <section>
-          <CodingFactor/>
+          <CodingFactor />
         </section>
         <section>
           <Factors />

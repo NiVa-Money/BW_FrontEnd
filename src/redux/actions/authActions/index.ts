@@ -8,33 +8,28 @@ import {
   REMOVE_OTP_MODAL,
   VERIFY_USER_OTP,
   GOOGLE_LOGIN,
-  PASSWORD_LOGIN
+  PASSWORD_LOGIN,
 } from '../actionTypes';
 
 export const logoutUser = () => ({
   type: LOGOUT_USER,
 });
 
-export const googleLogin = (payload:any) => ({
+export const googleLogin = (payload: any) => ({
   type: GOOGLE_LOGIN,
-  payload
-})
-export const passwordLoginAction = (payload:any) => ({
+  payload,
+});
+export const passwordLoginAction = (payload: any) => ({
   type: PASSWORD_LOGIN,
-  payload
-})
-export const verifyOtp = (userData:any) =>({
+  payload,
+});
+export const verifyOtp = (userData: any) => ({
   type: VERIFY_USER_OTP,
-  payload: userData
-})
-
-export const verifyUserDataAction = (userData: any) => ({
-  type: VERIFY_USER_DATA,
   payload: userData,
 });
 
-export const fetchUserDataSuccess = (userData: any) => ({
-  type: VERIFY_USER_DATA_SUCCESS,
+export const verifyUserDataAction = (userData: any) => ({
+  type: VERIFY_USER_DATA,
   payload: userData,
 });
 
@@ -44,11 +39,9 @@ export const signUpDataAction = (userData: any) => ({
 });
 export const removeModalOtp = () => ({
   type: REMOVE_OTP_MODAL,
- 
 });
 export const resetUserDataAction = () => ({
   type: SIGN_UP_DATA,
- 
 });
 
 export const fetchMetricsAction = (user_id: any) => ({
