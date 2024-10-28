@@ -45,7 +45,7 @@ export const verifyOtpUserData = async (payload: any) => {
 };
 
 //for verify
-export const fetchUserData = async (userEmail: string) => {
+export const verifyUserDataService = async (userEmail: string) => {
   try {
     const response = await axiosInstance.post('user/signup/verify', {
       emailId: userEmail,

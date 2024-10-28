@@ -71,6 +71,8 @@ const Hero = () => {
     }
   }, [googleVerifyRedux]);
 
+  const userIdLocal = localStorage.getItem('user_id');
+
   useEffect(() => {
     if (googleVerifyRedux) {
       const [firstName, lastName] = userRedux?.displayName.split(' ');
@@ -81,11 +83,11 @@ const Hero = () => {
         emailId: email,
         mobileNo: '',
       };
-      if (!userData?.success) {
+      if (!userIdLocal?.length) {
         dispatch(googleLogin(payload));
       }
     }
-  }, [userRedux, googleLoginUser]);
+  }, [userIdLocal]);
 
   return (
     <section>
