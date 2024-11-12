@@ -31,6 +31,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         persistor={persistor}
       >
         <Head>
+          <title>Botwot - AI Chatbot Solutions</title>
           <link
             rel="icon"
             type="image/svg"

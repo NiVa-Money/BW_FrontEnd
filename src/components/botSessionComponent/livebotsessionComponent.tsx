@@ -64,10 +64,9 @@ const BotSessionComponent: React.FC = () => {
 
   const [chatsData, setchatsData] = React.useState<any>([]);
   const [socket, setSocket] = React.useState<any>(null);
-
   React.useEffect(() => {
     if (sessionId && botIdLive && userIdLive) {
-      const newSocket = io('https://api.botwot.io', {
+      const newSocket = io(process.env.NEXT_PUBLIC_BASE_URL, {
         query: {
           isWidget: 'false',
           chatRoom: sessionId,
