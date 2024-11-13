@@ -82,7 +82,7 @@ const Footer: React.FC = () => {
               The Ultimate No-code <br /> Chatbot Creation Tool
             </h2>
             <p className="w-full text-md bg-clip-text leading-[64px] text-white">
-              Contact us at +1 (884) 791-3678 / +1 (828) 415-4511
+              Contact us at +1 (844) 791-3678 
             </p>
           </section>
           <nav className="flex flex-col ml-5 w-6/12 max-md:ml-0 max-md:w-full">
