@@ -81,6 +81,9 @@ const Footer: React.FC = () => {
             <h2 className="w-full text-5xl font-semibold bg-clip-text leading-[64px] text-transparent bg-gradient-to-r from-white to-gray-700">
               The Ultimate No-code <br /> Chatbot Creation Tool
             </h2>
+            <p className="w-full text-md bg-clip-text leading-[64px] text-white">
+              Contact us at +1 (884) 791-3678 / +1 (828) 415-4511
+            </p>
           </section>
           <nav className="flex flex-col ml-5 w-6/12 max-md:ml-0 max-md:w-full">
             <div className="grow justify-end max-md:mt-10">
@@ -103,7 +106,10 @@ const Footer: React.FC = () => {
           © 2024 BotWot Chat Bot AI. All rights reserved.
         </div>
         <div className="flex space-x-6">
-          <Link href="https://www.instagram.com/botwot.io?igsh=eW9jdmgxbWRuampo" target="_blank">
+          <Link
+            href="https://www.instagram.com/botwot.io?igsh=eW9jdmgxbWRuampo"
+            target="_blank"
+          >
             <Image
               src="/images/insta.png"
               alt="Instagram"
