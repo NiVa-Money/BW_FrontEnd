@@ -73,21 +73,42 @@ const Hero = () => {
 
   const userIdLocal = localStorage.getItem('user_id');
 
+  // useEffect(() => {
+  //   if (googleVerifyRedux) {
+  //     const [firstName, lastName] = userRedux?.displayName.split(' ');
+  //     const email = userRedux?.email;
+  //     const payload = {
+  //       firstName: firstName,
+  //       lastName: lastName ? lastName : '',
+  //       emailId: email,
+  //       mobileNo: '',
+  //     };
+  //     if (!userIdLocal?.length) {
+  //       dispatch(googleLogin(payload));
+  //     }
+  //   }
+  // }, [userIdLocal]);
   useEffect(() => {
     if (googleVerifyRedux) {
       const [firstName, lastName] = userRedux?.displayName.split(' ');
       const email = userRedux?.email;
       const payload = {
         firstName: firstName,
-        lastName: lastName ? lastName : '',
+        lastName: lastName || '',
         emailId: email,
         mobileNo: '',
       };
+  
       if (!userIdLocal?.length) {
+        // User is new, so create a new user
         dispatch(googleLogin(payload));
+      } else {
+        // User exists, proceed to fetch the user data
+        dispatch(verifyUserDataAction(email));
       }
     }
-  }, [userIdLocal]);
+  }, [googleVerifyRedux, userIdLocal]);
+  
 
   return (
     <section>
