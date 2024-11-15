@@ -98,17 +98,20 @@ const Hero = () => {
         emailId: email,
         mobileNo: '',
       };
-  
+
+      // Check if user is verified (you might have a state like 'isVerified' to handle this)
       if (!userIdLocal?.length) {
-        // User is new, so create a new user
-        dispatch(googleLogin(payload));
+        // If the user is not in local storage, check if the user is already verified
+        if (!googleLoginUser?.isVerified) {
+          // User is not verified, so proceed with the signup
+          dispatch(googleLogin(payload));
+        }
       } else {
-        // User exists, proceed to fetch the user data
+        // User exists, proceed to fetch user data (only if they aren't verified yet)
         dispatch(verifyUserDataAction(email));
       }
     }
-  }, [googleVerifyRedux, userIdLocal]);
-  
+  }, [googleVerifyRedux, userIdLocal, googleLoginUser]);
 
   return (
     <section>
