@@ -26,6 +26,8 @@ import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 import SettingsRoundedIcon from '@mui/icons-material/SettingsRounded';
 import PhoneAndroidRoundedIcon from '@mui/icons-material/PhoneAndroidRounded';
 import KeyboardArrowRightRoundedIcon from '@mui/icons-material/KeyboardArrowRightRounded';
+import StoreIcon from '@mui/icons-material/Store';
+import GroupsIcon from '@mui/icons-material/Groups';
 import AssistantIcon from '@mui/icons-material/Assistant';
 
 interface SidebarItemProps {
@@ -111,6 +113,8 @@ const SideBar: React.FC = () => {
         { title: 'Reports (coming soon)' },
       ],
     },
+    { icon: <GroupsIcon />, text: 'Engagement', path: '/' },
+    { icon: <StoreIcon />, text: 'Marketing', path: '/' },
     {
       icon: <SmartToyIcon />,
       text: 'Bots',
