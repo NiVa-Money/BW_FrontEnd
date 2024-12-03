@@ -22,6 +22,8 @@ import FeaturesGrid from '@/components/Features/features';
 import CodingFactor from '@/components/Factors/codingFactors';
 import Creation from '@/components/Factors/Creation';
 import Integrations from '@/components/Brands/integrations';
+import SignUp from '@/components/SignUp';
+import LoginPage from '@/components/Login';
 const LandingPage: React.FC = () => {
   const userEmail = useSelector((state: RootState) => state.root?.user?.email);
   const userVerify = useSelector((state: RootState) => state.root?.userVerify);
@@ -85,8 +87,11 @@ const LandingPage: React.FC = () => {
       <Script src="https://messages-dump.s3.amazonaws.com/widget/66cf26cda51861b4b167422c/66ec1e16a0ffb67f4eb2cce3.js" />
 
       <main>
-        <Hero />
-        <section>
+        {/* <Hero /> */}
+        {/* <SignUp/> */}
+ 
+        <LoginPage/>
+        {/* <section>
           <Features />
         </section>
         <section>
@@ -118,7 +123,7 @@ const LandingPage: React.FC = () => {
         </section>
         <section>
           <PricingCard />
-        </section>
+        </section> */}
       </main>
     </>
   );

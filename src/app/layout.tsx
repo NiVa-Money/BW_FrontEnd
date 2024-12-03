@@ -30,9 +30,11 @@ export default function RootLayout({
   const pathnameBrowser: any = usePathname();
 
   const routeWithoutHeader: string[] = [
+    '/home',
     '/mychatbots',
     '/createbot',
     '/editbot',
+    '/signup',
     '/knowledgebase',
     '/profile',
     '/rize',
@@ -56,6 +58,7 @@ export default function RootLayout({
     '/livechat',
   ];
   const routeWithoutFooter: string[] = [
+    '/home',
     '/mychatbots',
     '/createbot',
     '/editbot',
@@ -67,6 +70,7 @@ export default function RootLayout({
     '/membership-success',
     '/faq',
     '/dashboard',
+    '/signup',
     '/login',
     '/feedback',
     '/createknowledgebase',
@@ -93,6 +97,7 @@ export default function RootLayout({
     '/contactus',
     '/membership-failure',
     '/membership-success',
+    '/signup',
     '/login',
     '/home',
     '/botsession',
@@ -110,6 +115,7 @@ export default function RootLayout({
     '/membership',
     '/faq',
     '/dashboard',
+    '/signup',
     '/login',
     '/feedback',
     '/createknowledgebase',

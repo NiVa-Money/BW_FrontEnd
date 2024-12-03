@@ -72,7 +72,7 @@ function MyApp({ Component, pageProps }: AppProps) {
           <main className="flex-grow">
             <Component {...pageProps} />
           </main>
-          <Footer />
+          {/* <Footer /> */}
         </div>
       </PersistGate>
       <Toast />

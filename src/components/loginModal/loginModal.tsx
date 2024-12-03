@@ -107,7 +107,7 @@ const LoginModal: React.FC<ModalProps> = ({ closeModal }) => {
 
     try {
       // Await the dispatch to ensure the login action completes
-      await dispatch(passwordLoginAction({ email, password }));
+      dispatch(passwordLoginAction({ email, password }));
 
       // Close modal and redirect only after successful login
       closeModal();
