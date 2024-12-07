@@ -22,6 +22,7 @@ import withAuth from '../withAuth';
 import { useEffect } from 'react';
 import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
 import { fetchMembershipPlanRequest } from '@/redux/actions/paymentActions';
+import { Language, WhatsApp, Instagram } from '@mui/icons-material';
 
 const BotSessionComponent: React.FC = () => {
   const dispatch = useDispatch();
@@ -332,12 +333,24 @@ const BotSessionComponent: React.FC = () => {
                 }}
               >
                 <div className="flex justify-between items-center">
-                  <span className="cursor-pointer"> {id + 1}.Session</span>
+                  <span className="cursor-pointer"> {id + 1}.Session </span>
                   <div className="relative">
                     <ChatBubbleOutlineIcon />
                     <span className="absolute left-[15px] bg-[#141118] rounded-[100%] p-[4px] -top-[10px]">
                       {item.totalMessages}
                     </span>
+                    {/* <span className="text-[#6C6779] text-sm"> {item.channelName}</span> */}
+                    <div className="flex items-center space-x-1 mt-3">
+                      {item.channelName === 'website' && (
+                        <Language className="text-[#6C6779] text-sm" />
+                      )}
+                      {item.channelName === 'whatsapp' && (
+                        <WhatsApp className="text-[#6C6779] text-sm" />
+                      )}
+                      {item.channelName === 'instagram' && (
+                        <Instagram className="text-[#6C6779] text-sm" />
+                      )}
+                    </div>
                   </div>
                 </div>
                 <span className="w-[100%] left-[43px] cursor-pointer ">
@@ -649,7 +662,7 @@ const BotSessionComponent: React.FC = () => {
               </button>
               {nextSteps ? (
                 <div
-                className="w-[80%] justify-center items-center mt-2 border-4 border-[#DB88DB] py-4 px-10 text-base  text-white" 
+                  className="w-[80%] justify-center items-center mt-2 border-4 border-[#DB88DB] py-4 px-10 text-base  text-white"
                   dangerouslySetInnerHTML={{
                     __html: nextSteps,
                   }}
